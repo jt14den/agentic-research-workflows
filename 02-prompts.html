@@ -468,20 +468,20 @@ cleaning the data.”</p>
 <div id="concrete-example-from-bad-to-good" class="callout-inner">
 <h3 class="callout-title">Concrete example: From bad to good</h3>
 <div class="callout-content">
-<table class="table"><colgroup><col width="33%"><col width="33%"><col width="33%"></colgroup><thead><tr class="header"><th align="left">Aspect</th>
+<table class="table"><colgroup><col width="33%"><col width="33%"><col width="33%"></colgroup><thead><tr><th align="left">Aspect</th>
 <th align="left">Bad prompt</th>
 <th align="left">Good prompt</th>
-</tr></thead><tbody><tr class="odd"><td align="left">Vague vs specific</td>
+</tr></thead><tbody><tr><td align="left">Vague vs specific</td>
 <td align="left">“Clean this data.”</td>
 <td align="left">“In <code>data.csv</code>, remove rows with missing
 values in the ‘age’ column and save as
 <code>clean_data.csv</code>.”</td>
-</tr><tr class="even"><td align="left">No context vs context</td>
+</tr><tr><td align="left">No context vs context</td>
 <td align="left">“Write a plot script.”</td>
 <td align="left">“I am building a report for a climate study. Write a
 Python script using seaborn to create a line plot of ‘temp’ over ‘year’
 from <code>results.csv</code>.”</td>
-</tr><tr class="odd"><td align="left">Silent vs validated</td>
+</tr><tr><td align="left">Silent vs validated</td>
 <td align="left">“Run a t-test.”</td>
 <td align="left">“Perform a paired t-test between ‘pre’ and ‘post’
 columns. Print the t-statistic, p-value, and an interpretation of the
@@ -602,7 +602,7 @@ satisfied, then save it by asking: “Write this plan to PLAN.md.”</p>
   What a good plan includes
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <ul><li>An <strong>audit step</strong> — inspect files before changing
 them</li>
@@ -674,10 +674,13 @@ intermediate steps.”</li>
 <div class="callout-content">
 <p>Practice the CLEAR framework to visualize the relationship between
 “Date” and “Score” in a dataset.</p>
-<ol style="list-style-type: decimal"><li><p><strong>Start with a vague prompt</strong> — type this inside
-your Gemini CLI session:
-<code>Create a plot of the data I just made.</code> <em>Observe: Does it
-work? Is the plot useful? Where did it save it?</em></p></li>
+<ol style="list-style-type: decimal"><li>
+<p><strong>Start with a vague prompt</strong> — type this inside
+your Gemini CLI session:</p>
+<pre><code>Create a plot of the data I just made.</code></pre>
+<p><em>Observe: Does it work? Is the plot useful? Where did it save
+it?</em></p>
+</li>
 <li><p><strong>Refine the prompt:</strong> Write a new prompt that
 applies context (what the data is), specificity (scatterplot with
 regression line), and output instructions (save as
@@ -692,7 +695,7 @@ regression line), and output instructions (save as
   Example refined prompt
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <pre><code>Using the 'master_dataset.csv' file, create a Python script to generate a scatterplot of 'date' vs 'score'. Add a linear regression trendline. Label the axes clearly. Save the final plot to a file named 'fig/trend_analysis.png' (create the directory if it doesn't exist).</code></pre>
 <div class="section level3">
@@ -718,18 +721,18 @@ file?</li>
 <p>Test the AI as a verifier principle. Ask the AI to find flaws in its
 code before you run it.</p>
 <ol style="list-style-type: decimal"><li>
-<strong>Generate a script</strong> — type this prompt inside your
-Gemini CLI session:
-<code>Write a Python script that reads 'data.csv' and calculates the rolling 7-day average of a 'score' column. Handle missing values.</code>
+<p><strong>Generate a script</strong> — type this prompt inside your
+Gemini CLI session:</p>
+<pre><code>Write a Python script that reads 'data.csv' and calculates the rolling 7-day average of a 'score' column. Handle missing values.</code></pre>
 </li>
 <li>
-<strong>Force introspection:</strong> Once the code is generated, do
-not run it. Follow up in the same session:
-<code>Review the rolling average script you just wrote. Are there any edge cases (like having fewer than 7 days of data) where this would fail? If so, provide an updated version.</code>
+<p><strong>Force introspection:</strong> Once the code is generated,
+do not run it. Follow up in the same session:</p>
+<pre><code>Review the rolling average script you just wrote. Are there any edge cases (like having fewer than 7 days of data) where this would fail? If so, provide an updated version.</code></pre>
 </li>
-<li>
-<strong>Compare:</strong> Did the AI find a mistake in its first
-draft? Did it add a guard clause like <code>min_periods=1</code>?</li>
+<li><p><strong>Compare:</strong> Did the AI find a mistake in its first
+draft? Did it add a guard clause like
+<code>min_periods=1</code>?</p></li>
 </ol></div>
 </div>
 </div>
@@ -740,7 +743,7 @@ draft? Did it add a guard clause like <code>min_periods=1</code>?</li>
   Reflection
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>AI models are often more accurate when asked to critique logic than
 when asked to generate it. This second pass is part of the editor
@@ -830,7 +833,7 @@ any links that you are not going to use.
   "identifier": "https://jt14den.github.io/vibe-coding-lesson/02-prompts.html",
   "dateCreated": "2026-01-08",
   "dateModified": "2026-03-25",
-  "datePublished": "2026-04-28"
+  "datePublished": "2026-05-05"
 }
 
   </script><script>
