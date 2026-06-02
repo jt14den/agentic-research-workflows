@@ -406,7 +406,7 @@
   Setup check
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>Ask all learners to run:</p>
 <div class="codewrapper sourceCode" id="cb1">
@@ -500,7 +500,7 @@ high-level logic and the <strong>Living Spec</strong>.</p>
   Discussion prompt
   </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
 <div class="accordion-body">
 <p>Ask learners: “Have you ever used ChatGPT to write code that looked
 correct but failed when you ran it?” This is a good time to introduce
@@ -796,7 +796,7 @@ Metric” (how you know it’s done).</p>
   Example spec file
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <!-- TODO: Once model config mechanism is confirmed, add a 'model: gemini-2.5-flash-lite'
      line (or equivalent) to this example so learners see model pinning as a
@@ -1040,7 +1040,7 @@ result at alpha=0.05.”</td>
   Teaching tip: Visual aids
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>Write CLEAR vertically on a whiteboard. As you explain each letter,
 add the keyword (Concise, Logical, Explicit, Adaptive, Reflective). This
@@ -1080,7 +1080,7 @@ to critique its own output. This is often called self-correction.</p>
   The introspection concept
   </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
 <div class="accordion-body">
 <p>Emphasize this section. Most learners treat AI output as final. The
 idea that they can ask the AI to fix its own work is often a new
@@ -1192,7 +1192,7 @@ satisfied, then save it by asking: “Write this plan to PLAN.md.”</p>
   What a good plan includes
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <ul>
 <li>An <strong>audit step</strong> — inspect files before changing
@@ -1300,7 +1300,7 @@ regression line), and output instructions (save as
   Example refined prompt
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <pre><code>Using the 'master_dataset.csv' file, create a Python script to generate a scatterplot of 'date' vs 'score'. Add a linear regression trendline. Label the axes clearly. Save the final plot to a file named 'fig/trend_analysis.png' (create the directory if it doesn't exist).</code></pre>
 <div class="section level3">
@@ -1353,7 +1353,7 @@ draft? Did it add a guard clause like
   Reflection
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>AI models are often more accurate when asked to critique logic than
 when asked to generate it. This second pass is part of the editor
@@ -2093,7 +2093,7 @@ the documentation instead of querying an LLM.</li>
   Managing expectations
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>Models are becoming less likely to hallucinate. * <strong>If it
 refuses:</strong> Acknowledge that the model correctly identified its
@@ -2126,7 +2126,7 @@ uncertainty, or confidently invents instructions.</p>
   Discussion
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Current models (Gemini 2.5, Claude, GPT-4o) are significantly better
 at refusing or flagging uncertainty than earlier generations — you may
@@ -2616,7 +2616,7 @@ unit tests, or metamorphic checks?</li>
   Discussion
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>A pre-defined protocol reduces decision fatigue during complex coding
 sessions. Deciding how to verify work early prevents approval fatigue
@@ -2695,8 +2695,8 @@ any links that you are not going to use.
   "url": "https://jt14den.github.io/vibe-coding-lesson/instructor/aio.html",
   "identifier": "https://jt14den.github.io/vibe-coding-lesson/instructor/aio.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-05-26",
-  "datePublished": "2026-05-26"
+  "dateModified": "2026-06-02",
+  "datePublished": "2026-06-02"
 }
 
   </script><script>
