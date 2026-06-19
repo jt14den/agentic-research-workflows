@@ -29,7 +29,7 @@ exercises: 20
 All prompts in this episode are typed inside an active Claude Code session. Start one in your project folder before the exercises:
 
 ```bash
-cd path/to/your/project
+cd coastal-water-quality
 claude
 ```
 
@@ -167,7 +167,7 @@ Emphasize this section. Most learners treat AI output as final. The idea that th
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-AI models are often better at verifying code than writing it. Never accept the first draft. Follow up with an introspection prompt:
+Asking the AI to review its own code often surfaces problems, but it cannot decide which problems matter for your research; that judgement stays with you. Never accept the first draft. Follow up with an introspection prompt:
 
 *   "Review the code you just wrote. Are there any edge cases or security vulnerabilities?"
 *   "Did you hardcode any file paths?"
@@ -233,7 +233,7 @@ A `PLAN.md` and your `CLAUDE.md` serve different purposes. The spec defines pers
 Practise the think-then-do pattern before moving on to the data cleaning episode. Inside your Claude Code session, type:
 
 ```
-I have three CSV files from different research sites with inconsistent column names and date formats. Before writing any code, outline a step-by-step plan for cleaning and merging them into a single dataset. Do not write any files yet.
+Read the three site files in data/. They have inconsistent column names and date formats. Before writing any code, outline a step-by-step plan for cleaning and merging them into a single dataset. Do not write any files yet.
 ```
 
 Review the plan. Does it include an audit step? Does it address missing values? Revise the plan in the conversation until you are satisfied, then save it by asking: "Write this plan to PLAN.md."
@@ -285,23 +285,23 @@ Have you seen an AI make a confident mistake? In your research, what signs indic
 
 ## Challenge: The prompt refinement loop
 
-Practise the CLEAR framework to visualise the relationship between "Date" and "Score" in a dataset.
+Practise the CLEAR framework on a file you already have: one raw site file, `data/site_A.csv`. (You have not cleaned the data yet, so use the raw column names.)
 
 1.  **Start with a vague prompt**, type this inside your Claude Code session:
     ```
-    Create a plot of the data I just made.
+    Plot my data.
     ```
-    *Observe: Does it work? Is the plot useful? Where did it save it?*
+    *Observe: Does it work? Which file did it use? Is the plot useful? Where did it save it?*
 
 2.  **Refine the prompt:**
-    Write a new prompt that applies context (what the data is), specificity (scatterplot with regression line), and output instructions (save as `fig/trend_analysis.png`).
+    Write a new prompt that applies context (what the data is), specificity (which file and columns, scatterplot with a trendline), and output instructions (where to save it).
 
 :::::::::::::::::::::::::::::::::::::::: solution
 
 ## Example refined prompt
 
 ```
-Using the 'master_dataset.csv' file, create a Python script to generate a scatterplot of 'date' vs 'score'. Add a linear regression trendline. Label the axes clearly. Save the final plot to a file named 'fig/trend_analysis.png' (create the directory if it doesn't exist).
+Using data/site_A.csv, create a Python script that plots WaterQualityScore over Collection_Date as a scatterplot with a linear trendline. Label the axes. Save the plot to fig/site_A_trend.png (create the directory if it does not exist).
 ```
 
 ### Reflection
@@ -334,7 +334,7 @@ Test the AI as a verifier principle. Ask the AI to find flaws in its code before
 
 ### Reflection
 
-AI models are often more accurate when asked to critique logic than when asked to generate it. This second pass is part of the editor mindset and reduces manual debugging.
+A second, critique-focused pass often catches issues the first draft missed. Treat it as a prompt to look harder yourself, not as a guarantee the code is now correct.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

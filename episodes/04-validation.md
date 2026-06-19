@@ -11,6 +11,7 @@ exercises: 20
 - Use the approval gate to take responsibility for AI-generated code.
 - Use rewrite time as a formative signal about your workflow, not a productivity score.
 - Use a four-layer validation stack with explicit requirement constraints.
+- Turn validation into checks you can run, by finishing `validate_data.py`.
 - Use multi-model verification to peer-review research code.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -74,18 +75,18 @@ To minimise rewrite time and ensure research rigor, use a structured validation 
 ### Layer 1: Requirement constraints (No-Go Zones)
 Before the AI writes code, define requirement constraints in your `CLAUDE.md`. These are rules the AI is not allowed to break.
 
-*Example:* "Do not change the column names in `raw_data.csv`" or "Use only base R for this visualisation to ensure compatibility."
+*Example (from our project):* "Do not change the column names in `data/site_*.csv`" and "Do not drop any rows: the merge must have 60."
 
-### Layer 2: Automated unit tests
-Ask the agent to write tests before the implementation. Use a prompt pattern like: "First, write five Pytest cases that define the success of this data cleaning script. I will approve the tests before you write the logic."
+### Layer 2: Automated checks you can run
+Validation should be executable, not just a feeling. Your project ships `validate_data.py` with two checks written and three left as TODO. Ask the agent to help you implement the rest, then read and run them, so that "valid" means "these checks passed," not "it looked fine."
 
 ### Layer 3: Metamorphic and invariant checks
 Test the relationships in your data that should never change.
-- **Invariants:** The total number of participants must remain 150 after merging.
-- **Metamorphic checks:** If I change the order of the input rows, the final mean score should not change.
+- **Invariants:** the merged file must have 60 rows (3 sites x 20 samples), and no `sample_id` should be lost.
+- **Metamorphic checks:** if you shuffle the order of the input rows, the merged mean score should not change.
 
 ### Layer 4: Domain plausibility
-This is where your research expertise is irreplaceable. AI does not know that a negative blood pressure reading is impossible.
+This is where your research expertise is irreplaceable. A check can pass while the science is wrong. In our data, a water quality score above 100 is impossible, and site C's January samples must not appear in May. The clearest case: if the date-format trap goes uncaught, the cleaning runs, the row count is right, and the **trend you plot is still wrong**.
 
 ::::::::::::::::::::::::::::::::::::::::: callout
 
@@ -99,6 +100,24 @@ The stack only works if you stay in charge of it. Four things to keep in front o
 - **Domain plausibility is where your expertise matters most.** No model can replace knowing what a sensible result looks like in your field.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge: build the validator
+
+Open `validate_data.py`. Two checks are written for you; three are left as TODO (dates parse and fall in 2023, every `sample_id` is present exactly once, scores within 0-100).
+
+1. Implement the three TODO checks. Write them yourself, or ask the agent and then read every line before you trust them.
+2. Run `python validate_data.py` against your `data/master_dataset.csv`. Make the checks pass by fixing the data or the cleaning script, never by editing a value to satisfy a check.
+3. Now break it on purpose: ask the agent to re-clean while parsing site C dates as month-day. Run the validator again. Does your date check catch the January-to-May drift?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::: solution
+
+If your validator still passes on the misparsed data, the date check is too weak. A good check asserts something the bug would violate, for example that the earliest site C sample falls in January, or that each parsed date keeps the original day and month, not merely that `pd.to_datetime` did not raise an error. A validator that cannot fail on a known-bad input is not protecting you.
+
+:::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ---
 

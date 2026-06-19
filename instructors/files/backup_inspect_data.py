@@ -1,13 +1,16 @@
-import pandas as pd
+"""
+backup_inspect_data.py - instructor fallback for the audit step.
+Reports columns and missing-value counts for each raw site file.
+
+Run from inside the coastal-water-quality folder:  python inspect_data.py
+"""
 import glob
-import os
+import pandas as pd
 
-# Find all CSV files in the current folder
-csv_files = glob.glob("site_*.csv")
-
-for file in csv_files:
-    print(f"\n--- Filename: {file} ---")
+for file in sorted(glob.glob("data/site_*.csv")):
+    print(f"\n--- {file} ---")
     df = pd.read_csv(file)
     print("Columns:", list(df.columns))
+    print("Rows:", len(df))
     print("Missing values per column:")
     print(df.isnull().sum())
