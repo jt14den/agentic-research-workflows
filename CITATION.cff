@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use this lesson, please cite it as below."
-title: "Agentic Research Workflows: Orchestrating AI and Validation"
-abstract: "A Carpentries-style lesson introducing researchers to Spec-Driven Research Orchestration, emphasizing CLI-based agents, the AGENTS.md Living Spec, and a four-layer validation stack."
+title: "Agentic Research Workflows: AI Coding, Validation, and Research Responsibility"
+abstract: "A Carpentries-style lesson on working with CLI-based AI coding agents in research without giving up the learning, validation, and judgment that make code trustworthy. Emphasizes a CLAUDE.md Living Spec, a four-layer validation stack, provenance, and responsible use."
 authors:
   - family-names: "Dennis"
     given-names: "Tim"
@@ -15,7 +15,7 @@ authors:
 version: 0.1.0
 date-released: 2026-01-10
 license: CC-BY-4.0
-repository-code: "https://github.com/jt14den/vibe-coding-lesson"
+repository-code: "https://github.com/jt14den/agentic-research-workflows"
 keywords:
   - "AI"
   - "LLM"
@@ -24,9 +24,9 @@ keywords:
   - "Reproducibility"
 references:
   - type: software
-    title: "Google Gemini"
+    title: "Claude (Anthropic)"
     abstract: "Large Language Model used for porting content from slides, curriculum validation, and structural refactoring of the lesson materials."
-    version: "1.5 Pro"
-    date-accessed: "2026-01-10"
+    version: "Opus/Sonnet, 2026"
+    date-accessed: "2026-06-19"
     authors:
-      - name: "Google"
+      - name: "Anthropic"

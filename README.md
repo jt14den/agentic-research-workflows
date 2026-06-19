@@ -1,19 +1,19 @@
-# Agentic Research Workflows: Orchestrating AI and Validation
+# Agentic Research Workflows: AI Coding, Validation, and Research Responsibility
 
-[![Status](https://img.shields.io/badge/Status-pre--alpha-red.svg)](https://github.com/carpentries/vibe-coding-lesson)
+[![Status](https://img.shields.io/badge/Status-pre--alpha-red.svg)](https://github.com/jt14den/agentic-research-workflows)
 [![License: CC-BY 4.0](https://img.shields.io/badge/License-CC--BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
-This lesson introduces researchers to **Agentic Research Workflows**—the practice of using AI agents and CLI tools to accelerate research software development while maintaining high standards of software correctness and reproducibility.
+This lesson introduces researchers to **Agentic Research Workflows**: using AI coding agents in the terminal while keeping the validation, reproducibility, and research judgment that make code trustworthy.
 
-**[View the Lesson Website](https://carpentries.github.io/vibe-coding-lesson/)**
+**[View the Lesson Website](https://www.tim-dennis.com/agentic-research-workflows/)**
 
 ## Overview
 
-Traditional programming requires you to hold the entire syntax and logic of a script in your working memory. **Spec-Driven Research Orchestration** offloads the *syntax* generation to the AI, freeing up your cognitive resources for higher-level orchestration and validation. This lesson focuses on the **Gemini CLI** but teaches principles applicable to any "Open LLM" or coding agent.
+This lesson teaches researchers to work with AI coding agents without giving up the learning, feedback, validation, and research judgment that make code trustworthy. AI changes *what you need to practice*: less time recalling every line of syntax, more time understanding intent, dependencies, assumptions, tests, and failure modes. The hands-on work uses **Claude Code**, but the principles apply to any CLI coding agent.
 
 ## Key Features
 *   **CLI-First Approach**: Learn to use AI directly in your terminal where your data lives.
-*   **The Living Spec**: Master the use of `AGENTS.md` (and the standard `CONTEXT.md`) to ground your AI in your specific project goals.
+*   **The Living Spec**: Master the use of `CLAUDE.md` (and the portable `AGENTS.md` convention) to ground your AI in your specific project goals.
 *   **Validation**: Learn strategies like Synthetic Data Generation, Domain Plausibility, and Cross-AI Auditing to ensure research integrity.
 
 
@@ -35,8 +35,8 @@ This lesson is written in Markdown and built with [Sandpaper](https://carpentrie
 
 2.  **Clone the Repository:**
     ```bash
-    git clone https://github.com/carpentries/vibe-coding-lesson.git
-    cd vibe-coding-lesson
+    git clone https://github.com/jt14den/agentic-research-workflows.git
+    cd agentic-research-workflows
     ```
 
 3.  **Preview the Lesson:**
@@ -53,7 +53,7 @@ This lesson is adapted from the workshop "Vibe Coding for Research" by **Bruno S
 
 This lesson was developed with the assistance of AI tools, adhering to the project's own transparency standards:
 
-*   **Model:** Google Gemini 1.5 Pro (Jan 2026 version)
+*   **Model:** Anthropic Claude (Opus/Sonnet, 2026)
 *   **Role:** 
     *   **Porting & Conversion:** Assisted in porting the lesson content from original D-Lab workshop slides into the Carpentries Workbench markdown format.
     *   **Curriculum Validation:** Performed automated checks for completeness and alignment with Carpentries pedagogical standards.
