@@ -41,13 +41,12 @@ Using AI to generate code is research-adjacent labour. It becomes research only 
 
 ## Learning Objectives
 
-By the end of this lesson, participants will be able to:
+At the end of this lesson, learners will be able to:
 
-- Manage changes across a project using CLI-based AI agents.
-- Orchestrate agents using a **Living Spec (CLAUDE.md)**.
-- Apply a four-layer validation stack (requirements, tests, metamorphic checks, **domain plausibility**).
-- Implement approval gates to prevent fatigue and spec drift.
-- Track the provenance and reproducibility of agent-generated results using Git.
+- Distinguish code generation, code understanding, and code validation, and explain why AI-generated code can raise a novice's cognitive load.
+- Use a CLI agent guided by a Living Spec (`CLAUDE.md`) to plan and generate research code, reviewing and approving each step rather than accepting it wholesale.
+- Validate an AI-generated result with concrete, runnable checks (invariants and domain plausibility) and decide whether to approve, revise, or reject it.
+- Document an AI-assisted workflow (prompt, spec, validation, and provenance) so another researcher could reproduce and judge the result.
 
 ## Acknowledgements
 This lesson is adapted from the workshop "Vibe Coding for Research" developed by Bruno Smaniotto and Tom van Nuenen at the UC Berkeley D-Lab. 

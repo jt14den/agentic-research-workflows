@@ -112,6 +112,8 @@ graph TD
     style F fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
+*Description of the diagram: a loop. The researcher defines a goal in `CLAUDE.md`, the agent proposes a plan, and the researcher approves it or sends it back at an approval gate. Only after approval does the agent draft code, which then passes a verification step or returns for refinement. The researcher stays in control at every gate.*
+
 ::::::::::::::::::::::::::::::::::::::::: instructor
 
 ## Discussion prompt

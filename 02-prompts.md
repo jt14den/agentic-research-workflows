@@ -154,7 +154,7 @@ graph LR
     style R fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
-Effective prompts are concise and logical, prioritising important information and following a sequence of steps. They are also explicit, specifying the scope, persona, and tone of the output. When the AI produces poor results, be adaptive by rephrasing or splitting tasks. Finally, be reflective, evaluate the output and verify facts using other sources rather than trusting the response.
+The diagram traces the CLEAR loop, from Concise to Logical to Explicit to Adaptive to Reflective, with a feedback arrow from Reflective back to Adaptive. Effective prompts are concise and logical, prioritising important information and following a sequence of steps. They are also explicit, specifying the scope, persona, and tone of the output. When the AI produces poor results, be adaptive by rephrasing or splitting tasks. Finally, be reflective, evaluate the output and verify facts using other sources rather than trusting the response.
 
 ## Introspection
 
