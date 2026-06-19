@@ -164,29 +164,38 @@ A large context window makes this easier to run into, not harder. Managing what 
 
 Open a terminal window and type `claude --help`. You should see a usage summary listing the options and slash commands available. Claude Code defaults to an interactive session; the `-p` (or `--print`) flag runs a single prompt non-interactively (headless mode), which we use for quick one-off checks.
 
-Navigate to the project folder you created during setup and run a quick headless check:
+Navigate to your project folder, `coastal-water-quality`, and run a quick headless check:
 
 ```bash
-cd agentic-research-project
-claude -p "Tell me what operating system I am currently using and list the files in this directory."
+cd coastal-water-quality
+claude -p "What operating system am I on? List the files here and in data/."
 ```
 
-Compare the output to what you see when you run `ls` (or `dir` on Windows). Did the AI accurately describe your environment?
-
-The AI should return a response similar to:
+Compare the output to what you see when you run `ls` and `ls data/`. Did the AI describe your project accurately? The AI should return something like:
 
 ```
-You are currently using macOS (Darwin). The files in this directory are:
-- index.md
-- config.yaml
-- episodes/
-- data/
-...
+You are on macOS (Darwin). This looks like a data-cleaning project.
+Top level: README.md, CLAUDE.example.md, validate_data.py, data/, expected_outputs/
+data/: site_A.csv, site_B.csv, site_C.csv
 ```
 
-Notice that Claude Code can 'see' your files and understands what environment you are working in. 
+### A first look at the data
 
-We have a project folder that we want to start a project in, let's initialize it for Claude Code and see what that does. 
+Before you let the agent touch anything, look yourself. In your terminal:
+
+```bash
+head data/site_A.csv
+```
+
+Then ask the agent to describe the same file, and compare:
+
+```bash
+claude -p "Describe the columns in data/site_A.csv and note anything inconsistent or risky for analysis."
+```
+
+Did its description match what you saw with `head`? Where it added an interpretation (for example, guessing what a column means), note that as the agent's *assumption*, not fact. This habit, checking what the tool claims against the data itself, is the whole point of the lesson.
+
+Now let's initialize the project so the agent has persistent context.
 
 ::::::::::::::::::::::::::::::::::::::::: callout
 
@@ -222,33 +231,31 @@ This shows the files that are present. You should see a file named `CLAUDE.md`. 
 !cat CLAUDE.md
 ```
 
-Here is the kind of thing Claude Code generates for a fresh, nearly empty project folder:
+Here is the kind of thing Claude Code generates for this project:
 
 ```markdown
 # CLAUDE.md
 
 ## Project Overview
 
-This directory is a workspace for the `agentic-research-project` project. It is
-currently nearly empty, so there is little structure to describe yet. This
-file provides project context for Claude Code and is intended to be updated
-as the project evolves.
+This is a data-cleaning project. The `data/` directory holds three water quality
+files (`site_A.csv`, `site_B.csv`, `site_C.csv`) with inconsistent column names and
+date formats. The goal is to merge them into `data/master_dataset.csv` and analyse
+water quality trends. See `README.md` for the target schema.
 
 ## Key Files
 
-- **`CLAUDE.md`**: Project-specific context, conventions, and rules that
-  Claude Code loads automatically at the start of every session.
+- **`data/site_*.csv`**: raw per-site measurements (do not edit).
+- **`validate_data.py`**: checks for the merged dataset.
+- **`CLAUDE.md`**: project context and rules, loaded automatically each session.
 
 ## Usage
 
-As you add data files, scripts, and documentation, re-run `/init` to produce
-a richer description, and edit this file by hand to record your goals,
-constraints, and rules.
+Re-run `/init` after the project changes, and edit this file by hand to record your
+goals, constraints, and rules.
 ```
 
-A few things to notice. Claude Code scanned the directory and described what it found. Because the folder was nearly empty, it does not have much to say yet.
-Once you add data files, scripts, and documentation, running `/init` again will produce a richer spec that reflects your actual project.
-This is also something you will want to edit by hand, add your goals, constraints, and any rules you want the agent to follow.
+A few things to notice. Claude Code scanned the directory and described the real project, including the messy site files. Because this folder has data, the generated spec is already useful. You will still edit it by hand to add the goals, constraints, and rules the agent must follow.
 
 ## The Living Spec
 

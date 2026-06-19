@@ -33,16 +33,16 @@ claude --version
 
 If you see a version number, you are ready. If the command is not found, restart your terminal and try again.
 
-## 5. Create a working folder
+## 5. Get the project folder
 
-The lesson runs inside a dedicated project folder. Create an empty one now and move into it. You will generate the practice data files here during the lesson.
+The whole lesson works in one project: a small, messy water quality dataset. Download the `coastal-water-quality` folder that ships with this lesson (from the [lesson repository](https://github.com/jt14den/agentic-research-workflows) under `learners/files/coastal-water-quality`, or from a copy your instructor provides), then move into it:
 
 ```bash
-mkdir agentic-research-project
-cd agentic-research-project
+cd coastal-water-quality
+ls data/
 ```
 
-Throughout the lesson, start Claude Code from inside this folder.
+You should see `site_A.csv`, `site_B.csv`, and `site_C.csv`. Throughout the lesson, start Claude Code from inside this folder.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::: callout
 
