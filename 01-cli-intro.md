@@ -164,13 +164,10 @@ A large context window makes this easier to run into, not harder. Managing what 
 
 Open a terminal window and type `claude --help`. You should see a usage summary listing the options and slash commands available. Claude Code defaults to an interactive session; the `-p` (or `--print`) flag runs a single prompt non-interactively (headless mode), which we use for quick one-off checks.
 
-Navigate to your project folder and run a quick headless check:
-
-<!-- TODO: Replace /path/to/project/directory with the path to the scaffolded
-     starter project repo once it is created and distributed to learners. -->
+Navigate to the project folder you created during setup and run a quick headless check:
 
 ```bash
-cd /path/to/project/directory
+cd agentic-research-project
 claude -p "Tell me what operating system I am currently using and list the files in this directory."
 ```
 

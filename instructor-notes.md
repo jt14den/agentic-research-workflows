@@ -22,8 +22,7 @@ This lesson helps researchers work with AI coding agents without handing off the
 ## Episode 1: Understanding CLI-Based AI
 - **Auth Check:** Ask learners to run `claude --version`. If it returns a version number they are ready. If not, have them launch `claude` once and complete sign-in before continuing.
 - **Model Check:** Have all learners set the same model with `/model` (e.g. `claude-sonnet-4-6`) before starting, so outputs are comparable and provenance records are meaningful.
-<!-- TODO: Note whether a pre-class starter folder is being distributed and how to
-     confirm learners have it correctly set up. -->
+- **Starter folder:** No pre-built repo is required. Learners create an empty `agentic-research-project` folder in setup, and the practice data is generated in Episode 3 (`make_messy_data.py`). If you prefer a real dataset over synthetic data, a ready-made one ships at `learners/files/coastal-water-quality/` (three inconsistent site CSVs with the same kinds of issues); point learners at it instead of generating data.
 - **The Browser vs. CLI distinction:** Use the analogy of a "consultant" (Browser) vs. a "research assistant with keys to the lab" (CLI).
 - **Discussion:** The prompt about "ChatGPT writing code that looks correct but fails" is a great way to bond over shared frustration and set the stage for why we need the CLI (to run and test immediately).
 
