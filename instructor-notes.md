@@ -66,6 +66,18 @@ The whole lesson uses one fixture, `learners/files/coastal-water-quality/` (thre
 
 ---
 
+## Suggested first-pilot path (compressed)
+
+For a first pilot, do not teach every section evenly. Protect the practical spine and let the rest be optional. The pilot should answer one question: **can learners use Claude Code to clean a small messy dataset, explain what changed, validate it with checks, and decide whether to approve the result?**
+
+**Teach live:** Before We Use AI (briefly); CLI setup, the early data inspection, and `/init`; the Living Spec; Data Cleaning with AI; the `validate_data.py` approval gate; the capstone bundle.
+
+**Make optional / skim if short on time:** CO-STAR and reasoning-model detail; the advanced tool landscape, MCP, and local-model material in Resources; multi-model verification.
+
+If you run short, cut whole objectives (and their assessments), not bits from everywhere. The data-cleaning-to-validation-to-capstone arc is the part that must survive.
+
+---
+
 ## Troubleshooting & Common Issues
 
 ### API Quotas & Limits

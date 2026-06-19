@@ -118,6 +118,14 @@ Now ask for the script, pointing it at the spec:
 Read 'CLAUDE.md' and the three CSVs in data/. Write a script called 'clean_and_merge.py' that follows the plan and the spec rules. Save the result to data/master_dataset.csv. Add comments linking code steps to spec rules.
 ```
 
+::::::::::::::::::::::::::::::::::::::::: callout
+
+## Your script will not match the lesson's, and that is fine
+
+AI output varies, so your `clean_and_merge.py` will look different from your neighbour's and from any example. That is the point: the goal is not to match a reference, it is to read what you got and decide whether it is correct. Judge it against your spec and the checks below, not against someone else's code.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ::::::::::::::::::::::::::::::::::::::::: instructor
 
 ## Backup scripts
@@ -135,7 +143,7 @@ You are responsible for the final output. You cannot validate what you cannot ex
 
 ### F. Validate against checks, not vibes
 
-Run `python clean_and_merge.py`, then confirm the result with concrete checks. "It ran" is not one of them.
+Run `python clean_and_merge.py`. A correct run prints something like `Wrote data/master_dataset.csv with 60 rows.` Then confirm the result with concrete checks. "It ran" is not one of them.
 
 - **Row-count check:** 60 rows (3 sites x 20 samples), nothing dropped.
 - **Missing-value check:** missing scores filled per your strategy; nothing filled that should have stayed blank.

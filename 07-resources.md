@@ -54,7 +54,7 @@ Transparent attribution is part of open science. Major standards (COPE, Nature, 
 
 ## Challenge: your Monday workflow card
 
-Pick one real scenario from your own work, then fill out a short plan you could actually use next week.
+Pick one real scenario from your own work, then fill out a short plan you could actually use next week. A ready-made template, `monday-worksheet.md`, ships with the lesson (in `learners/files/`); open it and fill it in.
 
 Choose a scenario: a small public CSV, sensitive human-subjects data, large geospatial files, or an existing messy repository.
 
