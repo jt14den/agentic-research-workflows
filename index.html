@@ -397,15 +397,19 @@ scripts).</li>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="learning-objectives">Learning Objectives<a class="anchor" aria-label="anchor" href="#learning-objectives"></a></h2>
-<hr class="half-width"><p>By the end of this lesson, participants will be able to:</p>
-<ul><li>Manage changes across a project using CLI-based AI agents.</li>
-<li>Orchestrate agents using a <strong>Living Spec
-(CLAUDE.md)</strong>.</li>
-<li>Apply a four-layer validation stack (requirements, tests,
-metamorphic checks, <strong>domain plausibility</strong>).</li>
-<li>Implement approval gates to prevent fatigue and spec drift.</li>
-<li>Track the provenance and reproducibility of agent-generated results
-using Git.</li>
+<hr class="half-width"><p>At the end of this lesson, learners will be able to:</p>
+<ul><li>Distinguish code generation, code understanding, and code
+validation, and explain why AI-generated code can raise a novice’s
+cognitive load.</li>
+<li>Use a CLI agent guided by a Living Spec (<code>CLAUDE.md</code>) to
+plan and generate research code, reviewing and approving each step
+rather than accepting it wholesale.</li>
+<li>Validate an AI-generated result with concrete, runnable checks
+(invariants and domain plausibility) and decide whether to approve,
+revise, or reject it.</li>
+<li>Document an AI-assisted workflow (prompt, spec, validation, and
+provenance) so another researcher could reproduce and judge the
+result.</li>
 </ul></section><section><h2 class="section-heading" id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a></h2>
 <hr class="half-width"><p>This lesson is adapted from the workshop “Vibe Coding for Research”
 developed by Bruno Smaniotto and Tom van Nuenen at the UC Berkeley

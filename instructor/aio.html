@@ -494,7 +494,7 @@ moments when they come up.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor note: set the tone early </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>The goal of this episode is to reset expectations before learners
 open a terminal. Some will arrive expecting a productivity demo. Be
@@ -570,7 +570,7 @@ is a valid response)?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <ol style="list-style-type: decimal">
 <li>It reads <code>data.csv</code>, drops every row that has a missing
@@ -881,6 +881,12 @@ before it counts as done.</p>
     H --&gt; B
     style D fill:#bbf,stroke:#333,stroke-width:2px
     style F fill:#f9f,stroke:#333,stroke-width:2px</code></pre>
+<p><em>Description of the diagram: a loop. The researcher defines a goal
+in <code>CLAUDE.md</code>, the agent proposes a plan, and the researcher
+approves it or sends it back at an approval gate. Only after approval
+does the agent draft code, which then passes a verification step or
+returns for refinement. The researcher stays in control at every
+gate.</em></p>
 <div id="accordionInstructor3" class="accordion instructor-note accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor3" aria-expanded="false" aria-controls="collapseInstructor3">
@@ -1592,12 +1598,14 @@ a structured approach to prompt engineering:</p>
     A --&gt; R[Reflective]
     R --&gt;|Feedback Loop| A
     style R fill:#bbf,stroke:#333,stroke-width:2px</code></pre>
-<p>Effective prompts are concise and logical, prioritising important
-information and following a sequence of steps. They are also explicit,
-specifying the scope, persona, and tone of the output. When the AI
-produces poor results, be adaptive by rephrasing or splitting tasks.
-Finally, be reflective, evaluate the output and verify facts using other
-sources rather than trusting the response.</p>
+<p>The diagram traces the CLEAR loop, from Concise to Logical to
+Explicit to Adaptive to Reflective, with a feedback arrow from
+Reflective back to Adaptive. Effective prompts are concise and logical,
+prioritising important information and following a sequence of steps.
+They are also explicit, specifying the scope, persona, and tone of the
+output. When the AI produces poor results, be adaptive by rephrasing or
+splitting tasks. Finally, be reflective, evaluate the output and verify
+facts using other sources rather than trusting the response.</p>
 </section><section><h2 class="section-heading" id="introspection">Introspection<a class="anchor" aria-label="anchor" href="#introspection"></a>
 </h2>
 <hr class="half-width">
@@ -1987,7 +1995,7 @@ output.</li>
   Live coding
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>This episode uses live coding. Learners should follow along by
 running commands on their own machines.</p>
@@ -2130,7 +2138,7 @@ is what travels across sessions. For example:</p>
   Backup scripts
   </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
 <div class="accordion-body">
 <p>If a learner’s AI fails to generate working code on the coastal data,
 provide the pre-written versions from <code>instructors/files/</code>: -
@@ -2207,7 +2215,7 @@ still unsure about. Bring these back into the room.</p>
   Instructor note: cognitive load in this episode
   </h3>
 </button>
-<div id="collapseInstructor3" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor3" aria-labelledby="headingInstructor3">
+<div id="collapseInstructor3" class="accordion-collapse collapse" aria-labelledby="headingInstructor3" data-bs-parent="#accordionInstructor3">
 <div class="accordion-body">
 <p>This is the most technically demanding episode, and generated
 cleaning code is where extraneous load shows up most. Watch for scripts
@@ -2228,7 +2236,7 @@ feedback checkpoint: it is where you find out who is lost.</p>
   Challenge tip
   </h3>
 </button>
-<div id="collapseInstructor4" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor4" aria-labelledby="headingInstructor4">
+<div id="collapseInstructor4" class="accordion-collapse collapse" aria-labelledby="headingInstructor4" data-bs-parent="#accordionInstructor4">
 <div class="accordion-body">
 <p>This challenge requires modifying existing code. If learners are
 stuck, suggest they ask the AI to read <code>clean_and_merge.py</code>
@@ -2274,7 +2282,7 @@ should have dropped.</li>
   What to expect
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>January has four weekly sampling dates per site (5, 12, 19, 26), so a
 correct filter removes 12 rows, leaving 48. If you get a different
@@ -2329,7 +2337,7 @@ code and when.</p>
   Example command
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <pre><code>Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the model name 'Claude Sonnet 4.6', today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'</code></pre>
 <div class="section level3">
@@ -2600,7 +2608,7 @@ catch the January-to-May drift?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>If your validator still passes on the misparsed data, the date check
 is too weak. A good check asserts something the bug would violate, for
@@ -2651,7 +2659,7 @@ implementation model missed?</p></li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Why this works </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Models have different blind spots. Forcing a second AI to act as an
 auditor helps bypass the tendency of the primary assistant to be
@@ -2665,7 +2673,7 @@ over-confident. This process reduces your manual rewrite time.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Teaching tip: approval fatigue </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>Warn learners about approval fatigue, the tendency to accept AI
 suggestions without reading them. The four-layer stack is designed to
@@ -2699,7 +2707,7 @@ the approval gate out loud or in writing. Answer all five:</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> What a good answer looks like </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>A strong answer names the output precisely, points to
 <em>specific</em> checks as evidence (row counts, invariant checks, a
