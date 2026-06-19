@@ -1,5 +1,5 @@
 ---
-title: "Best practices for prompting"
+title: "Best Practices for Prompting"
 teaching: 20
 exercises: 20
 ---
@@ -41,7 +41,7 @@ Then type prompts directly at the prompt. Shell commands (like `python script.py
 
 Effective prompting is clear technical communication. To get the best results, start by being specific. Include constraints, filenames, and a description of your expected output. Vague requests lead to generic answers, while precise instructions result in usable code.
 
-Provide context. Explain why you need the code and what data you have (e.g., "I am processing a CSV file with these columns..."). This helps the AI understand the goal. Specify outputs clearly—tell the AI where to save files or how to format tables.
+Provide context. Explain why you need the code and what data you have (e.g., "I am processing a CSV file with these columns..."). This helps the AI understand the goal. Specify outputs clearly, tell the AI where to save files or how to format tables.
 
 Treat prompting as an iterative process. Start with a simple request and add complexity in follow-up prompts. Include validation steps by asking the AI to verify or test its own work.
 
@@ -51,10 +51,10 @@ Treat prompting as an iterative process. Start with a simple request and add com
 
 While CLEAR helps with conversation flow, CO-STAR structures complex research prompts that eventually become part of your `CLAUDE.md`:
 
-*   **Context**: Provide background (e.g., "I am a biologist analyzing RNA-seq data").
-*   **Objective**: Define the specific task ("Write a script to normalize these counts").
+*   **Context**: Provide background (e.g., "I am a biologist analysing RNA-seq data").
+*   **Objective**: Define the specific task ("Write a script to normalise these counts").
 *   **Style**: Specify the coding style ("Use the Tidyverse style guide in R").
-*   **Tone**: Set the personality ("Be concise and prioritize readable code").
+*   **Tone**: Set the personality ("Be concise and prioritise readable code").
 *   **Audience**: Who is this for? ("For a graduate student who knows R but not bioinformatics").
 *   **Response**: Define the format ("A single R script with comments and a plot output").
 
@@ -71,7 +71,7 @@ Instead of writing a full `CLAUDE.md` by hand, use the **Bootstrap Workflow**. T
 ::::::::::::::::::::::::::::::::::::::::: callout
 
 ## Example bootstrap prompt
-"Scan the CSV files in `data/raw/`. Based on my goal of 'Analyzing water quality trends', draft an `CLAUDE.md` file that defines the column schema, required libraries, and a plan for cleaning the data."
+"Scan the CSV files in `data/raw/`. Based on my goal of 'Analysing water quality trends', draft an `CLAUDE.md` file that defines the column schema, required libraries, and a plan for cleaning the data."
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -154,7 +154,7 @@ graph LR
     style R fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
-Effective prompts are concise and logical, prioritizing important information and following a sequence of steps. They are also explicit, specifying the scope, persona, and tone of the output. When the AI produces poor results, be adaptive by rephrasing or splitting tasks. Finally, be reflective—evaluate the output and verify facts using other sources rather than trusting the response.
+Effective prompts are concise and logical, prioritising important information and following a sequence of steps. They are also explicit, specifying the scope, persona, and tone of the output. When the AI produces poor results, be adaptive by rephrasing or splitting tasks. Finally, be reflective, evaluate the output and verify facts using other sources rather than trusting the response.
 
 ## Introspection
 
@@ -163,7 +163,7 @@ The CLEAR framework guides your input, but you can also force the AI to critique
 ::::::::::::::::::::::::::::::::::::::::: instructor
 
 ## The introspection concept
-Emphasize this section. Most learners treat AI output as final. The idea that they can ask the AI to fix its own work is often a new concept. It is like asking a student, "Are you sure you checked your work?"—they often find their own mistakes when asked.
+Emphasize this section. Most learners treat AI output as final. The idea that they can ask the AI to fix its own work is often a new concept. It is like asking a student, "Are you sure you checked your work?", they often find their own mistakes when asked.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -182,7 +182,7 @@ As of 2025, reasoning models (such as OpenAI o1/o3, DeepSeek-R1, or Gemini 2.5 T
 - **Standard models (e.g., Claude Haiku):** Best for quick formatting, simple scripts, and brainstorming.
 - **Reasoning models:** Best for complex logic, debugging hard errors, or writing scientific formulas where accuracy is important.
 
-When using a reasoning model, you often do not need to ask for introspection—they do it before showing the code.
+When using a reasoning model, you often do not need to ask for introspection, they do it before showing the code.
 
 ## Plan before you act
 
@@ -216,7 +216,7 @@ For complex projects, ask the agent to write a `PLAN.md` first:
 Write a PLAN.md outlining the steps to clean and merge these files. I will review and edit it before you write any code.
 ```
 
-This makes the plan a reviewable, editable artifact — a more formal version of the Bootstrap Workflow. Once approved, refer back to it in follow-up prompts: "Proceed with step 2 from PLAN.md."
+This makes the plan a reviewable, editable artefact, a more formal version of the Bootstrap Workflow. Once approved, refer back to it in follow-up prompts: "Proceed with step 2 from PLAN.md."
 
 ::::::::::::::::::::::::::::::::::::::::: callout
 
@@ -230,7 +230,7 @@ A `PLAN.md` and your `CLAUDE.md` serve different purposes. The spec defines pers
 
 ## Challenge: Plan before you clean
 
-Practice the think-then-do pattern before moving on to the data cleaning episode. Inside your Claude Code session, type:
+Practise the think-then-do pattern before moving on to the data cleaning episode. Inside your Claude Code session, type:
 
 ```
 I have three CSV files from different research sites with inconsistent column names and date formats. Before writing any code, outline a step-by-step plan for cleaning and merging them into a single dataset. Do not write any files yet.
@@ -242,9 +242,9 @@ Review the plan. Does it include an audit step? Does it address missing values? 
 
 ## What a good plan includes
 
-- An **audit step** — inspect files before changing them
-- A **schema harmonization step** — standardize column names
-- A **date standardization step**
+- An **audit step**, inspect files before changing them
+- A **schema harmonisation step**, standardise column names
+- A **date standardisation step**
 - A **missing value strategy**
 - An **output verification step**
 
@@ -285,9 +285,9 @@ Have you seen an AI make a confident mistake? In your research, what signs indic
 
 ## Challenge: The prompt refinement loop
 
-Practice the CLEAR framework to visualize the relationship between "Date" and "Score" in a dataset.
+Practise the CLEAR framework to visualise the relationship between "Date" and "Score" in a dataset.
 
-1.  **Start with a vague prompt** — type this inside your Claude Code session:
+1.  **Start with a vague prompt**, type this inside your Claude Code session:
     ```
     Create a plot of the data I just made.
     ```
@@ -320,7 +320,7 @@ Using the 'master_dataset.csv' file, create a Python script to generate a scatte
 
 Test the AI as a verifier principle. Ask the AI to find flaws in its code before you run it.
 
-1.  **Generate a script** — type this prompt inside your Claude Code session:
+1.  **Generate a script**, type this prompt inside your Claude Code session:
     ```
     Write a Python script that reads 'data.csv' and calculates the rolling 7-day average of a 'score' column. Handle missing values.
     ```

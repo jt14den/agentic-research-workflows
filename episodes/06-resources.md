@@ -1,5 +1,5 @@
 ---
-title: "Resources and next steps"
+title: "Resources and Next Steps"
 teaching: 10
 exercises: 10
 ---
@@ -27,11 +27,11 @@ The ecosystem of AI tools for research is expanding. For coding, tools like Clau
 
 Some researchers use AI-native code editors like Cursor to interact with an entire repository. Models like Claude, Gemini, and DeepSeek-V3/R1 have increased the speed of these interactions.
 
-Research-specific tools are also emerging. Elicit and Consensus focus on scientific paper discovery and evidence-based claims. Google's NotebookLM allows you to ground an AI's knowledge in your own collection of research PDFs for summarizing and querying documents.
+Research-specific tools are also emerging. Elicit and Consensus focus on scientific paper discovery and evidence-based claims. Google's NotebookLM allows you to ground an AI's knowledge in your own collection of research PDFs for summarising and querying documents.
 
 ## Extending capabilities
 
-AI tools can now connect with other software. Many browser-based models offer extensions for Google Drive, WolframAlpha, and other services. The Model Context Protocol (MCP) is an open standard that allows AI assistants to connect to local or remote data sources—such as a PostgreSQL database or your local file system—without requiring you to upload data to a central server. In December 2025, Anthropic donated MCP to the Agentic AI Foundation under the Linux Foundation. The 2026 MCP roadmap (published March 2026) focuses on enterprise authentication, audit trails, and agent-to-agent communication.
+AI tools can now connect with other software. Many browser-based models offer extensions for Google Drive, WolframAlpha, and other services. The Model Context Protocol (MCP) is an open standard that allows AI assistants to connect to local or remote data sources, such as a PostgreSQL database or your local file system, without requiring you to upload data to a central server. In December 2025, Anthropic donated MCP to the Agentic AI Foundation under the Linux Foundation. The 2026 MCP roadmap (published March 2026) focuses on enterprise authentication, audit trails, and agent-to-agent communication.
 
 ::::::::::::::::::::::::::::::::::::::::: caution
 
@@ -60,7 +60,7 @@ Local models offer privacy but require significant hardware (especially GPU VRAM
 ## Advanced trends
 
 ### Automated research discovery
-For time-sensitive research, AI agents can scan social platforms, developer forums, and prediction markets to identify trends before they appear in traditional journals. This "real-time literature mapping" works by prompting the agent to synthesize signal from fast-moving sources alongside traditional ones.
+For time-sensitive research, AI agents can scan social platforms, developer forums, and prediction markets to identify trends before they appear in traditional journals. This "real-time literature mapping" works by prompting the agent to synthesise signal from fast-moving sources alongside traditional ones.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::: callout
 
@@ -72,7 +72,7 @@ Use a prompt like this with any AI assistant that has web search access:
 1. **Discovery**: Identify the top 3 tools or methodologies mentioned.
 2. **Sentiment**: Quote the most upvoted critique for each.
 3. **Verification**: Cross-reference these with web sources for real-world impact.
-4. **Validation**: Apply 'Layer 4: Domain Plausibility'—identify one trend that sounds plausible but may be an AI-generated 'vibe' without empirical backing."
+4. **Validation**: Apply 'Layer 4: Domain Plausibility', identify one trend that sounds plausible but may be an AI-generated 'vibe' without empirical backing."
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -98,7 +98,7 @@ This is where the **external brain** from Episode 1 pays off. A running notes or
 With long-context models, it is easy to include unnecessary files in prompts, which increases costs.
 
 - **Monitor tokens:** Check your API usage dashboard.
-- **Optimize context:** Only include the files needed for the current task.
+- **Optimise context:** Only include the files needed for the current task.
 
 ## Citing and crediting AI
 
@@ -174,7 +174,7 @@ Before adopting a new tool, consider these points:
 Follow sources that focus on the practical and ethical aspects of AI in research:
 
 *   **[Simon Willison’s Weblog](https://simonwillison.net/):** Focuses on AI engineering and security risks.
-*   **[Ethan Mollick’s "One Useful Thing"](https://www.oneusefulthing.org/):** Analyzes how AI impacts cognitive labor.
+*   **[Ethan Mollick’s "One Useful Thing"](https://www.oneusefulthing.org/):** Analyses how AI impacts cognitive labour.
 *   **[Hamel Husain’s Blog](https://hamel.dev/):** Focuses on systematic evaluation of AI performance.
 *   **[Import AI](https://importai.net/) (Jack Clark):** Covers technical breakthroughs and policy.
 *   **[The Batch](https://www.deeplearning.ai/the-batch/):** Balanced coverage of AI in industry and science.

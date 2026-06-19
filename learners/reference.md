@@ -23,7 +23,7 @@ Chain of Thought
 : A prompting technique that encourages the AI to explain its reasoning step-by-step. Reasoning models (like o1 or R1) have this capability built-in.
 
 CLEAR Framework
-: A prompt engineering model (Concise, Logical, Explicit, Adaptive, Reflective) developed by Leo Lo to optimize AI interactions.
+: A prompt engineering model (Concise, Logical, Explicit, Adaptive, Reflective) developed by Leo Lo to optimise AI interactions.
 
 CLI (Command Line Interface)
 : A text-based interface for interacting with your computer's operating system. Essential for giving AI agents direct access to the file system.

@@ -1,5 +1,5 @@
 ---
-title: "Before We Use AI: What Are We Practicing?"
+title: "Before We Use AI: What Are We Practising?"
 teaching: 15
 exercises: 10
 ---
@@ -16,7 +16,7 @@ exercises: 10
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- What are we actually practicing in this lesson?
+- What are we actually practising in this lesson?
 - When does an AI coding tool help me learn, and when does it get in the way?
 - How do I decide whether to trust a result the AI gave me?
 
@@ -26,7 +26,7 @@ exercises: 10
 
 It is tempting to treat an AI coding agent as a machine that turns a sentence into a finished script. You type "clean this data," code appears, it runs, and you move on.
 
-This lesson is about the opposite skill. The point is to learn how to **inspect, question, constrain, and validate** AI-generated code so that the result is trustworthy enough for research. Throughout the lesson you will be asked to explain what the AI did, not just run what it produced.
+This lesson is about the opposite skill. The point is to learn how to **inspect, question, constrain, and validate** AI-generated code so that the result is trustworthy enough for research. Throughout the lesson you will be asked to explain what the AI did, not only run what it produced.
 
 Three things are easy to confuse:
 
@@ -69,7 +69,7 @@ Signs to watch for across the whole workshop:
 - Learners who accept output they cannot explain because "it ran."
 - Learners who turn to the AI before turning to a helper, which hides where they are stuck.
 
-Normalise bringing AI confusion back into the room. Treat confusing AI output as a shared teaching artifact, not a personal failure.
+Normalise bringing AI confusion back into the room. Treat confusing AI output as a shared teaching artefact, not a personal failure.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

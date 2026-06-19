@@ -4,10 +4,10 @@ title: "Instructor Notes"
 
 ## Teaching Philosophy: The Researcher Stays the Active Reviewer
 
-This lesson helps researchers work with AI coding agents without handing off the thinking. The shift is from writing every line of syntax toward reading, questioning, and validating code the agent produced. Resist framing this as "the AI does the work and you orchestrate" — the episodes deliberately push back on that. The core challenge for learners isn't syntax; it's managing **cognitive load** and staying the **active reviewer** who can explain and judge the result.
+This lesson helps researchers work with AI coding agents without handing off the thinking. The shift is from writing every line of syntax towards reading, questioning, and validating code the agent produced. Resist framing this as "the AI does the work and you orchestrate", the episodes deliberately push back on that. The core challenge for learners isn't syntax; it's managing **cognitive load** and staying the **active reviewer** who can explain and judge the result.
 
 ### Key Concepts to Emphasize:
-- **Verification Load:** It is often harder to *verify* code you didn't write than to write it yourself. Normalize this "friction" as a sign of high-quality research.
+- **Verification Load:** It is often harder to *verify* code you didn't write than to write it yourself. Normalise this "friction" as a sign of high-quality research.
 - **Evidence Mantra:** "I do not approve changes; I approve evidence." This should be the recurring theme of the workshop.
 - **Sandboxing:** Always emphasize the security implications of giving an AI direct access to the filesystem.
 
@@ -15,13 +15,13 @@ This lesson helps researchers work with AI coding agents without handing off the
 
 ## Episode: Before We Use AI (opening)
 - **Purpose:** Reset expectations before anyone opens a terminal. Some learners arrive expecting a speed demo; this episode says plainly that the workshop measures whether they can *explain and validate* AI output.
-- **Set the norm:** Make it safe to say "I don't understand this line." Treat confusing AI output as a shared teaching artifact, not a personal failure.
+- **Set the norm:** Make it safe to say "I don't understand this line." Treat confusing AI output as a shared teaching artefact, not a personal failure.
 - **The run / revise / reject checkpoint** introduced here is reused in every later episode. Refer back to it by name.
 - **Sticky-note opener:** Collect what learners want from AI and what they fear it will get wrong. Revisit at the end.
 
 ## Episode 1: Understanding CLI-Based AI
 - **Auth Check:** Ask learners to run `claude --version`. If it returns a version number they are ready. If not, have them launch `claude` once and complete sign-in before continuing.
-- **Model Check:** Have all learners set the same model with `/model` (e.g. `claude-sonnet-4-6`) before starting, so outputs are comparable and provenance records are meaningful.
+- **Model Check:** Have all learners set the same model with `/model` (e.g., `claude-sonnet-4-6`) before starting, so outputs are comparable and provenance records are meaningful.
 - **Starter folder:** No pre-built repo is required. Learners create an empty `agentic-research-project` folder in setup, and the practice data is generated in Episode 3 (`make_messy_data.py`). If you prefer a real dataset over synthetic data, a ready-made one ships at `learners/files/coastal-water-quality/` (three inconsistent site CSVs with the same kinds of issues); point learners at it instead of generating data.
 - **The Browser vs. CLI distinction:** Use the analogy of a "consultant" (Browser) vs. a "research assistant with keys to the lab" (CLI).
 - **Discussion:** The prompt about "ChatGPT writing code that looks correct but fails" is a great way to bond over shared frustration and set the stage for why we need the CLI (to run and test immediately).
@@ -34,7 +34,7 @@ This lesson helps researchers work with AI coding agents without handing off the
 ## Episode 3: Data Cleaning (Live Demo)
 - **High Intensity:** This is the most technically demanding episode. 
 - **The "Safety Net":** If a learner's AI fails to generate working code after two attempts, have them copy the pre-written script from `instructors/files/backup_clean_and_merge.py`. This prevents them from falling behind.
-- **Stop and Read:** Literally tell the class to "hands off keyboards" for 2 minutes to read the generated script before they run it.
+- **Stop and Read:** Literally tell the class to "hands off keyboards" for two minutes to read the generated script before they run it.
 
 ## Episode 4: Validation Best Practices
 - **Four-Layer Validation Stack** (match the episode exactly):
@@ -83,7 +83,7 @@ Run through this before teaching a pilot or merging substantial changes. It enco
 
 ### Feedback loop
 - [ ] Each episode has at least one pause-and-report checkpoint (sticky note / Etherpad / think-aloud).
-- [ ] Checkpoints surface where learners are confused, not just whether code ran.
+- [ ] Checkpoints surface where learners are confused, not only whether code ran.
 
 ### Validation and reproducibility
 - [ ] Exercises validate with concrete checks (counts, invariants, tests), not "it ran."
@@ -113,4 +113,4 @@ Use the output two ways: confirm the tool names and claims in Episodes 5-6 are s
 
 - **The lesson now uses Claude Code (Anthropic).** Learners run it on one of two backends: a personal Pro/Max plan or API key for non-sensitive (P1-P3) work, or **UCLA Amazon Bedrock** (Anthropic models) for sensitive (P3/P4) research data. The same commands work on both; only the backend changes. Confirm Bedrock access and data-tier approval with the learner's unit before using real sensitive data. See `learners/setup.md`.
 - **Historical note (why we migrated):** Google retired the free/consumer Gemini CLI on June 18, 2026 (folded into the paid Antigravity platform), which broke the lesson's original tooling. Paid Gemini Code Assist Standard/Enterprise and API-key access continued, but the free `gemini` command did not.
-- As of June 2026, the most common research-capable CLI agents are Claude Code (Anthropic), Codex CLI (OpenAI), Antigravity CLI (Google), Cursor Agent, and open-source OpenCode/Aider. The lesson's principles (Living Spec, plan-first, validation stack, provenance) transfer across all of them — see the `agentic-research/cli-agent-landscape` wiki note.
+- As of June 2026, the most common research-capable CLI agents are Claude Code (Anthropic), Codex CLI (OpenAI), Antigravity CLI (Google), Cursor Agent, and open-source OpenCode/Aider. The lesson's principles (Living Spec, plan-first, validation stack, provenance) transfer across all of them, see the `agentic-research/cli-agent-landscape` wiki note.

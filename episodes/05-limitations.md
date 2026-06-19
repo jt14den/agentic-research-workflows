@@ -1,5 +1,5 @@
 ---
-title: "Limitations and cautions"
+title: "Limitations and Cautions"
 teaching: 15
 exercises: 10
 ---
@@ -8,7 +8,7 @@ exercises: 10
 
 ## Objectives
 
-- Recognize high-risk scenarios for AI use.
+- Recognise high-risk scenarios for AI use.
 - Identify hallucinated or outdated code.
 - Distinguish between open and proprietary models.
 
@@ -31,9 +31,9 @@ AI capability is inconsistent. A model may solve a complex differential equation
 
 ## When not to trust AI code
 
-Using AI-generated code can introduce risks to research integrity. Security-critical tasks—like authentication, encryption, or handling sensitive data—require expert oversight.
+Using AI-generated code can introduce risks to research integrity. Security-critical tasks, like authentication, encryption, or handling sensitive data, require expert oversight.
 
-AI may also fail when research involves new statistical methods or domain-specific details. Models synthesize information from training data, which might not include the latest breakthroughs or specific sensor patterns. In performance-critical code, AI often prioritizes common algorithms over the most efficient ones, which can cause bottlenecks in large-scale processing.
+AI may also fail when research involves new statistical methods or domain-specific details. Models synthesise information from training data, which might not include the latest breakthroughs or specific sensor patterns. In performance-critical code, AI often prioritises common algorithms over the most efficient ones, which can cause bottlenecks in large-scale processing.
 
 ::::::::::::::::::::::::::::::::::::::::: callout
 
@@ -96,14 +96,14 @@ Semantic drift occurs when an agent makes a change that alters data assumptions 
 Data centers consume large amounts of electricity and water. Frequent, iterative prompting can be resource-intensive.
 
 *   **Energy use:** Every AI query requires complex calculations. Some estimates suggest a single generative AI query uses significantly more energy than a standard web search.
-*   **Code efficiency:** AI models often prioritize working code over efficient code. Inefficient software uses more energy and resources over time.
+*   **Code efficiency:** AI models often prioritise working code over efficient code. Inefficient software uses more energy and resources over time.
 
 ### Sustainable practices
 
 To code responsibly:
 
 1.  **Think before prompting:** Use the CLEAR framework to get the right answer in fewer attempts.
-2.  **Request optimization:** Prompt the AI to optimize for memory or speed once the logic is correct.
+2.  **Request optimisation:** Prompt the AI to optimise for memory or speed once the logic is correct.
 3.  **Use documentation:** If you need simple syntax, check the documentation instead of querying an LLM.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -133,7 +133,7 @@ Note whether the model admits it does not know, hedges with uncertainty, or conf
 
 ## Discussion
 
-Current models (Claude, GPT-4o, Gemini) are significantly better at refusing or flagging uncertainty than earlier generations — you may get a clean "this doesn't exist" response. That is the correct behavior. The lesson here is not that hallucination always happens, but that you cannot assume it won't: always verify suggested libraries and functions exist before using them. Older or smaller models are still more likely to confabulate.
+Current models (Claude, GPT-4o, Gemini) are significantly better at refusing or flagging uncertainty than earlier generations, you may get a clean "this doesn't exist" response. That is the correct behaviour. The lesson here is not that hallucination always happens, but that you cannot assume it won't: always verify suggested libraries and functions exist before using them. Older or smaller models are still more likely to confabulate.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -153,7 +153,7 @@ Use proprietary models for prototyping and cleaning, but archive the generated c
 
 ## Key lesson
 
-AI can generate code, but it does not take on your expertise or your responsibility. Your work shifts toward understanding, questioning, and verifying the code the AI produces. The accountability for the result stays with you.
+AI can generate code, but it does not take on your expertise or your responsibility. Your work shifts towards understanding, questioning, and verifying the code the AI produces. The accountability for the result stays with you.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

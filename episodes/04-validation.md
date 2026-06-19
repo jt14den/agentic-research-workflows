@@ -1,5 +1,5 @@
 ---
-title: "Validation strategies: the approval gate"
+title: "Validation Strategies: The Approval Gate"
 teaching: 30
 exercises: 20
 ---
@@ -69,12 +69,12 @@ Afterward, discuss as a group: what one change to the prompt, spec, or validatio
 
 ## The four-layer validation stack
 
-To minimize rewrite time and ensure research rigor, use a structured validation stack.
+To minimise rewrite time and ensure research rigor, use a structured validation stack.
 
 ### Layer 1: Requirement constraints (No-Go Zones)
 Before the AI writes code, define requirement constraints in your `CLAUDE.md`. These are rules the AI is not allowed to break.
 
-*Example:* "Do not change the column names in `raw_data.csv`" or "Use only base R for this visualization to ensure compatibility."
+*Example:* "Do not change the column names in `raw_data.csv`" or "Use only base R for this visualisation to ensure compatibility."
 
 ### Layer 2: Automated unit tests
 Ask the agent to write tests before the implementation. Use a prompt pattern like: "First, write five Pytest cases that define the success of this data cleaning script. I will approve the tests before you write the logic."
@@ -149,7 +149,7 @@ Take a script you (or a partner) generated earlier and walk through the approval
 
 ## What a good answer looks like
 
-A strong answer names the output precisely, points to *specific* checks as evidence (row counts, invariant checks, a test that passed), and is honest about gaps ("I have not checked the date parsing on the 2019 files"). The domain-assumption answer is the hardest and the most important: it is where you show you are judging the science, not just the code. "Approve" is only justified when the evidence covers the claim; otherwise the honest answer is "revise."
+A strong answer names the output precisely, points to *specific* checks as evidence (row counts, invariant checks, a test that passed), and is honest about gaps ("I have not checked the date parsing on the 2019 files"). The domain-assumption answer is the hardest and the most important: it is where you show you are judging the science, not only the code. "Approve" is only justified when the evidence covers the claim; otherwise the honest answer is "revise."
 
 :::::::::::::::::::::::::::::::::::::::::::::::::
 
