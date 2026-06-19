@@ -1,5 +1,5 @@
 ---
-title: "CLI-based AI"
+title: "CLI-Based AI"
 teaching: 15
 exercises: 10
 ---
@@ -41,7 +41,7 @@ If it returns a version number, they are ready. If the command is not found, the
 
 Most researchers use chat-based AI in a browser. These tools are good for brainstorming but run in an isolated sandbox. They cannot see your files, run your code, or understand your project structure without manual uploads.
 
-A CLI (Command Line Interface) agent runs in your terminal — the same place you run Python scripts or navigate your filesystem with `ls` and `cd` — and has access to three things a browser tool does not.
+A CLI (Command Line Interface) agent runs in your terminal, the same place you run Python scripts or navigate your filesystem with `ls` and `cd`, and has access to three things a browser tool does not.
 
 **Your files and data.** The agent can read your actual datasets, inspect your directory structure, and write scripts directly to disk. You are not copying and pasting between a chat window and a code editor. The agent works in your project the way a collaborator sitting at your machine would.
 
@@ -55,9 +55,9 @@ Before you trust any AI tool, the first question is always: *what can it see, an
 
 | Tool type | What context it has | What it can do | What can go wrong | What a novice should verify |
 |---|---|---|---|---|
-| **Chatbot** (browser, e.g. ChatGPT, Gemini web) | Only what you paste in | Suggests code and text | No view of your real files; guesses at structure; you copy code by hand | That the code matches your *actual* columns and files, not the example it imagined |
-| **IDE assistant** (e.g. Copilot in VS Code) | The file you have open, sometimes nearby files | Suggests and inserts code inline | Sees only part of the project; may complete code that fits the line but not the goal | That the suggestion does what you intended, not just what looks plausible |
-| **CLI agent** (e.g. Claude Code, Codex CLI) | Your project directory: files, data, structure | Reads files, runs code, writes scripts to disk | Can edit or delete real files; can act on a misread of your data | What files it read, what it changed, and what it ran, before you approve |
+| **Chatbot** (browser, e.g., ChatGPT, Gemini web) | Only what you paste in | Suggests code and text | No view of your real files; guesses at structure; you copy code by hand | That the code matches your *actual* columns and files, not the example it imagined |
+| **IDE assistant** (e.g., Copilot in VS Code) | The file you have open, sometimes nearby files | Suggests and inserts code inline | Sees only part of the project; may complete code that fits the line but not the goal | That the suggestion does what you intended, not only what looks plausible |
+| **CLI agent** (e.g., Claude Code, Codex CLI) | Your project directory: files, data, structure | Reads files, runs code, writes scripts to disk | Can edit or delete real files; can act on a misread of your data | What files it read, what it changed, and what it ran, before you approve |
 | **Fully agentic workflow** (multi-step, runs tools on its own) | Whatever you grant, across many steps | Plans and executes a chain of actions with little input | Errors compound across steps; hard to see where it went wrong | That you can still explain each step and reproduce the result |
 
 As you move down the table, the tool can do more for you and more *to* you. Nothing in this table removes your responsibility to understand the result.
@@ -93,7 +93,7 @@ For the terminal workflow in this lesson, think in two paths:
 
 People sometimes describe this shift as moving from "writer" to "orchestrator," as if the AI now does the work and you just conduct. That framing is misleading, and for a learner it is risky.
 
-A more honest version: **AI may reduce the need to recall every detail of syntax, but it increases the need to understand intent, dependencies, assumptions, tests, and failure modes.** You are not handing off the thinking. You are moving the work from typing toward reading, questioning, and judging. That is harder to do well, not easier.
+A more honest version: **AI may reduce the need to recall every detail of syntax, but it increases the need to understand intent, dependencies, assumptions, tests, and failure modes.** You are not handing off the thinking. You are moving the work from typing towards reading, questioning, and judging. That is harder to do well, not easier.
 
 You guide the agent using a **Living Spec**, and then you review what it produces against that spec. The diagram below shows the loop: you define the goal, the agent proposes a plan, *you* approve before any code is written, and *you* verify the result before it counts as done.
 
@@ -116,7 +116,7 @@ graph TD
 
 ## Discussion prompt
 Ask learners: "Have you ever used ChatGPT to write code that looked correct but failed when you ran it?"
-This is a good time to introduce the concept of orchestration. The goal is not just to "fix" code, but to ensure the AI's *intent* (the spec) is correct.
+This is a good time to introduce the concept of orchestration. The goal is not only to "fix" code, but to ensure the AI's *intent* (the spec) is correct.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -146,7 +146,7 @@ Always consider that your tools can have unintended consequences. Ensure files a
 
 ### Long context
 
-Like humans, we only have a certain amount of working memory and LLMs operate in similar fashion. This is called the **context window** in LLM tools. Current models like Claude have long context windows (hundreds of thousands of tokens, up to a million in some configurations). You can provide the AI with your entire project folder—scripts, documentation, and small datasets—at once.
+Like humans, we only have a certain amount of working memory, and large language models (LLMs) operate in a similar way. This is called the **context window** in LLM tools. Current models like Claude have long context windows (hundreds of thousands of tokens, up to a million in some configurations). You can provide the AI with your entire project folder, scripts, documentation, and small datasets, at once.
 
 This allows you to describe the desired state of your project, and the agent coordinates changes across multiple files. In a research context, this is declarative programming with AI agents.
 
@@ -154,7 +154,7 @@ This allows you to describe the desired state of your project, and the agent coo
 
 ## A large context window is not a free pass
 
-The more you load into a session, the more the model has to track. Beyond a certain point, quality degrades — the model may lose track of earlier instructions, produce inconsistent output, or fixate on the wrong files. This is sometimes called context poisoning.
+The more you load into a session, the more the model has to track. Beyond a certain point, quality degrades, the model may lose track of earlier instructions, produce inconsistent output, or fixate on the wrong files. This is sometimes called context poisoning.
 
 A large context window makes this easier to run into, not harder. Managing what goes into your context is part of the workflow, not an afterthought.
 
@@ -192,7 +192,7 @@ We have a project folder that we want to start a project in, let's initialize it
 
 ## Working directory matters
 
-Always start Claude Code from inside your project folder. The agent uses the current directory to find your files and spec. Starting from the wrong folder — such as your home directory — is one of the most common sources of confusion in a workshop.
+Always start Claude Code from inside your project folder. The agent uses the current directory to find your files and spec. Starting from the wrong folder, such as your home directory, is one of the most common sources of confusion in a workshop.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -204,7 +204,7 @@ Claude Code includes an `/init` command that creates a `CLAUDE.md` file describi
 ```bash
 claude
 ```
-You are now inside a Claude Code session. Type `/` to see the available slash commands and page through the full list. Notice `/init` — this is the command that will initialize our project. Let's run it:
+You are now inside a Claude Code session. Type `/` to see the available slash commands and page through the full list. Notice `/init`, this is the command that will initialize our project. Let's run it:
 
 ```bash
 /init
@@ -248,11 +248,11 @@ constraints, and rules.
 
 A few things to notice. Claude Code scanned the directory and described what it found. Because the folder was nearly empty, it does not have much to say yet.
 Once you add data files, scripts, and documentation, running `/init` again will produce a richer spec that reflects your actual project.
-This is also something you will want to edit by hand — add your goals, constraints, and any rules you want the agent to follow.
+This is also something you will want to edit by hand, add your goals, constraints, and any rules you want the agent to follow.
 
 ## The Living Spec
 
-To get the most out of a CLI agent, provide it with persistent context about your project. This acts as a "Living Spec"—a set of rules 
+To get the most out of a CLI agent, provide it with persistent context about your project. This acts as a "Living Spec", a set of rules 
 and goals the agent must follow across every session.
 
 Every major CLI tool has its own **native** spec file that it loads automatically when you start a session:
@@ -263,7 +263,7 @@ Every major CLI tool has its own **native** spec file that it loads automaticall
 | OpenAI Codex | `AGENTS.md` | Yes |
 | Cursor | `.cursorrules` | Yes |
 
-You can also use a **portable** spec file—`AGENTS.md` is a common convention—that you explicitly reference in any prompt: `"Read AGENTS.md and then..."`. It is not auto-loaded by any single tool, but it travels with your project if you switch tools. AGENTS.md was standardized in 2025 by the Agentic AI Foundation under the Linux Foundation — co-founded by Anthropic, OpenAI, and Block — making it the emerging cross-tool portable spec format.
+You can also use a **portable** spec file, `AGENTS.md` is a common convention, that you explicitly reference in any prompt: `"Read AGENTS.md and then..."`. It is not auto-loaded by any single tool, but it travels with your project if you switch tools. AGENTS.md was standardised in 2025 by the Agentic AI Foundation under the Linux Foundation, co-founded by Anthropic, OpenAI, and Block, making it the emerging cross-tool portable spec format.
 
 ### What to include in your spec file
 
@@ -301,7 +301,7 @@ Inside your Claude Code session, run `/init` to create a `CLAUDE.md` file. Then 
 # Project: Arctic Sea Ice Analysis
 
 ## Goal
-To analyze trends in sea ice extent from 1980-2020.
+To analyse trends in sea ice extent from 1980-2020.
 
 ## Rules of the Road
 - **Hard Constraint**: Only use the `xarray` library for spatial data processing.

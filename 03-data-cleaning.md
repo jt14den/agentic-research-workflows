@@ -1,5 +1,5 @@
 ---
-title: "Data cleaning with AI"
+title: "Data Cleaning with AI"
 teaching: 30
 exercises: 20
 ---
@@ -17,8 +17,8 @@ exercises: 20
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- Can I trust AI to standardize inconsistent files?
-- How do I check that a cleaning script did what I needed, not just what the AI assumed?
+- Can I trust AI to standardise inconsistent files?
+- How do I check that a cleaning script did what I needed, not only what the AI assumed?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -53,11 +53,11 @@ Run Python scripts in a separate terminal window when instructed.
 
 ## Cleaning messy data
 
-Cleaning and merging inconsistent files is a common bottleneck in research. We will use Claude Code to standardize messy CSV files.
+Cleaning and merging inconsistent files is a common bottleneck in research. We will use Claude Code to standardise messy CSV files.
 
 ### Generating test data
 
-To practice cleaning, we need a dataset with inconsistencies. We can use AI to simulate a multi-site study where each location used different naming conventions or date formats. Run this command to generate three files: `site_A.csv`, `site_B.csv`, and `site_C.csv`.
+To practise cleaning, we need a dataset with inconsistencies. We can use AI to simulate a multi-site study where each location used different naming conventions or date formats. Run this command to generate three files: `site_A.csv`, `site_B.csv`, and `site_C.csv`.
 
 ```
 Create a python script named 'make_messy_data.py'. It should generate 3 CSV files ('site_A.csv', 'site_B.csv', 'site_C.csv') with 50 rows each. Columns should include 'ID', 'Date', and 'Score', but make them inconsistent (e.g., 'ParticipantID' vs 'id', 'date' vs 'Date_Time'). Add some missing values and varied date formats (like '2023/01/05' vs 'Jan 5, 2023').
@@ -84,7 +84,7 @@ If your data files are extremely inconsistent, reasoning models (like o1 or Deep
 
 ## Cleaning with AI, one checkpoint at a time
 
-It is tempting to type "clean and merge these files" and run whatever comes back. Resist that. We will work the same task as a sequence of checkpoints so that you can explain and validate the result, not just produce one. This is the pattern you will reuse for the rest of the lesson: **predict, prompt for a plan, inspect, modify, validate, reflect.**
+It is tempting to type "clean and merge these files" and run whatever comes back. Resist that. We will work the same task as a sequence of checkpoints so that you can explain and validate the result, not only produce one. This is the pattern you will reuse for the rest of the lesson: **predict, prompt for a plan, inspect, modify, validate, reflect.**
 
 ### A. Predict before you prompt
 
@@ -227,7 +227,7 @@ To ensure research is reproducible, track which model generated your code and wh
 ## Example command
 
 ```
-Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the model name 'Claude Sonnet 4.6', today's date, and a summary of the prompt: 'Standardize site IDs, format dates, and impute missing scores with site medians.'
+Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the model name 'Claude Sonnet 4.6', today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'
 ```
 
 ### Reflection
