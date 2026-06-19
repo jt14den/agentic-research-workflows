@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<title>Agentic Research Workflows: Orchestrating AI and Validation: Instructor Notes</title>
+<title>Agentic Research Workflows: AI Coding, Validation, and Research Responsibility: Instructor Notes</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="assets/themetoggle.js"></script><link rel="stylesheet" type="text/css" href="assets/styles.css">
 <script src="assets/scripts.js" type="text/javascript"></script><!-- mathjax --><!-- NOTE: https://docs.mathjax.org/en/latest/output/mathml.html#mathml-support --><!-- Changes from V2 to V4: https://mathjax.github.io/MathJax-demos-web/convert-configuration/convert-configuration.html
@@ -99,7 +99,7 @@
       <img class="small-logo" alt="A lesson on AI-assisted programming and validation best practices." src="assets/images/incubator-logo-sm.svg">
 </div>
     <div class="lesson-title-md">
-      Agentic Research Workflows: Orchestrating AI and Validation
+      Agentic Research Workflows: AI Coding, Validation, and Research Responsibility
     </div>
     <div class="search-icon-sm">
       <!-- TODO: do not show until we have search
@@ -110,7 +110,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 <li class="nav-item">
           <span class="lesson-title">
-            Agentic Research Workflows: Orchestrating AI and Validation
+            Agentic Research Workflows: AI Coding, Validation, and Research Responsibility
           </span>
         </li>
         <li class="nav-item">
@@ -224,7 +224,7 @@
                   <div class="accordion accordion-flush" id="accordionFlush1">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading1">
-        <a href="index.html">Agentic Research Workflows: AI and Validation</a>
+        <a href="index.html">Agentic Research Workflows: AI Coding, Validation, and Research Responsibility</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -236,7 +236,7 @@
 <div class="accordion accordion-flush" id="accordionFlush2">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading2">
-        <a href="01-cli-intro.html">1. CLI-based AI</a>
+        <a href="00-before-ai.html">1. Before We Use AI: What Are We Practicing?</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -248,7 +248,7 @@
 <div class="accordion accordion-flush" id="accordionFlush3">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading3">
-        <a href="02-prompts.html">2. Best practices for prompting</a>
+        <a href="01-cli-intro.html">2. CLI-based AI</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -260,7 +260,7 @@
 <div class="accordion accordion-flush" id="accordionFlush4">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading4">
-        <a href="03-data-cleaning.html">3. Data cleaning with AI</a>
+        <a href="02-prompts.html">3. Best practices for prompting</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -272,7 +272,7 @@
 <div class="accordion accordion-flush" id="accordionFlush5">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading5">
-        <a href="04-validation.html">4. Validation strategies: the approval gate</a>
+        <a href="03-data-cleaning.html">4. Data cleaning with AI</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -284,7 +284,7 @@
 <div class="accordion accordion-flush" id="accordionFlush6">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading6">
-        <a href="05-limitations.html">5. Limitations and cautions</a>
+        <a href="04-validation.html">5. Validation strategies: the approval gate</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -296,7 +296,19 @@
 <div class="accordion accordion-flush" id="accordionFlush7">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading7">
-        <a href="06-resources.html">6. Resources and next steps</a>
+        <a href="05-limitations.html">6. Limitations and cautions</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush8">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading8">
+        <a href="06-resources.html">7. Resources and next steps</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -360,15 +372,17 @@
         <h1>Instructor Notes</h1>
         
 
-<section><h2 class="section-heading" id="teaching-philosophy-the-shift-from-writer-to-editor">Teaching Philosophy: The Shift from Writer to Editor<a class="anchor" aria-label="anchor" href="#teaching-philosophy-the-shift-from-writer-to-editor"></a>
+<section><h2 class="section-heading" id="teaching-philosophy-the-researcher-stays-the-active-reviewer">Teaching Philosophy: The Researcher Stays the Active Reviewer<a class="anchor" aria-label="anchor" href="#teaching-philosophy-the-researcher-stays-the-active-reviewer"></a>
 </h2>
 <hr class="half-width">
-<p>This lesson is designed to help researchers navigate the transition
-from <strong>imperative coding</strong> (writing every line) to
-<strong>agentic orchestration</strong> (guiding an AI to write code and
-then validating it). The core challenge for learners isn’t learning
-syntax—it’s managing <strong>Cognitive Load</strong> and maintaining a
-rigorous <strong>Editor’s Mindset</strong>.</p>
+<p>This lesson helps researchers work with AI coding agents without
+handing off the thinking. The shift is from writing every line of syntax
+toward reading, questioning, and validating code the agent produced.
+Resist framing this as “the AI does the work and you orchestrate” — the
+episodes deliberately push back on that. The core challenge for learners
+isn’t syntax; it’s managing <strong>cognitive load</strong> and staying
+the <strong>active reviewer</strong> who can explain and judge the
+result.</p>
 <div class="section level3">
 <h3 id="key-concepts-to-emphasize">Key Concepts to Emphasize:<a class="anchor" aria-label="anchor" href="#key-concepts-to-emphasize"></a>
 </h3>
@@ -387,18 +401,40 @@ implications of giving an AI direct access to the filesystem.</li>
 </ul>
 <hr>
 </div>
-</section><section><h2 class="section-heading" id="episode-1-understanding-cli-based-ai">Episode 1: Understanding CLI-Based AI<a class="anchor" aria-label="anchor" href="#episode-1-understanding-cli-based-ai"></a>
+</section><section><h2 class="section-heading" id="episode-before-we-use-ai-opening">Episode: Before We Use AI (opening)<a class="anchor" aria-label="anchor" href="#episode-before-we-use-ai-opening"></a>
+</h2>
+<hr class="half-width">
+<ul>
+<li>
+<strong>Purpose:</strong> Reset expectations before anyone opens a
+terminal. Some learners arrive expecting a speed demo; this episode says
+plainly that the workshop measures whether they can <em>explain and
+validate</em> AI output.</li>
+<li>
+<strong>Set the norm:</strong> Make it safe to say “I don’t
+understand this line.” Treat confusing AI output as a shared teaching
+artifact, not a personal failure.</li>
+<li>
+<strong>The run / revise / reject checkpoint</strong> introduced
+here is reused in every later episode. Refer back to it by name.</li>
+<li>
+<strong>Sticky-note opener:</strong> Collect what learners want from
+AI and what they fear it will get wrong. Revisit at the end.</li>
+</ul></section><section><h2 class="section-heading" id="episode-1-understanding-cli-based-ai">Episode 1: Understanding CLI-Based AI<a class="anchor" aria-label="anchor" href="#episode-1-understanding-cli-based-ai"></a>
 </h2>
 <hr class="half-width">
 <ul>
 <li>
 <strong>Auth Check:</strong> Ask learners to run
-<code>gemini --version</code>. If it returns a version number they are
-ready. If not, have them run <code>gemini auth login</code> and sign in
-with a Google account before continuing.
-<!-- TODO: Add a model check here once pinning to gemini-2.5-flash-lite is confirmed.
-   Instructors should verify all learners are on the same model before starting.
-   Also note whether a pre-class starter folder is being distributed and how to
+<code>claude --version</code>. If it returns a version number they are
+ready. If not, have them launch <code>claude</code> once and complete
+sign-in before continuing.</li>
+<li>
+<strong>Model Check:</strong> Have all learners set the same model
+with <code>/model</code> (e.g. <code>claude-sonnet-4-6</code>) before
+starting, so outputs are comparable and provenance records are
+meaningful.
+<!-- TODO: Note whether a pre-class starter folder is being distributed and how to
    confirm learners have it correctly set up. -->
 </li>
 <li>
@@ -446,11 +482,17 @@ run it.</li>
 <hr class="half-width">
 <ul>
 <li>
-<strong>Three-Layer Framework:</strong>
+<strong>Four-Layer Validation Stack</strong> (match the episode
+exactly):
 <ol style="list-style-type: decimal">
-<li>Human Rules (Ground Truth)</li>
-<li>AI Tests (Supervised)</li>
-<li>Metamorphic Tests (Relationships)</li>
+<li>Requirement constraints / No-Go Zones (human-authored ground truth
+in <code>CLAUDE.md</code>)</li>
+<li>Automated unit tests (written and approved before the
+implementation)</li>
+<li>Metamorphic and invariant checks (relationships that must not
+change)</li>
+<li>Domain plausibility (where the researcher’s expertise is
+irreplaceable; do not omit this layer)</li>
 </ol>
 </li>
 <li>
@@ -495,11 +537,13 @@ they wait 60 seconds or use a smaller “context” (don’t send every file
 in the folder).</p>
 </div>
 <div class="section level3">
-<h3 id="gemini-not-found">“Gemini Not Found”<a class="anchor" aria-label="anchor" href="#gemini-not-found"></a>
+<h3 id="claude-command-not-found">“claude: command not found”<a class="anchor" aria-label="anchor" href="#claude-command-not-found"></a>
 </h3>
-<p>Ensure the global npm install worked and that their <code>PATH</code>
-is updated. In Docker, this is handled automatically. On host machines,
-they might need to restart their terminal.</p>
+<p>Ensure the global npm install
+(<code>npm install -g @anthropic-ai/claude-code</code>) worked and that
+their <code>PATH</code> is updated. In Docker, this is handled
+automatically. On host machines, they might need to restart their
+terminal.</p>
 </div>
 <div class="section level3">
 <h3 id="hallucinations">Hallucinations<a class="anchor" aria-label="anchor" href="#hallucinations"></a>
@@ -507,6 +551,121 @@ they might need to restart their terminal.</p>
 <p>If a learner gets a script that imports a non-existent library (e.g.,
 <code>import science_cleaner</code>), use it as a “teachable moment” for
 the whole class about verification.</p>
+<hr>
+</div>
+</section><section><h2 class="section-heading" id="maintainer-checklist">Maintainer checklist<a class="anchor" aria-label="anchor" href="#maintainer-checklist"></a>
+</h2>
+<hr class="half-width">
+<p>Run through this before teaching a pilot or merging substantial
+changes. It encodes the Carpentries guidance on teaching with generative
+AI.</p>
+<div class="section level3">
+<h3 id="cognitive-load">Cognitive load<a class="anchor" aria-label="anchor" href="#cognitive-load"></a>
+</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">No exercise depends on syntax,
+libraries, or abstractions the lesson has not introduced.</label></li>
+<li><label><input type="checkbox">Where generated code is likely to
+over-reach (lambdas, regex, extra files), there is an instructor note
+flagging it.</label></li>
+<li><label><input type="checkbox">Small, interpretable tasks come
+before larger agentic workflows.</label></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="learner-agency">Learner agency<a class="anchor" aria-label="anchor" href="#learner-agency"></a>
+</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">No exercise can be completed by
+pasting the task into an AI and copying the answer.</label></li>
+<li><label><input type="checkbox">Every challenge requires at least
+one of: explain, predict, trace, modify-and-justify, or
+validate.</label></li>
+<li><label><input type="checkbox">Language frames the learner as the
+active reviewer and final judge, not a passive
+orchestrator.</label></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="feedback-loop">Feedback loop<a class="anchor" aria-label="anchor" href="#feedback-loop"></a>
+</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">Each episode has at least one
+pause-and-report checkpoint (sticky note / Etherpad /
+think-aloud).</label></li>
+<li><label><input type="checkbox">Checkpoints surface where learners
+are confused, not just whether code ran.</label></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="validation-and-reproducibility">Validation and reproducibility<a class="anchor" aria-label="anchor" href="#validation-and-reproducibility"></a>
+</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">Exercises validate with concrete
+checks (counts, invariants, tests), not “it ran.”</label></li>
+<li><label><input type="checkbox">Provenance (model, date, prompt) is
+recorded for generated code.</label></li>
+<li><label><input type="checkbox">Rewrite time is framed as a
+formative signal, never as proof AI is faster.</label></li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="privacy-and-security">Privacy and security<a class="anchor" aria-label="anchor" href="#privacy-and-security"></a>
+</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">Sensitive-data and security-critical
+tasks are explicitly flagged as out of scope for AI.</label></li>
+<li><label><input type="checkbox">Institutional vs personal account
+privacy differences are stated where relevant.</label></li>
+</ul>
+<hr>
+</div>
+</section><section><h2 class="section-heading" id="keeping-the-lesson-current">Keeping the lesson current<a class="anchor" aria-label="anchor" href="#keeping-the-lesson-current"></a>
+</h2>
+<hr class="half-width">
+<p>The AI tool landscape moves faster than a Carpentries release cycle.
+The most volatile parts of this lesson are the <strong>tool
+landscape</strong> and <strong>reputable sources</strong> in Episode 6,
+the <strong>failure modes</strong> in Episode 5, and any <strong>named
+model or CLI command</strong> in Episodes 1-4.</p>
+<p>Before each teaching, refresh these by running the
+<code>last30days</code> skill (see
+<code>~/projects/last30days-skill</code>):</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">python3</span> scripts/last30days.py <span class="st">"vibe coding"</span> <span class="at">--include-web</span> <span class="at">--emit</span><span class="op">=</span>md <span class="at">--store</span> <span class="at">--save-dir</span> research</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="ex">python3</span> scripts/last30days.py <span class="st">"AI coding agents"</span> <span class="at">--include-web</span> <span class="at">--emit</span><span class="op">=</span>md <span class="at">--save-dir</span> research</span></code></pre>
+</div>
+<p>Use the output two ways: confirm the tool names and claims in
+Episodes 5-6 are still accurate, and pull one <em>current</em> hype
+example to debunk live in the Episode 6 “Identifying hype” discussion. A
+fresh example beats a canned one.</p>
+<div class="section level3">
+<h3 id="tooling-status-last-checked-2026-06-19">Tooling status (last checked 2026-06-19)<a class="anchor" aria-label="anchor" href="#tooling-status-last-checked-2026-06-19"></a>
+</h3>
+<ul>
+<li>
+<strong>The lesson now uses Claude Code (Anthropic).</strong>
+Learners run it on one of two backends: a personal Pro/Max plan or API
+key for non-sensitive (P1-P3) work, or <strong>UCLA Amazon
+Bedrock</strong> (Anthropic models) for sensitive (P3/P4) research data.
+The same commands work on both; only the backend changes. Confirm
+Bedrock access and data-tier approval with the learner’s unit before
+using real sensitive data. See <code>learners/setup.md</code>.</li>
+<li>
+<strong>Historical note (why we migrated):</strong> Google retired
+the free/consumer Gemini CLI on June 18, 2026 (folded into the paid
+Antigravity platform), which broke the lesson’s original tooling. Paid
+Gemini Code Assist Standard/Enterprise and API-key access continued, but
+the free <code>gemini</code> command did not.</li>
+<li>As of June 2026, the most common research-capable CLI agents are
+Claude Code (Anthropic), Codex CLI (OpenAI), Antigravity CLI (Google),
+Cursor Agent, and open-source OpenCode/Aider. The lesson’s principles
+(Living Spec, plan-first, validation stack, provenance) transfer across
+all of them — see the <code>agentic-research/cli-agent-landscape</code>
+wiki note.</li>
+</ul>
 <!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
@@ -525,13 +684,13 @@ any links that you are not going to use.
         <p>This lesson is subject to the <a href="CODE_OF_CONDUCT.html">Code of Conduct</a></p>
         <p>
 
-        <a href="https://github.com/jt14den/vibe-coding-lesson/edit/main/README.md" class="external-link">Edit on GitHub</a>
+        <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/README.md" class="external-link">Edit on GitHub</a>
 
 	
-        | <a href="https://github.com/jt14den/vibe-coding-lesson/blob/main/CONTRIBUTING.md" class="external-link">Contributing</a>
-        | <a href="https://github.com/jt14den/vibe-coding-lesson/" class="external-link">Source</a></p>
+        | <a href="https://github.com/jt14den/agentic-research-workflows/blob/main/CONTRIBUTING.md" class="external-link">Contributing</a>
+        | <a href="https://github.com/jt14den/agentic-research-workflows/" class="external-link">Source</a></p>
         <p>
-        <a href="https://github.com/jt14den/vibe-coding-lesson/blob/main/" class="external-link">Cite</a>
+        <a href="https://github.com/jt14den/agentic-research-workflows/blob/main/" class="external-link">Cite</a>
         | <a href="mailto:timdennis@g.ucla.edu">Contact</a> | <a href="https://carpentries.org/about/" class="external-link">About</a></p>
 		</div>
 		<div class="col-md-6">
@@ -552,18 +711,18 @@ any links that you are not going to use.
     {
   "@context": "https://schema.org",
   "@type": "LearningResource",
-  "@id": "https://jt14den.github.io/vibe-coding-lesson/instructor-notes.html",
+  "@id": "https://jt14den.github.io/agentic-research-workflows/instructor-notes.html",
   "inLanguage": "en",
   "dct:conformsTo": "https://bioschemas.org/profiles/LearningResource/1.0-RELEASE",
   "description": "A Carpentries Lesson teaching foundational data and coding skills to researchers worldwide",
-  "keywords": "AI, LLM, research, validation, Python, Gemini",
+  "keywords": "AI, LLM, research, validation, Python, Claude Code",
   "name": "Instructor Notes",
   "creativeWorkStatus": "active",
-  "url": "https://jt14den.github.io/vibe-coding-lesson/instructor-notes.html",
-  "identifier": "https://jt14den.github.io/vibe-coding-lesson/instructor-notes.html",
+  "url": "https://jt14den.github.io/agentic-research-workflows/instructor-notes.html",
+  "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor-notes.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-06-16",
-  "datePublished": "2026-06-16"
+  "dateModified": "2026-06-19",
+  "datePublished": "2026-06-19"
 }
 
   </script><script>
