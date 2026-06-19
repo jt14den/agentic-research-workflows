@@ -483,6 +483,23 @@ is what travels across sessions. For example:</p>
 <h3 id="d--generate-the-code">D. Generate the code<a class="anchor" aria-label="anchor" href="#d--generate-the-code"></a></h3>
 <p>Now ask for the script, pointing it at the spec:</p>
 <pre><code>Read 'CLAUDE.md' and the three CSVs in data/. Write a script called 'clean_and_merge.py' that follows the plan and the spec rules. Save the result to data/master_dataset.csv. Add comments linking code steps to spec rules.</code></pre>
+<div id="your-script-will-not-match-the-lessons-and-that-is-fine" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="your-script-will-not-match-the-lessons-and-that-is-fine" class="callout-inner">
+<h3 class="callout-title">Your script will not match the lesson’s, and
+that is fine</h3>
+<div class="callout-content">
+<p>AI output varies, so your <code>clean_and_merge.py</code> will look
+different from your neighbour’s and from any example. That is the point:
+the goal is not to match a reference, it is to read what you got and
+decide whether it is correct. Judge it against your spec and the checks
+below, not against someone else’s code.</p>
+</div>
+</div>
+</div>
 
 </div>
 <div class="section level3">
@@ -497,8 +514,10 @@ you cannot explain.</p>
 </div>
 <div class="section level3">
 <h3 id="f--validate-against-checks-not-vibes">F. Validate against checks, not vibes<a class="anchor" aria-label="anchor" href="#f--validate-against-checks-not-vibes"></a></h3>
-<p>Run <code>python clean_and_merge.py</code>, then confirm the result
-with concrete checks. “It ran” is not one of them.</p>
+<p>Run <code>python clean_and_merge.py</code>. A correct run prints
+something like <code>Wrote data/master_dataset.csv with 60 rows.</code>
+Then confirm the result with concrete checks. “It ran” is not one of
+them.</p>
 <ul><li>
 <strong>Row-count check:</strong> 60 rows (3 sites x 20 samples),
 nothing dropped.</li>
@@ -573,7 +592,7 @@ should have dropped.</li>
   What to expect
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>January has four weekly sampling dates per site (5, 12, 19, 26), so a
 correct filter removes 12 rows, leaving 48. If you get a different
@@ -623,7 +642,7 @@ code and when.</p>
   Example command
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <pre><code>Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the model name 'Claude Sonnet 4.6', today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'</code></pre>
 <div class="section level3">

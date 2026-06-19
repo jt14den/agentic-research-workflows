@@ -494,7 +494,7 @@ moments when they come up.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor note: set the tone early </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>The goal of this episode is to reset expectations before learners
 open a terminal. Some will arrive expecting a productivity demo. Be
@@ -570,7 +570,7 @@ is a valid response)?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <ol style="list-style-type: decimal">
 <li>It reads <code>data.csv</code>, drops every row that has a missing
@@ -1143,10 +1143,10 @@ that it loads automatically when you start a session:</p>
 <code>AGENTS.md</code> is a common convention, that you explicitly
 reference in any prompt: <code>"Read AGENTS.md and then..."</code>. It
 is not auto-loaded by any single tool, but it travels with your project
-if you switch tools. AGENTS.md was standardised in 2025 by the Agentic
-AI Foundation under the Linux Foundation, co-founded by Anthropic,
-OpenAI, and Block, making it the emerging cross-tool portable spec
-format.</p>
+if you switch tools. AGENTS.md, released by OpenAI in 2025 and later
+brought under the Linux Foundation’s Agentic AI Foundation, is emerging
+as a portable convention for giving coding agents project-specific
+instructions.</p>
 <div class="section level3">
 <h3 id="what-to-include-in-your-spec-file">What to include in your spec file<a class="anchor" aria-label="anchor" href="#what-to-include-in-your-spec-file"></a>
 </h3>
@@ -1363,9 +1363,10 @@ asking the AI to verify or test its own work.</p>
 <div id="the-co-star-framework" class="callout-inner">
 <h3 class="callout-title">The CO-STAR framework</h3>
 <div class="callout-content">
-<p>While CLEAR helps with conversation flow, CO-STAR structures complex
-research prompts that eventually become part of your
-<code>CLAUDE.md</code>:</p>
+<p><em>Optional on a first pass. CLEAR (below) is enough to start; reach
+for CO-STAR when a prompt gets complex.</em> While CLEAR helps with
+conversation flow, CO-STAR structures complex research prompts that
+eventually become part of your <code>CLAUDE.md</code>:</p>
 <ul>
 <li>
 <strong>Context</strong>: Provide background (e.g., “I am a
@@ -1643,7 +1644,8 @@ way?”</li>
 <div class="section level3">
 <h3 id="reasoning-models">Reasoning models<a class="anchor" aria-label="anchor" href="#reasoning-models"></a>
 </h3>
-<p>As of 2025, reasoning models (such as OpenAI o1/o3, DeepSeek-R1, or
+<p><em>Optional: useful once you are comfortable with the basics.</em>
+As of 2025, reasoning models (such as OpenAI o1/o3, DeepSeek-R1, or
 Gemini 2.5 Thinking) have emerged. These models perform chain of thought
 reasoning before they answer.</p>
 <p><strong>When to use them:</strong></p>
@@ -1995,7 +1997,7 @@ output.</li>
   Live coding
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>This episode uses live coding. Learners should follow along by
 running commands on their own machines.</p>
@@ -2130,6 +2132,23 @@ is what travels across sessions. For example:</p>
 </h3>
 <p>Now ask for the script, pointing it at the spec:</p>
 <pre><code>Read 'CLAUDE.md' and the three CSVs in data/. Write a script called 'clean_and_merge.py' that follows the plan and the spec rules. Save the result to data/master_dataset.csv. Add comments linking code steps to spec rules.</code></pre>
+<div id="your-script-will-not-match-the-lessons-and-that-is-fine" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="your-script-will-not-match-the-lessons-and-that-is-fine" class="callout-inner">
+<h3 class="callout-title">Your script will not match the lesson’s, and
+that is fine</h3>
+<div class="callout-content">
+<p>AI output varies, so your <code>clean_and_merge.py</code> will look
+different from your neighbour’s and from any example. That is the point:
+the goal is not to match a reference, it is to read what you got and
+decide whether it is correct. Judge it against your spec and the checks
+below, not against someone else’s code.</p>
+</div>
+</div>
+</div>
 <div id="accordionInstructor2" class="accordion instructor-note accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor2" aria-expanded="false" aria-controls="collapseInstructor2">
@@ -2138,7 +2157,7 @@ is what travels across sessions. For example:</p>
   Backup scripts
   </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
 <div class="accordion-body">
 <p>If a learner’s AI fails to generate working code on the coastal data,
 provide the pre-written versions from <code>instructors/files/</code>: -
@@ -2163,8 +2182,10 @@ you cannot explain.</p>
 <div class="section level3">
 <h3 id="f--validate-against-checks-not-vibes">F. Validate against checks, not vibes<a class="anchor" aria-label="anchor" href="#f--validate-against-checks-not-vibes"></a>
 </h3>
-<p>Run <code>python clean_and_merge.py</code>, then confirm the result
-with concrete checks. “It ran” is not one of them.</p>
+<p>Run <code>python clean_and_merge.py</code>. A correct run prints
+something like <code>Wrote data/master_dataset.csv with 60 rows.</code>
+Then confirm the result with concrete checks. “It ran” is not one of
+them.</p>
 <ul>
 <li>
 <strong>Row-count check:</strong> 60 rows (3 sites x 20 samples),
@@ -2215,7 +2236,7 @@ still unsure about. Bring these back into the room.</p>
   Instructor note: cognitive load in this episode
   </h3>
 </button>
-<div id="collapseInstructor3" class="accordion-collapse collapse" aria-labelledby="headingInstructor3" data-bs-parent="#accordionInstructor3">
+<div id="collapseInstructor3" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor3" aria-labelledby="headingInstructor3">
 <div class="accordion-body">
 <p>This is the most technically demanding episode, and generated
 cleaning code is where extraneous load shows up most. Watch for scripts
@@ -2236,7 +2257,7 @@ feedback checkpoint: it is where you find out who is lost.</p>
   Challenge tip
   </h3>
 </button>
-<div id="collapseInstructor4" class="accordion-collapse collapse" aria-labelledby="headingInstructor4" data-bs-parent="#accordionInstructor4">
+<div id="collapseInstructor4" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor4" aria-labelledby="headingInstructor4">
 <div class="accordion-body">
 <p>This challenge requires modifying existing code. If learners are
 stuck, suggest they ask the AI to read <code>clean_and_merge.py</code>
@@ -2282,7 +2303,7 @@ should have dropped.</li>
   What to expect
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>January has four weekly sampling dates per site (5, 12, 19, 26), so a
 correct filter removes 12 rows, leaving 48. If you get a different
@@ -2337,7 +2358,7 @@ code and when.</p>
   Example command
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <pre><code>Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the model name 'Claude Sonnet 4.6', today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'</code></pre>
 <div class="section level3">
@@ -2590,15 +2611,28 @@ three are left as TODO (dates parse and fall in 2023, every
 <code>sample_id</code> is present exactly once, scores within
 0-100).</p>
 <ol style="list-style-type: decimal">
-<li>Implement the three TODO checks. Write them yourself, or ask the
-agent and then read every line before you trust them.</li>
-<li>Run <code>python validate_data.py</code> against your
+<li><p>Implement the three TODO checks. Write them yourself, or ask the
+agent and then read every line before you trust them.</p></li>
+<li>
+<p>Run <code>python validate_data.py</code> against your
 <code>data/master_dataset.csv</code>. Make the checks pass by fixing the
 data or the cleaning script, never by editing a value to satisfy a
-check.</li>
-<li>Now break it on purpose: ask the agent to re-clean while parsing
-site C dates as month-day. Run the validator again. Does your date check
-catch the January-to-May drift?</li>
+check. A passing run looks like:</p>
+<pre><code>[PASS] row count is 60
+[PASS] all canonical columns present
+[PASS] dates parse and all fall in 2023
+[PASS] every original sample_id is present exactly once
+[PASS] score values fall within 0-100
+All implemented checks passed.</code></pre>
+</li>
+<li>
+<p>Now break it on purpose: ask the agent to re-clean while parsing
+site C dates as month-day. Run the validator again. A good date check
+should now fail, for example:</p>
+<pre><code>[FAIL] dates parse and all fall in 2023 - earliest site C date is 2023-05-01</code></pre>
+<p>If instead everything still passes, your date check is too weak (see
+the solution).</p>
+</li>
 </ol>
 </div>
 </div>
@@ -2661,9 +2695,11 @@ implementation model missed?</p></li>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
-<p>Models have different blind spots. Forcing a second AI to act as an
-auditor helps bypass the tendency of the primary assistant to be
-over-confident. This process reduces your manual rewrite time.</p>
+<p>Models have different blind spots. Asking a second model to act as a
+skeptical reviewer surfaces edge cases and review questions the first
+one glossed over. Treat what it returns as more questions to
+investigate, not as proof: a second model is a reviewer, not evidence,
+and the decision is still yours.</p>
 </div>
 </div>
 </div>
@@ -2961,7 +2997,7 @@ the documentation instead of querying an LLM.</li>
   Managing expectations
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>Current models tend to flag uncertainty more often than older ones,
 but they still hallucinate. Do not promise learners it won’t happen. *
@@ -2995,7 +3031,7 @@ uncertainty, or confidently invents instructions.</p>
   Discussion
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Current models (Claude, GPT-4o, Gemini) are significantly better at
 refusing or flagging uncertainty than earlier generations, you may get a
@@ -3248,7 +3284,7 @@ check before using this for real.</li>
   What a strong bundle shows
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>The script running is the least interesting part. A strong bundle
 shows <em>judgement</em>: the spec names the date trap before the code
@@ -3268,7 +3304,7 @@ answer when the evidence does not yet cover the claim.</p>
   Instructor note
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>Budget most of the time for doing, not explaining. Expect the site C
 date bug to surface for several learners; treat it as the highlight, not
@@ -3459,7 +3495,9 @@ taxonomy</a>.</li>
 <h3 class="callout-title">Challenge: your Monday workflow card</h3>
 <div class="callout-content">
 <p>Pick one real scenario from your own work, then fill out a short plan
-you could actually use next week.</p>
+you could actually use next week. A ready-made template,
+<code>monday-worksheet.md</code>, ships with the lesson (in
+<code>learners/files/</code>); open it and fill it in.</p>
 <p>Choose a scenario: a small public CSV, sensitive human-subjects data,
 large geospatial files, or an existing messy repository.</p>
 <p>For it, write down:</p>

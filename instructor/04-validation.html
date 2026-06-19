@@ -538,15 +538,28 @@ like in your field.</li>
 three are left as TODO (dates parse and fall in 2023, every
 <code>sample_id</code> is present exactly once, scores within
 0-100).</p>
-<ol style="list-style-type: decimal"><li>Implement the three TODO checks. Write them yourself, or ask the
-agent and then read every line before you trust them.</li>
-<li>Run <code>python validate_data.py</code> against your
+<ol style="list-style-type: decimal"><li><p>Implement the three TODO checks. Write them yourself, or ask the
+agent and then read every line before you trust them.</p></li>
+<li>
+<p>Run <code>python validate_data.py</code> against your
 <code>data/master_dataset.csv</code>. Make the checks pass by fixing the
 data or the cleaning script, never by editing a value to satisfy a
-check.</li>
-<li>Now break it on purpose: ask the agent to re-clean while parsing
-site C dates as month-day. Run the validator again. Does your date check
-catch the January-to-May drift?</li>
+check. A passing run looks like:</p>
+<pre><code>[PASS] row count is 60
+[PASS] all canonical columns present
+[PASS] dates parse and all fall in 2023
+[PASS] every original sample_id is present exactly once
+[PASS] score values fall within 0-100
+All implemented checks passed.</code></pre>
+</li>
+<li>
+<p>Now break it on purpose: ask the agent to re-clean while parsing
+site C dates as month-day. Run the validator again. A good date check
+should now fail, for example:</p>
+<pre><code>[FAIL] dates parse and all fall in 2023 - earliest site C date is 2023-05-01</code></pre>
+<p>If instead everything still passes, your date check is too weak (see
+the solution).</p>
+</li>
 </ol></div>
 </div>
 </div>
@@ -603,9 +616,11 @@ implementation model missed?</p></li>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
-<p>Models have different blind spots. Forcing a second AI to act as an
-auditor helps bypass the tendency of the primary assistant to be
-over-confident. This process reduces your manual rewrite time.</p>
+<p>Models have different blind spots. Asking a second model to act as a
+skeptical reviewer surfaces edge cases and review questions the first
+one glossed over. Treat what it returns as more questions to
+investigate, not as proof: a second model is a reviewer, not evidence,
+and the decision is still yours.</p>
 </div>
 </div>
 </div>

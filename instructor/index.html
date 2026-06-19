@@ -522,37 +522,46 @@ and Python installed on your machine. Claude Code is Anthropic’s
 terminal-based AI coding agent. The steps below get you set up with a
 direct local install, which is the approach used throughout the
 lesson.</p>
-<section><h2 class="section-heading" id="install-node-js-and-python">1. Install Node.js and Python<a class="anchor" aria-label="anchor" href="#install-node-js-and-python"></a></h2>
+<section><h2 class="section-heading" id="install-node-js-python-and-two-python-packages">1. Install Node.js, Python, and two Python packages<a class="anchor" aria-label="anchor" href="#install-node-js-python-and-two-python-packages"></a></h2>
 <hr class="half-width"><ul><li>
 <strong>Node.js</strong>: Download the LTS version from <a href="https://nodejs.org" class="external-link">nodejs.org</a> or use a package manager
 (<code>brew install node</code> on macOS).</li>
 <li>
 <strong>Python</strong>: Ensure you have Python 3.9+ installed.
 Check with <code>python --version</code>.</li>
-</ul></section><section><h2 class="section-heading" id="install-claude-code">2. Install Claude Code<a class="anchor" aria-label="anchor" href="#install-claude-code"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb1">
+<li>
+<strong>Python packages</strong>: the lesson scripts use
+<code>pandas</code> (data handling) and <code>matplotlib</code> (the
+trend plot). Install both:</li>
+</ul><div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">npm</span> install <span class="at">-g</span> @anthropic-ai/claude-code</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install pandas matplotlib</span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="install-claude-code">2. Install Claude Code<a class="anchor" aria-label="anchor" href="#install-claude-code"></a></h2>
+<hr class="half-width"><div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">npm</span> install <span class="at">-g</span> @anthropic-ai/claude-code</span></code></pre>
 </div>
 </section><section><h2 class="section-heading" id="authenticate">3. Authenticate<a class="anchor" aria-label="anchor" href="#authenticate"></a></h2>
 <hr class="half-width"><p>How you authenticate depends on which path you are using (see
 “Institutional context and access” below). For the workshop, most
 learners will sign in with a personal Claude account:</p>
-<div class="codewrapper sourceCode" id="cb2">
+<div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">claude</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">claude</span></span></code></pre>
 </div>
 <p>On first launch, Claude Code walks you through signing in. A Claude
 Pro or Max subscription, or an Anthropic API key, will work. The
 credentials are stored locally; you will not need to repeat this
 step.</p>
 </section><section><h2 class="section-heading" id="verify-the-install">4. Verify the install<a class="anchor" aria-label="anchor" href="#verify-the-install"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb3">
+<hr class="half-width"><div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">claude</span> <span class="at">--version</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">claude</span> <span class="at">--version</span></span></code></pre>
 </div>
 <p>If you see a version number, you are ready. If the command is not
 found, restart your terminal and try again.</p>
@@ -562,15 +571,56 @@ dataset. Download the <code>coastal-water-quality</code> folder that
 ships with this lesson (from the <a href="https://github.com/jt14den/agentic-research-workflows" class="external-link">lesson
 repository</a> under <code>learners/files/coastal-water-quality</code>,
 or from a copy your instructor provides), then move into it:</p>
-<div class="codewrapper sourceCode" id="cb4">
+<div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="bu">cd</span> coastal-water-quality</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="fu">ls</span> data/</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="bu">cd</span> coastal-water-quality</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="fu">ls</span> data/</span></code></pre>
 </div>
 <p>You should see <code>site_A.csv</code>, <code>site_B.csv</code>, and
 <code>site_C.csv</code>. Throughout the lesson, start Claude Code from
 inside this folder.</p>
+</section><section><h2 class="section-heading" id="setup-check">6. Setup check<a class="anchor" aria-label="anchor" href="#setup-check"></a></h2>
+<hr class="half-width"><p>Run these from inside the <code>coastal-water-quality</code> folder.
+Each should produce the output shown:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">claude</span> <span class="at">--version</span>          <span class="co"># prints a version number</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="ex">python</span> <span class="at">--version</span>          <span class="co"># prints Python 3.9 or newer</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import pandas, matplotlib; print('packages ok')"</span>   <span class="co"># prints: packages ok</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a><span class="fu">ls</span> data/                  <span class="co"># site_A.csv  site_B.csv  site_C.csv</span></span></code></pre>
+</div>
+<p>If all four work, you are ready. If any fails, see the
+troubleshooting notes below.</p>
+<div id="troubleshooting" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="troubleshooting" class="callout-inner">
+<h3 class="callout-title">Troubleshooting</h3>
+<div class="callout-content">
+<ul><li>
+<strong><code>claude: command not found</code></strong>: the global
+npm install did not finish or your <code>PATH</code> is not updated.
+Re-run the install and restart your terminal.</li>
+<li>
+<strong><code>ModuleNotFoundError: No module named 'pandas'</code></strong>:
+the packages went to a different Python than the one you are running.
+Use the same interpreter:
+<code>python -m pip install pandas matplotlib</code>.</li>
+<li>
+<strong>Claude Code asks to sign in again</strong>: that is normal
+on a new machine; complete the sign-in once.</li>
+<li>
+<strong>The agent produces different code or output than the lesson
+shows</strong>: that is expected, AI output varies. The lesson teaches
+you to check it, not to match it. If you fall behind, your instructor
+can share a known-good script from <code>instructors/files/</code>.</li>
+</ul></div>
+</div>
+</div>
 <div id="keep-everyone-on-the-same-model" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
