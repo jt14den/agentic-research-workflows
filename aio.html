@@ -878,13 +878,12 @@ available. Claude Code defaults to an interactive session; the
 <code>-p</code> (or <code>--print</code>) flag runs a single prompt
 non-interactively (headless mode), which we use for quick one-off
 checks.</p>
-<p>Navigate to your project folder and run a quick headless check:</p>
-<!-- TODO: Replace /path/to/project/directory with the path to the scaffolded
-     starter project repo once it is created and distributed to learners. -->
+<p>Navigate to the project folder you created during setup and run a
+quick headless check:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="bu">cd</span> /path/to/project/directory</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="bu">cd</span> agentic-research-project</span>
 <span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a><span class="ex">claude</span> <span class="at">-p</span> <span class="st">"Tell me what operating system I am currently using and list the files in this directory."</span></span></code></pre>
 </div>
 <p>Compare the output to what you see when you run <code>ls</code> (or
@@ -1093,7 +1092,7 @@ Metric” (how you know it’s done).</p>
   Example spec file
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2004,7 +2003,7 @@ at exactly 10, or the filter ran in the wrong order).</li>
   Example command
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <pre><code>Read 'clean_and_merge.py'. Modify the script to filter out any rows where 'score' is less than 10. Keep all other logic the same. Save the updated script.</code></pre>
 <div class="section level3">
@@ -2059,7 +2058,7 @@ code and when.</p>
   Example command
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <pre><code>Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the model name 'Claude Sonnet 4.6', today's date, and a summary of the prompt: 'Standardize site IDs, format dates, and impute missing scores with site medians.'</code></pre>
 <div class="section level3">
@@ -2637,7 +2636,7 @@ uncertainty, or confidently invents instructions.</p>
   Discussion
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>Current models (Claude, GPT-4o, Gemini) are significantly better at
 refusing or flagging uncertainty than earlier generations — you may get
@@ -3149,7 +3148,7 @@ unit tests, or metamorphic checks?</li>
   Discussion
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>A pre-defined protocol reduces decision fatigue during complex coding
 sessions. Deciding how to verify work early prevents approval fatigue
