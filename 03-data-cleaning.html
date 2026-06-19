@@ -118,7 +118,7 @@
     <a id="search-button" class="btn btn-primary" href="aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
 </nav><aside class="col-md-12 lesson-progress"><div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 38%" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">38%</div>
+    <div class="progress-bar incubator" role="progressbar" style="width: 31%" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">31%</div>
   </div>
 </aside><div class="container">
       <div class="row">
@@ -237,6 +237,7 @@
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
         <ul><li><a href="#cleaning-messy-data">Cleaning messy data</a></li>
+<li><a href="#the-project-data">The project data</a></li>
 <li><a href="#cleaning-with-ai-one-checkpoint-at-a-time">Cleaning with AI, one checkpoint at a time</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
@@ -265,7 +266,16 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-resources.html">7. Resources and Next Steps</a>
+        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush9">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading9">
+        <a href="07-resources.html">8. Resources and Next Steps</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -384,7 +394,7 @@ session. Start one in your project folder before the exercises:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="bu">cd</span> path/to/your/project</span>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="bu">cd</span> coastal-water-quality</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="ex">claude</span></span></code></pre>
 </div>
 <p>Run Python scripts in a separate terminal window when instructed.</p>
@@ -393,86 +403,86 @@ session. Start one in your project folder before the exercises:</p>
 </div>
 <section><h2 class="section-heading" id="cleaning-messy-data">Cleaning messy data<a class="anchor" aria-label="anchor" href="#cleaning-messy-data"></a></h2>
 <hr class="half-width"><p>Cleaning and merging inconsistent files is a common bottleneck in
-research. We will use Claude Code to standardise messy CSV files.</p>
-<div class="section level3">
-<h3 id="generating-test-data">Generating test data<a class="anchor" aria-label="anchor" href="#generating-test-data"></a></h3>
-<p>To practise cleaning, we need a dataset with inconsistencies. We can
-use AI to simulate a multi-site study where each location used different
-naming conventions or date formats. Run this command to generate three
-files: <code>site_A.csv</code>, <code>site_B.csv</code>, and
-<code>site_C.csv</code>.</p>
-<pre><code>Create a python script named 'make_messy_data.py'. It should generate 3 CSV files ('site_A.csv', 'site_B.csv', 'site_C.csv') with 50 rows each. Columns should include 'ID', 'Date', and 'Score', but make them inconsistent (e.g., 'ParticipantID' vs 'id', 'date' vs 'Date_Time'). Add some missing values and varied date formats (like '2023/01/05' vs 'Jan 5, 2023').</code></pre>
-<p>After running <code>python make_messy_data.py</code>, you will have
-three inconsistent files in your directory.</p>
-</div>
-<div class="section level3">
-<h3 id="auditing-the-data">Auditing the data<a class="anchor" aria-label="anchor" href="#auditing-the-data"></a></h3>
-<p>Before fixing the files, we need to understand the inconsistencies.
-We can ask the AI to write an inspection script that reads every CSV in
-the folder and reports the filenames, column names, and missing value
-counts.</p>
-<pre><code>Write a Python script called 'inspect_data.py' that reads every CSV file in the current folder. For each file, print the filename, the list of column names, and the number of missing values in each column.</code></pre>
-<p>Run the inspection script. You should see inconsistencies like
-<code>site_A</code> using <code>ParticipantID</code> while
-<code>site_B</code> uses <code>id</code>.</p>
-<div id="reasoning-models" class="callout">
+research. We will use Claude Code to clean and merge the coastal water
+quality files into one analysis-ready dataset.</p>
+</section><section><h2 class="section-heading" id="the-project-data">The project data<a class="anchor" aria-label="anchor" href="#the-project-data"></a></h2>
+<hr class="half-width"><p>Your project folder (<code>coastal-water-quality</code>) contains
+three files in <code>data/</code>, one per monitoring site, collected
+weekly from January to May 2023: <code>site_A.csv</code>,
+<code>site_B.csv</code>, and <code>site_C.csv</code> (20 samples each,
+60 in total). They are messy in exactly the ways real multi-site data
+is: the site, date, and score columns are named differently in each
+file, the date formats differ, and a few values are missing. The
+folder’s <code>README.md</code> describes the target schema and what
+“done” looks like. Our goal is one clean
+<code>data/master_dataset.csv</code>, then (in the capstone) a trend
+plot of score over time by site.</p>
+<div id="optional-generate-your-own-messy-data" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <span class="callout-header">Callout</span>
-<div id="reasoning-models" class="callout-inner">
-<h3 class="callout-title">Reasoning models</h3>
+<div id="optional-generate-your-own-messy-data" class="callout-inner">
+<h3 class="callout-title">Optional: generate your own messy data</h3>
 <div class="callout-content">
-<p>If your data files are extremely inconsistent, reasoning models (like
-o1 or DeepSeek-R1) are often more effective. They can identify subtle
-naming patterns that standard models might miss.</p>
-</div>
+<p>To practise on a fresh problem later, you can have the AI synthesise
+a similar dataset:</p>
+<pre><code>Create a python script named 'make_messy_data.py' that generates 3 CSV files with inconsistent column names, varied date formats, and some missing values, mimicking a multi-site study.</code></pre>
+<p>For the lesson, use the provided files so everyone is working from
+the same data.</p>
 </div>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="cleaning-with-ai-one-checkpoint-at-a-time">Cleaning with AI, one checkpoint at a time<a class="anchor" aria-label="anchor" href="#cleaning-with-ai-one-checkpoint-at-a-time"></a></h2>
 <hr class="half-width"><p>It is tempting to type “clean and merge these files” and run whatever
-comes back. Resist that. We will work the same task as a sequence of
+comes back. Resist that. We will work the task as a sequence of
 checkpoints so that you can explain and validate the result, not only
 produce one. This is the pattern you will reuse for the rest of the
 lesson: <strong>predict, prompt for a plan, inspect, modify, validate,
 reflect.</strong></p>
 <div class="section level3">
 <h3 id="a--predict-before-you-prompt">A. Predict before you prompt<a class="anchor" aria-label="anchor" href="#a--predict-before-you-prompt"></a></h3>
-<p>Open the three CSV files and look at them yourself first. Without
-using the AI, write down <strong>two inconsistencies you expect any
-cleaning script will have to handle</strong> (for example:
-<code>site_A</code> uses <code>ParticipantID</code> but
-<code>site_B</code> uses <code>id</code>, or the dates are in different
-formats).</p>
-<p>Keep this list. It is your yardstick for judging what the AI
-proposes.</p>
+<p>Open the three files in <code>data/</code> and look at them yourself
+first. Without using the AI, write down <strong>two inconsistencies you
+expect any cleaning script will have to handle</strong>. Real examples
+in this data:</p>
+<ul><li>The site column is <code>SiteID</code> in site A, <code>id</code> in
+site B, and <code>StationID</code> in site C.</li>
+<li>The score column is <code>WaterQualityScore</code>,
+<code>score</code>, and <code>Quality_Index</code>.</li>
+<li>The dates differ: <code>2023/01/05</code> (A),
+<code>Jan 5 2023</code> (B), and <code>05-01-2023</code> (C). Watch site
+C: <code>05-01-2023</code> is day-month-year, so it means 5 January, not
+1 May.</li>
+</ul><p>Keep your list. It is your yardstick for judging what the AI
+proposes. If you want a faster overview, you can have the AI write an
+inspection script, but read its output against your own list:</p>
+<pre><code>Write a Python script called 'inspect_data.py' that reads every CSV in data/. For each file, print the filename, the column names, and the number of missing values per column. Do not change any files.</code></pre>
 </div>
 <div class="section level3">
 <h3 id="b--ask-the-ai-for-a-plan-only">B. Ask the AI for a plan only<a class="anchor" aria-label="anchor" href="#b--ask-the-ai-for-a-plan-only"></a></h3>
 <p>Do not ask for code yet. Inside your Claude Code session:</p>
-<pre><code>Read 'CLAUDE.md' and the three site CSVs. Before writing any code, give me a numbered plan for cleaning and merging them into 'master_dataset.csv'. Do not write any files yet.</code></pre>
-<p>Compare the plan with the two inconsistencies you wrote down in step
-A. Did the plan catch them? Did it miss any? Did it propose anything you
-did not expect (for example, filling missing values a particular
-way)?</p>
+<pre><code>Read 'CLAUDE.md' and the three CSVs in data/. Before writing any code, give me a numbered plan for cleaning and merging them into data/master_dataset.csv. Do not write any files yet.</code></pre>
+<p>Compare the plan with the inconsistencies you wrote down in step A.
+Did it catch the site C date format? Did it say how it will handle
+missing values? Did it propose anything you did not expect?</p>
 </div>
 <div class="section level3">
 <h3 id="c--approve-or-revise-the-plan">C. Approve or revise the plan<a class="anchor" aria-label="anchor" href="#c--approve-or-revise-the-plan"></a></h3>
 <p>If the plan is missing a constraint you care about, add it to
 <code>CLAUDE.md</code> rather than only mentioning it in chat. The spec
-is what travels across sessions. For example, you might add:</p>
+is what travels across sessions. For example:</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ss">- </span>Missing scores must be filled with the site median, never the global mean.</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="ss">- </span>Do not drop any participant rows during cleaning.</span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ss">- </span>Site C dates are day-month-year; parse them explicitly, do not let the tool guess.</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="ss">- </span>Fill missing score with the site median. Do not drop any rows: the merge must have 60.</span></code></pre>
 </div>
 </div>
 <div class="section level3">
 <h3 id="d--generate-the-code">D. Generate the code<a class="anchor" aria-label="anchor" href="#d--generate-the-code"></a></h3>
 <p>Now ask for the script, pointing it at the spec:</p>
-<pre><code>Read 'CLAUDE.md' and the three site CSVs. Write a script called 'clean_and_merge.py' that follows the plan and the spec rules. Save the result to 'master_dataset.csv'. Add comments linking code steps to spec rules.</code></pre>
+<pre><code>Read 'CLAUDE.md' and the three CSVs in data/. Write a script called 'clean_and_merge.py' that follows the plan and the spec rules. Save the result to data/master_dataset.csv. Add comments linking code steps to spec rules.</code></pre>
 
 </div>
 <div class="section level3">
@@ -488,20 +498,22 @@ you cannot explain.</p>
 <div class="section level3">
 <h3 id="f--validate-against-checks-not-vibes">F. Validate against checks, not vibes<a class="anchor" aria-label="anchor" href="#f--validate-against-checks-not-vibes"></a></h3>
 <p>Run <code>python clean_and_merge.py</code>, then confirm the result
-with three concrete checks. “It ran” is not one of them.</p>
+with concrete checks. “It ran” is not one of them.</p>
 <ul><li>
-<strong>Row-count check:</strong> Does the merged file have the
-number of rows you expected (for example, 150 if three sites of 50
-should all be kept)?</li>
+<strong>Row-count check:</strong> 60 rows (3 sites x 20 samples),
+nothing dropped.</li>
 <li>
-<strong>Missing-value check:</strong> Are there still missing values
-where there should be none? Are there none where some should
-remain?</li>
+<strong>Missing-value check:</strong> missing scores filled per your
+strategy; nothing filled that should have stayed blank.</li>
 <li>
-<strong>Date-format check:</strong> Are all dates in a single
-consistent format?</li>
+<strong>Date check:</strong> all dates in 2023, and site C’s January
+samples are in January, not May. Sort the file by date and look at the
+earliest site C rows: if they landed in May, the day-month-year format
+was misread.</li>
 </ul><p>You can ask the AI to write these checks, but read them before you
-trust them.</p>
+trust them. The project folder already ships a
+<code>validate_data.py</code> with some checks written and others left
+as TODO; you will finish it in the next episode.</p>
 </div>
 <div class="section level3">
 <h3 id="g--reflect">G. Reflect<a class="anchor" aria-label="anchor" href="#g--reflect"></a></h3>
@@ -534,13 +546,13 @@ still unsure about. Bring these back into the room.</p>
 <div id="challenge-update-the-script" class="callout-inner">
 <h3 class="callout-title">Challenge: Update the script</h3>
 <div class="callout-content">
-<p>Imagine you need to exclude any participant with a score below
-10.</p>
+<p>Imagine your analysis should cover February to May only, so you need
+to exclude the January samples.</p>
 <ol style="list-style-type: decimal"><li>
 <strong>Predict first.</strong> Before prompting, write down how
-many rows you expect this to remove and which
-<code>master_dataset.csv</code> row count you expect afterward. Base it
-on what you saw when you inspected the data.</li>
+many rows you expect this to remove and the row count you expect
+afterward. (Samples are weekly; January has four sampling dates per
+site.)</li>
 <li>
 <strong>Then update.</strong> Use Claude Code to update
 <code>clean_and_merge.py</code> instead of editing it manually. Ask the
@@ -548,8 +560,9 @@ AI to read the file and add the filtering logic.</li>
 <li>
 <strong>Verify against your prediction.</strong> Run the updated
 script and compare the actual row count to what you predicted. If they
-differ, explain why in one sentence (for example: missing scores, ties
-at exactly 10, or the filter ran in the wrong order).</li>
+differ, explain why in one sentence. Pay special attention to site C: if
+its January samples were misparsed as May, this filter will keep rows it
+should have dropped.</li>
 </ol></div>
 </div>
 </div>
@@ -557,18 +570,21 @@ at exactly 10, or the filter ran in the wrong order).</li>
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1">
-  Example command
+  What to expect
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
-<pre><code>Read 'clean_and_merge.py'. Modify the script to filter out any rows where 'score' is less than 10. Keep all other logic the same. Save the updated script.</code></pre>
-<div class="section level3">
-<h3 id="reflection">Reflection<a class="anchor" aria-label="anchor" href="#reflection"></a></h3>
-<ul><li>Did the AI edit the relevant part or rewrite the whole file?</li>
-<li>Did it include the necessary imports?</li>
-<li>Did you check the changes before running the script?</li>
-</ul></div>
+<p>January has four weekly sampling dates per site (5, 12, 19, 26), so a
+correct filter removes 12 rows, leaving 48. If you get a different
+number, the most likely cause is the site C date format: misparsed
+January dates land in May and survive the filter. This is a small, safe
+version of a silent error that would quietly bias a real trend
+analysis.</p>
+<pre><code>Read 'clean_and_merge.py'. Modify the script to keep only samples collected in February 2023 or later. Keep all other logic the same. Save the updated script.</code></pre>
+<p>Did the AI edit the relevant part or rewrite the whole file? Did it
+parse the dates correctly before filtering? Did you check the changes
+before running?</p>
 </div>
 </div>
 </div>
@@ -607,11 +623,11 @@ code and when.</p>
   Example command
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <pre><code>Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the model name 'Claude Sonnet 4.6', today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'</code></pre>
 <div class="section level3">
-<h3 id="reflection-1">Reflection<a class="anchor" aria-label="anchor" href="#reflection-1"></a></h3>
+<h3 id="reflection">Reflection<a class="anchor" aria-label="anchor" href="#reflection"></a></h3>
 <ul><li>Why record the model version and date?</li>
 <li>Does it matter if the AI model is updated later?</li>
 <li>How does this header help with reproducibility?</li>

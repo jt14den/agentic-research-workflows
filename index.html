@@ -201,7 +201,7 @@
 <li><a href="#install-claude-code">2. Install Claude Code</a></li>
 <li><a href="#authenticate">3. Authenticate</a></li>
 <li><a href="#verify-the-install">4. Verify the install</a></li>
-<li><a href="#create-a-working-folder">5. Create a working folder</a></li>
+<li><a href="#get-the-project-folder">5. Get the project folder</a></li>
 <li><a href="#institutional-context-and-access">Institutional context and access</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
@@ -266,7 +266,16 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-resources.html">7. Resources and Next Steps</a>
+        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush9">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading9">
+        <a href="07-resources.html">8. Resources and Next Steps</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -445,17 +454,21 @@ step.</p>
 </div>
 <p>If you see a version number, you are ready. If the command is not
 found, restart your terminal and try again.</p>
-</section><section><h2 class="section-heading" id="create-a-working-folder">5. Create a working folder<a class="anchor" aria-label="anchor" href="#create-a-working-folder"></a></h2>
-<hr class="half-width"><p>The lesson runs inside a dedicated project folder. Create an empty
-one now and move into it. You will generate the practice data files here
-during the lesson.</p>
+</section><section><h2 class="section-heading" id="get-the-project-folder">5. Get the project folder<a class="anchor" aria-label="anchor" href="#get-the-project-folder"></a></h2>
+<hr class="half-width"><p>The whole lesson works in one project: a small, messy water quality
+dataset. Download the <code>coastal-water-quality</code> folder that
+ships with this lesson (from the <a href="https://github.com/jt14den/agentic-research-workflows" class="external-link">lesson
+repository</a> under <code>learners/files/coastal-water-quality</code>,
+or from a copy your instructor provides), then move into it:</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="fu">mkdir</span> agentic-research-project</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="bu">cd</span> agentic-research-project</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="bu">cd</span> coastal-water-quality</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="fu">ls</span> data/</span></code></pre>
 </div>
-<p>Throughout the lesson, start Claude Code from inside this folder.</p>
+<p>You should see <code>site_A.csv</code>, <code>site_B.csv</code>, and
+<code>site_C.csv</code>. Throughout the lesson, start Claude Code from
+inside this folder.</p>
 <div id="keep-everyone-on-the-same-model" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>

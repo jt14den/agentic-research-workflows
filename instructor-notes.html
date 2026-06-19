@@ -308,7 +308,19 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-resources.html">7. Resources and Next Steps</a>
+        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush9">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading9">
+        <a href="07-resources.html">8. Resources and Next Steps</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -399,6 +411,22 @@ workshop.</li>
 <strong>Sandboxing:</strong> Always emphasize the security
 implications of giving an AI direct access to the filesystem.</li>
 </ul>
+</div>
+<div class="section level3">
+<h3 id="the-worked-example-one-project-all-the-way-through">The worked example (one project all the way through)<a class="anchor" aria-label="anchor" href="#the-worked-example-one-project-all-the-way-through"></a>
+</h3>
+<p>The whole lesson uses one fixture,
+<code>learners/files/coastal-water-quality/</code> (three messy site
+CSVs). Learners carry it from spec to clean merge to validation to a
+trend plot in the capstone. Two anchors to keep in mind: -
+<strong>Expected result:</strong> a merged
+<code>data/master_dataset.csv</code> with <strong>60 rows</strong> (3
+sites x 20 weekly samples), all dates in 2023. - <strong>The planted
+trap (the lesson’s climax):</strong> site C dates are day-month-year
+(<code>05-01-2023</code> is 5 January). If parsed as month-day, January
+samples land in May. The script still runs, the row count is still 60,
+and the trend plot is still wrong. This is the concrete “working code is
+not trustworthy code” moment; let it happen and use it.</p>
 <hr>
 </div>
 </section><section><h2 class="section-heading" id="episode-before-we-use-ai-opening">Episode: Before We Use AI (opening)<a class="anchor" aria-label="anchor" href="#episode-before-we-use-ai-opening"></a>
@@ -435,14 +463,12 @@ with <code>/model</code> (e.g., <code>claude-sonnet-4-6</code>) before
 starting, so outputs are comparable and provenance records are
 meaningful.</li>
 <li>
-<strong>Starter folder:</strong> No pre-built repo is required.
-Learners create an empty <code>agentic-research-project</code> folder in
-setup, and the practice data is generated in Episode 3
-(<code>make_messy_data.py</code>). If you prefer a real dataset over
-synthetic data, a ready-made one ships at
-<code>learners/files/coastal-water-quality/</code> (three inconsistent
-site CSVs with the same kinds of issues); point learners at it instead
-of generating data.</li>
+<strong>Starter folder:</strong> Everyone works in the provided
+<code>coastal-water-quality</code> folder (ships at
+<code>learners/files/coastal-water-quality/</code>). Confirm learners
+have it and can <code>ls data/</code> to see the three site CSVs before
+starting. Episode 1 has them inspect a real file and compare the agent’s
+description to it, the first hands-on win.</li>
 <li>
 <strong>The Browser vs. CLI distinction:</strong> Use the analogy of
 a “consultant” (Browser) vs. a “research assistant with keys to the lab”
@@ -475,10 +501,17 @@ cases.”</li>
 <strong>High Intensity:</strong> This is the most technically
 demanding episode.</li>
 <li>
+<strong>Expected output:</strong>
+<code>data/master_dataset.csv</code> with 60 rows. The “Update the
+script” challenge (exclude January) should remove 12 rows, leaving 48; a
+different number usually means the site C date format was
+misparsed.</li>
+<li>
 <strong>The “Safety Net”:</strong> If a learner’s AI fails to
-generate working code after two attempts, have them copy the pre-written
-script from <code>instructors/files/backup_clean_and_merge.py</code>.
-This prevents them from falling behind.</li>
+produce working code after two attempts, have them copy
+<code>instructors/files/backup_clean_and_merge.py</code> (it is written
+for this fixture and parses site C dates correctly). This keeps them on
+pace for the validate-and-judge steps, which are the point.</li>
 <li>
 <strong>Stop and Read:</strong> Literally tell the class to “hands
 off keyboards” for two minutes to read the generated script before they
@@ -493,32 +526,50 @@ exactly):
 <ol style="list-style-type: decimal">
 <li>Requirement constraints / No-Go Zones (human-authored ground truth
 in <code>CLAUDE.md</code>)</li>
-<li>Automated unit tests (written and approved before the
-implementation)</li>
-<li>Metamorphic and invariant checks (relationships that must not
-change)</li>
+<li>Executable checks you can run (finish the shipped
+<code>validate_data.py</code>)</li>
+<li>Metamorphic and invariant checks (60-row invariant; mean unchanged
+when rows are shuffled)</li>
 <li>Domain plausibility (where the researcher’s expertise is
 irreplaceable; do not omit this layer)</li>
 </ol>
 </li>
 <li>
-<strong>Activity:</strong> Encourage learners to try the
-“Metamorphic Sanity Check” (Challenge). It’s a powerful way to show how
-“reproducibility” can be subtly broken by AI randomness.</li>
+<strong>Build the validator:</strong> the core activity. Learners
+finish the three TODO checks in <code>validate_data.py</code>, then
+deliberately misparse the site C dates and confirm the validator now
+fails. A validator that cannot fail on a known-bad input is not
+protecting them.</li>
 </ul></section><section><h2 class="section-heading" id="episode-5-limitations-and-cautions">Episode 5: Limitations and Cautions<a class="anchor" aria-label="anchor" href="#episode-5-limitations-and-cautions"></a>
 </h2>
 <hr class="half-width">
 <ul>
 <li>
 <strong>Silent Semantic Drift:</strong> This is the most “dangerous”
-failure. Use the example of a filtering threshold (e.g.,
-<code>&gt; 0.5</code> vs. <code>&gt;= 0.5</code>) that might not crash
-the code but changes the science.</li>
+failure. The site C date trap from the worked example is the live
+version of this; refer back to it.</li>
 <li>
 <strong>Environmental Cost:</strong> This is often a new topic for
-researchers. It grounds the “Spec-Driven Research Orchestration” hype in
-physical reality.</li>
-</ul></section><section><h2 class="section-heading" id="episode-6-resources-and-next-steps">Episode 6: Resources and Next Steps<a class="anchor" aria-label="anchor" href="#episode-6-resources-and-next-steps"></a>
+researchers. It grounds the workflow in physical reality.</li>
+</ul></section><section><h2 class="section-heading" id="episode-6-from-ai-output-to-research-ready-code-capstone">Episode 6: From AI Output to Research-Ready Code (capstone)<a class="anchor" aria-label="anchor" href="#episode-6-from-ai-output-to-research-ready-code-capstone"></a>
+</h2>
+<hr class="half-width">
+<ul>
+<li>
+<strong>Mostly doing:</strong> budget the time for work, not
+exposition. Learners assemble the full bundle (spec, plan, code,
+validator, plot, provenance, approval decision) on the coastal
+data.</li>
+<li>
+<strong>Expect the date trap to surface</strong> for several
+learners during the plot step; that is the highlight. Collect a few
+approval decisions and read them aloud, especially the honest “revise”
+answers.</li>
+<li>
+<strong>Fallbacks:</strong> <code>backup_clean_and_merge.py</code>
+and <code>backup_plot_trend.py</code> let a stuck group still reach the
+validate-and-judge steps.</li>
+</ul></section><section><h2 class="section-heading" id="episode-7-resources-and-next-steps">Episode 7: Resources and Next Steps<a class="anchor" aria-label="anchor" href="#episode-7-resources-and-next-steps"></a>
 </h2>
 <hr class="half-width">
 <ul>
@@ -526,6 +577,10 @@ physical reality.</li>
 <strong>The Toolscape:</strong> Acknowledge that tools (Aider,
 Cursor, Claude Code) change weekly. Focus on the <em>principles</em>
 (CLI, validation, provenance) rather than specific software.</li>
+<li>
+<strong>Monday workflow card:</strong> the takeaway exercise; push
+learners to name the one check that would catch a silent error in their
+own data.</li>
 <li>
 <strong>Attribution:</strong> Remind learners that while AI can’t be
 an author, transparency about its use is a core tenet of Open
@@ -631,7 +686,7 @@ privacy differences are stated where relevant.</label></li>
 <hr class="half-width">
 <p>The AI tool landscape moves faster than a Carpentries release cycle.
 The most volatile parts of this lesson are the <strong>tool
-landscape</strong> and <strong>reputable sources</strong> in Episode 6,
+landscape</strong> and <strong>reputable sources</strong> in Episode 7,
 the <strong>failure modes</strong> in Episode 5, and any <strong>named
 model or CLI command</strong> in Episodes 1-4.</p>
 <p>Before each teaching, refresh these by running the
@@ -644,9 +699,9 @@ model or CLI command</strong> in Episodes 1-4.</p>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="ex">python3</span> scripts/last30days.py <span class="st">"AI coding agents"</span> <span class="at">--include-web</span> <span class="at">--emit</span><span class="op">=</span>md <span class="at">--save-dir</span> research</span></code></pre>
 </div>
 <p>Use the output two ways: confirm the tool names and claims in
-Episodes 5-6 are still accurate, and pull one <em>current</em> hype
-example to debunk live in the Episode 6 “Identifying hype” discussion. A
-fresh example beats a canned one.</p>
+Episodes 5 and 7 are still accurate, and pull one <em>current</em> hype
+example to debunk live in the Episode 7 “Spotting hype” section. A fresh
+example beats a canned one.</p>
 <div class="section level3">
 <h3 id="tooling-status-last-checked-2026-06-19">Tooling status (last checked 2026-06-19)<a class="anchor" aria-label="anchor" href="#tooling-status-last-checked-2026-06-19"></a>
 </h3>

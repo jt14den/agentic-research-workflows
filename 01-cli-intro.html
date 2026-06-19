@@ -118,7 +118,7 @@
     <a id="search-button" class="btn btn-primary" href="aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
 </nav><aside class="col-md-12 lesson-progress"><div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 11%" aria-valuenow="11" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">11%</div>
+    <div class="progress-bar incubator" role="progressbar" style="width: 9%" aria-valuenow="9" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">9%</div>
   </div>
 </aside><div class="container">
       <div class="row">
@@ -269,7 +269,16 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-resources.html">7. Resources and Next Steps</a>
+        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush9">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading9">
+        <a href="07-resources.html">8. Resources and Next Steps</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -587,28 +596,42 @@ available. Claude Code defaults to an interactive session; the
 <code>-p</code> (or <code>--print</code>) flag runs a single prompt
 non-interactively (headless mode), which we use for quick one-off
 checks.</p>
-<p>Navigate to the project folder you created during setup and run a
-quick headless check:</p>
+<p>Navigate to your project folder, <code>coastal-water-quality</code>,
+and run a quick headless check:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="bu">cd</span> agentic-research-project</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a><span class="ex">claude</span> <span class="at">-p</span> <span class="st">"Tell me what operating system I am currently using and list the files in this directory."</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="bu">cd</span> coastal-water-quality</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a><span class="ex">claude</span> <span class="at">-p</span> <span class="st">"What operating system am I on? List the files here and in data/."</span></span></code></pre>
 </div>
-<p>Compare the output to what you see when you run <code>ls</code> (or
-<code>dir</code> on Windows). Did the AI accurately describe your
-environment?</p>
-<p>The AI should return a response similar to:</p>
-<pre><code>You are currently using macOS (Darwin). The files in this directory are:
-- index.md
-- config.yaml
-- episodes/
-- data/
-...</code></pre>
-<p>Notice that Claude Code can ‘see’ your files and understands what
-environment you are working in.</p>
-<p>We have a project folder that we want to start a project in, let’s
-initialize it for Claude Code and see what that does.</p>
+<p>Compare the output to what you see when you run <code>ls</code> and
+<code>ls data/</code>. Did the AI describe your project accurately? The
+AI should return something like:</p>
+<pre><code>You are on macOS (Darwin). This looks like a data-cleaning project.
+Top level: README.md, CLAUDE.example.md, validate_data.py, data/, expected_outputs/
+data/: site_A.csv, site_B.csv, site_C.csv</code></pre>
+<div class="section level3">
+<h3 id="a-first-look-at-the-data">A first look at the data<a class="anchor" aria-label="anchor" href="#a-first-look-at-the-data"></a></h3>
+<p>Before you let the agent touch anything, look yourself. In your
+terminal:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="fu">head</span> data/site_A.csv</span></code></pre>
+</div>
+<p>Then ask the agent to describe the same file, and compare:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">claude</span> <span class="at">-p</span> <span class="st">"Describe the columns in data/site_A.csv and note anything inconsistent or risky for analysis."</span></span></code></pre>
+</div>
+<p>Did its description match what you saw with <code>head</code>? Where
+it added an interpretation (for example, guessing what a column means),
+note that as the agent’s <em>assumption</em>, not fact. This habit,
+checking what the tool claims against the data itself, is the whole
+point of the lesson.</p>
+<p>Now let’s initialize the project so the agent has persistent
+context.</p>
 <div id="working-directory-matters" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -624,72 +647,70 @@ sources of confusion in a workshop.</p>
 </div>
 </div>
 </div>
+</div>
 <div class="section level3">
 <h3 id="initialize-your-project">Initialize your project<a class="anchor" aria-label="anchor" href="#initialize-your-project"></a></h3>
 <p>Claude Code includes an <code>/init</code> command that creates a
 <code>CLAUDE.md</code> file describing your project in your working
 directory:</p>
-<div class="codewrapper sourceCode" id="cb5">
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ex">claude</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="ex">claude</span></span></code></pre>
 </div>
 <p>You are now inside a Claude Code session. Type <code>/</code> to see
 the available slash commands and page through the full list. Notice
 <code>/init</code>, this is the command that will initialize our
 project. Let’s run it:</p>
-<div class="codewrapper sourceCode" id="cb6">
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">/init</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="ex">/init</span></span></code></pre>
 </div>
 <p>Notice that it inspects your files and folders. After it finishes,
 let’s see what new files have been created. You can run a shell command
 from inside the session by starting the line with <code>!</code>:</p>
-<div class="codewrapper sourceCode" id="cb7">
+<div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="ex">!ls</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="ex">!ls</span></span></code></pre>
 </div>
 <p>This shows the files that are present. You should see a file named
 <code>CLAUDE.md</code>. Let’s look inside it:</p>
-<div class="codewrapper sourceCode" id="cb8">
+<div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="ex">!cat</span> CLAUDE.md</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="ex">!cat</span> CLAUDE.md</span></code></pre>
 </div>
-<p>Here is the kind of thing Claude Code generates for a fresh, nearly
-empty project folder:</p>
-<div class="codewrapper sourceCode" id="cb9">
+<p>Here is the kind of thing Claude Code generates for this project:</p>
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="fu"># CLAUDE.md</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a><span class="fu">## Project Overview</span></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a>This directory is a workspace for the <span class="in">`agentic-research-project`</span> project. It is</span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a>currently nearly empty, so there is little structure to describe yet. This</span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a>file provides project context for Claude Code and is intended to be updated</span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a>as the project evolves.</span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1" aria-label="code-block-9-9"></a></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1" aria-label="code-block-9-10"></a><span class="fu">## Key Files</span></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1" aria-label="code-block-9-11"></a></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1" aria-label="code-block-9-12"></a><span class="ss">- </span>**`CLAUDE.md`**: Project-specific context, conventions, and rules that</span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1" aria-label="code-block-9-13"></a>  Claude Code loads automatically at the start of every session.</span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1" aria-label="code-block-9-14"></a></span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1" aria-label="code-block-9-15"></a><span class="fu">## Usage</span></span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1" aria-label="code-block-9-16"></a></span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1" aria-label="code-block-9-17"></a>As you add data files, scripts, and documentation, re-run <span class="in">`/init`</span> to produce</span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1" aria-label="code-block-9-18"></a>a richer description, and edit this file by hand to record your goals,</span>
-<span id="cb9-19"><a href="#cb9-19" tabindex="-1" aria-label="code-block-9-19"></a>constraints, and rules.</span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="fu"># CLAUDE.md</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a><span class="fu">## Project Overview</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a>This is a data-cleaning project. The <span class="in">`data/`</span> directory holds three water quality</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1" aria-label="code-block-11-6"></a>files (<span class="in">`site_A.csv`</span>, <span class="in">`site_B.csv`</span>, <span class="in">`site_C.csv`</span>) with inconsistent column names and</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1" aria-label="code-block-11-7"></a>date formats. The goal is to merge them into <span class="in">`data/master_dataset.csv`</span> and analyse</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1" aria-label="code-block-11-8"></a>water quality trends. See <span class="in">`README.md`</span> for the target schema.</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1" aria-label="code-block-11-9"></a></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1" aria-label="code-block-11-10"></a><span class="fu">## Key Files</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1" aria-label="code-block-11-11"></a></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1" aria-label="code-block-11-12"></a><span class="ss">- </span>**`data/site_*.csv`**: raw per-site measurements (do not edit).</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1" aria-label="code-block-11-13"></a><span class="ss">- </span>**`validate_data.py`**: checks for the merged dataset.</span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1" aria-label="code-block-11-14"></a><span class="ss">- </span>**`CLAUDE.md`**: project context and rules, loaded automatically each session.</span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1" aria-label="code-block-11-15"></a></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1" aria-label="code-block-11-16"></a><span class="fu">## Usage</span></span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1" aria-label="code-block-11-17"></a></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1" aria-label="code-block-11-18"></a>Re-run <span class="in">`/init`</span> after the project changes, and edit this file by hand to record your</span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1" aria-label="code-block-11-19"></a>goals, constraints, and rules.</span></code></pre>
 </div>
 <p>A few things to notice. Claude Code scanned the directory and
-described what it found. Because the folder was nearly empty, it does
-not have much to say yet. Once you add data files, scripts, and
-documentation, running <code>/init</code> again will produce a richer
-spec that reflects your actual project. This is also something you will
-want to edit by hand, add your goals, constraints, and any rules you
-want the agent to follow.</p>
+described the real project, including the messy site files. Because this
+folder has data, the generated spec is already useful. You will still
+edit it by hand to add the goals, constraints, and rules the agent must
+follow.</p>
 </div>
 </section><section><h2 class="section-heading" id="the-living-spec">The Living Spec<a class="anchor" aria-label="anchor" href="#the-living-spec"></a></h2>
 <hr class="half-width"><p>To get the most out of a CLI agent, provide it with persistent
@@ -781,23 +802,23 @@ Metric” (how you know it’s done).</p>
   Example spec file
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb10">
+<div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="fu"># Project: Arctic Sea Ice Analysis</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a><span class="fu">## Goal</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a>To analyse trends in sea ice extent from 1980-2020.</span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a><span class="fu">## Rules of the Road</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a><span class="ss">- </span>**Hard Constraint**: Only use the <span class="in">`xarray`</span> library for spatial data processing.</span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a><span class="ss">- </span>**Success Metric**: All final plots must include a valid DOI reference for the data source.</span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a><span class="fu">## Conventions</span></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a><span class="ss">- </span>Use snake_case for variable names.</span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a><span class="ss">- </span>Save all plots to the <span class="in">`figures/`</span> directory.</span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="fu"># Project: Arctic Sea Ice Analysis</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a><span class="fu">## Goal</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a>To analyse trends in sea ice extent from 1980-2020.</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1" aria-label="code-block-12-5"></a></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1" aria-label="code-block-12-6"></a><span class="fu">## Rules of the Road</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1" aria-label="code-block-12-7"></a><span class="ss">- </span>**Hard Constraint**: Only use the <span class="in">`xarray`</span> library for spatial data processing.</span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1" aria-label="code-block-12-8"></a><span class="ss">- </span>**Success Metric**: All final plots must include a valid DOI reference for the data source.</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1" aria-label="code-block-12-9"></a></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1" aria-label="code-block-12-10"></a><span class="fu">## Conventions</span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1" aria-label="code-block-12-11"></a><span class="ss">- </span>Use snake_case for variable names.</span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1" aria-label="code-block-12-12"></a><span class="ss">- </span>Save all plots to the <span class="in">`figures/`</span> directory.</span></code></pre>
 </div>
 </div>
 </div>

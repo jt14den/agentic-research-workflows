@@ -118,7 +118,7 @@
     <a id="search-button" class="btn btn-primary" href="aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
 </nav><aside class="col-md-12 lesson-progress"><div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">60%</div>
+    <div class="progress-bar incubator" role="progressbar" style="width: 48%" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">48%</div>
   </div>
 </aside><div class="container">
       <div class="row">
@@ -267,7 +267,16 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-resources.html">7. Resources and Next Steps</a>
+        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush9">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading9">
+        <a href="07-resources.html">8. Resources and Next Steps</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -368,6 +377,8 @@ code.</li>
 productivity score.</li>
 <li>Use a four-layer validation stack with explicit requirement
 constraints.</li>
+<li>Turn validation into checks you can run, by finishing
+<code>validate_data.py</code>.</li>
 <li>Use multi-model verification to peer-review research code.</li>
 </ul></div>
 </div>
@@ -456,29 +467,34 @@ validation stack.</p>
 <p>Before the AI writes code, define requirement constraints in your
 <code>CLAUDE.md</code>. These are rules the AI is not allowed to
 break.</p>
-<p><em>Example:</em> “Do not change the column names in
-<code>raw_data.csv</code>” or “Use only base R for this visualisation to
-ensure compatibility.”</p>
+<p><em>Example (from our project):</em> “Do not change the column names
+in <code>data/site_*.csv</code>” and “Do not drop any rows: the merge
+must have 60.”</p>
 </div>
 <div class="section level3">
-<h3 id="layer-2-automated-unit-tests">Layer 2: Automated unit tests<a class="anchor" aria-label="anchor" href="#layer-2-automated-unit-tests"></a></h3>
-<p>Ask the agent to write tests before the implementation. Use a prompt
-pattern like: “First, write five Pytest cases that define the success of
-this data cleaning script. I will approve the tests before you write the
-logic.”</p>
+<h3 id="layer-2-automated-checks-you-can-run">Layer 2: Automated checks you can run<a class="anchor" aria-label="anchor" href="#layer-2-automated-checks-you-can-run"></a></h3>
+<p>Validation should be executable, not just a feeling. Your project
+ships <code>validate_data.py</code> with two checks written and three
+left as TODO. Ask the agent to help you implement the rest, then read
+and run them, so that “valid” means “these checks passed,” not “it
+looked fine.”</p>
 </div>
 <div class="section level3">
 <h3 id="layer-3-metamorphic-and-invariant-checks">Layer 3: Metamorphic and invariant checks<a class="anchor" aria-label="anchor" href="#layer-3-metamorphic-and-invariant-checks"></a></h3>
 <p>Test the relationships in your data that should never change. -
-<strong>Invariants:</strong> The total number of participants must
-remain 150 after merging. - <strong>Metamorphic checks:</strong> If I
-change the order of the input rows, the final mean score should not
-change.</p>
+<strong>Invariants:</strong> the merged file must have 60 rows (3 sites
+x 20 samples), and no <code>sample_id</code> should be lost. -
+<strong>Metamorphic checks:</strong> if you shuffle the order of the
+input rows, the merged mean score should not change.</p>
 </div>
 <div class="section level3">
 <h3 id="layer-4-domain-plausibility">Layer 4: Domain plausibility<a class="anchor" aria-label="anchor" href="#layer-4-domain-plausibility"></a></h3>
-<p>This is where your research expertise is irreplaceable. AI does not
-know that a negative blood pressure reading is impossible.</p>
+<p>This is where your research expertise is irreplaceable. A check can
+pass while the science is wrong. In our data, a water quality score
+above 100 is impossible, and site C’s January samples must not appear in
+May. The clearest case: if the date-format trap goes uncaught, the
+cleaning runs, the row count is right, and the <strong>trend you plot is
+still wrong</strong>.</p>
 <div id="validation-is-yours-to-own" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -506,6 +522,47 @@ question.</li>
 most.</strong> No model can replace knowing what a sensible result looks
 like in your field.</li>
 </ul></div>
+</div>
+</div>
+<div id="challenge-build-the-validator" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-build-the-validator" class="callout-inner">
+<h3 class="callout-title">Challenge: build the validator</h3>
+<div class="callout-content">
+<p>Open <code>validate_data.py</code>. Two checks are written for you;
+three are left as TODO (dates parse and fall in 2023, every
+<code>sample_id</code> is present exactly once, scores within
+0-100).</p>
+<ol style="list-style-type: decimal"><li>Implement the three TODO checks. Write them yourself, or ask the
+agent and then read every line before you trust them.</li>
+<li>Run <code>python validate_data.py</code> against your
+<code>data/master_dataset.csv</code>. Make the checks pass by fixing the
+data or the cleaning script, never by editing a value to satisfy a
+check.</li>
+<li>Now break it on purpose: ask the agent to re-clean while parsing
+site C dates as month-day. Run the validator again. Does your date check
+catch the January-to-May drift?</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<p>If your validator still passes on the misparsed data, the date check
+is too weak. A good check asserts something the bug would violate, for
+example that the earliest site C sample falls in January, or that each
+parsed date keeps the original day and month, not merely that
+<code>pd.to_datetime</code> did not raise an error. A validator that
+cannot fail on a known-bad input is not protecting you.</p>
+</div>
+</div>
 </div>
 </div>
 <hr></div>
@@ -537,14 +594,12 @@ implementation model missed?</p></li>
 </ol></div>
 </div>
 </div>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1">
-  Why this works
-  </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Why this works </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>Models have different blind spots. Forcing a second AI to act as an
 auditor helps bypass the tendency of the primary assistant to be
@@ -572,14 +627,12 @@ the approval gate out loud or in writing. Answer all five:</p>
 </ol></div>
 </div>
 </div>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2">
-  What a good answer looks like
-  </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> What a good answer looks like </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>A strong answer names the output precisely, points to
 <em>specific</em> checks as evidence (row counts, invariant checks, a
