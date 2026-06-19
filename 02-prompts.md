@@ -24,16 +24,16 @@ exercises: 20
 
 ::::::::::::::::::::::::::::::::::::::::: callout
 
-## Working inside the Gemini CLI
+## Working inside Claude Code
 
-All prompts in this episode are typed inside an active Gemini CLI session. Start one in your project folder before the exercises:
+All prompts in this episode are typed inside an active Claude Code session. Start one in your project folder before the exercises:
 
 ```bash
 cd path/to/your/project
-gemini
+claude
 ```
 
-Then type prompts directly at the `>` prompt. Shell commands (like `python script.py`) are run in a separate terminal window.
+Then type prompts directly at the prompt. Shell commands (like `python script.py`) are run in a separate terminal window, or from inside the session by prefixing the line with `!`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -49,7 +49,7 @@ Treat prompting as an iterative process. Start with a simple request and add com
 
 ## The CO-STAR framework
 
-While CLEAR helps with conversation flow, CO-STAR structures complex research prompts that eventually become part of your `AGENTS.md`:
+While CLEAR helps with conversation flow, CO-STAR structures complex research prompts that eventually become part of your `CLAUDE.md`:
 
 *   **Context**: Provide background (e.g., "I am a biologist analyzing RNA-seq data").
 *   **Objective**: Define the specific task ("Write a script to normalize these counts").
@@ -62,16 +62,16 @@ While CLEAR helps with conversation flow, CO-STAR structures complex research pr
 
 ## The Bootstrap Workflow
 
-Instead of writing a full `AGENTS.md` by hand, use the **Bootstrap Workflow**. This lets the agent assist in defining the project spec from the start.
+Instead of writing a full `CLAUDE.md` by hand, use the **Bootstrap Workflow**. This lets the agent assist in defining the project spec from the start.
 
 1.  **Scan**: Ask the agent to scan your directory and data files.
-2.  **Draft**: Ask the agent to write an initial `AGENTS.md` based on what it sees and your high-level goal.
+2.  **Draft**: Ask the agent to write an initial `CLAUDE.md` based on what it sees and your high-level goal.
 3.  **Gate**: You review, edit, and approve the spec before any code is written.
 
 ::::::::::::::::::::::::::::::::::::::::: callout
 
 ## Example bootstrap prompt
-"Scan the CSV files in `data/raw/`. Based on my goal of 'Analyzing water quality trends', draft an `AGENTS.md` file that defines the column schema, required libraries, and a plan for cleaning the data."
+"Scan the CSV files in `data/raw/`. Based on my goal of 'Analyzing water quality trends', draft an `CLAUDE.md` file that defines the column schema, required libraries, and a plan for cleaning the data."
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -84,6 +84,52 @@ Instead of writing a full `AGENTS.md` by hand, use the **Bootstrap Workflow**. T
 | Vague vs specific | "Clean this data." | "In `data.csv`, remove rows with missing values in the 'age' column and save as `clean_data.csv`." |
 | No context vs context | "Write a plot script." | "I am building a report for a climate study. Write a Python script using seaborn to create a line plot of 'temp' over 'year' from `results.csv`." |
 | Silent vs validated | "Run a t-test." | "Perform a paired t-test between 'pre' and 'post' columns. Print the t-statistic, p-value, and an interpretation of the result at alpha=0.05." |
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+## Prompts that preserve learning
+
+Good prompting is technical communication, but in a learning setting it is also *learning design*. A prompt can be specific and well-formed and still rob you of the understanding you came to build. The prompts below are written to keep you in the loop: the AI helps, but you still do the thinking that makes the result yours.
+
+Prompts that preserve learning:
+
+- "Do not give me the final code yet. Ask me three questions about the data first."
+- "Give me a plan using only concepts we have covered so far."
+- "Write the simplest possible version. Avoid list comprehensions, classes, and external libraries."
+- "Explain what assumptions you are making about my data."
+- "Give me one small change to make myself, and tell me where to make it."
+- "Ask me to predict the output before you show me the answer."
+- "Give me a hint, not the solution."
+
+::::::::::::::::::::::::::::::::::::::::: callout
+
+## Prompts to avoid, and what to ask instead
+
+The prompts on the left feel efficient but hand over the parts that make code trustworthy. The versions on the right keep you able to explain and validate the result.
+
+| Avoid | Ask instead |
+| :--- | :--- |
+| "Do this exercise for me." | "Walk me through how to approach this; do not write the final answer." |
+| "Fix everything." | "List the problems you see, ranked. I will choose which to fix first." |
+| "Make this production ready." | "Name the three biggest risks in this script for research use." |
+| "Clean this data." | "Tell me what inconsistencies you find in these files. Do not change anything yet." |
+| "Write the whole pipeline." | "Outline the pipeline in steps. We will build and check one step at a time." |
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::: instructor
+
+## Instructor note: watch for cognitive load
+
+Generated prompts often pull in syntax, libraries, or abstractions the lesson has not introduced. Signs that AI output is adding extraneous load:
+
+- The agent uses an advanced feature (comprehensions, classes, decorators) before it has been taught.
+- It imports a library that is not installed locally.
+- It writes several files when one short script would do.
+- It buries the core logic under heavy comments.
+- The answer is correct but the learner cannot explain it.
+
+Interventions: ask the learner to request a simpler version, to remove one abstraction, to trace the code line by line, or to compare it with a minimal reference solution. Slowing down here is the lesson, not a detour.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -133,7 +179,7 @@ As of 2025, reasoning models (such as OpenAI o1/o3, DeepSeek-R1, or Gemini 2.5 T
 
 **When to use them:**
 
-- **Standard models (e.g., Gemini Flash):** Best for quick formatting, simple scripts, and brainstorming.
+- **Standard models (e.g., Claude Haiku):** Best for quick formatting, simple scripts, and brainstorming.
 - **Reasoning models:** Best for complex logic, debugging hard errors, or writing scientific formulas where accuracy is important.
 
 When using a reasoning model, you often do not need to ask for introspection—they do it before showing the code.
@@ -176,7 +222,7 @@ This makes the plan a reviewable, editable artifact — a more formal version of
 
 ## Plan files vs. the Living Spec
 
-A `PLAN.md` and your `GEMINI.md` serve different purposes. The spec defines persistent rules and constraints that apply across all sessions. The plan describes the steps for a specific task. Keep them separate: plans are temporary, specs are durable.
+A `PLAN.md` and your `CLAUDE.md` serve different purposes. The spec defines persistent rules and constraints that apply across all sessions. The plan describes the steps for a specific task. Keep them separate: plans are temporary, specs are durable.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -184,7 +230,7 @@ A `PLAN.md` and your `GEMINI.md` serve different purposes. The spec defines pers
 
 ## Challenge: Plan before you clean
 
-Practice the think-then-do pattern before moving on to the data cleaning episode. Inside your Gemini CLI session, type:
+Practice the think-then-do pattern before moving on to the data cleaning episode. Inside your Claude Code session, type:
 
 ```
 I have three CSV files from different research sites with inconsistent column names and date formats. Before writing any code, outline a step-by-step plan for cleaning and merging them into a single dataset. Do not write any files yet.
@@ -241,7 +287,7 @@ Have you seen an AI make a confident mistake? In your research, what signs indic
 
 Practice the CLEAR framework to visualize the relationship between "Date" and "Score" in a dataset.
 
-1.  **Start with a vague prompt** — type this inside your Gemini CLI session:
+1.  **Start with a vague prompt** — type this inside your Claude Code session:
     ```
     Create a plot of the data I just made.
     ```
@@ -274,7 +320,7 @@ Using the 'master_dataset.csv' file, create a Python script to generate a scatte
 
 Test the AI as a verifier principle. Ask the AI to find flaws in its code before you run it.
 
-1.  **Generate a script** — type this prompt inside your Gemini CLI session:
+1.  **Generate a script** — type this prompt inside your Claude Code session:
     ```
     Write a Python script that reads 'data.csv' and calculates the rolling 7-day average of a 'score' column. Handle missing values.
     ```
@@ -294,11 +340,20 @@ AI models are often more accurate when asked to critique logic than when asked t
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+:::::::::::::::::::::::::::::::::::::: discussion
+
+## Feedback checkpoint: paste one line you don't understand
+
+In the shared Etherpad, paste one line of AI-generated code from this episode that you cannot fully explain yet. We will pick a few and work through them together. There is no penalty for not understanding a line; the penalty is shipping it without knowing what it does.
+
+:::::::::::::::::::::::::::::::::::::::::::::::::
+
 ::::::::::::::::::::::::::::::::::::::: keypoints
 
 - Be specific and provide context.
 - Plan before you act: request a numbered plan and approve it before any files are written.
-- Always validate AI outputs.
+- Prefer prompts that preserve learning: ask for plans, hints, and the simplest version, not the finished answer.
+- Always validate AI outputs, and never ship a line you cannot explain.
 - Introspection improves code quality.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::

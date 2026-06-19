@@ -2,58 +2,65 @@
 title: Setup
 ---
 
-To follow this lesson, you will need the Gemini CLI and Python installed on your machine. The steps below get you set up with a direct local install, which is the approach used throughout the lesson.
+To follow this lesson, you will need [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and Python installed on your machine. Claude Code is Anthropic's terminal-based AI coding agent. The steps below get you set up with a direct local install, which is the approach used throughout the lesson.
 
 ## 1. Install Node.js and Python
 
 - **Node.js**: Download the LTS version from [nodejs.org](https://nodejs.org) or use a package manager (`brew install node` on macOS).
 - **Python**: Ensure you have Python 3.9+ installed. Check with `python --version`.
 
-## 2. Install the Gemini CLI
+## 2. Install Claude Code
 
 ```bash
-npm install -g @google/gemini-cli
+npm install -g @anthropic-ai/claude-code
 ```
 
 ## 3. Authenticate
 
-Run this command and sign in with your Google account when the browser opens:
+How you authenticate depends on which path you are using (see "Institutional context and access" below). For the workshop, most learners will sign in with a personal Claude account:
 
 ```bash
-gemini auth login
+claude
 ```
 
-The CLI stores your credentials locally. You will not need to repeat this step.
+On first launch, Claude Code walks you through signing in. A Claude Pro or Max subscription, or an Anthropic API key, will work. The credentials are stored locally; you will not need to repeat this step.
 
 ## 4. Verify the install
 
 ```bash
-gemini --version
+claude --version
 ```
 
 If you see a version number, you are ready. If the command is not found, restart your terminal and try again.
 
-<!-- TODO: Add a step here to configure the default model to gemini-2.5-flash-lite.
-     This keeps all learners on the same free-tier model during the workshop.
-     Need to confirm the correct mechanism for @google/gemini-cli:
-       - Is it a config file (e.g. ~/.gemini/config.json or settings.json)?
-       - An environment variable (GEMINI_MODEL or similar)?
-       - A flag passed when starting the CLI?
-       - A setting in GEMINI.md?
-     Also decide whether to provide a pre-configured starter folder that learners
-     download before class (with GEMINI.md and model config pre-set).
-     Reflect the chosen approach in setup.md, episode 01 GEMINI.md example,
-     and instructor notes. -->
+## 5. Create a working folder
+
+The lesson runs inside a dedicated project folder. Create an empty one now and move into it. You will generate the practice data files here during the lesson.
+
+```bash
+mkdir agentic-research-project
+cd agentic-research-project
+```
+
+Throughout the lesson, start Claude Code from inside this folder.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::: callout
+
+### Keep everyone on the same model
+
+Inside a Claude Code session you can set the model with the `/model` command (for example, `claude-sonnet-4-6`). Pinning the whole class to one model keeps outputs comparable and makes provenance records meaningful. Your instructor will tell you which model to select.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::::::::: caution
 
 ### Security and working directory
 
-The Gemini CLI runs in your terminal and has direct access to the files in your current folder. A few habits to keep in mind:
+Claude Code runs in your terminal and has direct access to the files in your current folder. A few habits to keep in mind:
 
-1. Always start the CLI from a dedicated project folder, not your home directory.
+1. Always start it from a dedicated project folder, not your home directory.
 2. Keep files under version control (Git) so you can revert unwanted changes.
-3. Never start the CLI in folders with sensitive system files, credentials, or private data.
+3. Never start it in folders with sensitive system files, credentials, or private data.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -61,9 +68,9 @@ The Gemini CLI runs in your terminal and has direct access to the files in your 
 
 ### Running in a sandbox (optional)
 
-Some researchers prefer to isolate the CLI from their personal files entirely. Two options worth knowing about:
+Some researchers prefer to isolate the agent from their personal files entirely. Two options worth knowing about:
 
-- **Docker**: The lesson repository includes a `Dockerfile` that builds a container with the Gemini CLI pre-installed. The agent can only see files you explicitly mount into it. See the [Docker documentation](https://docs.docker.com/) for setup, or [Docker AI Sandboxes](https://docs.docker.com/ai/sandboxes/) for a purpose-built option.
+- **Docker**: The lesson repository includes a `Dockerfile` that builds a container with the agent pre-installed. It can only see files you explicitly mount into it. See the [Docker documentation](https://docs.docker.com/) for setup, or [Docker AI Sandboxes](https://docs.docker.com/ai/sandboxes/) for a purpose-built option.
 - **Agent Safehouse**: [agent-safehouse.dev](https://agent-safehouse.dev/) is a dedicated environment for running AI agents with built-in isolation controls.
 
 Both approaches require more setup and are not needed for this workshop, but are worth exploring if you plan to use these tools regularly with sensitive data.
@@ -72,4 +79,13 @@ Both approaches require more setup and are not needed for this workshop, but are
 
 ## Institutional context and access
 
-Many campuses (like the University of California) have enterprise AI agreements. CLI access is often a separate feature that requires IT provisioning. If your institution's license does not cover the CLI, you may need to use a personal Google account for this workshop. Always follow your institution's data privacy policies.
+This is the most important section to read before using these tools with real research data. Your institution decides which AI tools are approved for which kinds of data.
+
+**At UCLA**, the centrally provided free AI tools (Gemini Basic, Microsoft Copilot, ChatGPT web) are **web-only** and approved for data classified **P1-P3** (P4 requires CISO/Unit Head approval). They are not terminal agents and cannot run this lesson. See [UCLA's available AI tools list](https://dts.ucla.edu/initiatives/ai/available-tools) for the current details and data-tier rules.
+
+For the terminal workflow this lesson teaches, there are two paths:
+
+- **Personal plan or API key (P1-P3, non-sensitive data).** A personal Claude Pro/Max subscription or Anthropic API key. This is the simplest setup and what most workshop exercises assume. Do not use it with sensitive or restricted research data.
+- **UCLA Amazon Bedrock (sensitive data).** Claude Code can run against Anthropic models hosted in **Amazon Bedrock**, which UCLA provides as an enterprise, privacy-bounded service. The same lesson commands work; only the backend changes. Use this path for P3/P4 research data, and confirm your unit's Bedrock access and data-tier approval first. See your instructor or UCLA DTS for setup.
+
+**Always follow your institution's data privacy policies.** PHI and attorney-client privileged information are not approved for these tools; UCLA Health users should use the HIPAA-compliant alternative (nebulaOne).

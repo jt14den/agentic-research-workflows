@@ -8,17 +8,17 @@ exercises: 20
 
 ## Objectives
 
-- Generate a test dataset using Gemini.
-- Build a data processing pipeline for inconsistent files.
-- Verify AI-generated code before running it.
-- Document the cleaning process.
+- Predict what a cleaning script must handle before you prompt for it.
+- Build a data processing pipeline for inconsistent files using a spec.
+- Explain and validate AI-generated code before you trust its output.
+- Document the cleaning process and record its provenance.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- How can AI handle messy data?
 - Can I trust AI to standardize inconsistent files?
+- How do I check that a cleaning script did what I needed, not just what the AI assumed?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -30,7 +30,7 @@ This episode uses live coding. Learners should follow along by running commands 
 :::::::::::::::::::::::::::::::::::::::::: prereq
 
 ## Prerequisites
-Ensure you are authenticated (`gemini auth login`) and have a Gemini CLI session running in your project folder. Generating scripts can take 10-30 seconds.
+Ensure you are signed in to Claude Code and have a session running in your project folder. Generating scripts can take 10-30 seconds.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -38,13 +38,13 @@ Ensure you are authenticated (`gemini auth login`) and have a Gemini CLI session
 
 ::::::::::::::::::::::::::::::::::::::::: callout
 
-## Working inside the Gemini CLI
+## Working inside Claude Code
 
-All prompts in this episode are typed inside an active Gemini CLI session. Start one in your project folder before the exercises:
+All prompts in this episode are typed inside an active Claude Code session. Start one in your project folder before the exercises:
 
 ```bash
 cd path/to/your/project
-gemini
+claude
 ```
 
 Run Python scripts in a separate terminal window when instructed.
@@ -53,7 +53,7 @@ Run Python scripts in a separate terminal window when instructed.
 
 ## Cleaning messy data
 
-Cleaning and merging inconsistent files is a common bottleneck in research. We will use Gemini to standardize messy CSV files.
+Cleaning and merging inconsistent files is a common bottleneck in research. We will use Claude Code to standardize messy CSV files.
 
 ### Generating test data
 
@@ -82,16 +82,41 @@ If your data files are extremely inconsistent, reasoning models (like o1 or Deep
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Spec-guided cleaning
+## Cleaning with AI, one checkpoint at a time
 
-In **Spec-Driven Research Orchestration**, we don't just ask for a script. We refer to the `AGENTS.md` file to ensure the script follows the project's rules.
+It is tempting to type "clean and merge these files" and run whatever comes back. Resist that. We will work the same task as a sequence of checkpoints so that you can explain and validate the result, not just produce one. This is the pattern you will reuse for the rest of the lesson: **predict, prompt for a plan, inspect, modify, validate, reflect.**
 
-### Harmonizing files with the Spec
+### A. Predict before you prompt
 
-We will now ask Gemini to generate a script using the rules defined in `AGENTS.md`.
+Open the three CSV files and look at them yourself first. Without using the AI, write down **two inconsistencies you expect any cleaning script will have to handle** (for example: `site_A` uses `ParticipantID` but `site_B` uses `id`, or the dates are in different formats).
+
+Keep this list. It is your yardstick for judging what the AI proposes.
+
+### B. Ask the AI for a plan only
+
+Do not ask for code yet. Inside your Claude Code session:
 
 ```
-Read 'AGENTS.md' and the 3 site CSVs. Write a script called 'clean_and_merge.py' that renames IDs and standardizes dates according to the schema in the spec. Fill missing scores with the median and save to 'master_dataset.csv'. Add comments linking code steps to spec rules.
+Read 'CLAUDE.md' and the three site CSVs. Before writing any code, give me a numbered plan for cleaning and merging them into 'master_dataset.csv'. Do not write any files yet.
+```
+
+Compare the plan with the two inconsistencies you wrote down in step A. Did the plan catch them? Did it miss any? Did it propose anything you did not expect (for example, filling missing values a particular way)?
+
+### C. Approve or revise the plan
+
+If the plan is missing a constraint you care about, add it to `CLAUDE.md` rather than only mentioning it in chat. The spec is what travels across sessions. For example, you might add:
+
+```markdown
+- Missing scores must be filled with the site median, never the global mean.
+- Do not drop any participant rows during cleaning.
+```
+
+### D. Generate the code
+
+Now ask for the script, pointing it at the spec:
+
+```
+Read 'CLAUDE.md' and the three site CSVs. Write a script called 'clean_and_merge.py' that follows the plan and the spec rules. Save the result to 'master_dataset.csv'. Add comments linking code steps to spec rules.
 ```
 
 ::::::::::::::::::::::::::::::::::::::::: instructor
@@ -104,19 +129,41 @@ If a learner's AI fails to generate working code, provide the pre-written versio
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::::::: callout
+### E. Explain before you run
 
-## The editor role
-Before running the code, open `clean_and_merge.py`. Check if the logic is sound, if the comments match the code, and if there are syntax errors. You are responsible for the final output.
+Hands off the keyboard. Open `clean_and_merge.py` and read it. In pairs, **each person explains one section of the script out loud** to the other: what it does and which spec rule it serves. If a section uses something you have not seen, that is exactly the line to ask about.
 
-::::::::::::::::::::::::::::::::::::::::::::::::::
+You are responsible for the final output. You cannot validate what you cannot explain.
 
-Run `python clean_and_merge.py` to create the clean dataset.
+### F. Validate against checks, not vibes
 
-::::::::::::::::::::::::::::::::::::::::: callout
+Run `python clean_and_merge.py`, then confirm the result with three concrete checks. "It ran" is not one of them.
 
-## Using comments
-We asked the AI to "Add comments explaining each step." These comments make the script readable and help you verify the methodology.
+- **Row-count check:** Does the merged file have the number of rows you expected (for example, 150 if three sites of 50 should all be kept)?
+- **Missing-value check:** Are there still missing values where there should be none? Are there none where some should remain?
+- **Date-format check:** Are all dates in a single consistent format?
+
+You can ask the AI to write these checks, but read them before you trust them.
+
+### G. Reflect
+
+- What did the AI handle well?
+- What did you have to already know in order to judge its answer?
+- Did anything in the script change the data in a way the plan did not mention?
+
+:::::::::::::::::::::::::::::::::::::::::: discussion
+
+## Feedback checkpoint: surprises and uncertainty
+
+In the shared Etherpad, post two short lines: one thing the AI did that surprised you, and one thing it made sound certain that you are still unsure about. Bring these back into the room.
+
+:::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::: instructor
+
+## Instructor note: cognitive load in this episode
+
+This is the most technically demanding episode, and generated cleaning code is where extraneous load shows up most. Watch for scripts that reach for `apply` with lambdas, regex date parsing, or multiple helper files when a short linear script would do. If a learner cannot explain a block in step E, have them ask the agent for a simpler version before continuing. The "hands off keyboard" read in step E is a feedback checkpoint: it is where you find out who is lost.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -131,7 +178,11 @@ This challenge requires modifying existing code. If learners are stuck, suggest 
 
 ## Challenge: Update the script
 
-Imagine you need to exclude any participant with a score below 10. Use the Gemini CLI to update `clean_and_merge.py` instead of editing it manually. Ask the AI to read the file and add the filtering logic. Run the updated script and verify the results in `master_dataset.csv`.
+Imagine you need to exclude any participant with a score below 10.
+
+1. **Predict first.** Before prompting, write down how many rows you expect this to remove and which `master_dataset.csv` row count you expect afterward. Base it on what you saw when you inspected the data.
+2. **Then update.** Use Claude Code to update `clean_and_merge.py` instead of editing it manually. Ask the AI to read the file and add the filtering logic.
+3. **Verify against your prediction.** Run the updated script and compare the actual row count to what you predicted. If they differ, explain why in one sentence (for example: missing scores, ties at exactly 10, or the filter ran in the wrong order).
 
 :::::::::::::::::::::::::::::::::::::::: solution
 
@@ -165,9 +216,9 @@ Create a README.md file that explains the data processing pipeline we just built
 
 To ensure research is reproducible, track which model generated your code and when.
 
-1. Use the Gemini CLI to add a provenance header to `clean_and_merge.py`.
+1. Use Claude Code to add a provenance header to `clean_and_merge.py`.
 2. The header should be a Python docstring containing:
-    - The model used (e.g., Gemini 2.0 Flash)
+    - The model used (e.g., Claude Sonnet 4.6)
     - The date
     - A summary of the prompt.
 
@@ -176,7 +227,7 @@ To ensure research is reproducible, track which model generated your code and wh
 ## Example command
 
 ```
-Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the model name 'Gemini 2.5 Flash', today's date, and a summary of the prompt: 'Standardize site IDs, format dates, and impute missing scores with site medians.'
+Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the model name 'Claude Sonnet 4.6', today's date, and a summary of the prompt: 'Standardize site IDs, format dates, and impute missing scores with site medians.'
 ```
 
 ### Reflection
@@ -190,8 +241,9 @@ Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a prov
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- Use AI to automate data harmonization and standardization.
-- Audit data before cleaning to identify inconsistencies.
-- Read and test all generated code before running it.
+- Predict the inconsistencies yourself before prompting, so you can judge the AI's plan.
+- Ask for a plan first, put constraints in the spec, then generate code.
+- Explain the script before you run it; you cannot validate what you cannot explain.
+- Validate with concrete checks (row count, missing values, date format), not because it ran.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::

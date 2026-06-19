@@ -1,10 +1,10 @@
-# Project Context: Agentic Research Workflows: Orchestrating AI and Validation
+# Project Context: Agentic Research Workflows: AI Coding, Validation, and Research Responsibility
 
 This repository contains the "Agentic Research Workflows" lesson, part of the IMLS Open Science curriculum hub. It is a Carpentries-style lesson (using the Sandpaper framework) designed to introduce researchers to AI-assisted programming and validation best practices.
 
 ## Recent Accomplishments
 
-### Current Lesson Development (`vibe-coding-lesson`)
+### Current Lesson Development (`agentic-research-workflows`)
 - **Orchestration Context**: Added sections on "Spec-Driven Research Orchestration" and cognitive load management, emphasizing the shift from "writer" to "orchestrator" in the development process.
 - **Framework Integration**: Integrated the **CO-STAR** prompting framework, the **CLEAR** framework, and the **Bootstrap Workflow** into the curriculum.
 - **Glossary & References**: Converted the glossary to a semantic definition list format and updated references to include Aider and the Spec-Driven workflow.

@@ -8,14 +8,16 @@ exercises: 10
 
 ## Objectives
 
-- Compare CLI and browser-based AI tools.
-- Create a Living Spec (GEMINI.md) to guide an agent.
-- Explain the shift from writer to orchestrator.
+- Describe what different AI tools can see and what they can change.
+- Compare chatbot, IDE assistant, CLI agent, and fully agentic workflows.
+- Create a Living Spec (CLAUDE.md) to guide an agent.
+- Explain why you remain the active reviewer of AI-generated code.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
+- What can each kind of AI tool see, and what can it change?
 - Why use a CLI for AI instead of a browser?
 - What is the Living Spec and why does it matter?
 
@@ -28,10 +30,10 @@ exercises: 10
 Ask all learners to run:
 
 ```bash
-gemini --version
+claude --version
 ```
 
-If it returns a version number, they are ready. If the command is not found, they need to complete the install and run `gemini auth login` before continuing.
+If it returns a version number, they are ready. If the command is not found, they need to complete the install and sign in (launch `claude` once and follow the prompts) before continuing. Confirm everyone has selected the same model with `/model`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -47,27 +49,57 @@ A CLI (Command Line Interface) agent runs in your terminal — the same place yo
 
 **An iterative loop.** When a script fails, the agent sees the error output in the terminal and can try again. You are not copying stack traces back into a chat window. The feedback loop is tight and stays in one place.
 
+## What the tool can see, and what it can change
+
+Before you trust any AI tool, the first question is always: *what can it see, and what can it do?* The more access a tool has, the more it can help, and the more it can quietly get wrong. These four kinds of tools sit along that spectrum.
+
+| Tool type | What context it has | What it can do | What can go wrong | What a novice should verify |
+|---|---|---|---|---|
+| **Chatbot** (browser, e.g. ChatGPT, Gemini web) | Only what you paste in | Suggests code and text | No view of your real files; guesses at structure; you copy code by hand | That the code matches your *actual* columns and files, not the example it imagined |
+| **IDE assistant** (e.g. Copilot in VS Code) | The file you have open, sometimes nearby files | Suggests and inserts code inline | Sees only part of the project; may complete code that fits the line but not the goal | That the suggestion does what you intended, not just what looks plausible |
+| **CLI agent** (e.g. Claude Code, Codex CLI) | Your project directory: files, data, structure | Reads files, runs code, writes scripts to disk | Can edit or delete real files; can act on a misread of your data | What files it read, what it changed, and what it ran, before you approve |
+| **Fully agentic workflow** (multi-step, runs tools on its own) | Whatever you grant, across many steps | Plans and executes a chain of actions with little input | Errors compound across steps; hard to see where it went wrong | That you can still explain each step and reproduce the result |
+
+As you move down the table, the tool can do more for you and more *to* you. Nothing in this table removes your responsibility to understand the result.
+
+::::::::::::::::::::::::::::::::::::::::: instructor
+
+## Instructor note: access is not understanding
+
+Learners are often impressed that a CLI agent can read their files and run their code. Impressive access is not the same as a correct result. Watch for learners who can describe what the agent *can do* but not what it *just did*.
+
+Before any learner approves a command that changes files, ask them to say out loud: what did the agent read, what is it about to change, and why. If they cannot answer, that is the moment to slow down, not speed up.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ::::::::::::::::::::::::::::::::::::::::: caution
 
 ## Data privacy and institutional context
 
-The University of California and many other campuses have enterprise agreements with AI vendors like OpenAI and Google. These agreements usually state that your data will not be used to train public models.
+Your institution decides which AI tools are approved for which kinds of data, and the free tools are usually not the ones you can point at sensitive research data. At UCLA, the centrally provided free tools (Gemini Basic, Microsoft Copilot, ChatGPT web) are web-only and approved for data classified P1-P3, with P4 requiring approval. None of them is a terminal agent. See [UCLA's available AI tools list](https://dts.ucla.edu/initiatives/ai/available-tools).
 
-However, CLI or API access under these agreements is not always documented. Campus IT often needs to provision this access, and terms can vary. Verify with your institution whether your license covers both web interfaces and CLI/API access.
+For the terminal workflow in this lesson, think in two paths:
 
-**Warning:** Personal accounts may allow CLI/API usage but often lack the privacy protections of institutional licenses. Consult your campus IT policy before using AI tools with sensitive data.
+- **Personal plan or API key** for non-sensitive (P1-P3) work. Simple to set up; this is what most workshop exercises assume. Do not use it with sensitive or restricted data.
+- **UCLA Amazon Bedrock** (Anthropic models) for sensitive (P3/P4) research data. Claude Code can run against Bedrock with the same commands; only the backend changes. Confirm your unit's access and data-tier approval first.
 
-**Looking ahead:** If your research requires absolute privacy, these skills transfer to open LLMs (like Gemma or Llama) run locally via Ollama.
+**Warning:** Personal accounts often lack the privacy protections of an institutional agreement. Consult your campus data policy before using any AI tool with sensitive data. PHI and attorney-client privileged information are not approved for these tools.
+
+**Looking ahead:** If your research requires fully local processing, these same skills transfer to open-weight models (like Gemma or Llama) run via Ollama.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Shift from writer to orchestrator
+## From writer to active reviewer
 
-Traditional programming requires you to remember the syntax and logic of a script. **Spec-Driven Research Orchestration** offloads syntax generation to the AI, letting you focus on the high-level logic and the **Living Spec**.
+People sometimes describe this shift as moving from "writer" to "orchestrator," as if the AI now does the work and you just conduct. That framing is misleading, and for a learner it is risky.
+
+A more honest version: **AI may reduce the need to recall every detail of syntax, but it increases the need to understand intent, dependencies, assumptions, tests, and failure modes.** You are not handing off the thinking. You are moving the work from typing toward reading, questioning, and judging. That is harder to do well, not easier.
+
+You guide the agent using a **Living Spec**, and then you review what it produces against that spec. The diagram below shows the loop: you define the goal, the agent proposes a plan, *you* approve before any code is written, and *you* verify the result before it counts as done.
 
 ```mermaid
 graph TD
-    A[Researcher] -->|Define goal| B(GEMINI.md\nLiving Spec)
+    A[Researcher] -->|Define goal| B(CLAUDE.md\nLiving Spec)
     B --> C[Request a plan]
     C --> D{Approval Gate}
     D -->|Approve| E(AI Agent executes)
@@ -100,7 +132,7 @@ It is common to feel "out of the loop" when the AI generates many lines of code 
 
 ## File system access
 
-Unlike browser tools, the Gemini CLI has access to your working environment. It can read project context from the directory structure and modify files. Instead of copying and pasting code, the agent writes scripts to your disk and can iterate based on terminal errors.
+Unlike browser tools, Claude Code has access to your working environment. It can read project context from the directory structure and modify files. Instead of copying and pasting code, the agent writes scripts to your disk and can iterate based on terminal errors.
 
 ::::::::::::::::::::::::::::::::::::::::: caution
 
@@ -114,7 +146,7 @@ Always consider that your tools can have unintended consequences. Ensure files a
 
 ### Long context
 
-Like humans, we only have a certain amount of working memory and LLMs operate in similar fashion. This is called the **context window** in LLM tools. Models like Gemini 2.5 have a long context window of 1 million to 2 million tokens. You can provide the AI with your entire project folder—scripts, documentation, and small datasets—at once.
+Like humans, we only have a certain amount of working memory and LLMs operate in similar fashion. This is called the **context window** in LLM tools. Current models like Claude have long context windows (hundreds of thousands of tokens, up to a million in some configurations). You can provide the AI with your entire project folder—scripts, documentation, and small datasets—at once.
 
 This allows you to describe the desired state of your project, and the agent coordinates changes across multiple files. In a research context, this is declarative programming with AI agents.
 
@@ -130,31 +162,16 @@ A large context window makes this easier to run into, not harder. Managing what 
 
 ## Let's make sure this works
 
-Open a terminal window and type `gemini --help` and you should see something like: 
+Open a terminal window and type `claude --help`. You should see a usage summary listing the options and slash commands available. Claude Code defaults to an interactive session; the `-p` (or `--print`) flag runs a single prompt non-interactively (headless mode), which we use for quick one-off checks.
 
-```bash
-Usage: gemini [options] [command]
-
-Gemini CLI - Defaults to interactive mode. Use -p/--prompt for non-interactive (headless) mode.
-
-Commands:
-  gemini [query..]             Launch Gemini CLI                                                                                                      [default]
-  gemini mcp                   Manage MCP servers
-  gemini extensions <command>  Manage Gemini CLI extensions.                                                                               [aliases: extension]
-  gemini skills <command>      Manage agent skills.                                                                                            [aliases: skill]
-  gemini hooks <command>       Manage Gemini CLI hooks.                                                                                         [aliases: hook]
-...
-```
-
-
-Navigate to your project folder and start a session:
+Navigate to your project folder and run a quick headless check:
 
 <!-- TODO: Replace /path/to/project/directory with the path to the scaffolded
      starter project repo once it is created and distributed to learners. -->
 
 ```bash
 cd /path/to/project/directory
-gemini -p "Tell me what operating system I am currently using and list the files in this directory."
+claude -p "Tell me what operating system I am currently using and list the files in this directory."
 ```
 
 Compare the output to what you see when you run `ls` (or `dir` on Windows). Did the AI accurately describe your environment?
@@ -170,74 +187,70 @@ You are currently using macOS (Darwin). The files in this directory are:
 ...
 ```
 
-Notice that gemini can 'see' your files and understands what environment you are working in. 
+Notice that Claude Code can 'see' your files and understands what environment you are working in. 
 
-We have a project folder that we want to start a project in, let's initialize it as a gemini project and see what that does. 
+We have a project folder that we want to start a project in, let's initialize it for Claude Code and see what that does. 
 
 ::::::::::::::::::::::::::::::::::::::::: callout
 
 ## Working directory matters
 
-Always start the Gemini CLI from inside your project folder. The agent uses the current directory to find your files and spec. Starting from the wrong folder — such as your home directory — is one of the most common sources of confusion in a workshop.
+Always start Claude Code from inside your project folder. The agent uses the current directory to find your files and spec. Starting from the wrong folder — such as your home directory — is one of the most common sources of confusion in a workshop.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
 ### Initialize your project
 
-The Gemini CLI includes an `init` command that creates a `GEMINI.md` template in your working directory:
+Claude Code includes an `/init` command that creates a `CLAUDE.md` file describing your project in your working directory:
 
 ```bash
-gemini
+claude
 ```
-You are now inside Gemini. Press `/` to see the available slash commands and page through the full list. Notice `/init` — this is the command that will initialize our project. Let's run it:
+You are now inside a Claude Code session. Type `/` to see the available slash commands and page through the full list. Notice `/init` — this is the command that will initialize our project. Let's run it:
 
 ```bash
 /init
 ```
 
-Notice that it does a bunch of stuff and inspects your file folders. After it finishes let's see what new files have been created. You can do this inside gemini by: 
+Notice that it inspects your files and folders. After it finishes, let's see what new files have been created. You can run a shell command from inside the session by starting the line with `!`:
 
 ```bash
 !ls
 ```
 
-This shows the files that are created. You should see a file named `GEMINI.md`. Let's look inside it using the `cat` command with `!`:
+This shows the files that are present. You should see a file named `CLAUDE.md`. Let's look inside it:
 
 ```bash
-!cat GEMINI.md
+!cat CLAUDE.md
 ```
 
-Here is what Gemini generated for a fresh empty project folder:
+Here is the kind of thing Claude Code generates for a fresh, nearly empty project folder:
 
 ```markdown
-# Project Context: vibe-coding-lesson
+# CLAUDE.md
 
-## Directory Overview
+## Project Overview
 
-The `/Users/geno/Desktop/vibe-coding-lesson` directory appears to be an empty
-project directory. It currently contains only this `GEMINI.md` file, which
-serves as an index and context provider for the project.
+This directory is a workspace for the `agentic-research-project` project. It is
+currently nearly empty, so there is little structure to describe yet. This
+file provides project context for Claude Code and is intended to be updated
+as the project evolves.
 
 ## Key Files
 
-*   **`GEMINI.md`**: This file contains project-specific context, documentation,
-    and instructional information for AI agents and developers. It is intended to
-    be updated as the project evolves.
+- **`CLAUDE.md`**: Project-specific context, conventions, and rules that
+  Claude Code loads automatically at the start of every session.
 
 ## Usage
 
-This directory is intended to be a workspace for the 'vibe-coding-lesson'
-project. As it is currently empty, it is ready for initialization or the
-addition of new files and code. Future usage will depend on the specific goals
-of the 'vibe-coding-lesson' project.
-
----
-*Last analyzed on: March 25, 2026*
+As you add data files, scripts, and documentation, re-run `/init` to produce
+a richer description, and edit this file by hand to record your goals,
+constraints, and rules.
 ```
 
-A few things to notice. Gemini scanned the directory and described what it found. Because the folder was empty, it does not have much to say yet. 
-Once you add data files, scripts, and documentation, running `/init` again will produce a richer spec that reflects your actual project. 
+A few things to notice. Claude Code scanned the directory and described what it found. Because the folder was nearly empty, it does not have much to say yet.
+Once you add data files, scripts, and documentation, running `/init` again will produce a richer spec that reflects your actual project.
 This is also something you will want to edit by hand — add your goals, constraints, and any rules you want the agent to follow.
 
 ## The Living Spec
@@ -249,7 +262,6 @@ Every major CLI tool has its own **native** spec file that it loads automaticall
 
 | Tool | Native spec file | Auto-loaded? |
 |---|---|---|
-| Gemini CLI | `GEMINI.md` | Yes |
 | Claude Code | `CLAUDE.md` | Yes |
 | OpenAI Codex | `AGENTS.md` | Yes |
 | Cursor | `.cursorrules` | Yes |
@@ -264,19 +276,29 @@ Use this file to define:
 - **Rules of the Road**: Technical constraints (e.g., "Always use `pandas` for dataframes").
 - **Verification Gates**: How you will confirm the code is correct.
 
+::::::::::::::::::::::::::::::::::::::::: callout
+
+## Your project's external brain
+
+A model forgets everything between sessions, and even within a session its context window is limited. The fix researchers have settled on is to keep the project's memory in plain markdown files that the agent reads and updates. Andrej Karpathy popularized calling this an "external brain." Three files do most of the work:
+
+- `CLAUDE.md`: durable rules, goals, and constraints, auto-loaded every session (the file you just created).
+- `PLAN.md`: the step-by-step plan for the task at hand. It is temporary, and you will meet it in the next episode.
+- A running notes file (for example `NOTES.md`): a dated log of what was tried, what worked, and why you made key choices.
+
+For research, that notes file is not bureaucracy. It is provenance: it is how you, a reviewer, or future-you reconstruct what the agent knew and why a result came out the way it did. Because the external brain lives in your repo and under version control, it stays reviewable and reproducible, unlike the model's hidden and disposable memory.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ::::::::::::::::::::::::::::::::::::::::: challenge
 
 ## Challenge: Initialize and customize your spec file
 
-Inside your Gemini CLI session, run `/init` to create a `GEMINI.md` file. Then open it in a text editor and add one "Hard Constraint" (something the AI *must* do) and one "Success Metric" (how you know it's done).
+Inside your Claude Code session, run `/init` to create a `CLAUDE.md` file. Then open it in a text editor and add one "Hard Constraint" (something the AI *must* do) and one "Success Metric" (how you know it's done).
 
 :::::::::::::::::::::::::::::::::::::::: solution
 
 ## Example spec file
-
-<!-- TODO: Once model config mechanism is confirmed, add a 'model: gemini-2.5-flash-lite'
-     line (or equivalent) to this example so learners see model pinning as a
-     standard part of the spec from the start. -->
 
 ```markdown
 # Project: Arctic Sea Ice Analysis
@@ -297,11 +319,20 @@ To analyze trends in sea ice extent from 1980-2020.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+:::::::::::::::::::::::::::::::::::::::::: discussion
+
+## Feedback checkpoint: describe the agent's context
+
+Before we move on, turn to the person next to you and answer out loud: when you ran `/init`, what did the agent look at, and what file did it create? If you are not sure, say so. In the shared Etherpad, paste one thing the agent did that surprised you.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- CLI agents coordinate actions across multiple files.
-- Run `/init` inside Gemini to create a `GEMINI.md` Living Spec that reduces context drift.
+- Different AI tools see and change different things; always ask what a tool can see and do before trusting it.
+- A CLI agent can read, run, and edit your real files, which makes verifying what it changed part of the workflow.
+- Run `/init` inside Claude Code to create a `CLAUDE.md` Living Spec that reduces context drift.
 - A portable `AGENTS.md` lets the same spec travel across different AI tools.
-- Research orchestration shifts focus from writing syntax to validating intent.
+- The shift is from writing syntax to actively reviewing intent, assumptions, and evidence; it does not remove your responsibility.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::

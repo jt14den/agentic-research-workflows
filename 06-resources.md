@@ -25,7 +25,7 @@ exercises: 10
 
 The ecosystem of AI tools for research is expanding. For coding, tools like Claude Code (Anthropic's CLI), GitHub Copilot, and Aider (a CLI agent that works with multiple models) provide terminal support.
 
-Some researchers use AI-native code editors like Cursor to interact with an entire repository. Models like Gemini 2.5 and DeepSeek-V3/R1 have increased the speed of these interactions.
+Some researchers use AI-native code editors like Cursor to interact with an entire repository. Models like Claude, Gemini, and DeepSeek-V3/R1 have increased the speed of these interactions.
 
 Research-specific tools are also emerging. Elicit and Consensus focus on scientific paper discovery and evidence-based claims. Google's NotebookLM allows you to ground an AI's knowledge in your own collection of research PDFs for summarizing and querying documents.
 
@@ -53,7 +53,7 @@ For researchers handling sensitive data or requiring reproducibility, local AI i
 
 ## Privacy and performance
 
-Local models offer privacy but require significant hardware (especially GPU VRAM) to match the performance of cloud models like Gemini 2.5. Many researchers use a hybrid approach: cloud models for general scripting and local models for sensitive data.
+Local models offer privacy but require significant hardware (especially GPU VRAM) to match the performance of cloud models like Claude or Gemini. Many researchers use a hybrid approach: cloud models for general scripting and local models for sensitive data.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -92,6 +92,8 @@ Include metadata in the header of AI-generated files to ensure reproducibility:
 - Date and a link to the prompt used.
 - A hash of the context files provided.
 
+This is where the **external brain** from Episode 1 pays off. A running notes or decisions file, kept under version control alongside `CLAUDE.md`, is a durable provenance record: it captures what the agent knew and why each key choice was made, in a form a reviewer can actually audit.
+
 ### Cost and efficiency
 With long-context models, it is easy to include unnecessary files in prompts, which increases costs.
 
@@ -111,16 +113,16 @@ Add an AI usage section to your project documentation:
 
 ### Example attribution
 
-*   **Model:** Google Gemini 2.5 Flash
+*   **Model:** Anthropic Claude Sonnet 4.6
 *   **Role:** Spec drafting and spec-guided cleaning.
-*   **Verification:** Verified by [Your Name] via `GEMINI.md` rules and `validate_data.py`.
+*   **Verification:** Verified by [Your Name] via `CLAUDE.md` rules and `validate_data.py`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 **2. In manuscripts:**
 Cite the model in the methods or acknowledgements section.
 
-*   *Example:* "We used Google Gemini 2.5 Flash to assist with data cleaning scripts. Prompts and raw outputs are available in the supplementary material."
+*   *Example:* "We used Anthropic Claude Sonnet 4.6 to assist with data cleaning scripts. Prompts and raw outputs are available in the supplementary material."
 
 ### Resources and standards
 
@@ -133,7 +135,7 @@ Cite the model in the methods or acknowledgements section.
 ## Summary checklist
 
 - [ ] CLI agents coordinate actions directly on your files.
-- [ ] A Living Spec (`GEMINI.md` or portable `AGENTS.md`) is your source of truth.
+- [ ] A Living Spec (`CLAUDE.md` or portable `AGENTS.md`) is your source of truth.
 - [ ] The **Bootstrap Workflow** creates your spec from your data.
 - [ ] Use **Layer 4: Domain Plausibility** to catch research logic errors.
 - [ ] Track AI-generated code with Git so every change is reversible.
@@ -189,7 +191,7 @@ When AI scripts become critical for research, move to systematic evaluation. Cre
 
 :::::::::::::::::::::::::::::::::::::::::::::::::: checklist
 
-- [Gemini API Docs](https://ai.google.dev/gemini-api/docs)
+- [Claude Code Docs](https://docs.anthropic.com/en/docs/claude-code)
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -216,7 +218,7 @@ A pre-defined protocol reduces decision fatigue during complex coding sessions. 
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- Gemini, Claude, and Copilot serve different needs.
+- Claude Code, Codex, and Copilot serve different needs.
 - Community support is vital.
 - Plugins and MCP allow AI to connect to external data.
 

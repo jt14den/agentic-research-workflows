@@ -8,13 +8,13 @@ carpentry: 'incubator'
 # Alt-text description of the lesson.
 carpentry_description: 'A lesson on AI-assisted programming and validation best practices.'
 
-title: 'Agentic Research Workflows: Orchestrating AI and Validation'
+title: 'Agentic Research Workflows: AI Coding, Validation, and Research Responsibility'
 
 # Date the lesson was created (YYYY-MM-DD, this is empty by default)
 created: '2026-01-08'
 
 # Comma-separated list of keywords for the lesson
-keywords: 'AI, LLM, research, validation, Python, Gemini'
+keywords: 'AI, LLM, research, validation, Python, Claude Code'
 
 # Life cycle stage of the lesson
 # possible values: pre-alpha, alpha, beta, stable
@@ -24,7 +24,7 @@ life_cycle: 'pre-alpha'
 license: 'CC-BY 4.0'
 
 # Link to the source repository for this lesson
-source: 'https://github.com/jt14den/vibe-coding-lesson'
+source: 'https://github.com/jt14den/agentic-research-workflows'
 
 # Default branch of your lesson
 branch: 'main'
@@ -36,6 +36,7 @@ contact: 'timdennis@g.ucla.edu'
 
 # Order of episodes in your lesson
 episodes:
+  - 00-before-ai.md
   - 01-cli-intro.md
   - 02-prompts.md
   - 03-data-cleaning.md
