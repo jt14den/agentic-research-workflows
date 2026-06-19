@@ -108,8 +108,24 @@ The stack only works if you stay in charge of it. Four things to keep in front o
 Open `validate_data.py`. Two checks are written for you; three are left as TODO (dates parse and fall in 2023, every `sample_id` is present exactly once, scores within 0-100).
 
 1. Implement the three TODO checks. Write them yourself, or ask the agent and then read every line before you trust them.
-2. Run `python validate_data.py` against your `data/master_dataset.csv`. Make the checks pass by fixing the data or the cleaning script, never by editing a value to satisfy a check.
-3. Now break it on purpose: ask the agent to re-clean while parsing site C dates as month-day. Run the validator again. Does your date check catch the January-to-May drift?
+2. Run `python validate_data.py` against your `data/master_dataset.csv`. Make the checks pass by fixing the data or the cleaning script, never by editing a value to satisfy a check. A passing run looks like:
+
+   ```
+   [PASS] row count is 60
+   [PASS] all canonical columns present
+   [PASS] dates parse and all fall in 2023
+   [PASS] every original sample_id is present exactly once
+   [PASS] score values fall within 0-100
+   All implemented checks passed.
+   ```
+
+3. Now break it on purpose: ask the agent to re-clean while parsing site C dates as month-day. Run the validator again. A good date check should now fail, for example:
+
+   ```
+   [FAIL] dates parse and all fall in 2023 - earliest site C date is 2023-05-01
+   ```
+
+   If instead everything still passes, your date check is too weak (see the solution).
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::: solution
 
@@ -139,7 +155,7 @@ We use a challenger model to audit an implementation model rather than trusting 
 ::::::::::::::::::::::::::::::::::::::::::::::::: solution
 
 ## Why this works
-Models have different blind spots. Forcing a second AI to act as an auditor helps bypass the tendency of the primary assistant to be over-confident. This process reduces your manual rewrite time.
+Models have different blind spots. Asking a second model to act as a skeptical reviewer surfaces edge cases and review questions the first one glossed over. Treat what it returns as more questions to investigate, not as proof: a second model is a reviewer, not evidence, and the decision is still yours.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::
 

@@ -4,10 +4,15 @@ title: Setup
 
 To follow this lesson, you will need [Claude Code](https://docs.anthropic.com/en/docs/claude-code) and Python installed on your machine. Claude Code is Anthropic's terminal-based AI coding agent. The steps below get you set up with a direct local install, which is the approach used throughout the lesson.
 
-## 1. Install Node.js and Python
+## 1. Install Node.js, Python, and two Python packages
 
 - **Node.js**: Download the LTS version from [nodejs.org](https://nodejs.org) or use a package manager (`brew install node` on macOS).
 - **Python**: Ensure you have Python 3.9+ installed. Check with `python --version`.
+- **Python packages**: the lesson scripts use `pandas` (data handling) and `matplotlib` (the trend plot). Install both:
+
+```bash
+python -m pip install pandas matplotlib
+```
 
 ## 2. Install Claude Code
 
@@ -43,6 +48,30 @@ ls data/
 ```
 
 You should see `site_A.csv`, `site_B.csv`, and `site_C.csv`. Throughout the lesson, start Claude Code from inside this folder.
+
+## 6. Setup check
+
+Run these from inside the `coastal-water-quality` folder. Each should produce the output shown:
+
+```bash
+claude --version          # prints a version number
+python --version          # prints Python 3.9 or newer
+python -c "import pandas, matplotlib; print('packages ok')"   # prints: packages ok
+ls data/                  # site_A.csv  site_B.csv  site_C.csv
+```
+
+If all four work, you are ready. If any fails, see the troubleshooting notes below.
+
+:::::::::::::::::::::::::::::::::::::::::::::::::: callout
+
+### Troubleshooting
+
+- **`claude: command not found`**: the global npm install did not finish or your `PATH` is not updated. Re-run the install and restart your terminal.
+- **`ModuleNotFoundError: No module named 'pandas'`**: the packages went to a different Python than the one you are running. Use the same interpreter: `python -m pip install pandas matplotlib`.
+- **Claude Code asks to sign in again**: that is normal on a new machine; complete the sign-in once.
+- **The agent produces different code or output than the lesson shows**: that is expected, AI output varies. The lesson teaches you to check it, not to match it. If you fall behind, your instructor can share a known-good script from `instructors/files/`.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::: callout
 

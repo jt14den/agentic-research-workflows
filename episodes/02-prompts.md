@@ -49,7 +49,7 @@ Treat prompting as an iterative process. Start with a simple request and add com
 
 ## The CO-STAR framework
 
-While CLEAR helps with conversation flow, CO-STAR structures complex research prompts that eventually become part of your `CLAUDE.md`:
+*Optional on a first pass. CLEAR (below) is enough to start; reach for CO-STAR when a prompt gets complex.* While CLEAR helps with conversation flow, CO-STAR structures complex research prompts that eventually become part of your `CLAUDE.md`:
 
 *   **Context**: Provide background (e.g., "I am a biologist analysing RNA-seq data").
 *   **Objective**: Define the specific task ("Write a script to normalise these counts").
@@ -175,7 +175,7 @@ Asking the AI to review its own code often surfaces problems, but it cannot deci
 
 ### Reasoning models
 
-As of 2025, reasoning models (such as OpenAI o1/o3, DeepSeek-R1, or Gemini 2.5 Thinking) have emerged. These models perform chain of thought reasoning before they answer.
+*Optional: useful once you are comfortable with the basics.* As of 2025, reasoning models (such as OpenAI o1/o3, DeepSeek-R1, or Gemini 2.5 Thinking) have emerged. These models perform chain of thought reasoning before they answer.
 
 **When to use them:**
 
