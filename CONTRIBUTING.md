@@ -27,8 +27,8 @@ With R installed:
 
 ```r
 # install.packages("sandpaper", repos = "https://carpentries.r-universe.dev")
-sandpaper::serve()      # preview locally
-sandpaper::check_lesson()  # validate structure
+sandpaper::serve()            # preview locally
+sandpaper::validate_lesson()  # validate divs, internal links, and images
 ```
 
 ## What we look for

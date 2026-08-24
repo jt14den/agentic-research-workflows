@@ -1,5 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this lesson, please cite it as below."
+type: software
 title: "Agentic Research Workflows: AI Coding, Validation, and Research Responsibility"
 abstract: "A Carpentries-style lesson on working with CLI-based AI coding agents in research without giving up the learning, validation, and judgment that make code trustworthy. Emphasizes a CLAUDE.md Living Spec, a four-layer validation stack, provenance, and responsible use."
 authors:
@@ -12,8 +13,6 @@ authors:
   - family-names: "van Nuenen"
     given-names: "Tom"
     affiliation: "UC Berkeley D-Lab"
-version: 0.1.0
-date-released: 2026-01-10
 license: CC-BY-4.0
 repository-code: "https://github.com/jt14den/agentic-research-workflows"
 keywords:

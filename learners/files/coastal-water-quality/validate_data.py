@@ -41,10 +41,14 @@ def main():
     missing_cols = [c for c in CANONICAL_COLUMNS if c not in df.columns]
     check("all canonical columns present", not missing_cols, f"missing {missing_cols}")
 
-    # Check 3 (TODO): dates parse and all fall within 2023.
-    #   Hint: pd.to_datetime(df["date"]) should not raise, and every year should be 2023.
-    #   The point of this check is to catch site C's day-month-year dates being misread.
-    print("[TODO] dates parse and all fall in 2023 - implement this check")
+    # Check 3 (TODO): every sample's date matches what the raw file actually says.
+    #   Hint: "parses without error and falls in 2023" is NOT enough. A misparsed
+    #   site C date (e.g. 05-01-2023 read as month-day instead of day-month) still
+    #   produces a valid-looking 2023 date, so that weaker check can pass on wrong
+    #   data. Instead, re-parse each raw site file with its known date format (see
+    #   clean_and_merge.py) and compare the result to what ended up in
+    #   master_dataset.csv, sample_id by sample_id.
+    print("[TODO] every sample's date matches the raw source - implement this check")
 
     # Check 4 (TODO): no sample_id was lost - every original ID appears exactly once.
     #   Hint: compare the set of sample_ids in the merge to the raw site files.

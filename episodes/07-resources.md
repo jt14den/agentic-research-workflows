@@ -4,6 +4,17 @@ teaching: 10
 exercises: 15
 ---
 
+<style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style>
+
+:::::::::::::::::::::::::::::::::::::::::::::::::: questions
+
+- Which tool should I reach for, and when?
+- How do I take this back to my own data?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 :::::::::::::::::::::::::::::::::::::::::::::::::: objectives
 
 ## Objectives
@@ -11,13 +22,6 @@ exercises: 15
 - Choose an appropriate AI coding tool for a given task and data sensitivity.
 - Plan how you will apply this workflow to your own research.
 - Know where to keep learning and how to spot hype.
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::::::::::::: questions
-
-- Which tool should I reach for, and when?
-- How do I take this back to my own data?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -38,7 +42,7 @@ Local models (run via Ollama) keep data on your hardware and let you pin a froze
 
 ## MCP and the shadow-IT risk
 
-The Model Context Protocol (MCP) lets agents connect to external tools and data sources (databases, file systems, services). It is powerful, but MCP servers are often installed without institutional oversight, and security researchers have shown risks including prompt injection and silent data exfiltration. Before connecting one, check it is actively maintained and from a trusted source, and that your institution's policy covers it.
+The Model Context Protocol (MCP) lets agents connect to external tools and data sources (databases, file systems, services). Anthropic donated MCP governance to the Linux Foundation's Agentic AI Foundation in December 2025, and an official server registry now exists — but registry listing is not a safety certification. MCP servers are still often installed without institutional oversight, and prompt injection and silent data exfiltration remain real risks: a server's tool descriptions and returned data should be treated as untrusted input, not just the servers themselves. Before connecting one, check it is actively maintained and from a trusted source, sandbox it with minimal filesystem/network access where you can, and confirm your institution's policy covers it.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -46,7 +50,7 @@ The Model Context Protocol (MCP) lets agents connect to external tools and data 
 
 Transparent attribution is part of open science. Major standards (COPE, Nature, Elsevier) agree AI tools cannot be authors, because they cannot take accountability. Cite them as methodological tools instead.
 
-- In a repo `README.md`: note the model, its role, and who verified the output (for example, "Claude Sonnet 4.6 drafted the cleaning script; verified by [you] via `validate_data.py`").
+- In a repo `README.md`: note the model, its role, and who verified the output (for example, "Claude [current model name] drafted the cleaning script; verified by [you] via `validate_data.py`").
 - In a manuscript: name the model in methods or acknowledgements, and keep prompts and outputs available.
 - References: [COPE on AI authorship](https://publicationethics.org/cope-position-statements/ai-author), [Elsevier AI policy](https://www.elsevier.com/about/policies/publishing-ethics/usage-of-ai-tools-in-writing-for-research), [CRediT taxonomy](https://credit.niso.org/).
 
@@ -85,7 +89,7 @@ New tools appear daily, and many are more marketing than substance. Before adopt
 
 A few sources that stay practical and skeptical: [Simon Willison](https://simonwillison.net/) (AI engineering and security), [Ethan Mollick](https://www.oneusefulthing.org/) (AI and cognitive work), [Hamel Husain](https://hamel.dev/) (systematic evaluation), and [The Batch](https://www.deeplearning.ai/the-batch/) (balanced industry coverage).
 
-For the tool used here, see the [Claude Code documentation](https://docs.anthropic.com/en/docs/claude-code).
+For the tool used here, see the [Claude Code documentation][claude-code-docs]. For definitions of terms used throughout this lesson (Living Spec, external brain, approval gates, and more), see the [learner reference page](../learners/reference.md).
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
