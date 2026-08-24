@@ -248,7 +248,7 @@
         <ul><li><a href="#the-approval-gate-verification-over-generation">The approval gate: verification over generation</a></li>
 <li><a href="#rewrite-time-a-signal-not-a-score">Rewrite time: a signal, not a score</a></li>
 <li><a href="#the-four-layer-validation-stack">The four-layer validation stack</a></li>
-<li><a href="#multi-model-verification">Multi-model verification</a></li>
+<li><a href="#multi-model-critique">Multi-model critique</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -267,7 +267,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+        <a href="06-capstone.html">7. From AI Output to a Review-Ready Bundle</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -340,7 +340,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Validation Strategies: The Approval Gate</h1>
-        <p>Last updated on 2026-06-19 |
+        <p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/04-validation.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -354,7 +354,10 @@
 
         
 
-<div class="overview card">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style><div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
 <div class="col-md-4">
@@ -381,7 +384,8 @@ productivity score.</li>
 constraints.</li>
 <li>Turn validation into checks you can run, by finishing
 <code>validate_data.py</code>.</li>
-<li>Use multi-model verification to peer-review research code.</li>
+<li>Use a multi-model critique, in a fresh session, to widen review
+without treating it as an authority.</li>
 </ul></div>
 </div>
 </div>
@@ -415,7 +419,16 @@ you claim from it.</p>
 <p>Rewrite time does <strong>not</strong> prove AI makes researchers
 faster in general. Measuring programmer productivity is genuinely hard,
 and a single timing on a single task tells you almost nothing about
-productivity overall. Treat rewrite time as a <strong>formative
+productivity overall. This caution isn’t hypothetical: a 2026 survey of
+868 scientists who program found that <em>feeling</em> more productive
+with a genAI tool was associated with less programming experience and
+less use of practices like testing and code review, not with better
+outcomes. The single strongest predictor of feeling productive was
+simply how many lines of generated code someone accepted at once (<a href="https://arxiv.org/abs/2512.19644" class="external-link">O’Brien et al., 2026</a>) — the
+authors’ own conclusion is that scientists may be “gauging productivity
+by code generation rather than validation.” That gap between feeling
+productive and being correct is exactly what this validation stack
+exists to close. Treat rewrite time as a <strong>formative
 signal</strong> about <em>this</em> workflow, on <em>this</em> task:</p>
 <ul><li>It is local and contextual.</li>
 <li>High rewrite time usually means the task was underspecified, the
@@ -440,13 +453,13 @@ it.</p>
 </div>
 </div>
 </div>
-<div id="challenge-think-aloud-while-you-work" class="callout discussion">
+<div id="think-aloud-while-you-work" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
 <span class="callout-header">Discussion</span>
-<div id="challenge-think-aloud-while-you-work" class="callout-inner">
-<h3 class="callout-title">Challenge: think aloud while you work</h3>
+<div id="think-aloud-while-you-work" class="callout-inner">
+<h3 class="callout-title">Think aloud while you work</h3>
 <div class="callout-content">
 <p>Work in pairs. One person uses the AI for five minutes on a small,
 constrained task (for example, adding a single validation check to the
@@ -535,30 +548,41 @@ like in your field.</li>
 <h3 class="callout-title">Challenge: build the validator</h3>
 <div class="callout-content">
 <p>Open <code>validate_data.py</code>. Two checks are written for you;
-three are left as TODO (dates parse and fall in 2023, every
-<code>sample_id</code> is present exactly once, scores within
+three are left as TODO (every sample’s date matches the raw source,
+every <code>sample_id</code> is present exactly once, scores within
 0-100).</p>
 <ol style="list-style-type: decimal"><li><p>Implement the three TODO checks. Write them yourself, or ask the
-agent and then read every line before you trust them.</p></li>
+agent and then read every line before you trust them. For the date check
+specifically: don’t settle for “parses without error and falls in 2023”
+— a misparsed site C date can still produce a valid-looking 2023 date.
+Compare against the raw file instead (see the hint already in
+<code>validate_data.py</code>).</p></li>
 <li>
 <p>Run <code>python validate_data.py</code> against your
 <code>data/master_dataset.csv</code>. Make the checks pass by fixing the
 data or the cleaning script, never by editing a value to satisfy a
-check. A passing run looks like:</p>
+check. A passing run looks like this (captured from the reference
+implementation,
+<code>instructors/files/backup_validate_data.py</code>):</p>
 <pre><code>[PASS] row count is 60
 [PASS] all canonical columns present
-[PASS] dates parse and all fall in 2023
+[PASS] every sample's date matches the raw source
 [PASS] every original sample_id is present exactly once
 [PASS] score values fall within 0-100
-All implemented checks passed.</code></pre>
+
+All 5 checks passed.</code></pre>
 </li>
 <li>
-<p>Now break it on purpose: ask the agent to re-clean while parsing
-site C dates as month-day. Run the validator again. A good date check
-should now fail, for example:</p>
-<pre><code>[FAIL] dates parse and all fall in 2023 - earliest site C date is 2023-05-01</code></pre>
-<p>If instead everything still passes, your date check is too weak (see
-the solution).</p>
+<p>Now break it on purpose: ask the agent to re-clean site C’s dates
+using <code>pd.to_datetime(..., format="mixed")</code> instead of the
+explicit <code>%d-%m-%Y</code> format. Run the validator again. A good
+date check should now fail, for example:</p>
+<pre><code>[FAIL] every sample's date matches the raw source - 8 mismatch(es), e.g. ['SC001', 'SC002', 'SC006']</code></pre>
+<p>Notice this doesn’t crash, and it doesn’t obviously bunch the whole
+site C line at one edge of a plot either — only some rows are wrong,
+because <code>format="mixed"</code> guesses each date individually and
+gets some of them right by accident. If instead everything still passes,
+your date check is too weak (see the solution).</p>
 </li>
 </ol></div>
 </div>
@@ -568,59 +592,70 @@ the solution).</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>If your validator still passes on the misparsed data, the date check
-is too weak. A good check asserts something the bug would violate, for
-example that the earliest site C sample falls in January, or that each
-parsed date keeps the original day and month, not merely that
-<code>pd.to_datetime</code> did not raise an error. A validator that
-cannot fail on a known-bad input is not protecting you.</p>
+is too weak. A good check reconstructs the expected date for each sample
+from the raw file (parsed with the explicit format) and compares it
+exactly — not merely that <code>pd.to_datetime</code> did not raise an
+error, or that the year is 2023. See
+<code>instructors/files/backup_validate_data.py</code> for a complete
+reference implementation. A validator that cannot fail on a known-bad
+input is not protecting you.</p>
 </div>
 </div>
 </div>
 </div>
 <hr></div>
-</section><section><h2 class="section-heading" id="multi-model-verification">Multi-model verification<a class="anchor" aria-label="anchor" href="#multi-model-verification"></a></h2>
-<hr class="half-width"><p>We use a challenger model to audit an implementation model rather
-than trusting a single AI.</p>
-<div id="challenge-orchestrate-a-peer-review" class="callout challenge">
+</section><section><h2 class="section-heading" id="multi-model-critique">Multi-model critique<a class="anchor" aria-label="anchor" href="#multi-model-critique"></a></h2>
+<hr class="half-width"><p>A second model can widen your review, but switching models inside the
+same Claude Code session is not independent verification: it shares your
+conversation history, tools, and context with the first model. Treat
+what it returns as a hypothesis to check, not a second opinion from a
+clean slate.</p>
+<div id="challenge-get-a-multi-model-critique" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-orchestrate-a-peer-review" class="callout-inner">
-<h3 class="callout-title">Challenge: orchestrate a peer review</h3>
+<div id="challenge-get-a-multi-model-critique" class="callout-inner">
+<h3 class="callout-title">Challenge: get a multi-model critique</h3>
 <div class="callout-content">
 <ol style="list-style-type: decimal"><li><p>Use Model A (Claude Code) to generate a data cleaning
 script.</p></li>
 <li>
-<p>Provide the code to Model B, a <em>different</em> model. The
-simplest way is to switch models inside your Claude Code session with
-<code>/model</code>; if you have Codex CLI or another agent installed,
-you can use that instead. Then give it this prompt:</p>
+<p>Provide the code to Model B, a <em>different</em> model, in a
+<strong>fresh session</strong> if you can (a new terminal, a different
+tool such as Codex CLI, or at minimum <code>/clear</code> first) — not
+just a <code>/model</code> switch inside the same conversation, which
+still carries the first model’s framing. Give it the specification, the
+code, and any tests, not the first model’s narrative about its own work.
+Then give it this prompt:</p>
 <p>“Read this script. Act as a skeptical senior data scientist. Identify
 three potential edge cases where this script will fail, such as empty
 strings, NaN values, or encoding issues. Suggest specific assert
 statements to catch these.”</p>
 </li>
-<li><p>Reflect: Did the challenger model find something the
-implementation model missed?</p></li>
+<li><p>Reflect: Did the second model find something the first missed?
+Which of its findings still need a deterministic check or your own
+domain judgment before you’d act on them?</p></li>
 </ol></div>
 </div>
 </div>
 <div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2"> Why this works </h4>
+  <h4 class="accordion-header" id="headingSolution2"> Why this works, and its limit </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
-<p>Models have different blind spots. Asking a second model to act as a
-skeptical reviewer surfaces edge cases and review questions the first
-one glossed over. Treat what it returns as more questions to
-investigate, not as proof: a second model is a reviewer, not evidence,
-and the decision is still yours.</p>
+<p>Models have different blind spots, so a second read can surface edge
+cases and review questions the first one glossed over. But it is a
+hypothesis generator, not an authority: it shares training data and
+general tendencies with the first model, and a same-session
+<code>/model</code> switch shares even more (conversation history,
+tools, framing). Treat its findings as more questions to investigate
+with a deterministic check or your own expertise, not as proof.</p>
 </div>
 </div>
 </div>
@@ -630,7 +665,7 @@ and the decision is still yours.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Teaching tip: approval fatigue </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>Warn learners about approval fatigue, the tendency to accept AI
 suggestions without reading them. The four-layer stack is designed to
@@ -662,7 +697,7 @@ the approval gate out loud or in writing. Answer all five:</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> What a good answer looks like </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>A strong answer names the output precisely, points to
 <em>specific</em> checks as evidence (row counts, invariant checks, a
@@ -688,16 +723,17 @@ research.</li>
 productivity score.</li>
 <li>Requirement constraints prevent the AI from drifting away from
 research specs.</li>
-<li>Multi-model verification uses a second AI as a reviewer, not an
-authority.</li>
+<li>A multi-model critique, run in a fresh session, is a reviewer, not
+an authority.</li>
 <li>You cannot validate what you cannot explain.</li>
 </ul></div>
 </div>
 </div>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter Bottom"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="../instructor/03-data-cleaning.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
@@ -758,8 +794,8 @@ any links that you are not going to use.
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/04-validation.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/04-validation.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-06-19",
-  "datePublished": "2026-08-18"
+  "dateModified": "2026-08-24",
+  "datePublished": "2026-08-24"
 }
 
   </script><script>

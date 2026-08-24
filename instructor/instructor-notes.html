@@ -309,7 +309,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+        <a href="06-capstone.html">7. From AI Output to a Review-Ready Bundle</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -425,10 +425,17 @@ trend plot in the capstone. Two anchors to keep in mind: -
 <code>data/master_dataset.csv</code> with <strong>60 rows</strong> (3
 sites x 20 weekly samples), all dates in 2023. - <strong>The planted
 trap (the lesson’s climax):</strong> site C dates are day-month-year
-(<code>05-01-2023</code> is 5 January). If parsed as month-day, January
-samples land in May. The script still runs, the row count is still 60,
-and the trend plot is still wrong. This is the concrete “working code is
-not trustworthy code” moment; let it happen and use it.</p>
+(<code>05-01-2023</code> is 5 January). A naive
+<code>pd.to_datetime()</code> call with no explicit format actually
+<em>raises an error</em> on this file (day values like 19 and 26 can’t
+be a month) — that’s a loud, easy failure, and a fine outcome if it
+happens. The dangerous case is <code>format="mixed"</code>: it silently
+swaps day and month for some rows (<code>05-01-2023</code> becomes May
+1) while accidentally parsing others correctly (<code>19-01-2023</code>
+still lands in January), so a handful of wrong dates hide among
+mostly-right ones. Either way the row count stays 60 and the trend plot
+is still wrong. This is the concrete “working code is not trustworthy
+code” moment; let it happen and use it.</p>
 <hr>
 </div>
 </section><section><h2 class="section-heading" id="episode-before-we-use-ai-opening">Episode: Before We Use AI (opening)<a class="anchor" aria-label="anchor" href="#episode-before-we-use-ai-opening"></a>
@@ -461,9 +468,9 @@ ready. If not, have them launch <code>claude</code> once and complete
 sign-in before continuing.</li>
 <li>
 <strong>Model Check:</strong> Have all learners set the same model
-with <code>/model</code> (e.g., <code>claude-sonnet-4-6</code>) before
-starting, so outputs are comparable and provenance records are
-meaningful.</li>
+with <code>/model</code> before starting (pick the current recommended
+model close to the session date), so outputs are comparable and
+provenance records are meaningful.</li>
 <li>
 <strong>Starter folder:</strong> Everyone works in the provided
 <code>coastal-water-quality</code> folder (ships at
@@ -504,10 +511,13 @@ cases.”</li>
 demanding episode.</li>
 <li>
 <strong>Expected output:</strong>
-<code>data/master_dataset.csv</code> with 60 rows. The “Update the
-script” challenge (exclude January) should remove 12 rows, leaving 48; a
-different number usually means the site C date format was
-misparsed.</li>
+<code>data/master_dataset.csv</code> with 60 rows, produced by
+<code>clean_and_merge.py</code>, which learners should not modify. The
+“Update the script” challenge writes a separate
+<code>clean_feb_onward.py</code> (12 rows removed, 48 remaining) instead
+of editing the canonical script in place, so Episodes 4 and 6 can still
+rely on the full 60-row file. A wrong row count on the filter usually
+means some site C dates were silently misparsed.</li>
 <li>
 <strong>The “Safety Net”:</strong> If a learner’s AI fails to
 produce working code after two attempts, have them copy
@@ -748,9 +758,10 @@ all of them, see the <code>agentic-research/cli-agent-landscape</code>
 wiki note.</li>
 </ul>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </div>
 </section><section id="aggregate-instructor-notes"><section id="00-before-ai"><h2 class="section-heading"><a href="00-before-ai.html">Before We Use AI: What Are We Practising?</a></h2>
 <hr class="half-width">
@@ -853,19 +864,6 @@ work?”, they often find their own mistakes when asked.</p>
 </h3>
 <p>This episode uses live coding. Learners should follow along by
 running commands on their own machines.</p>
-<div id="prerequisites" class="callout prereq">
-<div class="callout-square">
-<i class="callout-icon" data-feather="check"></i>
-</div>
-<span class="callout-header">Prerequisite</span>
-<div id="prerequisites" class="callout-inner">
-<h3 class="callout-title">Prerequisites</h3>
-<div class="callout-content">
-<p>Ensure you are signed in to Claude Code and have a session running in
-your project folder. Generating scripts can take 10-30 seconds.</p>
-</div>
-</div>
-</div>
 <hr>
 <br><h3 id="03-data-cleaning-headingInstructor2">
 <a href="03-data-cleaning.html#headingInstructor2">Backup scripts</a><a class="anchor" aria-label="anchor" href="#03-data-cleaning-headingInstructor2"></a>
@@ -914,7 +912,7 @@ identified its own limitations. * <strong>Backup:</strong> Have a
 screenshot of a known hallucination ready to show if the AI performs
 perfectly during the session.</p>
 <hr>
-<br></section><section id="06-capstone"><h2 class="section-heading"><a href="06-capstone.html">From AI Output to Research-Ready Code</a></h2>
+<br></section><section id="06-capstone"><h2 class="section-heading"><a href="06-capstone.html">From AI Output to a Review-Ready Bundle</a></h2>
 <hr class="half-width">
 <h3 id="06-capstone-headingInstructor1">
 <a href="06-capstone.html#headingInstructor1">Instructor note</a><a class="anchor" aria-label="anchor" href="#06-capstone-headingInstructor1"></a>
@@ -979,8 +977,8 @@ the best teaching.</p>
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/instructor-notes.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/instructor-notes.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-08-18",
-  "datePublished": "2026-08-18"
+  "dateModified": "2026-08-24",
+  "datePublished": "2026-08-24"
 }
 
   </script><script>

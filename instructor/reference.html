@@ -250,7 +250,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+        <a href="06-capstone.html">7. From AI Output to a Review-Ready Bundle</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -318,7 +318,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Reference</h1>
-        <p>Last updated on 2026-06-19 |
+        <p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/learners/reference.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -366,8 +366,10 @@ researcher then reviews and approves.
 <dt>Chain of Thought</dt>
 <dd>
 A prompting technique that encourages the AI to explain its reasoning
-step-by-step. Reasoning models (like o1 or R1) have this capability
-built-in.
+step-by-step. Current frontier models build this in as an adjustable
+reasoning-effort or thinking setting on the same model, rather than
+requiring a separate “reasoning model.” A displayed chain of thought is
+not necessarily a faithful record of the model’s internal computation.
 </dd>
 <dt>CLEAR Framework</dt>
 <dd>
@@ -390,12 +392,14 @@ A failure mode where irrelevant, stale, or contradictory information
 within a long context window (e.g., an <code>/archive</code> folder)
 causes the AI to hallucinate or generate incorrect code.
 </dd>
-<dt>Declarative Programming (with AI)</dt>
+<dt>Intent Specification</dt>
 <dd>
 A focus on describing the <em>desired outcome</em> (what the data should
 look like) and letting an agent draft the <em>mechanical steps</em> (how
 to write the loop), which you then read and verify rather than accept
-blindly.
+blindly. Not “declarative programming”: the agent still writes an
+ordinary imperative implementation, and the spec itself is not
+executable.
 </dd>
 <dt>Determinism Collapse</dt>
 <dd>
@@ -443,7 +447,9 @@ the AI agent.
 <dt>LLM (Large Language Model)</dt>
 <dd>
 A deep learning model trained on vast amounts of text data to generate
-human-like text (e.g., Claude Sonnet/Opus, GPT-4o, Gemini).
+human-like text (e.g., Claude, GPT, Gemini). Check <code>/status</code>
+in Claude Code for the exact current model in use; specific model names
+in this lesson go stale within months.
 </dd>
 <dt>MCP (Model Context Protocol)</dt>
 <dd>
@@ -469,10 +475,13 @@ multi-step tasks across multiple files in a project.
 The practice of documenting the metadata of an AI interaction (model
 version, prompt, context hashes) to ensure research accountability.
 </dd>
-<dt>Reasoning Models</dt>
+<dt>Reasoning Effort</dt>
 <dd>
-A new class of AI models (e.g., o1, DeepSeek-R1) trained to perform
-complex logical reasoning and verification before producing an output.
+An adjustable setting (in Claude Code, <code>low</code> through
+<code>xhigh</code>, with <code>max</code> on some models) that controls
+how much a model reasons before responding, on the same model rather
+than a separate “reasoning model” line. Higher effort costs more time
+and tokens and does not guarantee a better answer.
 </dd>
 <dt>Silent Semantic Drift</dt>
 <dd>
@@ -513,9 +522,10 @@ D-Lab. <a href="https://github.com/dlab-berkeley/Vibe-Coding-for-Research" class
 <li>Claude Code Documentation: <a href="https://docs.anthropic.com/en/docs/claude-code" class="external-link">https://docs.anthropic.com/en/docs/claude-code</a>
 </li>
 </ol><!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- --></section></div> <!-- / div.lesson-content -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+--></section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter Bottom"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="../instructor/index.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
       </div>
@@ -570,8 +580,8 @@ any links that you are not going to use.
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/reference.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/reference.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-06-19",
-  "datePublished": "2026-08-18"
+  "dateModified": "2026-08-24",
+  "datePublished": "2026-08-24"
 }
 
   </script><script>

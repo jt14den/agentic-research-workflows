@@ -309,7 +309,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+        <a href="06-capstone.html">7. From AI Output to a Review-Ready Bundle</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -387,13 +387,17 @@
         
 <section id="aio-00-before-ai"><p>Content from <a href="00-before-ai.html">Before We Use AI: What Are We Practising?</a></p>
 <hr>
-<p>Last updated on 2026-06-19 |
+<p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/00-before-ai.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 25 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -629,18 +633,23 @@ revise / reject checkpoint every time.</li>
 </div>
 </div>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </section></section><section id="aio-01-cli-intro"><p>Content from <a href="01-cli-intro.html">CLI-Based AI</a></p>
 <hr>
-<p>Last updated on 2026-06-19 |
+<p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/01-cli-intro.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 25 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -682,7 +691,7 @@ code.</li>
   Setup check
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>Ask all learners to run:</p>
 <div class="codewrapper sourceCode" id="cb1">
@@ -702,10 +711,26 @@ Confirm everyone has selected the same model with
 <section><h2 class="section-heading" id="why-cli-matters-for-research">Why CLI matters for research<a class="anchor" aria-label="anchor" href="#why-cli-matters-for-research"></a>
 </h2>
 <hr class="half-width">
-<p>Most researchers use chat-based AI in a browser. These tools are good
-for brainstorming but run in an isolated sandbox. They cannot see your
-files, run your code, or understand your project structure without
-manual uploads.</p>
+<p>Most researchers start with chat-based AI in a browser. Browser and
+desktop AI products increasingly ship connectors, uploaded-file access,
+or even their own coding/agentic surfaces, so “browser tools are
+sandboxed, CLI tools aren’t” is no longer a reliable rule. What actually
+matters is the <em>configured</em> surface for the specific tool in
+front of you: what it’s connected to and what permissions it has, not
+which category it falls in. Check that directly rather than assuming
+from “browser” vs. “CLI.”</p>
+<p>If you have not used a CLI agent before, that puts you with most of
+your peers, not behind them: a 2026 survey of 868 scientists who program
+found browser-based general-purpose chat tools accounted for the large
+majority of primary tool choice, with CLI/agentic tools a small minority
+(<a href="https://arxiv.org/abs/2512.19644" class="external-link">O’Brien et al., 2026</a>).
+This lesson teaches the less-common path deliberately, not because it is
+trendy, but because of a structural advantage a stateless chat interface
+cannot match: the persistent external brain described later in this
+episode. A browser chat forgets your project’s rules the moment you
+close the tab; a file like <code>CLAUDE.md</code> reloads them at the
+start of every session, under version control, reviewable by you or
+anyone else.</p>
 <p>A CLI (Command Line Interface) agent runs in your terminal, the same
 place you run Python scripts or navigate your filesystem with
 <code>ls</code> and <code>cd</code>, and has access to three things a
@@ -800,7 +825,7 @@ understand the result.</p>
   Instructor note: access is not understanding
   </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
 <div class="accordion-body">
 <p>Learners are often impressed that a CLI agent can read their files
 and run their code. Impressive access is not the same as a correct
@@ -847,8 +872,10 @@ policy before using any AI tool with sensitive data. PHI and
 attorney-client privileged information are not approved for these
 tools.</p>
 <p><strong>Looking ahead:</strong> If your research requires fully local
-processing, these same skills transfer to open-weight models (like Gemma
-or Llama) run via Ollama.</p>
+processing, these same skills transfer to open-weight models (like
+Qwen3, Gemma, or OpenAI’s gpt-oss) run via Ollama. Check both the
+license and the specific version before you rely on one for
+reproducibility.</p>
 </div>
 </div>
 </div>
@@ -870,6 +897,8 @@ the loop: you define the goal, the agent proposes a plan, <em>you</em>
 approve before any code is written, and <em>you</em> verify the result
 before it counts as done.</p>
 <pre class="mermaid"><code>graph TD
+    accTitle: Living Spec approval and verification loop
+    accDescr {A researcher defines a goal in CLAUDE.md, the agent proposes a plan, and the researcher approves it or sends it back at an approval gate. Only after approval does the agent draft code, which then passes a verification step or returns for refinement.}
     A[Researcher] --&gt;|Define goal| B(CLAUDE.md\nLiving Spec)
     B --&gt; C[Request a plan]
     C --&gt; D{Approval Gate}
@@ -895,7 +924,7 @@ gate.</em></p>
   Discussion prompt
   </h3>
 </button>
-<div id="collapseInstructor3" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor3" aria-labelledby="headingInstructor3">
+<div id="collapseInstructor3" class="accordion-collapse collapse" aria-labelledby="headingInstructor3" data-bs-parent="#accordionInstructor3">
 <div class="accordion-body">
 <p>Ask learners: “Have you ever used ChatGPT to write code that looked
 correct but failed when you ran it?” This is a good time to introduce
@@ -955,12 +984,17 @@ can revert unwanted changes.</p>
 large language models (LLMs) operate in a similar way. This is called
 the <strong>context window</strong> in LLM tools. Current models like
 Claude have long context windows (hundreds of thousands of tokens, up to
-a million in some configurations). You can provide the AI with your
-entire project folder, scripts, documentation, and small datasets, at
-once.</p>
+a million in some configurations), but a large window doesn’t mean the
+agent should load your entire project at once. The more useful pattern
+is that the agent inspects and retrieves the specific files it needs
+within its configured access, rather than everything being crammed in up
+front.</p>
 <p>This allows you to describe the desired state of your project, and
-the agent coordinates changes across multiple files. In a research
-context, this is declarative programming with AI agents.</p>
+the agent coordinates changes across multiple files. Call this
+<strong>intent specification</strong>, not “declarative programming”:
+you’re describing what you want, but the agent still writes an ordinary,
+imperative implementation, and the spec itself is not executable the way
+real declarative code is.</p>
 <div id="a-large-context-window-is-not-a-free-pass" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -1119,34 +1153,59 @@ that it loads automatically when you start a session:</p>
 <thead><tr>
 <th>Tool</th>
 <th>Native spec file</th>
-<th>Auto-loaded?</th>
 </tr></thead>
 <tbody>
 <tr>
 <td>Claude Code</td>
 <td><code>CLAUDE.md</code></td>
-<td>Yes</td>
 </tr>
 <tr>
 <td>OpenAI Codex</td>
 <td><code>AGENTS.md</code></td>
-<td>Yes</td>
 </tr>
 <tr>
 <td>Cursor</td>
 <td><code>.cursorrules</code></td>
-<td>Yes</td>
 </tr>
 </tbody>
 </table>
-<p>You can also use a <strong>portable</strong> spec file,
-<code>AGENTS.md</code> is a common convention, that you explicitly
-reference in any prompt: <code>"Read AGENTS.md and then..."</code>. It
-is not auto-loaded by any single tool, but it travels with your project
-if you switch tools. AGENTS.md, released by OpenAI in 2025 and later
-brought under the Linux Foundation’s Agentic AI Foundation, is emerging
-as a portable convention for giving coding agents project-specific
-instructions.</p>
+<p><code>AGENTS.md</code> is also emerging as a
+<strong>portable</strong> convention across tools: OpenAI released it in
+August 2025, and it was contributed to the Linux Foundation’s Agentic AI
+Foundation in December 2025 alongside Anthropic’s MCP and Block’s goose.
+But whether a tool <em>auto-loads</em> it varies, so check before
+assuming:</p>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr>
+<th>Tool</th>
+<th>Auto-loads <code>AGENTS.md</code>?</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>OpenAI Codex CLI</td>
+<td>Yes, it’s the native file above</td>
+</tr>
+<tr>
+<td>Claude Code</td>
+<td>No. It reads <code>CLAUDE.md</code> only. Add
+<code>@AGENTS.md</code> as an import inside your <code>CLAUDE.md</code>,
+or symlink <code>CLAUDE.md</code> to <code>AGENTS.md</code>, to bring it
+in</td>
+</tr>
+<tr>
+<td>Gemini CLI</td>
+<td>No by default; needs explicit configuration</td>
+</tr>
+</tbody>
+</table>
+<p>For a tool that doesn’t auto-load it, you can still reference it
+explicitly in a prompt: <code>"Read AGENTS.md and then..."</code>.
+That’s what makes it portable: it travels with your project even when
+the tool you’re using doesn’t pick it up on its own.</p>
 <div class="section level3">
 <h3 id="what-to-include-in-your-spec-file">What to include in your spec file<a class="anchor" aria-label="anchor" href="#what-to-include-in-your-spec-file"></a>
 </h3>
@@ -1216,7 +1275,7 @@ Metric” (how you know it’s done).</p>
   Example spec file
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1269,7 +1328,8 @@ verifying what it changed part of the workflow.</li>
 <li>Run <code>/init</code> inside Claude Code to create a
 <code>CLAUDE.md</code> Living Spec that reduces context drift.</li>
 <li>A portable <code>AGENTS.md</code> lets the same spec travel across
-different AI tools.</li>
+different AI tools, but auto-loading it isn’t universal; check per tool
+(Claude Code needs an explicit <code>@AGENTS.md</code> import).</li>
 <li>The shift is from writing syntax to actively reviewing intent,
 assumptions, and evidence; it does not remove your responsibility.</li>
 </ul>
@@ -1277,19 +1337,24 @@ assumptions, and evidence; it does not remove your responsibility.</li>
 </div>
 </div>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </div>
 </section></section><section id="aio-02-prompts"><p>Content from <a href="02-prompts.html">Best Practices for Prompting</a></p>
 <hr>
-<p>Last updated on 2026-06-19 |
+<p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/02-prompts.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 40 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -1299,8 +1364,11 @@ any links that you are not going to use.
 <h3 class="card-title">Questions</h3>
 <ul>
 <li>How do I write effective prompts?</li>
+<li>How do I review a plan before the agent acts on it, not just
+after?</li>
 <li>What are common AI failures?</li>
-<li>How can I make the AI fix its own mistakes?</li>
+<li>How can I make the AI fix its own mistakes, and when should I not
+trust that it has?</li>
 </ul>
 </div>
 </div>
@@ -1311,8 +1379,10 @@ any links that you are not going to use.
 <h3 class="card-title">Objectives</h3>
 <ul>
 <li>Apply the CLEAR framework.</li>
+<li>Use Claude Code’s plan mode to review an agent’s approach before it
+writes any files.</li>
 <li>Identify common AI failures.</li>
-<li>Use introspection to refine code.</li>
+<li>Use introspection to refine code, and know its limits.</li>
 </ul>
 </div>
 </div>
@@ -1549,7 +1619,7 @@ one step at a time.”</td>
   Instructor note: watch for cognitive load
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>Generated prompts often pull in syntax, libraries, or abstractions
 the lesson has not introduced. Signs that AI output is adding extraneous
@@ -1578,7 +1648,7 @@ a detour.</p>
   Teaching tip: Visual aids
   </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
 <div class="accordion-body">
 <p>Write CLEAR vertically on a whiteboard. As you explain each letter,
 add the keyword (Concise, Logical, Explicit, Adaptive, Reflective). This
@@ -1593,6 +1663,8 @@ helps students remember the framework.</p>
 <p>The CLEAR framework, developed by <a href="https://doi.org/10.1016/j.acalib.2023.102720" class="external-link">Leo Lo</a>, provides
 a structured approach to prompt engineering:</p>
 <pre class="mermaid"><code>graph LR
+    accTitle: The CLEAR prompting loop
+    accDescr {Effective prompts move from Concise to Logical to Explicit to Adaptive to Reflective, with a feedback loop from Reflective back to Adaptive when the output needs another pass.}
     C[Concise] --&gt; L[Logical]
     L --&gt; E[Explicit]
     E --&gt; A[Adaptive]
@@ -1620,7 +1692,7 @@ to critique its own output. This is often called self-correction.</p>
   The introspection concept
   </h3>
 </button>
-<div id="collapseInstructor3" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor3" aria-labelledby="headingInstructor3">
+<div id="collapseInstructor3" class="accordion-collapse collapse" aria-labelledby="headingInstructor3" data-bs-parent="#accordionInstructor3">
 <div class="accordion-body">
 <p>Emphasize this section. Most learners treat AI output as final. The
 idea that they can ask the AI to fix its own work is often a new
@@ -1642,45 +1714,68 @@ security vulnerabilities?”</li>
 way?”</li>
 </ul>
 <div class="section level3">
-<h3 id="reasoning-models">Reasoning models<a class="anchor" aria-label="anchor" href="#reasoning-models"></a>
+<h3 id="reasoning-effort">Reasoning effort<a class="anchor" aria-label="anchor" href="#reasoning-effort"></a>
 </h3>
 <p><em>Optional: useful once you are comfortable with the basics.</em>
-As of 2025, reasoning models (such as OpenAI o1/o3, DeepSeek-R1, or
-Gemini 2.5 Thinking) have emerged. These models perform chain of thought
-reasoning before they answer.</p>
-<p><strong>When to use them:</strong></p>
+Frontier models no longer split cleanly into separate “standard” and
+“reasoning” model families the way they did in 2025. The current
+generation instead lets you turn up a reasoning-effort setting on the
+same model. In Claude Code this is the <code>effort</code> setting
+(<code>low</code> through <code>xhigh</code>, with <code>max</code> on
+some models); the default is <code>high</code>, which suits most complex
+reasoning and coding work.</p>
+<p><strong>When to raise it:</strong></p>
 <ul>
-<li>
-<strong>Standard models (e.g., Claude Haiku):</strong> Best for
-quick formatting, simple scripts, and brainstorming.</li>
-<li>
-<strong>Reasoning models:</strong> Best for complex logic, debugging
-hard errors, or writing scientific formulas where accuracy is
-important.</li>
+<li>Reach for more effort when a task has multiple interacting
+constraints, or chains many steps of tool use together, not just because
+it “feels hard.”</li>
+<li>Leave it at the default for routine formatting, quick scripts, and
+brainstorming.</li>
+<li>Higher isn’t free: it costs more time and tokens, and on some tasks
+it can lead to overthinking rather than a better answer. Check your
+session’s <code>/status</code> for the exact model and effort level in
+use, since both change over time.</li>
 </ul>
-<p>When using a reasoning model, you often do not need to ask for
-introspection, they do it before showing the code.</p>
+<p>At higher effort levels, a model already does more internal reasoning
+before answering, so you often need less explicit introspection
+prompting than you would at a lower setting.</p>
 </div>
 </section><section><h2 class="section-heading" id="plan-before-you-act">Plan before you act<a class="anchor" aria-label="anchor" href="#plan-before-you-act"></a>
 </h2>
 <hr class="half-width">
 <p>As tasks grow more complex, asking the agent to write code
-immediately leads to more rewrite time. The emerging best practice is to
-request a plan first, review it, and approve it before any files are
-written.</p>
+immediately leads to more rewrite time. Claude Code has an actual
+enforced planning mode for this, not just a prompting convention: use it
+rather than relying on the agent to honor a polite request.</p>
 <div class="section level3">
-<h3 id="the-think-then-do-pattern">The think-then-do pattern<a class="anchor" aria-label="anchor" href="#the-think-then-do-pattern"></a>
+<h3 id="use-plan-mode-not-just-a-polite-request">Use plan mode, not just a polite request<a class="anchor" aria-label="anchor" href="#use-plan-mode-not-just-a-polite-request"></a>
 </h3>
-<p>Start any multi-step task with an explicit planning prompt:</p>
-<pre><code>Before writing any code, describe your approach in numbered steps. Do not write any files yet.</code></pre>
+<p>Start a session in plan mode from the command line:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">claude</span> <span class="at">--permission-mode</span> plan</span></code></pre>
+</div>
+<p>You can also switch into plan mode mid-session; check
+<code>/help</code> or your installed version’s documentation for the
+current way to do that, since the exact command has changed across
+releases. While in plan mode, the agent can read files and reason, but
+is blocked from writing files or running mutating commands, no matter
+what it decides to do. That is a real difference from a prompt like “do
+not write any files yet”: a prompt is a request the agent usually
+follows but is not required to, while plan mode is enforced by the tool
+itself.</p>
 <p>Review the plan, push back on steps you disagree with, and ask for
-alternatives. Once you are satisfied, say “proceed with step 1.”</p>
+alternatives. When you are satisfied, exit plan mode and let the agent
+proceed.</p>
 </div>
 <div class="section level3">
 <h3 id="checkpoint-prompts">Checkpoint prompts<a class="anchor" aria-label="anchor" href="#checkpoint-prompts"></a>
 </h3>
 <p>Break large tasks into explicit phases so you review the output at
-each stage before moving forward:</p>
+each stage before moving forward. This is useful whether or not you are
+in plan mode, since it scopes what the agent does even after you have
+approved the overall plan:</p>
 <pre><code>Step 1 only: read the three CSV files and tell me what inconsistencies you find. Do not write any code yet.</code></pre>
 <p>This is especially valuable in research because it catches
 misunderstandings about your data before they propagate into broken
@@ -1719,12 +1814,15 @@ durable.</p>
 <div id="challenge-plan-before-you-clean" class="callout-inner">
 <h3 class="callout-title">Challenge: Plan before you clean</h3>
 <div class="callout-content">
-<p>Practise the think-then-do pattern before moving on to the data
-cleaning episode. Inside your Claude Code session, type:</p>
-<pre><code>Read the three site files in data/. They have inconsistent column names and date formats. Before writing any code, outline a step-by-step plan for cleaning and merging them into a single dataset. Do not write any files yet.</code></pre>
-<p>Review the plan. Does it include an audit step? Does it address
-missing values? Revise the plan in the conversation until you are
-satisfied, then save it by asking: “Write this plan to PLAN.md.”</p>
+<p>Practise using plan mode before moving on to the data cleaning
+episode. Start (or switch into) plan mode, then inside your Claude Code
+session, type:</p>
+<pre><code>Read the three site files in data/. They have inconsistent column names and date formats. Outline a step-by-step plan for cleaning and merging them into a single dataset.</code></pre>
+<p>You do not need to add “do not write any files yet” here — plan mode
+already guarantees that. Review the plan. Does it include an audit step?
+Does it address missing values? Revise the plan in the conversation
+until you are satisfied, then exit plan mode and save it by asking:
+“Write this plan to PLAN.md.”</p>
 </div>
 </div>
 </div>
@@ -1735,7 +1833,7 @@ satisfied, then save it by asking: “Write this plan to PLAN.md.”</p>
   What a good plan includes
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <ul>
 <li>An <strong>audit step</strong>, inspect files before changing
@@ -1771,8 +1869,11 @@ or model updates can lead to different outputs for the same task, which
 affects reproducibility.
 <ul>
 <li>
-<em>Fix:</em> Use <code>temperature=0</code> (if available) and log
-your model versions and prompts.</li>
+<em>Fix:</em> There isn’t a setting that makes an agentic run
+reproducible — tool calls, retries, and file-system state all vary run
+to run regardless of sampling settings. Instead, log the exact model,
+prompt, and relevant outputs (a provenance header, see the next episode)
+so a different run can be compared, not guaranteed identical.</li>
 </ul>
 </li>
 <li>
@@ -1844,7 +1945,7 @@ it).</p></li>
   Example refined prompt
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <pre><code>Using data/site_A.csv, create a Python script that plots WaterQualityScore over Collection_Date as a scatterplot with a linear trendline. Label the axes. Save the plot to fig/site_A_trend.png (create the directory if it does not exist).</code></pre>
 <div class="section level3">
@@ -1897,7 +1998,7 @@ draft? Did it add a guard clause like
   Reflection
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>A second, critique-focused pass often catches issues the first draft
 missed. Treat it as a prompt to look harder yourself, not as a guarantee
@@ -1931,31 +2032,39 @@ the penalty is shipping it without knowing what it does.</p>
 <div class="callout-content">
 <ul>
 <li>Be specific and provide context.</li>
-<li>Plan before you act: request a numbered plan and approve it before
-any files are written.</li>
+<li>Plan before you act: use plan mode so the agent can’t write files
+until you approve its approach, not just a prompt asking it to
+wait.</li>
 <li>Prefer prompts that preserve learning: ask for plans, hints, and the
 simplest version, not the finished answer.</li>
 <li>Always validate AI outputs, and never ship a line you cannot
 explain.</li>
-<li>Introspection improves code quality.</li>
+<li>Introspection can surface issues the first draft missed, but it is
+not a guarantee of correctness; treat what it finds as something to
+verify, not proof.</li>
 </ul>
 </div>
 </div>
 </div>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </div>
 </section></section><section id="aio-03-data-cleaning"><p>Content from <a href="03-data-cleaning.html">Data Cleaning with AI</a></p>
 <hr>
-<p>Last updated on 2026-06-19 |
+<p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/03-data-cleaning.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 50 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -1989,18 +2098,6 @@ output.</li>
 </div>
 </div>
 </div>
-<div id="accordionInstructor1" class="accordion instructor-note accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
-  <h3 class="accordion-header" id="headingInstructor1">
-  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div>
-  Live coding
-  </h3>
-</button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
-<div class="accordion-body">
-<p>This episode uses live coding. Learners should follow along by
-running commands on their own machines.</p>
 <div id="prerequisites" class="callout prereq">
 <div class="callout-square">
 <i class="callout-icon" data-feather="check"></i>
@@ -2014,6 +2111,18 @@ your project folder. Generating scripts can take 10-30 seconds.</p>
 </div>
 </div>
 </div>
+<div id="accordionInstructor1" class="accordion instructor-note accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
+  <h3 class="accordion-header" id="headingInstructor1">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div>
+  Live coding
+  </h3>
+</button>
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div class="accordion-body">
+<p>This episode uses live coding. Learners should follow along by
+running commands on their own machines.</p>
 </div>
 </div>
 </div>
@@ -2194,10 +2303,13 @@ nothing dropped.</li>
 <strong>Missing-value check:</strong> missing scores filled per your
 strategy; nothing filled that should have stayed blank.</li>
 <li>
-<strong>Date check:</strong> all dates in 2023, and site C’s January
-samples are in January, not May. Sort the file by date and look at the
-earliest site C rows: if they landed in May, the day-month-year format
-was misread.</li>
+<strong>Date check:</strong> don’t just confirm the dates parse
+without error and fall in 2023 — a wrong parse can still produce
+valid-looking 2023 dates. Compare a few site C sample dates against the
+raw file by hand (<code>05-01-2023</code> must become
+<code>2023-01-05</code>, not <code>2023-05-01</code>), or better,
+re-parse site C’s raw dates with the explicit <code>%d-%m-%Y</code>
+format and compare the result to your merged file row by row.</li>
 </ul>
 <p>You can ask the AI to write these checks, but read them before you
 trust them. The project folder already ships a
@@ -2283,15 +2395,19 @@ many rows you expect this to remove and the row count you expect
 afterward. (Samples are weekly; January has four sampling dates per
 site.)</li>
 <li>
-<strong>Then update.</strong> Use Claude Code to update
-<code>clean_and_merge.py</code> instead of editing it manually. Ask the
-AI to read the file and add the filtering logic.</li>
+<strong>Then update.</strong> Use Claude Code to write a
+<strong>new</strong> script, <code>clean_feb_onward.py</code>, that
+reuses <code>clean_and_merge.py</code>’s cleaning logic but filters to
+February 2023 onward. Do not modify <code>clean_and_merge.py</code>
+itself: the capstone and later episodes reuse it and expect the full
+60-row dataset, so it needs to stay untouched.</li>
 <li>
-<strong>Verify against your prediction.</strong> Run the updated
-script and compare the actual row count to what you predicted. If they
-differ, explain why in one sentence. Pay special attention to site C: if
-its January samples were misparsed as May, this filter will keep rows it
-should have dropped.</li>
+<strong>Verify against your prediction.</strong> Run the new script
+and compare the actual row count to what you predicted. If they differ,
+explain why in one sentence. Pay special attention to site C: a naive
+parse can silently swap day and month for some rows and not others, so
+some misparsed January rows may land outside the window and vanish while
+others land inside it and wrongly survive.</li>
 </ol>
 </div>
 </div>
@@ -2307,11 +2423,15 @@ should have dropped.</li>
 <div class="accordion-body">
 <p>January has four weekly sampling dates per site (5, 12, 19, 26), so a
 correct filter removes 12 rows, leaving 48. If you get a different
-number, the most likely cause is the site C date format: misparsed
-January dates land in May and survive the filter. This is a small, safe
-version of a silent error that would quietly bias a real trend
-analysis.</p>
-<pre><code>Read 'clean_and_merge.py'. Modify the script to keep only samples collected in February 2023 or later. Keep all other logic the same. Save the updated script.</code></pre>
+number, the most likely cause is the site C date format: a naive parse
+can silently swap day and month for <em>some</em> rows and not others.
+For example, <code>05-01-2023</code> can silently become May 1 and
+<code>12-01-2023</code> can become December 1, while
+<code>19-01-2023</code> happens to parse correctly regardless, since 19
+can’t be a month. So a partial misparse doesn’t move cleanly to one edge
+of the range, it scatters. This is a small, safe version of a silent
+error that would quietly bias a real trend analysis.</p>
+<pre><code>Read 'clean_and_merge.py'. Write a new script, 'clean_feb_onward.py', that reuses its cleaning logic but keeps only samples collected in February 2023 or later. Do not modify clean_and_merge.py.</code></pre>
 <p>Did the AI edit the relevant part or rewrite the whole file? Did it
 parse the dates correctly before filtering? Did you check the changes
 before running?</p>
@@ -2323,10 +2443,11 @@ before running?</p>
 <div class="section level3">
 <h3 id="automating-documentation">Automating documentation<a class="anchor" aria-label="anchor" href="#automating-documentation"></a>
 </h3>
-<p>For the final step, have the AI generate a README that explains the
-data pipeline, including the raw files, cleaning steps, and final output
-format.</p>
-<pre><code>Create a README.md file that explains the data processing pipeline we just built. List the original files, the cleaning steps performed, and the final output format.</code></pre>
+<p>For the final step, have the AI generate a short pipeline summary.
+This folder already ships a <code>README.md</code> describing the schema
+and target output, so ask for a differently-named file rather than
+letting the agent overwrite it:</p>
+<pre><code>Create a PIPELINE.md file that explains the data processing pipeline we just built. List the original files, the cleaning steps performed, and the final output format. Do not modify or overwrite README.md.</code></pre>
 <div id="challenge-provenance-tracking" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
@@ -2342,7 +2463,8 @@ code and when.</p>
 <code>clean_and_merge.py</code>.</li>
 <li>The header should be a Python docstring containing:
 <ul>
-<li>The model used (e.g., Claude Sonnet 4.6)</li>
+<li>The model used (check your session’s <code>/status</code> or status
+line for the exact name)</li>
 <li>The date</li>
 <li>A summary of the prompt.</li>
 </ul>
@@ -2360,7 +2482,7 @@ code and when.</p>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
-<pre><code>Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the model name 'Claude Sonnet 4.6', today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'</code></pre>
+<pre><code>Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the exact model name from this session (check /status if unsure), today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'</code></pre>
 <div class="section level3">
 <h3 id="reflection">Reflection<a class="anchor" aria-label="anchor" href="#reflection"></a>
 </h3>
@@ -2395,19 +2517,24 @@ format), not because it ran.</li>
 </div>
 </div>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </div>
 </section></section><section id="aio-04-validation"><p>Content from <a href="04-validation.html">Validation Strategies: The Approval Gate</a></p>
 <hr>
-<p>Last updated on 2026-06-19 |
+<p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/04-validation.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 50 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -2438,7 +2565,8 @@ productivity score.</li>
 constraints.</li>
 <li>Turn validation into checks you can run, by finishing
 <code>validate_data.py</code>.</li>
-<li>Use multi-model verification to peer-review research code.</li>
+<li>Use a multi-model critique, in a fresh session, to widen review
+without treating it as an authority.</li>
 </ul>
 </div>
 </div>
@@ -2477,7 +2605,16 @@ you claim from it.</p>
 <p>Rewrite time does <strong>not</strong> prove AI makes researchers
 faster in general. Measuring programmer productivity is genuinely hard,
 and a single timing on a single task tells you almost nothing about
-productivity overall. Treat rewrite time as a <strong>formative
+productivity overall. This caution isn’t hypothetical: a 2026 survey of
+868 scientists who program found that <em>feeling</em> more productive
+with a genAI tool was associated with less programming experience and
+less use of practices like testing and code review, not with better
+outcomes. The single strongest predictor of feeling productive was
+simply how many lines of generated code someone accepted at once (<a href="https://arxiv.org/abs/2512.19644" class="external-link">O’Brien et al., 2026</a>) — the
+authors’ own conclusion is that scientists may be “gauging productivity
+by code generation rather than validation.” That gap between feeling
+productive and being correct is exactly what this validation stack
+exists to close. Treat rewrite time as a <strong>formative
 signal</strong> about <em>this</em> workflow, on <em>this</em> task:</p>
 <ul>
 <li>It is local and contextual.</li>
@@ -2504,13 +2641,13 @@ it.</p>
 </div>
 </div>
 </div>
-<div id="challenge-think-aloud-while-you-work" class="callout discussion">
+<div id="think-aloud-while-you-work" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
 <span class="callout-header">Discussion</span>
-<div id="challenge-think-aloud-while-you-work" class="callout-inner">
-<h3 class="callout-title">Challenge: think aloud while you work</h3>
+<div id="think-aloud-while-you-work" class="callout-inner">
+<h3 class="callout-title">Think aloud while you work</h3>
 <div class="callout-content">
 <p>Work in pairs. One person uses the AI for five minutes on a small,
 constrained task (for example, adding a single validation check to the
@@ -2607,31 +2744,42 @@ like in your field.</li>
 <h3 class="callout-title">Challenge: build the validator</h3>
 <div class="callout-content">
 <p>Open <code>validate_data.py</code>. Two checks are written for you;
-three are left as TODO (dates parse and fall in 2023, every
-<code>sample_id</code> is present exactly once, scores within
+three are left as TODO (every sample’s date matches the raw source,
+every <code>sample_id</code> is present exactly once, scores within
 0-100).</p>
 <ol style="list-style-type: decimal">
 <li><p>Implement the three TODO checks. Write them yourself, or ask the
-agent and then read every line before you trust them.</p></li>
+agent and then read every line before you trust them. For the date check
+specifically: don’t settle for “parses without error and falls in 2023”
+— a misparsed site C date can still produce a valid-looking 2023 date.
+Compare against the raw file instead (see the hint already in
+<code>validate_data.py</code>).</p></li>
 <li>
 <p>Run <code>python validate_data.py</code> against your
 <code>data/master_dataset.csv</code>. Make the checks pass by fixing the
 data or the cleaning script, never by editing a value to satisfy a
-check. A passing run looks like:</p>
+check. A passing run looks like this (captured from the reference
+implementation,
+<code>instructors/files/backup_validate_data.py</code>):</p>
 <pre><code>[PASS] row count is 60
 [PASS] all canonical columns present
-[PASS] dates parse and all fall in 2023
+[PASS] every sample's date matches the raw source
 [PASS] every original sample_id is present exactly once
 [PASS] score values fall within 0-100
-All implemented checks passed.</code></pre>
+
+All 5 checks passed.</code></pre>
 </li>
 <li>
-<p>Now break it on purpose: ask the agent to re-clean while parsing
-site C dates as month-day. Run the validator again. A good date check
-should now fail, for example:</p>
-<pre><code>[FAIL] dates parse and all fall in 2023 - earliest site C date is 2023-05-01</code></pre>
-<p>If instead everything still passes, your date check is too weak (see
-the solution).</p>
+<p>Now break it on purpose: ask the agent to re-clean site C’s dates
+using <code>pd.to_datetime(..., format="mixed")</code> instead of the
+explicit <code>%d-%m-%Y</code> format. Run the validator again. A good
+date check should now fail, for example:</p>
+<pre><code>[FAIL] every sample's date matches the raw source - 8 mismatch(es), e.g. ['SC001', 'SC002', 'SC006']</code></pre>
+<p>Notice this doesn’t crash, and it doesn’t obviously bunch the whole
+site C line at one edge of a plot either — only some rows are wrong,
+because <code>format="mixed"</code> guesses each date individually and
+gets some of them right by accident. If instead everything still passes,
+your date check is too weak (see the solution).</p>
 </li>
 </ol>
 </div>
@@ -2642,48 +2790,57 @@ the solution).</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>If your validator still passes on the misparsed data, the date check
-is too weak. A good check asserts something the bug would violate, for
-example that the earliest site C sample falls in January, or that each
-parsed date keeps the original day and month, not merely that
-<code>pd.to_datetime</code> did not raise an error. A validator that
-cannot fail on a known-bad input is not protecting you.</p>
+is too weak. A good check reconstructs the expected date for each sample
+from the raw file (parsed with the explicit format) and compares it
+exactly — not merely that <code>pd.to_datetime</code> did not raise an
+error, or that the year is 2023. See
+<code>instructors/files/backup_validate_data.py</code> for a complete
+reference implementation. A validator that cannot fail on a known-bad
+input is not protecting you.</p>
 </div>
 </div>
 </div>
 </div>
 <hr>
 </div>
-</section><section><h2 class="section-heading" id="multi-model-verification">Multi-model verification<a class="anchor" aria-label="anchor" href="#multi-model-verification"></a>
+</section><section><h2 class="section-heading" id="multi-model-critique">Multi-model critique<a class="anchor" aria-label="anchor" href="#multi-model-critique"></a>
 </h2>
 <hr class="half-width">
-<p>We use a challenger model to audit an implementation model rather
-than trusting a single AI.</p>
-<div id="challenge-orchestrate-a-peer-review" class="callout challenge">
+<p>A second model can widen your review, but switching models inside the
+same Claude Code session is not independent verification: it shares your
+conversation history, tools, and context with the first model. Treat
+what it returns as a hypothesis to check, not a second opinion from a
+clean slate.</p>
+<div id="challenge-get-a-multi-model-critique" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-orchestrate-a-peer-review" class="callout-inner">
-<h3 class="callout-title">Challenge: orchestrate a peer review</h3>
+<div id="challenge-get-a-multi-model-critique" class="callout-inner">
+<h3 class="callout-title">Challenge: get a multi-model critique</h3>
 <div class="callout-content">
 <ol style="list-style-type: decimal">
 <li><p>Use Model A (Claude Code) to generate a data cleaning
 script.</p></li>
 <li>
-<p>Provide the code to Model B, a <em>different</em> model. The
-simplest way is to switch models inside your Claude Code session with
-<code>/model</code>; if you have Codex CLI or another agent installed,
-you can use that instead. Then give it this prompt:</p>
+<p>Provide the code to Model B, a <em>different</em> model, in a
+<strong>fresh session</strong> if you can (a new terminal, a different
+tool such as Codex CLI, or at minimum <code>/clear</code> first) — not
+just a <code>/model</code> switch inside the same conversation, which
+still carries the first model’s framing. Give it the specification, the
+code, and any tests, not the first model’s narrative about its own work.
+Then give it this prompt:</p>
 <p>“Read this script. Act as a skeptical senior data scientist. Identify
 three potential edge cases where this script will fail, such as empty
 strings, NaN values, or encoding issues. Suggest specific assert
 statements to catch these.”</p>
 </li>
-<li><p>Reflect: Did the challenger model find something the
-implementation model missed?</p></li>
+<li><p>Reflect: Did the second model find something the first missed?
+Which of its findings still need a deterministic check or your own
+domain judgment before you’d act on them?</p></li>
 </ol>
 </div>
 </div>
@@ -2691,15 +2848,17 @@ implementation model missed?</p></li>
 <div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2"> Why this works </h4>
+  <h4 class="accordion-header" id="headingSolution2"> Why this works, and its limit </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
-<p>Models have different blind spots. Asking a second model to act as a
-skeptical reviewer surfaces edge cases and review questions the first
-one glossed over. Treat what it returns as more questions to
-investigate, not as proof: a second model is a reviewer, not evidence,
-and the decision is still yours.</p>
+<p>Models have different blind spots, so a second read can surface edge
+cases and review questions the first one glossed over. But it is a
+hypothesis generator, not an authority: it shares training data and
+general tendencies with the first model, and a same-session
+<code>/model</code> switch shares even more (conversation history,
+tools, framing). Treat its findings as more questions to investigate
+with a deterministic check or your own expertise, not as proof.</p>
 </div>
 </div>
 </div>
@@ -2709,7 +2868,7 @@ and the decision is still yours.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Teaching tip: approval fatigue </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>Warn learners about approval fatigue, the tendency to accept AI
 suggestions without reading them. The four-layer stack is designed to
@@ -2743,7 +2902,7 @@ the approval gate out loud or in writing. Answer all five:</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> What a good answer looks like </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>A strong answer names the output precisely, points to
 <em>specific</em> checks as evidence (row counts, invariant checks, a
@@ -2770,26 +2929,31 @@ research.</li>
 productivity score.</li>
 <li>Requirement constraints prevent the AI from drifting away from
 research specs.</li>
-<li>Multi-model verification uses a second AI as a reviewer, not an
-authority.</li>
+<li>A multi-model critique, run in a fresh session, is a reviewer, not
+an authority.</li>
 <li>You cannot validate what you cannot explain.</li>
 </ul>
 </div>
 </div>
 </div>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </section></section><section id="aio-05-limitations"><p>Content from <a href="05-limitations.html">Limitations and Cautions</a></p>
 <hr>
-<p>Last updated on 2026-06-19 |
+<p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/05-limitations.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 25 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -2943,9 +3107,14 @@ formulas or logic as certain.</li>
 <li>
 <strong>Tool poisoning via MCP:</strong> When an agent calls
 external tools through MCP, a misconfigured or malicious MCP server can
-inject instructions into the agent’s context (prompt injection). This
-can cause the agent to take unintended actions or leak data. Mitigation:
-only install MCP servers from trusted, audited sources.</li>
+inject instructions into the agent’s context (prompt injection) through
+its tool descriptions or returned data, even from a server that is
+otherwise sandboxed. This can cause the agent to take unintended actions
+or leak data. Mitigation: only install MCP servers from trusted, audited
+sources; treat everything a server returns as untrusted input, not just
+the server itself; and sandbox with minimal filesystem/network access
+where you can. Registry listing (MCP now has an official one) is not a
+safety certification.</li>
 <li>
 <strong>Over-engineering:</strong> The model generates complex code
 for simple problems.</li>
@@ -3009,18 +3178,24 @@ perfectly during the session.</p>
 </div>
 </div>
 </div>
-<div id="challenge-test-for-hallucinations" class="callout challenge">
+<div id="challenge-test-for-hallucinations-then-verify-independently" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-test-for-hallucinations" class="callout-inner">
-<h3 class="callout-title">Challenge: Test for hallucinations</h3>
+<div id="challenge-test-for-hallucinations-then-verify-independently" class="callout-inner">
+<h3 class="callout-title">Challenge: Test for hallucinations, then
+verify independently</h3>
 <div class="callout-content">
 <p>Inside your Claude Code session, type:</p>
 <pre><code>How do I use the 'pypanda-researcher' library to automatically write my conclusion?</code></pre>
 <p>Note whether the model admits it does not know, hedges with
-uncertainty, or confidently invents instructions.</p>
+uncertainty, or confidently invents instructions. Then check for
+yourself, independent of what the model told you: search PyPI (or your
+language’s package index) for <code>pypanda-researcher</code>. Record
+what you find and the date you checked. Would you accept, revise, or
+reject the model’s answer based on that evidence, not on how confident
+it sounded?</p>
 </div>
 </div>
 </div>
@@ -3033,13 +3208,20 @@ uncertainty, or confidently invents instructions.</p>
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<p>Current models (Claude, GPT-4o, Gemini) are significantly better at
-refusing or flagging uncertainty than earlier generations, you may get a
-clean “this doesn’t exist” response. That is the correct behaviour. The
-lesson here is not that hallucination always happens, but that you
-cannot assume it won’t: always verify suggested libraries and functions
-exist before using them. Older or smaller models are still more likely
-to confabulate.</p>
+<p>Current models are somewhat better at flagging uncertainty than
+earlier generations — you may get a clean “this doesn’t exist” response,
+and that’s the correct behaviour when it happens. But don’t count on it:
+a 2026 study testing five current frontier models found they still
+hallucinate nonexistent package names 4.6-6.1% of the time, and more
+surprisingly, 127 of those hallucinated package names were invented
+<em>identically</em> by all five models. That second finding matters for
+your validation habits specifically: asking a different model to
+double-check a package name is weaker protection than it sounds, because
+current models increasingly confabulate the same wrong answers, not
+different ones. The lesson here is not that hallucination always
+happens, but that you cannot assume it won’t, and cross-checking with
+another model is not a substitute for checking the official package
+registry or documentation directly.</p>
 </div>
 </div>
 </div>
@@ -3052,19 +3234,26 @@ to confabulate.</p>
 research.</p>
 <ul>
 <li>
-<strong>Proprietary models (Gemini, GPT-4, Claude):</strong> These
-are closed-weight models. You cannot verify their training data, and
-they may update silently. Institutional agreements provide data privacy
-but do not solve reproducibility issues.</li>
+<strong>Proprietary models (Gemini, GPT, Claude):</strong> These are
+closed-weight models. You cannot verify their training data, and they
+may update silently. Institutional agreements provide data privacy but
+do not solve reproducibility issues.</li>
 <li>
-<strong>Open-weights models (Gemma, Llama, Mistral):</strong> These
-can be run locally using tools like Ollama. They offer better
-reproducibility because you can use a specific, frozen version of the
-model.</li>
+<strong>Open-weight models (e.g. Qwen3, Gemma, OpenAI’s
+gpt-oss):</strong> These can be run locally using tools like Ollama.
+They offer better reproducibility because you can pin a specific, frozen
+model revision — though license terms still vary by model, so check them
+alongside the version. “Open-weight” is the precise term here: the
+weights are downloadable, but that alone doesn’t make the system open
+source under the fuller definition (training data, code, and license may
+still be closed or restricted).</li>
 </ul>
-<p><strong>Recommendation:</strong> Use proprietary models for
-prototyping and cleaning, but archive the generated code. Do not rely on
-the AI to regenerate the same code in the future.</p>
+<p><strong>Recommendation:</strong> There is no blanket right answer
+between proprietary and open-weight for prototyping and cleaning. Base
+the choice on your data’s classification and authorization, the task’s
+reproducibility and auditability needs, and cost, not on a default.
+Whichever you use, archive the generated code rather than relying on the
+model to regenerate the same result later.</p>
 <div id="key-lesson" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -3107,25 +3296,31 @@ verified. These are the items most worth a second look.</p>
 syntax practice.</li>
 <li>Know when AI supports learning and when it gets in the way.</li>
 <li>You are responsible for the final output.</li>
-<li>Open models offer better reproducibility; proprietary models offer
-more power.</li>
+<li>Open-weight models offer better reproducibility (a pinned revision);
+the right choice for a task still depends on data sensitivity,
+auditability, and cost, not a default.</li>
 </ul>
 </div>
 </div>
 </div>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
-</section></section><section id="aio-06-capstone"><p>Content from <a href="06-capstone.html">From AI Output to Research-Ready Code</a></p>
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
+</section></section><section id="aio-06-capstone"><p>Content from <a href="06-capstone.html">From AI Output to a Review-Ready Bundle</a></p>
 <hr>
-<p>Last updated on 2026-06-19 |
+<p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/06-capstone.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 50 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -3136,7 +3331,7 @@ any links that you are not going to use.
 <ul>
 <li>Can I take one task from prompt to trustworthy, documented
 result?</li>
-<li>What does “research-ready” actually include, beyond a script that
+<li>What does “review-ready” actually include, beyond a script that
 runs?</li>
 </ul>
 </div>
@@ -3149,7 +3344,7 @@ runs?</li>
 <ul>
 <li>Run the full workflow on one project, from messy files to a
 validated, documented result.</li>
-<li>Produce a research-ready bundle: spec, plan, code, validation, a
+<li>Produce a review-ready bundle: spec, plan, code, validation, a
 result, and provenance.</li>
 <li>Make and defend an approve / revise / reject decision on your own
 output.</li>
@@ -3162,8 +3357,12 @@ output.</li>
 <p>So far you have practised each move on its own: a spec, a plan, a
 cleaning script, a validator. The capstone puts them together on the
 project you have been carrying all along, the coastal water quality
-data, and ends with an actual finding: <strong>is the water quality
-score trending up or down, and does it differ by site?</strong></p>
+data, and ends with an actual finding: <strong>what pattern is visible
+in the water quality score at each site over the monitoring
+period?</strong> (A descriptive line plot can show a visible pattern; it
+does not by itself establish a statistically significant trend or a
+difference between sites — that would need a stated method and
+uncertainty, which is out of scope here.)</p>
 <p>Work through the steps below. The goal is not just a plot. It is a
 bundle you could hand to a collaborator, or your future self, and have
 them trust.</p>
@@ -3205,9 +3404,10 @@ range, no lost IDs.</li>
 it.</li>
 <li>
 <strong>Judge the result (domain plausibility).</strong> Does the
-trend make sense? Do all three site lines span January to May, or does
-site C only appear at the May edge, the sign the date trap bit you? A
-plot can render cleanly and still be wrong.</li>
+trend make sense? Do all three site lines span January to May with a
+continuous weekly pattern, or does site C look scattered or out of
+order, the sign the date trap bit you? A plot can render cleanly and
+still be wrong.</li>
 <li>
 <strong>Document provenance.</strong> Add a header or a short
 <code>PROVENANCE.md</code>: model used, date, the prompt summary, and
@@ -3225,21 +3425,26 @@ line saying why.</li>
 <h3 class="callout-title">What can go wrong here (and that is the
 point)</h3>
 <div class="callout-content">
-<p>The most likely failure is silent: site C’s <code>05-01-2023</code>
-dates parsed as month-day, so its January samples land in May. The
-script runs, the row count is 60, and the trend plot still misleads.
-This is exactly the kind of error that “it ran” would have hidden, and
-exactly what your validator and your eyes on the plot are for.</p>
+<p>The most likely failure is silent: if the cleaning script parses site
+C’s dates with <code>format="mixed"</code> instead of the explicit
+<code>%d-%m-%Y</code>, some rows silently swap day and month
+(<code>05-01-2023</code> becomes May 1) while others accidentally parse
+correctly. The script runs, the row count is 60, and the trend plot
+still misleads — but the wrong points scatter rather than bunching
+neatly at one edge, so eyeballing the plot alone won’t reliably catch
+it. This is exactly the kind of error that “it ran” would have hidden,
+and exactly what your validator (checking exact per-sample dates, not
+just “falls in 2023”) and your eyes on the plot are for.</p>
 </div>
 </div>
 </div>
-<div id="capstone-challenge-the-research-ready-bundle" class="callout challenge">
+<div id="capstone-challenge-the-review-ready-bundle" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="capstone-challenge-the-research-ready-bundle" class="callout-inner">
-<h3 class="callout-title">Capstone challenge: the research-ready
+<div id="capstone-challenge-the-review-ready-bundle" class="callout-inner">
+<h3 class="callout-title">Capstone challenge: the review-ready
 bundle</h3>
 <div class="callout-content">
 <p>Produce and submit (or share with a partner) a bundle for the coastal
@@ -3284,7 +3489,7 @@ check before using this for real.</li>
   What a strong bundle shows
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>The script running is the least interesting part. A strong bundle
 shows <em>judgement</em>: the spec names the date trap before the code
@@ -3304,7 +3509,7 @@ answer when the evidence does not yet cover the claim.</p>
   Instructor note
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>Budget most of the time for doing, not explaining. Expect the site C
 date bug to surface for several learners; treat it as the highlight, not
@@ -3341,8 +3546,9 @@ answer? Post one line in the Etherpad.</p>
 <div class="callout-inner">
 <div class="callout-content">
 <ul>
-<li>Research-ready means spec, plan, code, validation, a result,
-provenance, and a decision, not just a script that runs.</li>
+<li>Review-ready means spec, plan, code, validation, a result,
+provenance, and a decision, not just a script that runs — a descriptive
+plot is not itself a statistical finding.</li>
 <li>The same checkpoint pattern scales from one script to a whole small
 project.</li>
 <li>A plot can render cleanly and still be wrong; domain plausibility is
@@ -3354,18 +3560,23 @@ cover the claim.</li>
 </div>
 </div>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </section></section><section id="aio-07-resources"><p>Content from <a href="07-resources.html">Resources and Next Steps</a></p>
 <hr>
-<p>Last updated on 2026-06-19 |
+<p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/07-resources.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 25 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -3458,12 +3669,17 @@ general scripting, a local model for sensitive data.</p>
 <h3 class="callout-title">MCP and the shadow-IT risk</h3>
 <div class="callout-content">
 <p>The Model Context Protocol (MCP) lets agents connect to external
-tools and data sources (databases, file systems, services). It is
-powerful, but MCP servers are often installed without institutional
-oversight, and security researchers have shown risks including prompt
-injection and silent data exfiltration. Before connecting one, check it
-is actively maintained and from a trusted source, and that your
-institution’s policy covers it.</p>
+tools and data sources (databases, file systems, services). Anthropic
+donated MCP governance to the Linux Foundation’s Agentic AI Foundation
+in December 2025, and an official server registry now exists — but
+registry listing is not a safety certification. MCP servers are still
+often installed without institutional oversight, and prompt injection
+and silent data exfiltration remain real risks: a server’s tool
+descriptions and returned data should be treated as untrusted input, not
+just the servers themselves. Before connecting one, check it is actively
+maintained and from a trusted source, sandbox it with minimal
+filesystem/network access where you can, and confirm your institution’s
+policy covers it.</p>
 </div>
 </div>
 </div>
@@ -3476,8 +3692,8 @@ cannot take accountability. Cite them as methodological tools
 instead.</p>
 <ul>
 <li>In a repo <code>README.md</code>: note the model, its role, and who
-verified the output (for example, “Claude Sonnet 4.6 drafted the
-cleaning script; verified by [you] via
+verified the output (for example, “Claude [current model name] drafted
+the cleaning script; verified by [you] via
 <code>validate_data.py</code>”).</li>
 <li>In a manuscript: name the model in methods or acknowledgements, and
 keep prompts and outputs available.</li>
@@ -3526,7 +3742,7 @@ prompt.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>A good card is specific to your data. The validation line is the
 tell: if you cannot name a check that would fail when the result is
@@ -3562,7 +3778,8 @@ security), <a href="https://www.oneusefulthing.org/" class="external-link">Ethan
 (systematic evaluation), and <a href="https://www.deeplearning.ai/the-batch/" class="external-link">The Batch</a> (balanced
 industry coverage).</p>
 <p>For the tool used here, see the <a href="https://docs.anthropic.com/en/docs/claude-code" class="external-link">Claude Code
-documentation</a>.</p>
+documentation</a>. For definitions of terms used throughout this lesson
+(Living Spec, external brain, approval gates, and more), see the <a href="reference.html">learner reference page</a>.</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -3581,9 +3798,10 @@ check that would catch a silent error.</li>
 </div>
 </div>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </section></section>
 </div>
     </main>
@@ -3634,8 +3852,8 @@ any links that you are not going to use.
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/aio.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/aio.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-08-18",
-  "datePublished": "2026-08-18"
+  "dateModified": "2026-08-24",
+  "datePublished": "2026-08-24"
 }
 
   </script><script>

@@ -270,7 +270,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+        <a href="06-capstone.html">7. From AI Output to a Review-Ready Bundle</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -343,7 +343,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Best Practices for Prompting</h1>
-        <p>Last updated on 2026-06-19 |
+        <p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/02-prompts.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -355,7 +355,10 @@
 
         
 
-<div class="overview card">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style><div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
 <div class="col-md-4">
@@ -363,8 +366,11 @@
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul><li>How do I write effective prompts?</li>
+<li>How do I review a plan before the agent acts on it, not just
+after?</li>
 <li>What are common AI failures?</li>
-<li>How can I make the AI fix its own mistakes?</li>
+<li>How can I make the AI fix its own mistakes, and when should I not
+trust that it has?</li>
 </ul></div>
 </div>
 </div>
@@ -373,8 +379,10 @@
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul><li>Apply the CLEAR framework.</li>
+<li>Use Claude Code’s plan mode to review an agent’s approach before it
+writes any files.</li>
 <li>Identify common AI failures.</li>
-<li>Use introspection to refine code.</li>
+<li>Use introspection to refine code, and know its limits.</li>
 </ul></div>
 </div>
 </div>
@@ -559,6 +567,8 @@ one step at a time.”</td>
 <hr class="half-width"><p>The CLEAR framework, developed by <a href="https://doi.org/10.1016/j.acalib.2023.102720" class="external-link">Leo Lo</a>, provides
 a structured approach to prompt engineering:</p>
 <pre class="mermaid"><code>graph LR
+    accTitle: The CLEAR prompting loop
+    accDescr {Effective prompts move from Concise to Logical to Explicit to Adaptive to Reflective, with a feedback loop from Reflective back to Adaptive when the output needs another pass.}
     C[Concise] --&gt; L[Logical]
     L --&gt; E[Explicit]
     E --&gt; A[Adaptive]
@@ -587,38 +597,61 @@ security vulnerabilities?”</li>
 <li>“Critique your own implementation. Is there a more efficient
 way?”</li>
 </ul><div class="section level3">
-<h3 id="reasoning-models">Reasoning models<a class="anchor" aria-label="anchor" href="#reasoning-models"></a></h3>
+<h3 id="reasoning-effort">Reasoning effort<a class="anchor" aria-label="anchor" href="#reasoning-effort"></a></h3>
 <p><em>Optional: useful once you are comfortable with the basics.</em>
-As of 2025, reasoning models (such as OpenAI o1/o3, DeepSeek-R1, or
-Gemini 2.5 Thinking) have emerged. These models perform chain of thought
-reasoning before they answer.</p>
-<p><strong>When to use them:</strong></p>
-<ul><li>
-<strong>Standard models (e.g., Claude Haiku):</strong> Best for
-quick formatting, simple scripts, and brainstorming.</li>
-<li>
-<strong>Reasoning models:</strong> Best for complex logic, debugging
-hard errors, or writing scientific formulas where accuracy is
-important.</li>
-</ul><p>When using a reasoning model, you often do not need to ask for
-introspection, they do it before showing the code.</p>
+Frontier models no longer split cleanly into separate “standard” and
+“reasoning” model families the way they did in 2025. The current
+generation instead lets you turn up a reasoning-effort setting on the
+same model. In Claude Code this is the <code>effort</code> setting
+(<code>low</code> through <code>xhigh</code>, with <code>max</code> on
+some models); the default is <code>high</code>, which suits most complex
+reasoning and coding work.</p>
+<p><strong>When to raise it:</strong></p>
+<ul><li>Reach for more effort when a task has multiple interacting
+constraints, or chains many steps of tool use together, not just because
+it “feels hard.”</li>
+<li>Leave it at the default for routine formatting, quick scripts, and
+brainstorming.</li>
+<li>Higher isn’t free: it costs more time and tokens, and on some tasks
+it can lead to overthinking rather than a better answer. Check your
+session’s <code>/status</code> for the exact model and effort level in
+use, since both change over time.</li>
+</ul><p>At higher effort levels, a model already does more internal reasoning
+before answering, so you often need less explicit introspection
+prompting than you would at a lower setting.</p>
 </div>
 </section><section><h2 class="section-heading" id="plan-before-you-act">Plan before you act<a class="anchor" aria-label="anchor" href="#plan-before-you-act"></a></h2>
 <hr class="half-width"><p>As tasks grow more complex, asking the agent to write code
-immediately leads to more rewrite time. The emerging best practice is to
-request a plan first, review it, and approve it before any files are
-written.</p>
+immediately leads to more rewrite time. Claude Code has an actual
+enforced planning mode for this, not just a prompting convention: use it
+rather than relying on the agent to honor a polite request.</p>
 <div class="section level3">
-<h3 id="the-think-then-do-pattern">The think-then-do pattern<a class="anchor" aria-label="anchor" href="#the-think-then-do-pattern"></a></h3>
-<p>Start any multi-step task with an explicit planning prompt:</p>
-<pre><code>Before writing any code, describe your approach in numbered steps. Do not write any files yet.</code></pre>
+<h3 id="use-plan-mode-not-just-a-polite-request">Use plan mode, not just a polite request<a class="anchor" aria-label="anchor" href="#use-plan-mode-not-just-a-polite-request"></a></h3>
+<p>Start a session in plan mode from the command line:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">claude</span> <span class="at">--permission-mode</span> plan</span></code></pre>
+</div>
+<p>You can also switch into plan mode mid-session; check
+<code>/help</code> or your installed version’s documentation for the
+current way to do that, since the exact command has changed across
+releases. While in plan mode, the agent can read files and reason, but
+is blocked from writing files or running mutating commands, no matter
+what it decides to do. That is a real difference from a prompt like “do
+not write any files yet”: a prompt is a request the agent usually
+follows but is not required to, while plan mode is enforced by the tool
+itself.</p>
 <p>Review the plan, push back on steps you disagree with, and ask for
-alternatives. Once you are satisfied, say “proceed with step 1.”</p>
+alternatives. When you are satisfied, exit plan mode and let the agent
+proceed.</p>
 </div>
 <div class="section level3">
 <h3 id="checkpoint-prompts">Checkpoint prompts<a class="anchor" aria-label="anchor" href="#checkpoint-prompts"></a></h3>
 <p>Break large tasks into explicit phases so you review the output at
-each stage before moving forward:</p>
+each stage before moving forward. This is useful whether or not you are
+in plan mode, since it scopes what the agent does even after you have
+approved the overall plan:</p>
 <pre><code>Step 1 only: read the three CSV files and tell me what inconsistencies you find. Do not write any code yet.</code></pre>
 <p>This is especially valuable in research because it catches
 misunderstandings about your data before they propagate into broken
@@ -656,12 +689,15 @@ durable.</p>
 <div id="challenge-plan-before-you-clean" class="callout-inner">
 <h3 class="callout-title">Challenge: Plan before you clean</h3>
 <div class="callout-content">
-<p>Practise the think-then-do pattern before moving on to the data
-cleaning episode. Inside your Claude Code session, type:</p>
-<pre><code>Read the three site files in data/. They have inconsistent column names and date formats. Before writing any code, outline a step-by-step plan for cleaning and merging them into a single dataset. Do not write any files yet.</code></pre>
-<p>Review the plan. Does it include an audit step? Does it address
-missing values? Revise the plan in the conversation until you are
-satisfied, then save it by asking: “Write this plan to PLAN.md.”</p>
+<p>Practise using plan mode before moving on to the data cleaning
+episode. Start (or switch into) plan mode, then inside your Claude Code
+session, type:</p>
+<pre><code>Read the three site files in data/. They have inconsistent column names and date formats. Outline a step-by-step plan for cleaning and merging them into a single dataset.</code></pre>
+<p>You do not need to add “do not write any files yet” here — plan mode
+already guarantees that. Review the plan. Does it include an audit step?
+Does it address missing values? Revise the plan in the conversation
+until you are satisfied, then exit plan mode and save it by asking:
+“Write this plan to PLAN.md.”</p>
 </div>
 </div>
 </div>
@@ -672,7 +708,7 @@ satisfied, then save it by asking: “Write this plan to PLAN.md.”</p>
   What a good plan includes
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <ul><li>An <strong>audit step</strong>, inspect files before changing
 them</li>
@@ -701,8 +737,11 @@ shortcuts.</p>
 or model updates can lead to different outputs for the same task, which
 affects reproducibility.
 <ul><li>
-<em>Fix:</em> Use <code>temperature=0</code> (if available) and log
-your model versions and prompts.</li>
+<em>Fix:</em> There isn’t a setting that makes an agentic run
+reproducible — tool calls, retries, and file-system state all vary run
+to run regardless of sampling settings. Instead, log the exact model,
+prompt, and relevant outputs (a provenance header, see the next episode)
+so a different run can be compared, not guaranteed identical.</li>
 </ul></li>
 <li>
 <strong>Over-correction loops:</strong> If an agent runs its own
@@ -766,7 +805,7 @@ it).</p></li>
   Example refined prompt
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <pre><code>Using data/site_A.csv, create a Python script that plots WaterQualityScore over Collection_Date as a scatterplot with a linear trendline. Label the axes. Save the plot to fig/site_A_trend.png (create the directory if it does not exist).</code></pre>
 <div class="section level3">
@@ -814,7 +853,7 @@ draft? Did it add a guard clause like
   Reflection
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>A second, critique-focused pass often catches issues the first draft
 missed. Treat it as a prompt to look harder yourself, not as a guarantee
@@ -847,20 +886,24 @@ the penalty is shipping it without knowing what it does.</p>
 <div class="callout-inner">
 <div class="callout-content">
 <ul><li>Be specific and provide context.</li>
-<li>Plan before you act: request a numbered plan and approve it before
-any files are written.</li>
+<li>Plan before you act: use plan mode so the agent can’t write files
+until you approve its approach, not just a prompt asking it to
+wait.</li>
 <li>Prefer prompts that preserve learning: ask for plans, hints, and the
 simplest version, not the finished answer.</li>
 <li>Always validate AI outputs, and never ship a line you cannot
 explain.</li>
-<li>Introspection improves code quality.</li>
+<li>Introspection can surface issues the first draft missed, but it is
+not a guarantee of correctness; treat what it finds as something to
+verify, not proof.</li>
 </ul></div>
 </div>
 </div>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </div>
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter Bottom"><div class="d-block d-sm-block d-md-none">
@@ -922,8 +965,8 @@ any links that you are not going to use.
   "url": "https://jt14den.github.io/agentic-research-workflows/02-prompts.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/02-prompts.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-06-19",
-  "datePublished": "2026-08-18"
+  "dateModified": "2026-08-24",
+  "datePublished": "2026-08-24"
 }
 
   </script><script>

@@ -253,7 +253,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+        <a href="06-capstone.html">7. From AI Output to a Review-Ready Bundle</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -330,7 +330,7 @@
       <div class="d-none d-sm-none d-md-block">
         <a class="chapter-link" href="../instructor/06-capstone.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: From AI Output to
+          Previous: From AI Output to a
         </a>
         <a class="chapter-link float-end" href="../instructor/index.html" rel="next">
           Next: Agentic Research...
@@ -339,7 +339,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Resources and Next Steps</h1>
-        <p>Last updated on 2026-06-19 |
+        <p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/07-resources.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -353,7 +353,10 @@
 
         
 
-<div class="overview card">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style><div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
 <div class="col-md-4">
@@ -420,12 +423,17 @@ general scripting, a local model for sensitive data.</p>
 <h3 class="callout-title">MCP and the shadow-IT risk</h3>
 <div class="callout-content">
 <p>The Model Context Protocol (MCP) lets agents connect to external
-tools and data sources (databases, file systems, services). It is
-powerful, but MCP servers are often installed without institutional
-oversight, and security researchers have shown risks including prompt
-injection and silent data exfiltration. Before connecting one, check it
-is actively maintained and from a trusted source, and that your
-institution’s policy covers it.</p>
+tools and data sources (databases, file systems, services). Anthropic
+donated MCP governance to the Linux Foundation’s Agentic AI Foundation
+in December 2025, and an official server registry now exists — but
+registry listing is not a safety certification. MCP servers are still
+often installed without institutional oversight, and prompt injection
+and silent data exfiltration remain real risks: a server’s tool
+descriptions and returned data should be treated as untrusted input, not
+just the servers themselves. Before connecting one, check it is actively
+maintained and from a trusted source, sandbox it with minimal
+filesystem/network access where you can, and confirm your institution’s
+policy covers it.</p>
 </div>
 </div>
 </div>
@@ -435,8 +443,8 @@ institution’s policy covers it.</p>
 cannot take accountability. Cite them as methodological tools
 instead.</p>
 <ul><li>In a repo <code>README.md</code>: note the model, its role, and who
-verified the output (for example, “Claude Sonnet 4.6 drafted the
-cleaning script; verified by [you] via
+verified the output (for example, “Claude [current model name] drafted
+the cleaning script; verified by [you] via
 <code>validate_data.py</code>”).</li>
 <li>In a manuscript: name the model in methods or acknowledgements, and
 keep prompts and outputs available.</li>
@@ -482,7 +490,7 @@ prompt.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>A good card is specific to your data. The validation line is the
 tell: if you cannot name a check that would fail when the result is
@@ -514,7 +522,8 @@ security), <a href="https://www.oneusefulthing.org/" class="external-link">Ethan
 (systematic evaluation), and <a href="https://www.deeplearning.ai/the-batch/" class="external-link">The Batch</a> (balanced
 industry coverage).</p>
 <p>For the tool used here, see the <a href="https://docs.anthropic.com/en/docs/claude-code" class="external-link">Claude Code
-documentation</a>.</p>
+documentation</a>. For definitions of terms used throughout this lesson
+(Living Spec, external brain, approval gates, and more), see the <a href="reference.html">learner reference page</a>.</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -531,9 +540,10 @@ check that would catch a silent error.</li>
 </div>
 </div>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter Bottom"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="../instructor/06-capstone.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
@@ -543,7 +553,7 @@ any links that you are not going to use.
       <div class="d-none d-sm-none d-md-block">
         <a class="chapter-link" href="../instructor/06-capstone.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: From AI Output to
+          Previous: From AI Output to a
         </a>
         <a class="chapter-link float-end" href="../instructor/index.html" rel="next">
           Next: Agentic Research...
@@ -594,8 +604,8 @@ any links that you are not going to use.
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/07-resources.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/07-resources.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-06-19",
-  "datePublished": "2026-08-18"
+  "dateModified": "2026-08-24",
+  "datePublished": "2026-08-24"
 }
 
   </script><script>

@@ -269,7 +269,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+        <a href="06-capstone.html">7. From AI Output to a Review-Ready Bundle</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -342,7 +342,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>CLI-Based AI</h1>
-        <p>Last updated on 2026-06-19 |
+        <p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/01-cli-intro.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -354,7 +354,10 @@
 
         
 
-<div class="overview card">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style><div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
 <div class="col-md-4">
@@ -385,10 +388,26 @@ code.</li>
 </div>
 
 <section><h2 class="section-heading" id="why-cli-matters-for-research">Why CLI matters for research<a class="anchor" aria-label="anchor" href="#why-cli-matters-for-research"></a></h2>
-<hr class="half-width"><p>Most researchers use chat-based AI in a browser. These tools are good
-for brainstorming but run in an isolated sandbox. They cannot see your
-files, run your code, or understand your project structure without
-manual uploads.</p>
+<hr class="half-width"><p>Most researchers start with chat-based AI in a browser. Browser and
+desktop AI products increasingly ship connectors, uploaded-file access,
+or even their own coding/agentic surfaces, so “browser tools are
+sandboxed, CLI tools aren’t” is no longer a reliable rule. What actually
+matters is the <em>configured</em> surface for the specific tool in
+front of you: what it’s connected to and what permissions it has, not
+which category it falls in. Check that directly rather than assuming
+from “browser” vs. “CLI.”</p>
+<p>If you have not used a CLI agent before, that puts you with most of
+your peers, not behind them: a 2026 survey of 868 scientists who program
+found browser-based general-purpose chat tools accounted for the large
+majority of primary tool choice, with CLI/agentic tools a small minority
+(<a href="https://arxiv.org/abs/2512.19644" class="external-link">O’Brien et al., 2026</a>).
+This lesson teaches the less-common path deliberately, not because it is
+trendy, but because of a structural advantage a stateless chat interface
+cannot match: the persistent external brain described later in this
+episode. A browser chat forgets your project’s rules the moment you
+close the tab; a file like <code>CLAUDE.md</code> reloads them at the
+start of every session, under version control, reviewable by you or
+anyone else.</p>
 <p>A CLI (Command Line Interface) agent runs in your terminal, the same
 place you run Python scripts or navigate your filesystem with
 <code>ls</code> and <code>cd</code>, and has access to three things a
@@ -484,8 +503,10 @@ policy before using any AI tool with sensitive data. PHI and
 attorney-client privileged information are not approved for these
 tools.</p>
 <p><strong>Looking ahead:</strong> If your research requires fully local
-processing, these same skills transfer to open-weight models (like Gemma
-or Llama) run via Ollama.</p>
+processing, these same skills transfer to open-weight models (like
+Qwen3, Gemma, or OpenAI’s gpt-oss) run via Ollama. Check both the
+license and the specific version before you rely on one for
+reproducibility.</p>
 </div>
 </div>
 </div>
@@ -505,6 +526,8 @@ the loop: you define the goal, the agent proposes a plan, <em>you</em>
 approve before any code is written, and <em>you</em> verify the result
 before it counts as done.</p>
 <pre class="mermaid"><code>graph TD
+    accTitle: Living Spec approval and verification loop
+    accDescr {A researcher defines a goal in CLAUDE.md, the agent proposes a plan, and the researcher approves it or sends it back at an approval gate. Only after approval does the agent draft code, which then passes a verification step or returns for refinement.}
     A[Researcher] --&gt;|Define goal| B(CLAUDE.md\nLiving Spec)
     B --&gt; C[Request a plan]
     C --&gt; D{Approval Gate}
@@ -570,12 +593,17 @@ can revert unwanted changes.</p>
 large language models (LLMs) operate in a similar way. This is called
 the <strong>context window</strong> in LLM tools. Current models like
 Claude have long context windows (hundreds of thousands of tokens, up to
-a million in some configurations). You can provide the AI with your
-entire project folder, scripts, documentation, and small datasets, at
-once.</p>
+a million in some configurations), but a large window doesn’t mean the
+agent should load your entire project at once. The more useful pattern
+is that the agent inspects and retrieves the specific files it needs
+within its configured access, rather than everything being crammed in up
+front.</p>
 <p>This allows you to describe the desired state of your project, and
-the agent coordinates changes across multiple files. In a research
-context, this is declarative programming with AI agents.</p>
+the agent coordinates changes across multiple files. Call this
+<strong>intent specification</strong>, not “declarative programming”:
+you’re describing what you want, but the agent still writes an ordinary,
+imperative implementation, and the spec itself is not executable the way
+real declarative code is.</p>
 <div id="a-large-context-window-is-not-a-free-pass" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -726,24 +754,33 @@ and goals the agent must follow across every session.</p>
 that it loads automatically when you start a session:</p>
 <table class="table"><thead><tr><th>Tool</th>
 <th>Native spec file</th>
-<th>Auto-loaded?</th>
 </tr></thead><tbody><tr><td>Claude Code</td>
 <td><code>CLAUDE.md</code></td>
-<td>Yes</td>
 </tr><tr><td>OpenAI Codex</td>
 <td><code>AGENTS.md</code></td>
-<td>Yes</td>
 </tr><tr><td>Cursor</td>
 <td><code>.cursorrules</code></td>
-<td>Yes</td>
-</tr></tbody></table><p>You can also use a <strong>portable</strong> spec file,
-<code>AGENTS.md</code> is a common convention, that you explicitly
-reference in any prompt: <code>"Read AGENTS.md and then..."</code>. It
-is not auto-loaded by any single tool, but it travels with your project
-if you switch tools. AGENTS.md, released by OpenAI in 2025 and later
-brought under the Linux Foundation’s Agentic AI Foundation, is emerging
-as a portable convention for giving coding agents project-specific
-instructions.</p>
+</tr></tbody></table><p><code>AGENTS.md</code> is also emerging as a
+<strong>portable</strong> convention across tools: OpenAI released it in
+August 2025, and it was contributed to the Linux Foundation’s Agentic AI
+Foundation in December 2025 alongside Anthropic’s MCP and Block’s goose.
+But whether a tool <em>auto-loads</em> it varies, so check before
+assuming:</p>
+<table class="table"><colgroup><col width="50%"><col width="50%"></colgroup><thead><tr><th>Tool</th>
+<th>Auto-loads <code>AGENTS.md</code>?</th>
+</tr></thead><tbody><tr><td>OpenAI Codex CLI</td>
+<td>Yes, it’s the native file above</td>
+</tr><tr><td>Claude Code</td>
+<td>No. It reads <code>CLAUDE.md</code> only. Add
+<code>@AGENTS.md</code> as an import inside your <code>CLAUDE.md</code>,
+or symlink <code>CLAUDE.md</code> to <code>AGENTS.md</code>, to bring it
+in</td>
+</tr><tr><td>Gemini CLI</td>
+<td>No by default; needs explicit configuration</td>
+</tr></tbody></table><p>For a tool that doesn’t auto-load it, you can still reference it
+explicitly in a prompt: <code>"Read AGENTS.md and then..."</code>.
+That’s what makes it portable: it travels with your project even when
+the tool you’re using doesn’t pick it up on its own.</p>
 <div class="section level3">
 <h3 id="what-to-include-in-your-spec-file">What to include in your spec file<a class="anchor" aria-label="anchor" href="#what-to-include-in-your-spec-file"></a></h3>
 <p>Use this file to define:</p>
@@ -808,7 +845,7 @@ Metric” (how you know it’s done).</p>
   Example spec file
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -860,16 +897,18 @@ verifying what it changed part of the workflow.</li>
 <li>Run <code>/init</code> inside Claude Code to create a
 <code>CLAUDE.md</code> Living Spec that reduces context drift.</li>
 <li>A portable <code>AGENTS.md</code> lets the same spec travel across
-different AI tools.</li>
+different AI tools, but auto-loading it isn’t universal; check per tool
+(Claude Code needs an explicit <code>@AGENTS.md</code> import).</li>
 <li>The shift is from writing syntax to actively reviewing intent,
 assumptions, and evidence; it does not remove your responsibility.</li>
 </ul></div>
 </div>
 </div>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </div>
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter Bottom"><div class="d-block d-sm-block d-md-none">
@@ -931,8 +970,8 @@ any links that you are not going to use.
   "url": "https://jt14den.github.io/agentic-research-workflows/01-cli-intro.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/01-cli-intro.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-06-19",
-  "datePublished": "2026-08-18"
+  "dateModified": "2026-08-24",
+  "datePublished": "2026-08-24"
 }
 
   </script><script>

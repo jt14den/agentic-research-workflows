@@ -1,4 +1,12 @@
-# Pedagogical Evaluation: Agentic Research Workflows
+# Pedagogical Evaluation: Agentic Research Workflows (ARCHIVED)
+
+> **This evaluation is a superseded historical snapshot, not current guidance.**
+> It predates the pivot from `AGENTS.md`/Gemini CLI to `CLAUDE.md`/Claude Code,
+> references a 6-episode structure (the lesson now has 8), and its "ready for
+> alpha testing" conclusion does not reflect the current `pre-alpha` lifecycle
+> status. Kept for historical reference only. For current status, see the
+> repository's most recent audit and adjudication documents rather than this
+> file.
 
 **Date:** January 11, 2026
 **Evaluator:** Gemini Agent (Pedagogy & Design)

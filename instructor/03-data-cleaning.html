@@ -266,7 +266,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+        <a href="06-capstone.html">7. From AI Output to a Review-Ready Bundle</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -339,7 +339,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Data Cleaning with AI</h1>
-        <p>Last updated on 2026-06-19 |
+        <p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/03-data-cleaning.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -353,7 +353,10 @@
 
         
 
-<div class="overview card">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style><div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
 <div class="col-md-4">
@@ -382,18 +385,6 @@ output.</li>
 </div>
 </div>
 </div>
-<div id="accordionInstructor1" class="accordion instructor-note accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
-  <h3 class="accordion-header" id="headingInstructor1">
-  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div>
-  Live coding
-  </h3>
-</button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
-<div class="accordion-body">
-<p>This episode uses live coding. Learners should follow along by
-running commands on their own machines.</p>
 <div id="prerequisites" class="callout prereq">
 <div class="callout-square">
 <i class="callout-icon" data-feather="check"></i>
@@ -407,6 +398,18 @@ your project folder. Generating scripts can take 10-30 seconds.</p>
 </div>
 </div>
 </div>
+<div id="accordionInstructor1" class="accordion instructor-note accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
+  <h3 class="accordion-header" id="headingInstructor1">
+  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div>
+  Live coding
+  </h3>
+</button>
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div class="accordion-body">
+<p>This episode uses live coding. Learners should follow along by
+running commands on their own machines.</p>
 </div>
 </div>
 </div>
@@ -572,10 +575,13 @@ nothing dropped.</li>
 <strong>Missing-value check:</strong> missing scores filled per your
 strategy; nothing filled that should have stayed blank.</li>
 <li>
-<strong>Date check:</strong> all dates in 2023, and site C’s January
-samples are in January, not May. Sort the file by date and look at the
-earliest site C rows: if they landed in May, the day-month-year format
-was misread.</li>
+<strong>Date check:</strong> don’t just confirm the dates parse
+without error and fall in 2023 — a wrong parse can still produce
+valid-looking 2023 dates. Compare a few site C sample dates against the
+raw file by hand (<code>05-01-2023</code> must become
+<code>2023-01-05</code>, not <code>2023-05-01</code>), or better,
+re-parse site C’s raw dates with the explicit <code>%d-%m-%Y</code>
+format and compare the result to your merged file row by row.</li>
 </ul><p>You can ask the AI to write these checks, but read them before you
 trust them. The project folder already ships a
 <code>validate_data.py</code> with some checks written and others left
@@ -656,15 +662,19 @@ many rows you expect this to remove and the row count you expect
 afterward. (Samples are weekly; January has four sampling dates per
 site.)</li>
 <li>
-<strong>Then update.</strong> Use Claude Code to update
-<code>clean_and_merge.py</code> instead of editing it manually. Ask the
-AI to read the file and add the filtering logic.</li>
+<strong>Then update.</strong> Use Claude Code to write a
+<strong>new</strong> script, <code>clean_feb_onward.py</code>, that
+reuses <code>clean_and_merge.py</code>’s cleaning logic but filters to
+February 2023 onward. Do not modify <code>clean_and_merge.py</code>
+itself: the capstone and later episodes reuse it and expect the full
+60-row dataset, so it needs to stay untouched.</li>
 <li>
-<strong>Verify against your prediction.</strong> Run the updated
-script and compare the actual row count to what you predicted. If they
-differ, explain why in one sentence. Pay special attention to site C: if
-its January samples were misparsed as May, this filter will keep rows it
-should have dropped.</li>
+<strong>Verify against your prediction.</strong> Run the new script
+and compare the actual row count to what you predicted. If they differ,
+explain why in one sentence. Pay special attention to site C: a naive
+parse can silently swap day and month for some rows and not others, so
+some misparsed January rows may land outside the window and vanish while
+others land inside it and wrongly survive.</li>
 </ol></div>
 </div>
 </div>
@@ -679,11 +689,15 @@ should have dropped.</li>
 <div class="accordion-body">
 <p>January has four weekly sampling dates per site (5, 12, 19, 26), so a
 correct filter removes 12 rows, leaving 48. If you get a different
-number, the most likely cause is the site C date format: misparsed
-January dates land in May and survive the filter. This is a small, safe
-version of a silent error that would quietly bias a real trend
-analysis.</p>
-<pre><code>Read 'clean_and_merge.py'. Modify the script to keep only samples collected in February 2023 or later. Keep all other logic the same. Save the updated script.</code></pre>
+number, the most likely cause is the site C date format: a naive parse
+can silently swap day and month for <em>some</em> rows and not others.
+For example, <code>05-01-2023</code> can silently become May 1 and
+<code>12-01-2023</code> can become December 1, while
+<code>19-01-2023</code> happens to parse correctly regardless, since 19
+can’t be a month. So a partial misparse doesn’t move cleanly to one edge
+of the range, it scatters. This is a small, safe version of a silent
+error that would quietly bias a real trend analysis.</p>
+<pre><code>Read 'clean_and_merge.py'. Write a new script, 'clean_feb_onward.py', that reuses its cleaning logic but keeps only samples collected in February 2023 or later. Do not modify clean_and_merge.py.</code></pre>
 <p>Did the AI edit the relevant part or rewrite the whole file? Did it
 parse the dates correctly before filtering? Did you check the changes
 before running?</p>
@@ -694,10 +708,11 @@ before running?</p>
 </div>
 <div class="section level3">
 <h3 id="automating-documentation">Automating documentation<a class="anchor" aria-label="anchor" href="#automating-documentation"></a></h3>
-<p>For the final step, have the AI generate a README that explains the
-data pipeline, including the raw files, cleaning steps, and final output
-format.</p>
-<pre><code>Create a README.md file that explains the data processing pipeline we just built. List the original files, the cleaning steps performed, and the final output format.</code></pre>
+<p>For the final step, have the AI generate a short pipeline summary.
+This folder already ships a <code>README.md</code> describing the schema
+and target output, so ask for a differently-named file rather than
+letting the agent overwrite it:</p>
+<pre><code>Create a PIPELINE.md file that explains the data processing pipeline we just built. List the original files, the cleaning steps performed, and the final output format. Do not modify or overwrite README.md.</code></pre>
 <div id="challenge-provenance-tracking" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
@@ -711,7 +726,8 @@ code and when.</p>
 <ol style="list-style-type: decimal"><li>Use Claude Code to add a provenance header to
 <code>clean_and_merge.py</code>.</li>
 <li>The header should be a Python docstring containing:
-<ul><li>The model used (e.g., Claude Sonnet 4.6)</li>
+<ul><li>The model used (check your session’s <code>/status</code> or status
+line for the exact name)</li>
 <li>The date</li>
 <li>A summary of the prompt.</li>
 </ul></li>
@@ -727,7 +743,7 @@ code and when.</p>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
-<pre><code>Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the model name 'Claude Sonnet 4.6', today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'</code></pre>
+<pre><code>Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the exact model name from this session (check /status if unsure), today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'</code></pre>
 <div class="section level3">
 <h3 id="reflection">Reflection<a class="anchor" aria-label="anchor" href="#reflection"></a></h3>
 <ul><li>Why record the model version and date?</li>
@@ -757,9 +773,10 @@ format), not because it ran.</li>
 </div>
 </div>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </div>
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter Bottom"><div class="d-block d-sm-block d-md-none">
@@ -821,8 +838,8 @@ any links that you are not going to use.
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/03-data-cleaning.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/03-data-cleaning.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-06-19",
-  "datePublished": "2026-08-18"
+  "dateModified": "2026-08-24",
+  "datePublished": "2026-08-24"
 }
 
   </script><script>

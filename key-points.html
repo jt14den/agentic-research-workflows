@@ -308,7 +308,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+        <a href="06-capstone.html">7. From AI Output to a Review-Ready Bundle</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -404,20 +404,24 @@ verifying what it changed part of the workflow.</li>
 <li>Run <code>/init</code> inside Claude Code to create a
 <code>CLAUDE.md</code> Living Spec that reduces context drift.</li>
 <li>A portable <code>AGENTS.md</code> lets the same spec travel across
-different AI tools.</li>
+different AI tools, but auto-loading it isn’t universal; check per tool
+(Claude Code needs an explicit <code>@AGENTS.md</code> import).</li>
 <li>The shift is from writing syntax to actively reviewing intent,
 assumptions, and evidence; it does not remove your responsibility.</li>
 </ul></section><section id="02-prompts"><h2 class="section-heading"><a href="02-prompts.html">Best Practices for Prompting</a></h2>
 <hr class="half-width">
 <ul>
 <li>Be specific and provide context.</li>
-<li>Plan before you act: request a numbered plan and approve it before
-any files are written.</li>
+<li>Plan before you act: use plan mode so the agent can’t write files
+until you approve its approach, not just a prompt asking it to
+wait.</li>
 <li>Prefer prompts that preserve learning: ask for plans, hints, and the
 simplest version, not the finished answer.</li>
 <li>Always validate AI outputs, and never ship a line you cannot
 explain.</li>
-<li>Introspection improves code quality.</li>
+<li>Introspection can surface issues the first draft missed, but it is
+not a guarantee of correctness; treat what it finds as something to
+verify, not proof.</li>
 </ul></section><section id="03-data-cleaning"><h2 class="section-heading"><a href="03-data-cleaning.html">Data Cleaning with AI</a></h2>
 <hr class="half-width">
 <ul>
@@ -438,8 +442,8 @@ research.</li>
 productivity score.</li>
 <li>Requirement constraints prevent the AI from drifting away from
 research specs.</li>
-<li>Multi-model verification uses a second AI as a reviewer, not an
-authority.</li>
+<li>A multi-model critique, run in a fresh session, is a reviewer, not
+an authority.</li>
 <li>You cannot validate what you cannot explain.</li>
 </ul></section><section id="05-limitations"><h2 class="section-heading"><a href="05-limitations.html">Limitations and Cautions</a></h2>
 <hr class="half-width">
@@ -448,13 +452,15 @@ authority.</li>
 syntax practice.</li>
 <li>Know when AI supports learning and when it gets in the way.</li>
 <li>You are responsible for the final output.</li>
-<li>Open models offer better reproducibility; proprietary models offer
-more power.</li>
-</ul></section><section id="06-capstone"><h2 class="section-heading"><a href="06-capstone.html">From AI Output to Research-Ready Code</a></h2>
+<li>Open-weight models offer better reproducibility (a pinned revision);
+the right choice for a task still depends on data sensitivity,
+auditability, and cost, not a default.</li>
+</ul></section><section id="06-capstone"><h2 class="section-heading"><a href="06-capstone.html">From AI Output to a Review-Ready Bundle</a></h2>
 <hr class="half-width">
 <ul>
-<li>Research-ready means spec, plan, code, validation, a result,
-provenance, and a decision, not just a script that runs.</li>
+<li>Review-ready means spec, plan, code, validation, a result,
+provenance, and a decision, not just a script that runs — a descriptive
+plot is not itself a statistical finding.</li>
 <li>The same checkpoint pattern scales from one script to a whole small
 project.</li>
 <li>A plot can render cleanly and still be wrong; domain plausibility is
@@ -519,8 +525,8 @@ check that would catch a silent error.</li>
   "url": "https://jt14den.github.io/agentic-research-workflows/key-points.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/key-points.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-08-18",
-  "datePublished": "2026-08-18"
+  "dateModified": "2026-08-24",
+  "datePublished": "2026-08-24"
 }
 
   </script><script>

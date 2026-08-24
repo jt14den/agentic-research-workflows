@@ -266,7 +266,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+        <a href="06-capstone.html">7. From AI Output to a Review-Ready Bundle</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -333,13 +333,13 @@
           Previous: Validation
         </a>
         <a class="chapter-link float-end" href="../instructor/06-capstone.html" rel="next">
-          Next: From AI Output to...
+          Next: From AI Output to a...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Limitations and Cautions</h1>
-        <p>Last updated on 2026-06-19 |
+        <p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/05-limitations.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -353,7 +353,10 @@
 
         
 
-<div class="overview card">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style><div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
 <div class="col-md-4">
@@ -489,9 +492,14 @@ formulas or logic as certain.</li>
 <li>
 <strong>Tool poisoning via MCP:</strong> When an agent calls
 external tools through MCP, a misconfigured or malicious MCP server can
-inject instructions into the agent’s context (prompt injection). This
-can cause the agent to take unintended actions or leak data. Mitigation:
-only install MCP servers from trusted, audited sources.</li>
+inject instructions into the agent’s context (prompt injection) through
+its tool descriptions or returned data, even from a server that is
+otherwise sandboxed. This can cause the agent to take unintended actions
+or leak data. Mitigation: only install MCP servers from trusted, audited
+sources; treat everything a server returns as untrusted input, not just
+the server itself; and sandbox with minimal filesystem/network access
+where you can. Registry listing (MCP now has an official one) is not a
+safety certification.</li>
 <li>
 <strong>Over-engineering:</strong> The model generates complex code
 for simple problems.</li>
@@ -549,18 +557,24 @@ perfectly during the session.</p>
 </div>
 </div>
 </div>
-<div id="challenge-test-for-hallucinations" class="callout challenge">
+<div id="challenge-test-for-hallucinations-then-verify-independently" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-test-for-hallucinations" class="callout-inner">
-<h3 class="callout-title">Challenge: Test for hallucinations</h3>
+<div id="challenge-test-for-hallucinations-then-verify-independently" class="callout-inner">
+<h3 class="callout-title">Challenge: Test for hallucinations, then
+verify independently</h3>
 <div class="callout-content">
 <p>Inside your Claude Code session, type:</p>
 <pre><code>How do I use the 'pypanda-researcher' library to automatically write my conclusion?</code></pre>
 <p>Note whether the model admits it does not know, hedges with
-uncertainty, or confidently invents instructions.</p>
+uncertainty, or confidently invents instructions. Then check for
+yourself, independent of what the model told you: search PyPI (or your
+language’s package index) for <code>pypanda-researcher</code>. Record
+what you find and the date you checked. Would you accept, revise, or
+reject the model’s answer based on that evidence, not on how confident
+it sounded?</p>
 </div>
 </div>
 </div>
@@ -573,13 +587,20 @@ uncertainty, or confidently invents instructions.</p>
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<p>Current models (Claude, GPT-4o, Gemini) are significantly better at
-refusing or flagging uncertainty than earlier generations, you may get a
-clean “this doesn’t exist” response. That is the correct behaviour. The
-lesson here is not that hallucination always happens, but that you
-cannot assume it won’t: always verify suggested libraries and functions
-exist before using them. Older or smaller models are still more likely
-to confabulate.</p>
+<p>Current models are somewhat better at flagging uncertainty than
+earlier generations — you may get a clean “this doesn’t exist” response,
+and that’s the correct behaviour when it happens. But don’t count on it:
+a 2026 study testing five current frontier models found they still
+hallucinate nonexistent package names 4.6-6.1% of the time, and more
+surprisingly, 127 of those hallucinated package names were invented
+<em>identically</em> by all five models. That second finding matters for
+your validation habits specifically: asking a different model to
+double-check a package name is weaker protection than it sounds, because
+current models increasingly confabulate the same wrong answers, not
+different ones. The lesson here is not that hallucination always
+happens, but that you cannot assume it won’t, and cross-checking with
+another model is not a substitute for checking the official package
+registry or documentation directly.</p>
 </div>
 </div>
 </div>
@@ -589,18 +610,25 @@ to confabulate.</p>
 <hr class="half-width"><p>Claude Code is not open source, which creates a tension in open
 research.</p>
 <ul><li>
-<strong>Proprietary models (Gemini, GPT-4, Claude):</strong> These
-are closed-weight models. You cannot verify their training data, and
-they may update silently. Institutional agreements provide data privacy
-but do not solve reproducibility issues.</li>
+<strong>Proprietary models (Gemini, GPT, Claude):</strong> These are
+closed-weight models. You cannot verify their training data, and they
+may update silently. Institutional agreements provide data privacy but
+do not solve reproducibility issues.</li>
 <li>
-<strong>Open-weights models (Gemma, Llama, Mistral):</strong> These
-can be run locally using tools like Ollama. They offer better
-reproducibility because you can use a specific, frozen version of the
-model.</li>
-</ul><p><strong>Recommendation:</strong> Use proprietary models for
-prototyping and cleaning, but archive the generated code. Do not rely on
-the AI to regenerate the same code in the future.</p>
+<strong>Open-weight models (e.g. Qwen3, Gemma, OpenAI’s
+gpt-oss):</strong> These can be run locally using tools like Ollama.
+They offer better reproducibility because you can pin a specific, frozen
+model revision — though license terms still vary by model, so check them
+alongside the version. “Open-weight” is the precise term here: the
+weights are downloadable, but that alone doesn’t make the system open
+source under the fuller definition (training data, code, and license may
+still be closed or restricted).</li>
+</ul><p><strong>Recommendation:</strong> There is no blanket right answer
+between proprietary and open-weight for prototyping and cleaning. Base
+the choice on your data’s classification and authorization, the task’s
+reproducibility and auditability needs, and cost, not on a default.
+Whichever you use, archive the generated code rather than relying on the
+model to regenerate the same result later.</p>
 <div id="key-lesson" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -642,15 +670,17 @@ verified. These are the items most worth a second look.</p>
 syntax practice.</li>
 <li>Know when AI supports learning and when it gets in the way.</li>
 <li>You are responsible for the final output.</li>
-<li>Open models offer better reproducibility; proprietary models offer
-more power.</li>
+<li>Open-weight models offer better reproducibility (a pinned revision);
+the right choice for a task still depends on data sensitivity,
+auditability, and cost, not a default.</li>
 </ul></div>
 </div>
 </div>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter Bottom"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="../instructor/04-validation.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
@@ -663,7 +693,7 @@ any links that you are not going to use.
           Previous: Validation
         </a>
         <a class="chapter-link float-end" href="../instructor/06-capstone.html" rel="next">
-          Next: From AI Output to...
+          Next: From AI Output to a...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -711,8 +741,8 @@ any links that you are not going to use.
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/05-limitations.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/05-limitations.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-06-19",
-  "datePublished": "2026-08-18"
+  "dateModified": "2026-08-24",
+  "datePublished": "2026-08-24"
 }
 
   </script><script>

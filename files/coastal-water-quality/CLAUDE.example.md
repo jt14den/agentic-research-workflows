@@ -35,5 +35,6 @@ trend in water quality score over time by site.
 ## Verification gates (how we know it is done)
 - `python validate_data.py` passes.
 - 60 rows, all six canonical columns present.
-- All dates fall in 2023; site C's January samples are in January, not May.
+- All dates match the raw source files exactly, not just "parses and falls in 2023"
+  (that weaker check can pass on a partially misparsed file).
 - `score` values are within 0-100.

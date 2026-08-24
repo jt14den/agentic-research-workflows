@@ -263,7 +263,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+        <a href="06-capstone.html">7. From AI Output to a Review-Ready Bundle</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -413,9 +413,10 @@ developed by Bruno Smaniotto and Tom van Nuenen at the UC Berkeley
 D-Lab.</p>
 <p>The original materials can be found at <a href="https://github.com/dlab-berkeley/Vibe-Coding-for-Research" class="external-link">dlab-berkeley/Vibe-Coding-for-Research</a>.</p>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </section><section id="schedule"><table class="table table schedule table-striped" role="presentation"><tbody><tr><td></td><td><a href="#setup">Setup Instructions</a></td><td> Download files required for the lesson</td>
           </tr><tr><td>
 <span class="visually-hidden">Duration: </span>00h 00m
@@ -447,8 +448,10 @@ does it matter?
  3. <a href="02-prompts.html">Best Practices for Prompting</a>
 </td>
 <td>
-How do I write effective prompts?<br>What are common AI
-failures?<br>How can I make the AI fix its own mistakes?
+How do I write effective prompts?<br>How do I review a plan before the
+agent acts on it, not just after?<br>What are common AI
+failures?<br>How can I make the AI fix its own mistakes, and when
+should I not trust that it has?
 </td>
 </tr><tr><td>
 <span class="visually-hidden">Duration: </span>01h 30m
@@ -486,11 +489,12 @@ When should I not use AI?<br>What are common failure modes?
 <span class="visually-hidden">Duration: </span>03h 35m
 </td>
 <td>
- 7. <a href="06-capstone.html">From AI Output to Research-Ready Code</a>
+ 7. <a href="06-capstone.html">From AI Output to a Review-Ready
+Bundle</a>
 </td>
 <td>
 Can I take one task from prompt to trustworthy, documented
-result?<br>What does “research-ready” actually include, beyond a script
+result?<br>What does “review-ready” actually include, beyond a script
 that runs?
 </td>
 </tr><tr><td>
@@ -512,56 +516,68 @@ Finish
 <td>
 </td>
 </tr><!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- --></tbody></table><p>
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+--></tbody></table><p>
       The actual schedule may vary slightly depending on the topics and exercises chosen by the instructor.
       </p>
-      </section><section id="setup"><p>To follow this lesson, you will need <a href="https://docs.anthropic.com/en/docs/claude-code" class="external-link">Claude Code</a>
+      </section><section id="setup"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style><p>To follow this lesson, you will need <a href="https://docs.anthropic.com/en/docs/claude-code" class="external-link">Claude Code</a>
 and Python installed on your machine. Claude Code is Anthropic’s
 terminal-based AI coding agent. The steps below get you set up with a
 direct local install, which is the approach used throughout the
 lesson.</p>
-<section><h2 class="section-heading" id="install-node-js-python-and-two-python-packages">1. Install Node.js, Python, and two Python packages<a class="anchor" aria-label="anchor" href="#install-node-js-python-and-two-python-packages"></a></h2>
+<section><h2 class="section-heading" id="install-python-and-two-python-packages">1. Install Python and two Python packages<a class="anchor" aria-label="anchor" href="#install-python-and-two-python-packages"></a></h2>
 <hr class="half-width"><ul><li>
-<strong>Node.js</strong>: Download the LTS version from <a href="https://nodejs.org" class="external-link">nodejs.org</a> or use a package manager
-(<code>brew install node</code> on macOS).</li>
-<li>
-<strong>Python</strong>: Ensure you have Python 3.9+ installed.
-Check with <code>python --version</code>.</li>
+<strong>Python</strong>: Ensure you have Python 3.11+ installed
+(current Matplotlib requires it). Check with
+<code>python --version</code>.</li>
 <li>
 <strong>Python packages</strong>: the lesson scripts use
 <code>pandas</code> (data handling) and <code>matplotlib</code> (the
-trend plot). Install both:</li>
+trend plot). Install both, ideally in a project-scoped environment
+rather than globally (a <code>venv</code>, <code>pixi</code>, or
+<code>uv</code> environment all work):</li>
 </ul><div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install pandas matplotlib</span></code></pre>
 </div>
 </section><section><h2 class="section-heading" id="install-claude-code">2. Install Claude Code<a class="anchor" aria-label="anchor" href="#install-claude-code"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb2">
+<hr class="half-width"><p>Use the native installer as your primary path:</p>
+<div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">npm</span> install <span class="at">-g</span> @anthropic-ai/claude-code</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://claude.ai/install.sh <span class="kw">|</span> <span class="fu">bash</span></span></code></pre>
+</div>
+<p>(Windows: <code>irm https://claude.ai/install.ps1 | iex</code> in
+PowerShell.) If your institution requires installing via npm instead,
+that also works, but needs Node.js 22 or newer:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">npm</span> install <span class="at">-g</span> @anthropic-ai/claude-code</span></code></pre>
 </div>
 </section><section><h2 class="section-heading" id="authenticate">3. Authenticate<a class="anchor" aria-label="anchor" href="#authenticate"></a></h2>
 <hr class="half-width"><p>How you authenticate depends on which path you are using (see
 “Institutional context and access” below). For the workshop, most
 learners will sign in with a personal Claude account:</p>
-<div class="codewrapper sourceCode" id="cb3">
+<div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">claude</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">claude</span></span></code></pre>
 </div>
 <p>On first launch, Claude Code walks you through signing in. A Claude
 Pro or Max subscription, or an Anthropic API key, will work. The
 credentials are stored locally; you will not need to repeat this
 step.</p>
 </section><section><h2 class="section-heading" id="verify-the-install">4. Verify the install<a class="anchor" aria-label="anchor" href="#verify-the-install"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb4">
+<hr class="half-width"><div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">claude</span> <span class="at">--version</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ex">claude</span> <span class="at">--version</span></span></code></pre>
 </div>
 <p>If you see a version number, you are ready. If the command is not
 found, restart your terminal and try again.</p>
@@ -571,11 +587,11 @@ dataset. Download the <code>coastal-water-quality</code> folder that
 ships with this lesson (from the <a href="https://github.com/jt14den/agentic-research-workflows" class="external-link">lesson
 repository</a> under <code>learners/files/coastal-water-quality</code>,
 or from a copy your instructor provides), then move into it:</p>
-<div class="codewrapper sourceCode" id="cb5">
+<div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="bu">cd</span> coastal-water-quality</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="fu">ls</span> data/</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="bu">cd</span> coastal-water-quality</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="fu">ls</span> data/</span></code></pre>
 </div>
 <p>You should see <code>site_A.csv</code>, <code>site_B.csv</code>, and
 <code>site_C.csv</code>. Throughout the lesson, start Claude Code from
@@ -583,13 +599,13 @@ inside this folder.</p>
 </section><section><h2 class="section-heading" id="setup-check">6. Setup check<a class="anchor" aria-label="anchor" href="#setup-check"></a></h2>
 <hr class="half-width"><p>Run these from inside the <code>coastal-water-quality</code> folder.
 Each should produce the output shown:</p>
-<div class="codewrapper sourceCode" id="cb6">
+<div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">claude</span> <span class="at">--version</span>          <span class="co"># prints a version number</span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="ex">python</span> <span class="at">--version</span>          <span class="co"># prints Python 3.9 or newer</span></span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import pandas, matplotlib; print('packages ok')"</span>   <span class="co"># prints: packages ok</span></span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a><span class="fu">ls</span> data/                  <span class="co"># site_A.csv  site_B.csv  site_C.csv</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="ex">claude</span> <span class="at">--version</span>          <span class="co"># prints a version number</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a><span class="ex">python</span> <span class="at">--version</span>          <span class="co"># prints Python 3.11 or newer</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import pandas, matplotlib; print('packages ok')"</span>   <span class="co"># prints: packages ok</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a><span class="fu">ls</span> data/                  <span class="co"># site_A.csv  site_B.csv  site_C.csv</span></span></code></pre>
 </div>
 <p>If all four work, you are ready. If any fails, see the
 troubleshooting notes below.</p>
@@ -602,9 +618,10 @@ troubleshooting notes below.</p>
 <h3 class="callout-title">Troubleshooting</h3>
 <div class="callout-content">
 <ul><li>
-<strong><code>claude: command not found</code></strong>: the global
-npm install did not finish or your <code>PATH</code> is not updated.
-Re-run the install and restart your terminal.</li>
+<strong><code>claude: command not found</code></strong>: the install
+did not finish or your <code>PATH</code> is not updated. Re-run the
+install command and restart your terminal, or run
+<code>claude doctor</code> for a diagnostic.</li>
 <li>
 <strong><code>ModuleNotFoundError: No module named 'pandas'</code></strong>:
 the packages went to a different Python than the one you are running.
@@ -630,10 +647,11 @@ can share a known-good script from <code>instructors/files/</code>.</li>
 <h3 class="callout-title">Keep everyone on the same model</h3>
 <div class="callout-content">
 <p>Inside a Claude Code session you can set the model with the
-<code>/model</code> command (for example,
-<code>claude-sonnet-4-6</code>). Pinning the whole class to one model
-keeps outputs comparable and makes provenance records meaningful. Your
-instructor will tell you which model to select.</p>
+<code>/model</code> command. Pinning the whole class to one model keeps
+outputs comparable and makes provenance records meaningful. Your
+instructor will tell you which model to select (check
+<code>/status</code> to confirm the exact model and version once you’ve
+set it).</p>
 </div>
 </div>
 </div>
@@ -656,30 +674,36 @@ or private data.</li>
 </ol></div>
 </div>
 </div>
-<div id="running-in-a-sandbox-optional" class="callout">
+<div id="running-in-a-sandbox-optional-and-currently-untested" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <span class="callout-header">Callout</span>
-<div id="running-in-a-sandbox-optional" class="callout-inner">
-<h3 class="callout-title">Running in a sandbox (optional)</h3>
+<div id="running-in-a-sandbox-optional-and-currently-untested" class="callout-inner">
+<h3 class="callout-title">Running in a sandbox (optional, and currently
+untested)</h3>
 <div class="callout-content">
 <p>Some researchers prefer to isolate the agent from their personal
-files entirely. Two options worth knowing about:</p>
+files entirely. The repository’s <code>Dockerfile</code> and
+<code>.devcontainer/</code> are a starting point for that, but as of
+this writing they have not been rebuilt and smoke-tested against the
+current Claude Code toolchain — don’t rely on them working out of the
+box for a workshop. Options worth knowing about generally:</p>
 <ul><li>
-<strong>Docker</strong>: The lesson repository includes a
-<code>Dockerfile</code> that builds a container with the agent
-pre-installed. It can only see files you explicitly mount into it. See
-the <a href="https://docs.docker.com/" class="external-link">Docker documentation</a> for
-setup, or <a href="https://docs.docker.com/ai/sandboxes/" class="external-link">Docker AI
-Sandboxes</a> for a purpose-built option.</li>
+<strong>Docker</strong>: see the <a href="https://docs.docker.com/" class="external-link">Docker documentation</a>, or <a href="https://docs.docker.com/ai/sandboxes/" class="external-link">Docker AI Sandboxes</a> for
+a purpose-built option, and expect to update this repo’s
+<code>Dockerfile</code> yourself before using it.</li>
+<li>
+<strong>Claude Code’s own sandboxing</strong>: see the <a href="https://code.claude.com/docs/en/sandboxing" class="external-link">sandboxing
+documentation</a> for filesystem/network isolation options built into
+the tool itself, which need less setup than a full container.</li>
 <li>
 <strong>Agent Safehouse</strong>: <a href="https://agent-safehouse.dev/" class="external-link">agent-safehouse.dev</a> is a
 dedicated environment for running AI agents with built-in isolation
 controls.</li>
-</ul><p>Both approaches require more setup and are not needed for this
-workshop, but are worth exploring if you plan to use these tools
-regularly with sensitive data.</p>
+</ul><p>None of these are needed for this workshop. If you want a tested
+container path, budget time to rebuild and verify the
+<code>Dockerfile</code> first.</p>
 </div>
 </div>
 </div>
@@ -713,10 +737,48 @@ setup.</li>
 policies.</strong> PHI and attorney-client privileged information are
 not approved for these tools; UCLA Health users should use the
 HIPAA-compliant alternative (nebulaOne).</p>
+<div id="what-does-a-personal-promax-subscription-actually-give-you" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="what-does-a-personal-promax-subscription-actually-give-you" class="callout-inner">
+<h3 class="callout-title">What does a personal Pro/Max subscription
+actually give you?</h3>
+<div class="callout-content">
+<p>The two paths above differ in a way that is easy to miss: they are
+governed by different terms with different defaults, not just different
+backends.</p>
+<ul><li>
+<strong>Personal Pro/Max/Free (Consumer Terms):</strong> you get an
+explicit, changeable choice whether your conversations, including Claude
+Code sessions, are used to train future models — set it at <a href="https://claude.ai/settings/data-privacy-controls" class="external-link">claude.ai/settings/data-privacy-controls</a>.
+That choice changes how long Anthropic retains your data: <strong>5
+years if training is on, 30 days if it is off.</strong> Even with
+training off, Claude Code also keeps a local plaintext copy of session
+transcripts on your own machine for 30 days by default. The
+<code>/feedback</code>, <code>/bug</code>, and <code>/share</code>
+commands are a separate path: they send your actual conversation
+history, including code, to Anthropic regardless of your training
+setting, unless you disable it.</li>
+<li>
+<strong>UCLA Amazon Bedrock and other commercial/API paths
+(Commercial Terms):</strong> training on your data is contractually
+prohibited by default, not a toggle you set. Standard retention is 30
+days; Zero Data Retention is available to qualifying Enterprise
+accounts.</li>
+</ul><p>If you are using a personal subscription for this workshop, check
+your own setting rather than assuming: see <a href="https://code.claude.com/docs/en/data-usage" class="external-link">Claude Code’s current
+data usage policy</a> for the full, current breakdown by account
+type.</p>
+</div>
+</div>
+</div>
 <!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- -->
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 </section></section></main><nav class="bottom-pagination mx-md-4" aria-label="Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link float-end" href="../instructor/00-before-ai.html" rel="next">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
@@ -768,8 +830,8 @@ any links that you are not going to use.
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/index.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/index.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-08-18",
-  "datePublished": "2026-08-18"
+  "dateModified": "2026-08-24",
+  "datePublished": "2026-08-24"
 }
 
   </script><script>

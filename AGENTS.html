@@ -250,7 +250,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="06-capstone.html">7. From AI Output to Research-Ready Code</a>
+        <a href="06-capstone.html">7. From AI Output to a Review-Ready Bundle</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -318,7 +318,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1></h1>
-        <p>Last updated on 2026-06-19 |
+        <p>Last updated on 2026-08-24 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/AGENTS.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -360,13 +360,15 @@ Aider and the Spec-Driven workflow.</li>
 markdown formatting improvements for better readability and
 accessibility.</li>
 <li>
-<strong>Lesson Structure</strong>: Defined 6 core episodes:
-<ol style="list-style-type: decimal"><li>Understanding CLI-Based AI (Writer to Orchestrator)</li>
+<strong>Lesson Structure</strong>: 8 episodes:
+<ol start="0" style="list-style-type: decimal"><li>Before We Use AI</li>
+<li>Understanding CLI-Based AI (Writer to Orchestrator)</li>
 <li>Effective Prompting (The Bootstrap Workflow)</li>
 <li>AI-Assisted Data Cleaning (Spec-Guided Cleaning)</li>
 <li>Validation Strategies (The 4-Layer Validation Stack)</li>
-<li>Limitations &amp; Bias (Spec Drift &amp; Bootstrap Failures)</li>
-<li>Resources &amp; Next Steps (Aider &amp; Commit-as-Draft)</li>
+<li>Limitations &amp; Cautions</li>
+<li>From AI Output to a Review-Ready Bundle (Capstone)</li>
+<li>Resources and Next Steps</li>
 </ol></li>
 </ul></div>
 </div>
@@ -401,12 +403,18 @@ jargon).</p>
 <div class="section level3">
 <h3 id="efficiency-metrics">Efficiency Metrics<a class="anchor" aria-label="anchor" href="#efficiency-metrics"></a></h3>
 <ul><li>
-<strong>Target Rewrite Time</strong>: &lt; 10% (Human review and
-refactoring should take minimal time).</li>
+<strong>Rewrite time</strong> is tracked as a formative signal about
+a specific workflow, not a productivity target. Do not set or enforce an
+arbitrary percentage threshold; see Episode 4’s own caution against
+turning it into a productivity claim.</li>
 <li>
-<strong>Validation Gate</strong>: All new content must be
-cross-verified by a “Challenger” model (e.g., Gemini CLI auditing Claude
-Code).</li>
+<strong>Validation Gate</strong>: Deterministic checks
+(build/validate, executable tests, div/link structure) plus a
+maintainer’s human review are the authority for merging. An optional
+multi-model critique, run in a fresh session rather than a same-session
+model switch, may surface additional hypotheses to investigate — it is
+not itself a merge gate, consistent with the lesson’s own caution
+against treating a second model as an authority.</li>
 </ul></div>
 </div>
 <div class="section level2">
@@ -499,18 +507,9 @@ Workbench</a>
 <p>To ensure the lesson is correctly formatted and free of errors, run
 the following commands in the R console:</p>
 <ol style="list-style-type: decimal"><li>
-<p><strong>Check Lesson Structure</strong>:</p>
+<p><strong>Validate Lesson Content</strong> (divs, internal
+links/images):</p>
 <div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">sandpaper</span><span class="fu">::</span><span class="fu">check_lesson</span><span class="op">(</span><span class="op">)</span></span></code></pre>
-</div>
-</li>
-<li>
-<p><strong>Validate Lesson Content</strong> (links, images,
-components):</p>
-<div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -518,7 +517,17 @@ components):</p>
 </div>
 </li>
 <li>
-<p><strong>Build and Preview</strong>:</p>
+<p><strong>Full Build</strong> (also runs the CITATION.cff schema
+check):</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">sandpaper</span><span class="fu">::</span><span class="fu">build_lesson</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+</div>
+</li>
+<li>
+<p><strong>Preview Locally</strong>:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -534,10 +543,10 @@ components):</p>
 match in length (at least 3 colons, usually recommended to use more to
 distinguish from nested blocks).</p>
 <p><strong>Episode Structure Blocks:</strong> *
-<code>::::::::::::::::::::::::::::::::::::::: objectives</code> (Start
-of episode) *
 <code>:::::::::::::::::::::::::::::::::::::::: questions</code> (Start
-of episode) *
+of episode, before objectives) *
+<code>::::::::::::::::::::::::::::::::::::::: objectives</code> (Start
+of episode, after questions) *
 <code>:::::::::::::::::::::::::::::::::::::::: keypoints</code> (End of
 episode)</p>
 <p><strong>Interactive Blocks:</strong> *
@@ -550,8 +559,11 @@ nested inside <code>challenge</code>) *
 <p><strong>Callout Blocks:</strong> *
 <code>::::::::::::::::::::::::::::::::::::::::: callout</code> (General
 info/warning) *
+<code>::::::::::::::::::::::::::::::::::::::::: caution</code>
+(Potential issues or problems a learner might hit) *
 <code>:::::::::::::::::::::::::::::::::::::::::: prereq</code>
-(Prerequisites) *
+(Prerequisites; must be a top-level div, not nested inside
+<code>instructor</code>, or it is hidden from learners) *
 <code>::::::::::::::::::::::::::::::::::::::: checklist</code>
 (Checklists) *
 <code>:::::::::::::::::::::::::::::::::::::: discussion</code>
@@ -562,11 +574,11 @@ info/warning) *
 <code>::::::::::::::::::::::::::::::::::::::::: instructor</code>
 (Instructor-only notes - visible in instructor view) *
 <code>::::::::::::::::::::::::::::::::::::::::::::::::: spoiler</code>
-(Collapsible content) *
-<code>::::::::::::::::::::::::::::::::::::::::: output</code> (Output
-block for code results) *
-<code>::::::::::::::::::::::::::::::::::::::: div</code> (Generic div
-for custom styling)</p>
+(Collapsible content)</p>
+<p><code>output</code> and generic <code>div</code> are not confirmed
+Workbench div types as of this writing (verified against <a href="https://carpentries.github.io/sandpaper-docs/component-guide.html" class="external-link">carpentries.github.io/sandpaper-docs/component-guide.html</a>,
+2026-08-23) — do not use them without re-checking the current component
+guide first.</p>
 <p><strong>Tabs:</strong> *
 <code>::::::::::::::::::::::::::::::::::::::::: panel-tabset</code>
 (Container for tabs - automatic tab creation from headers) * OR *
@@ -600,9 +612,10 @@ colons, child uses 35).</li>
 <li>Always check for matching closing tags.</li>
 </ul></li>
 </ol><!--
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use.
- --></div>
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+--></div>
 </div>
 </div>
 
@@ -662,8 +675,8 @@ any links that you are not going to use.
   "url": "https://jt14den.github.io/agentic-research-workflows/AGENTS.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/AGENTS.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-06-19",
-  "datePublished": "2026-08-18"
+  "dateModified": "2026-08-24",
+  "datePublished": "2026-08-24"
 }
 
   </script><script>
