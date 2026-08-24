@@ -4,6 +4,17 @@ teaching: 30
 exercises: 20
 ---
 
+<style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style>
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- Can I trust AI to standardise inconsistent files?
+- How do I check that a cleaning script did what I needed, not only what the AI assumed?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ::::::::::::::::::::::::::::::::::::::: objectives
 
 ## Objectives
@@ -15,10 +26,10 @@ exercises: 20
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::::: questions
+:::::::::::::::::::::::::::::::::::::::::: prereq
 
-- Can I trust AI to standardise inconsistent files?
-- How do I check that a cleaning script did what I needed, not only what the AI assumed?
+## Prerequisites
+Ensure you are signed in to Claude Code and have a session running in your project folder. Generating scripts can take 10-30 seconds.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -26,13 +37,6 @@ exercises: 20
 
 ## Live coding
 This episode uses live coding. Learners should follow along by running commands on their own machines.
-
-:::::::::::::::::::::::::::::::::::::::::: prereq
-
-## Prerequisites
-Ensure you are signed in to Claude Code and have a session running in your project folder. Generating scripts can take 10-30 seconds.
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -147,7 +151,7 @@ Run `python clean_and_merge.py`. A correct run prints something like `Wrote data
 
 - **Row-count check:** 60 rows (3 sites x 20 samples), nothing dropped.
 - **Missing-value check:** missing scores filled per your strategy; nothing filled that should have stayed blank.
-- **Date check:** all dates in 2023, and site C's January samples are in January, not May. Sort the file by date and look at the earliest site C rows: if they landed in May, the day-month-year format was misread.
+- **Date check:** don't just confirm the dates parse without error and fall in 2023 — a wrong parse can still produce valid-looking 2023 dates. Compare a few site C sample dates against the raw file by hand (`05-01-2023` must become `2023-01-05`, not `2023-05-01`), or better, re-parse site C's raw dates with the explicit `%d-%m-%Y` format and compare the result to your merged file row by row.
 
 You can ask the AI to write these checks, but read them before you trust them. The project folder already ships a `validate_data.py` with some checks written and others left as TODO; you will finish it in the next episode.
 
@@ -187,17 +191,17 @@ This challenge requires modifying existing code. If learners are stuck, suggest 
 Imagine your analysis should cover February to May only, so you need to exclude the January samples.
 
 1. **Predict first.** Before prompting, write down how many rows you expect this to remove and the row count you expect afterward. (Samples are weekly; January has four sampling dates per site.)
-2. **Then update.** Use Claude Code to update `clean_and_merge.py` instead of editing it manually. Ask the AI to read the file and add the filtering logic.
-3. **Verify against your prediction.** Run the updated script and compare the actual row count to what you predicted. If they differ, explain why in one sentence. Pay special attention to site C: if its January samples were misparsed as May, this filter will keep rows it should have dropped.
+2. **Then update.** Use Claude Code to write a **new** script, `clean_feb_onward.py`, that reuses `clean_and_merge.py`'s cleaning logic but filters to February 2023 onward. Do not modify `clean_and_merge.py` itself: the capstone and later episodes reuse it and expect the full 60-row dataset, so it needs to stay untouched.
+3. **Verify against your prediction.** Run the new script and compare the actual row count to what you predicted. If they differ, explain why in one sentence. Pay special attention to site C: a naive parse can silently swap day and month for some rows and not others, so some misparsed January rows may land outside the window and vanish while others land inside it and wrongly survive.
 
 :::::::::::::::::::::::::::::::::::::::: solution
 
 ## What to expect
 
-January has four weekly sampling dates per site (5, 12, 19, 26), so a correct filter removes 12 rows, leaving 48. If you get a different number, the most likely cause is the site C date format: misparsed January dates land in May and survive the filter. This is a small, safe version of a silent error that would quietly bias a real trend analysis.
+January has four weekly sampling dates per site (5, 12, 19, 26), so a correct filter removes 12 rows, leaving 48. If you get a different number, the most likely cause is the site C date format: a naive parse can silently swap day and month for *some* rows and not others. For example, `05-01-2023` can silently become May 1 and `12-01-2023` can become December 1, while `19-01-2023` happens to parse correctly regardless, since 19 can't be a month. So a partial misparse doesn't move cleanly to one edge of the range, it scatters. This is a small, safe version of a silent error that would quietly bias a real trend analysis.
 
 ```
-Read 'clean_and_merge.py'. Modify the script to keep only samples collected in February 2023 or later. Keep all other logic the same. Save the updated script.
+Read 'clean_and_merge.py'. Write a new script, 'clean_feb_onward.py', that reuses its cleaning logic but keeps only samples collected in February 2023 or later. Do not modify clean_and_merge.py.
 ```
 
 Did the AI edit the relevant part or rewrite the whole file? Did it parse the dates correctly before filtering? Did you check the changes before running?
@@ -208,10 +212,10 @@ Did the AI edit the relevant part or rewrite the whole file? Did it parse the da
 
 ### Automating documentation
 
-For the final step, have the AI generate a README that explains the data pipeline, including the raw files, cleaning steps, and final output format.
+For the final step, have the AI generate a short pipeline summary. This folder already ships a `README.md` describing the schema and target output, so ask for a differently-named file rather than letting the agent overwrite it:
 
 ```
-Create a README.md file that explains the data processing pipeline we just built. List the original files, the cleaning steps performed, and the final output format.
+Create a PIPELINE.md file that explains the data processing pipeline we just built. List the original files, the cleaning steps performed, and the final output format. Do not modify or overwrite README.md.
 ```
 
 ::::::::::::::::::::::::::::::::::::::::: challenge
@@ -222,7 +226,7 @@ To ensure research is reproducible, track which model generated your code and wh
 
 1. Use Claude Code to add a provenance header to `clean_and_merge.py`.
 2. The header should be a Python docstring containing:
-    - The model used (e.g., Claude Sonnet 4.6)
+    - The model used (check your session's `/status` or status line for the exact name)
     - The date
     - A summary of the prompt.
 
@@ -231,7 +235,7 @@ To ensure research is reproducible, track which model generated your code and wh
 ## Example command
 
 ```
-Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the model name 'Claude Sonnet 4.6', today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'
+Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the exact model name from this session (check /status if unsure), today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'
 ```
 
 ### Reflection

@@ -1,10 +1,10 @@
-<!-- 
-Place links that you need to refer to multiple times across pages here. Delete
-any links that you are not going to use. 
- -->
+<!--
+Links referenced two or more times across the lesson source. Use as
+[link text][label] in episode/learner/instructor markdown; Sandpaper resolves
+these at build time.
+-->
 
-[pandoc]: https://pandoc.org/MANUAL.html
-[r-markdown]: https://rmarkdown.rstudio.com/
-[rstudio]: https://www.rstudio.com/
-[carpentries-workbench]: https://carpentries.github.io/sandpaper-docs/
+[claude-code-docs]: https://docs.anthropic.com/en/docs/claude-code
+[ucla-ai-tools]: https://dts.ucla.edu/initiatives/ai/available-tools
+[obrien-2026]: https://arxiv.org/abs/2512.19644
 

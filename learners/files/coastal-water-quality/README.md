@@ -19,9 +19,12 @@ result, run a small trend analysis, and document the whole thing.
 
 ## Research goal
 
-Combine the three site files into a single clean dataset, then answer: **is the
-water quality score trending up or down over the monitoring period, and does it
-differ by site?**
+Combine the three site files into a single clean dataset, then answer: **what
+pattern is visible in the water quality score at each site over the monitoring
+period?** A descriptive line plot can show a visible pattern; treat it as
+description, not as a statistically tested trend or a tested difference between
+sites, since that would need a stated method and uncertainty this project doesn't
+cover.
 
 ## Known issues (the reason this needs cleaning)
 
@@ -48,6 +51,8 @@ Target file: `data/master_dataset.csv`, one row per sample, with these columns:
 ## What "done" looks like
 
 - 60 rows in `data/master_dataset.csv` (3 sites x 20 weekly samples), no rows dropped.
-- All dates parsed correctly (site C's January samples must not land in May).
+- All dates parsed correctly and match the raw files exactly. Don't just check the
+  visible range: a partial misparse can swap day and month for some site C rows and
+  not others, so it won't always show up as an obviously-wrong month like May.
 - A documented strategy for the missing values.
 - A trend plot of `score` over `date`, one line per site.

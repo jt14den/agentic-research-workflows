@@ -4,6 +4,18 @@ teaching: 15
 exercises: 10
 ---
 
+<style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style>
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- What can each kind of AI tool see, and what can it change?
+- Why use a CLI for AI instead of a browser?
+- What is the Living Spec and why does it matter?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ::::::::::::::::::::::::::::::::::::::: objectives
 
 ## Objectives
@@ -12,14 +24,6 @@ exercises: 10
 - Compare chatbot, IDE assistant, CLI agent, and fully agentic workflows.
 - Create a Living Spec (CLAUDE.md) to guide an agent.
 - Explain why you remain the active reviewer of AI-generated code.
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::: questions
-
-- What can each kind of AI tool see, and what can it change?
-- Why use a CLI for AI instead of a browser?
-- What is the Living Spec and why does it matter?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -39,7 +43,9 @@ If it returns a version number, they are ready. If the command is not found, the
 
 ## Why CLI matters for research
 
-Most researchers use chat-based AI in a browser. These tools are good for brainstorming but run in an isolated sandbox. They cannot see your files, run your code, or understand your project structure without manual uploads.
+Most researchers start with chat-based AI in a browser. Browser and desktop AI products increasingly ship connectors, uploaded-file access, or even their own coding/agentic surfaces, so "browser tools are sandboxed, CLI tools aren't" is no longer a reliable rule. What actually matters is the *configured* surface for the specific tool in front of you: what it's connected to and what permissions it has, not which category it falls in. Check that directly rather than assuming from "browser" vs. "CLI."
+
+If you have not used a CLI agent before, that puts you with most of your peers, not behind them: a 2026 survey of 868 scientists who program found browser-based general-purpose chat tools accounted for the large majority of primary tool choice, with CLI/agentic tools a small minority ([O'Brien et al., 2026][obrien-2026]). This lesson teaches the less-common path deliberately, not because it is trendy, but because of a structural advantage a stateless chat interface cannot match: the persistent external brain described later in this episode. A browser chat forgets your project's rules the moment you close the tab; a file like `CLAUDE.md` reloads them at the start of every session, under version control, reviewable by you or anyone else.
 
 A CLI (Command Line Interface) agent runs in your terminal, the same place you run Python scripts or navigate your filesystem with `ls` and `cd`, and has access to three things a browser tool does not.
 
@@ -76,7 +82,7 @@ Before any learner approves a command that changes files, ask them to say out lo
 
 ## Data privacy and institutional context
 
-Your institution decides which AI tools are approved for which kinds of data, and the free tools are usually not the ones you can point at sensitive research data. At UCLA, the centrally provided free tools (Gemini Basic, Microsoft Copilot, ChatGPT web) are web-only and approved for data classified P1-P3, with P4 requiring approval. None of them is a terminal agent. See [UCLA's available AI tools list](https://dts.ucla.edu/initiatives/ai/available-tools).
+Your institution decides which AI tools are approved for which kinds of data, and the free tools are usually not the ones you can point at sensitive research data. At UCLA, the centrally provided free tools (Gemini Basic, Microsoft Copilot, ChatGPT web) are web-only and approved for data classified P1-P3, with P4 requiring approval. None of them is a terminal agent. See [UCLA's available AI tools list][ucla-ai-tools].
 
 For the terminal workflow in this lesson, think in two paths:
 
@@ -85,7 +91,7 @@ For the terminal workflow in this lesson, think in two paths:
 
 **Warning:** Personal accounts often lack the privacy protections of an institutional agreement. Consult your campus data policy before using any AI tool with sensitive data. PHI and attorney-client privileged information are not approved for these tools.
 
-**Looking ahead:** If your research requires fully local processing, these same skills transfer to open-weight models (like Gemma or Llama) run via Ollama.
+**Looking ahead:** If your research requires fully local processing, these same skills transfer to open-weight models (like Qwen3, Gemma, or OpenAI's gpt-oss) run via Ollama. Check both the license and the specific version before you rely on one for reproducibility.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -99,6 +105,8 @@ You guide the agent using a **Living Spec**, and then you review what it produce
 
 ```mermaid
 graph TD
+    accTitle: Living Spec approval and verification loop
+    accDescr {A researcher defines a goal in CLAUDE.md, the agent proposes a plan, and the researcher approves it or sends it back at an approval gate. Only after approval does the agent draft code, which then passes a verification step or returns for refinement.}
     A[Researcher] -->|Define goal| B(CLAUDE.md\nLiving Spec)
     B --> C[Request a plan]
     C --> D{Approval Gate}
@@ -148,9 +156,9 @@ Always consider that your tools can have unintended consequences. Ensure files a
 
 ### Long context
 
-Like humans, we only have a certain amount of working memory, and large language models (LLMs) operate in a similar way. This is called the **context window** in LLM tools. Current models like Claude have long context windows (hundreds of thousands of tokens, up to a million in some configurations). You can provide the AI with your entire project folder, scripts, documentation, and small datasets, at once.
+Like humans, we only have a certain amount of working memory, and large language models (LLMs) operate in a similar way. This is called the **context window** in LLM tools. Current models like Claude have long context windows (hundreds of thousands of tokens, up to a million in some configurations), but a large window doesn't mean the agent should load your entire project at once. The more useful pattern is that the agent inspects and retrieves the specific files it needs within its configured access, rather than everything being crammed in up front.
 
-This allows you to describe the desired state of your project, and the agent coordinates changes across multiple files. In a research context, this is declarative programming with AI agents.
+This allows you to describe the desired state of your project, and the agent coordinates changes across multiple files. Call this **intent specification**, not "declarative programming": you're describing what you want, but the agent still writes an ordinary, imperative implementation, and the spec itself is not executable the way real declarative code is.
 
 ::::::::::::::::::::::::::::::::::::::::: callout
 
@@ -266,13 +274,21 @@ and goals the agent must follow across every session.
 
 Every major CLI tool has its own **native** spec file that it loads automatically when you start a session:
 
-| Tool | Native spec file | Auto-loaded? |
-|---|---|---|
-| Claude Code | `CLAUDE.md` | Yes |
-| OpenAI Codex | `AGENTS.md` | Yes |
-| Cursor | `.cursorrules` | Yes |
+| Tool | Native spec file |
+|---|---|
+| Claude Code | `CLAUDE.md` |
+| OpenAI Codex | `AGENTS.md` |
+| Cursor | `.cursorrules` |
 
-You can also use a **portable** spec file, `AGENTS.md` is a common convention, that you explicitly reference in any prompt: `"Read AGENTS.md and then..."`. It is not auto-loaded by any single tool, but it travels with your project if you switch tools. AGENTS.md, released by OpenAI in 2025 and later brought under the Linux Foundation's Agentic AI Foundation, is emerging as a portable convention for giving coding agents project-specific instructions.
+`AGENTS.md` is also emerging as a **portable** convention across tools: OpenAI released it in August 2025, and it was contributed to the Linux Foundation's Agentic AI Foundation in December 2025 alongside Anthropic's MCP and Block's goose. But whether a tool *auto-loads* it varies, so check before assuming:
+
+| Tool | Auto-loads `AGENTS.md`? |
+|---|---|
+| OpenAI Codex CLI | Yes, it's the native file above |
+| Claude Code | No. It reads `CLAUDE.md` only. Add `@AGENTS.md` as an import inside your `CLAUDE.md`, or symlink `CLAUDE.md` to `AGENTS.md`, to bring it in |
+| Gemini CLI | No by default; needs explicit configuration |
+
+For a tool that doesn't auto-load it, you can still reference it explicitly in a prompt: `"Read AGENTS.md and then..."`. That's what makes it portable: it travels with your project even when the tool you're using doesn't pick it up on its own.
 
 ### What to include in your spec file
 
@@ -338,7 +354,7 @@ Before we move on, turn to the person next to you and answer out loud: when you 
 - Different AI tools see and change different things; always ask what a tool can see and do before trusting it.
 - A CLI agent can read, run, and edit your real files, which makes verifying what it changed part of the workflow.
 - Run `/init` inside Claude Code to create a `CLAUDE.md` Living Spec that reduces context drift.
-- A portable `AGENTS.md` lets the same spec travel across different AI tools.
+- A portable `AGENTS.md` lets the same spec travel across different AI tools, but auto-loading it isn't universal; check per tool (Claude Code needs an explicit `@AGENTS.md` import).
 - The shift is from writing syntax to actively reviewing intent, assumptions, and evidence; it does not remove your responsibility.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
