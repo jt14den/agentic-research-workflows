@@ -9,13 +9,15 @@ This repository contains the "Agentic Research Workflows" lesson, part of the IM
 - **Framework Integration**: Integrated the **CO-STAR** prompting framework, the **CLEAR** framework, and the **Bootstrap Workflow** into the curriculum.
 - **Glossary & References**: Converted the glossary to a semantic definition list format and updated references to include Aider and the Spec-Driven workflow.
 - **Markdown Polish**: Performed multiple passes of markdown formatting improvements for better readability and accessibility.
-- **Lesson Structure**: Defined 6 core episodes:
+- **Lesson Structure**: 8 episodes:
+    0. Before We Use AI
     1. Understanding CLI-Based AI (Writer to Orchestrator)
     2. Effective Prompting (The Bootstrap Workflow)
     3. AI-Assisted Data Cleaning (Spec-Guided Cleaning)
     4. Validation Strategies (The 4-Layer Validation Stack)
-    5. Limitations & Bias (Spec Drift & Bootstrap Failures)
-    6. Resources & Next Steps (Aider & Commit-as-Draft)
+    5. Limitations & Cautions
+    6. From AI Output to a Review-Ready Bundle (Capstone)
+    7. Resources and Next Steps
 
 ## Project Structure
 - `episodes/`: Markdown files for each lesson chapter.
@@ -33,8 +35,8 @@ When editing this lesson, AI agents must adhere to these hard constraints:
 - **No-Go Zone 3**: Ensure all examples remain relevant to general research (avoid overly domain-specific jargon).
 
 ### Efficiency Metrics
-- **Target Rewrite Time**: < 10% (Human review and refactoring should take minimal time).
-- **Validation Gate**: All new content must be cross-verified by a "Challenger" model (e.g., Gemini CLI auditing Claude Code).
+- **Rewrite time** is tracked as a formative signal about a specific workflow, not a productivity target. Do not set or enforce an arbitrary percentage threshold; see Episode 4's own caution against turning it into a productivity claim.
+- **Validation Gate**: Deterministic checks (build/validate, executable tests, div/link structure) plus a maintainer's human review are the authority for merging. An optional multi-model critique, run in a fresh session rather than a same-session model switch, may surface additional hypotheses to investigate — it is not itself a merge gate, consistent with the lesson's own caution against treating a second model as an authority.
 
 ## Tech Stack & Conventions
 - **Framework**: Carpentries Sandpaper (R-based lesson engine).
@@ -74,15 +76,15 @@ When editing this lesson, AI agents must adhere to these hard constraints:
 ### Verification
 To ensure the lesson is correctly formatted and free of errors, run the following commands in the R console:
 
-1.  **Check Lesson Structure**:
-    ```r
-    sandpaper::check_lesson()
-    ```
-2.  **Validate Lesson Content** (links, images, components):
+1.  **Validate Lesson Content** (divs, internal links/images):
     ```r
     sandpaper::validate_lesson()
     ```
-3.  **Build and Preview**:
+2.  **Full Build** (also runs the CITATION.cff schema check):
+    ```r
+    sandpaper::build_lesson()
+    ```
+3.  **Preview Locally**:
     ```r
     sandpaper::serve()
     ```
@@ -91,8 +93,8 @@ To ensure the lesson is correctly formatted and free of errors, run the followin
 The Workbench uses **Pandoc fenced divs** (colons `:::`) for special blocks. The opening and closing tags must match in length (at least 3 colons, usually recommended to use more to distinguish from nested blocks).
 
 **Episode Structure Blocks:**
-*   `::::::::::::::::::::::::::::::::::::::: objectives` (Start of episode)
-*   `:::::::::::::::::::::::::::::::::::::::: questions` (Start of episode)
+*   `:::::::::::::::::::::::::::::::::::::::: questions` (Start of episode, before objectives)
+*   `::::::::::::::::::::::::::::::::::::::: objectives` (Start of episode, after questions)
 *   `:::::::::::::::::::::::::::::::::::::::: keypoints` (End of episode)
 
 **Interactive Blocks:**
@@ -102,7 +104,8 @@ The Workbench uses **Pandoc fenced divs** (colons `:::`) for special blocks. The
 
 **Callout Blocks:**
 *   `::::::::::::::::::::::::::::::::::::::::: callout` (General info/warning)
-*   `:::::::::::::::::::::::::::::::::::::::::: prereq` (Prerequisites)
+*   `::::::::::::::::::::::::::::::::::::::::: caution` (Potential issues or problems a learner might hit)
+*   `:::::::::::::::::::::::::::::::::::::::::: prereq` (Prerequisites; must be a top-level div, not nested inside `instructor`, or it is hidden from learners)
 *   `::::::::::::::::::::::::::::::::::::::: checklist` (Checklists)
 *   `:::::::::::::::::::::::::::::::::::::: discussion` (Discussion topics)
 *   `::::::::::::::::::::::::::::::::::::: testimonial` (Quotes/Testimonials)
@@ -110,8 +113,8 @@ The Workbench uses **Pandoc fenced divs** (colons `:::`) for special blocks. The
 **Advanced Blocks:**
 *   `::::::::::::::::::::::::::::::::::::::::: instructor` (Instructor-only notes - visible in instructor view)
 *   `::::::::::::::::::::::::::::::::::::::::::::::::: spoiler` (Collapsible content)
-*   `::::::::::::::::::::::::::::::::::::::::: output` (Output block for code results)
-*   `::::::::::::::::::::::::::::::::::::::: div` (Generic div for custom styling)
+
+`output` and generic `div` are not confirmed Workbench div types as of this writing (verified against [carpentries.github.io/sandpaper-docs/component-guide.html](https://carpentries.github.io/sandpaper-docs/component-guide.html), 2026-08-23) — do not use them without re-checking the current component guide first.
 
 **Tabs:**
 *   `::::::::::::::::::::::::::::::::::::::::: panel-tabset` (Container for tabs - automatic tab creation from headers)

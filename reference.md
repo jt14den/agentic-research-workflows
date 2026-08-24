@@ -20,7 +20,7 @@ Bootstrap Workflow
 : An iterative process where an AI agent scans a researcher's raw data and goals to draft the initial `CLAUDE.md` spec, which the researcher then reviews and approves.
 
 Chain of Thought
-: A prompting technique that encourages the AI to explain its reasoning step-by-step. Reasoning models (like o1 or R1) have this capability built-in.
+: A prompting technique that encourages the AI to explain its reasoning step-by-step. Current frontier models build this in as an adjustable reasoning-effort or thinking setting on the same model, rather than requiring a separate "reasoning model." A displayed chain of thought is not necessarily a faithful record of the model's internal computation.
 
 CLEAR Framework
 : A prompt engineering model (Concise, Logical, Explicit, Adaptive, Reflective) developed by Leo Lo to optimise AI interactions.
@@ -34,8 +34,8 @@ CO-STAR Framework
 Context Poisoning
 : A failure mode where irrelevant, stale, or contradictory information within a long context window (e.g., an `/archive` folder) causes the AI to hallucinate or generate incorrect code.
 
-Declarative Programming (with AI)
-: A focus on describing the *desired outcome* (what the data should look like) and letting an agent draft the *mechanical steps* (how to write the loop), which you then read and verify rather than accept blindly.
+Intent Specification
+: A focus on describing the *desired outcome* (what the data should look like) and letting an agent draft the *mechanical steps* (how to write the loop), which you then read and verify rather than accept blindly. Not "declarative programming": the agent still writes an ordinary imperative implementation, and the spec itself is not executable.
 
 Determinism Collapse
 : The risk that small variations in prompts or silent updates to AI model weights will result in different code outputs for the same task, threatening research reproducibility.
@@ -59,7 +59,7 @@ Immutable Requirements
 : Human-authored domain rules and constraints (e.g., "dates must be chronological") that act as the "Ground Truth" and cannot be modified by the AI agent.
 
 LLM (Large Language Model)
-: A deep learning model trained on vast amounts of text data to generate human-like text (e.g., Claude Sonnet/Opus, GPT-4o, Gemini).
+: A deep learning model trained on vast amounts of text data to generate human-like text (e.g., Claude, GPT, Gemini). Check `/status` in Claude Code for the exact current model in use; specific model names in this lesson go stale within months.
 
 MCP (Model Context Protocol)
 : An open standard that lets AI agents call external tools (file systems, databases, APIs, services like Zotero) in a consistent way. When you install a tool like `zotero-mcp`, you are giving the agent a structured interface to that tool via MCP. You configure it once; the agent handles the rest.
@@ -73,8 +73,8 @@ Natural Language Orchestration
 Provenance Tracking
 : The practice of documenting the metadata of an AI interaction (model version, prompt, context hashes) to ensure research accountability.
 
-Reasoning Models
-: A new class of AI models (e.g., o1, DeepSeek-R1) trained to perform complex logical reasoning and verification before producing an output.
+Reasoning Effort
+: An adjustable setting (in Claude Code, `low` through `xhigh`, with `max` on some models) that controls how much a model reasons before responding, on the same model rather than a separate "reasoning model" line. Higher effort costs more time and tokens and does not guarantee a better answer.
 
 Silent Semantic Drift
 : A failure mode where an AI's code runs and passes basic tests but quietly changes the underlying research assumptions or data meanings.

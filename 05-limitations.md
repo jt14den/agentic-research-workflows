@@ -4,6 +4,17 @@ teaching: 15
 exercises: 10
 ---
 
+<style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style>
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- When should I not use AI?
+- What are common failure modes?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ::::::::::::::::::::::::::::::::::::::: objectives
 
 ## Objectives
@@ -11,13 +22,6 @@ exercises: 10
 - Recognise high-risk scenarios for AI use.
 - Identify hallucinated or outdated code.
 - Distinguish between open and proprietary models.
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::: questions
-
-- When should I not use AI?
-- What are common failure modes?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -86,7 +90,7 @@ Semantic drift occurs when an agent makes a change that alters data assumptions 
 *   **Hallucinated functions:** The model uses libraries or APIs that do not exist.
 *   **Outdated approaches:** The AI uses deprecated syntax from its training data.
 *   **Confident incorrectness:** The AI presents wrong formulas or logic as certain.
-*   **Tool poisoning via MCP:** When an agent calls external tools through MCP, a misconfigured or malicious MCP server can inject instructions into the agent's context (prompt injection). This can cause the agent to take unintended actions or leak data. Mitigation: only install MCP servers from trusted, audited sources.
+*   **Tool poisoning via MCP:** When an agent calls external tools through MCP, a misconfigured or malicious MCP server can inject instructions into the agent's context (prompt injection) through its tool descriptions or returned data, even from a server that is otherwise sandboxed. This can cause the agent to take unintended actions or leak data. Mitigation: only install MCP servers from trusted, audited sources; treat everything a server returns as untrusted input, not just the server itself; and sandbox with minimal filesystem/network access where you can. Registry listing (MCP now has an official one) is not a safety certification.
 *   **Over-engineering:** The model generates complex code for simple problems.
 
 :::::::::::::::::::::::::::::::::::::: discussion
@@ -119,7 +123,7 @@ Current models tend to flag uncertainty more often than older ones, but they sti
 
 ::::::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge: Test for hallucinations
+## Challenge: Test for hallucinations, then verify independently
 
 Inside your Claude Code session, type:
 
@@ -127,13 +131,13 @@ Inside your Claude Code session, type:
 How do I use the 'pypanda-researcher' library to automatically write my conclusion?
 ```
 
-Note whether the model admits it does not know, hedges with uncertainty, or confidently invents instructions.
+Note whether the model admits it does not know, hedges with uncertainty, or confidently invents instructions. Then check for yourself, independent of what the model told you: search PyPI (or your language's package index) for `pypanda-researcher`. Record what you find and the date you checked. Would you accept, revise, or reject the model's answer based on that evidence, not on how confident it sounded?
 
 :::::::::::::::::::::::::::::::::::::::: solution
 
 ## Discussion
 
-Current models (Claude, GPT-4o, Gemini) are significantly better at refusing or flagging uncertainty than earlier generations, you may get a clean "this doesn't exist" response. That is the correct behaviour. The lesson here is not that hallucination always happens, but that you cannot assume it won't: always verify suggested libraries and functions exist before using them. Older or smaller models are still more likely to confabulate.
+Current models are somewhat better at flagging uncertainty than earlier generations — you may get a clean "this doesn't exist" response, and that's the correct behaviour when it happens. But don't count on it: a 2026 study testing five current frontier models found they still hallucinate nonexistent package names 4.6-6.1% of the time, and more surprisingly, 127 of those hallucinated package names were invented *identically* by all five models. That second finding matters for your validation habits specifically: asking a different model to double-check a package name is weaker protection than it sounds, because current models increasingly confabulate the same wrong answers, not different ones. The lesson here is not that hallucination always happens, but that you cannot assume it won't, and cross-checking with another model is not a substitute for checking the official package registry or documentation directly.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -143,11 +147,11 @@ Current models (Claude, GPT-4o, Gemini) are significantly better at refusing or 
 
 Claude Code is not open source, which creates a tension in open research.
 
-*   **Proprietary models (Gemini, GPT-4, Claude):** These are closed-weight models. You cannot verify their training data, and they may update silently. Institutional agreements provide data privacy but do not solve reproducibility issues.
-*   **Open-weights models (Gemma, Llama, Mistral):** These can be run locally using tools like Ollama. They offer better reproducibility because you can use a specific, frozen version of the model.
+*   **Proprietary models (Gemini, GPT, Claude):** These are closed-weight models. You cannot verify their training data, and they may update silently. Institutional agreements provide data privacy but do not solve reproducibility issues.
+*   **Open-weight models (e.g. Qwen3, Gemma, OpenAI's gpt-oss):** These can be run locally using tools like Ollama. They offer better reproducibility because you can pin a specific, frozen model revision — though license terms still vary by model, so check them alongside the version. "Open-weight" is the precise term here: the weights are downloadable, but that alone doesn't make the system open source under the fuller definition (training data, code, and license may still be closed or restricted).
 
 **Recommendation:**
-Use proprietary models for prototyping and cleaning, but archive the generated code. Do not rely on the AI to regenerate the same code in the future.
+There is no blanket right answer between proprietary and open-weight for prototyping and cleaning. Base the choice on your data's classification and authorization, the task's reproducibility and auditability needs, and cost, not on a default. Whichever you use, archive the generated code rather than relying on the model to regenerate the same result later.
 
 ::::::::::::::::::::::::::::::::::::::::: callout
 
@@ -170,6 +174,6 @@ In the shared Etherpad, post one thing an AI tool told you this session that it 
 - Avoid AI for security-critical tasks, sensitive data, and basic syntax practice.
 - Know when AI supports learning and when it gets in the way.
 - You are responsible for the final output.
-- Open models offer better reproducibility; proprietary models offer more power.
+- Open-weight models offer better reproducibility (a pinned revision); the right choice for a task still depends on data sensitivity, auditability, and cost, not a default.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::

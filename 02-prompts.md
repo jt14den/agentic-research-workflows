@@ -4,21 +4,27 @@ teaching: 20
 exercises: 20
 ---
 
+<style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style>
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- How do I write effective prompts?
+- How do I review a plan before the agent acts on it, not just after?
+- What are common AI failures?
+- How can I make the AI fix its own mistakes, and when should I not trust that it has?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ::::::::::::::::::::::::::::::::::::::: objectives
 
 ## Objectives
 
 - Apply the CLEAR framework.
+- Use Claude Code's plan mode to review an agent's approach before it writes any files.
 - Identify common AI failures.
-- Use introspection to refine code.
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::: questions
-
-- How do I write effective prompts?
-- What are common AI failures?
-- How can I make the AI fix its own mistakes?
+- Use introspection to refine code, and know its limits.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -146,6 +152,8 @@ The CLEAR framework, developed by [Leo Lo](https://doi.org/10.1016/j.acalib.2023
 
 ```mermaid
 graph LR
+    accTitle: The CLEAR prompting loop
+    accDescr {Effective prompts move from Concise to Logical to Explicit to Adaptive to Reflective, with a feedback loop from Reflective back to Adaptive when the output needs another pass.}
     C[Concise] --> L[Logical]
     L --> E[Explicit]
     E --> A[Adaptive]
@@ -173,34 +181,37 @@ Asking the AI to review its own code often surfaces problems, but it cannot deci
 *   "Did you hardcode any file paths?"
 *   "Critique your own implementation. Is there a more efficient way?"
 
-### Reasoning models
+### Reasoning effort
 
-*Optional: useful once you are comfortable with the basics.* As of 2025, reasoning models (such as OpenAI o1/o3, DeepSeek-R1, or Gemini 2.5 Thinking) have emerged. These models perform chain of thought reasoning before they answer.
+*Optional: useful once you are comfortable with the basics.* Frontier models no longer split cleanly into separate "standard" and "reasoning" model families the way they did in 2025. The current generation instead lets you turn up a reasoning-effort setting on the same model. In Claude Code this is the `effort` setting (`low` through `xhigh`, with `max` on some models); the default is `high`, which suits most complex reasoning and coding work.
 
-**When to use them:**
+**When to raise it:**
 
-- **Standard models (e.g., Claude Haiku):** Best for quick formatting, simple scripts, and brainstorming.
-- **Reasoning models:** Best for complex logic, debugging hard errors, or writing scientific formulas where accuracy is important.
+- Reach for more effort when a task has multiple interacting constraints, or chains many steps of tool use together, not just because it "feels hard."
+- Leave it at the default for routine formatting, quick scripts, and brainstorming.
+- Higher isn't free: it costs more time and tokens, and on some tasks it can lead to overthinking rather than a better answer. Check your session's `/status` for the exact model and effort level in use, since both change over time.
 
-When using a reasoning model, you often do not need to ask for introspection, they do it before showing the code.
+At higher effort levels, a model already does more internal reasoning before answering, so you often need less explicit introspection prompting than you would at a lower setting.
 
 ## Plan before you act
 
-As tasks grow more complex, asking the agent to write code immediately leads to more rewrite time. The emerging best practice is to request a plan first, review it, and approve it before any files are written.
+As tasks grow more complex, asking the agent to write code immediately leads to more rewrite time. Claude Code has an actual enforced planning mode for this, not just a prompting convention: use it rather than relying on the agent to honor a polite request.
 
-### The think-then-do pattern
+### Use plan mode, not just a polite request
 
-Start any multi-step task with an explicit planning prompt:
+Start a session in plan mode from the command line:
 
+```bash
+claude --permission-mode plan
 ```
-Before writing any code, describe your approach in numbered steps. Do not write any files yet.
-```
 
-Review the plan, push back on steps you disagree with, and ask for alternatives. Once you are satisfied, say "proceed with step 1."
+You can also switch into plan mode mid-session; check `/help` or your installed version's documentation for the current way to do that, since the exact command has changed across releases. While in plan mode, the agent can read files and reason, but is blocked from writing files or running mutating commands, no matter what it decides to do. That is a real difference from a prompt like "do not write any files yet": a prompt is a request the agent usually follows but is not required to, while plan mode is enforced by the tool itself.
+
+Review the plan, push back on steps you disagree with, and ask for alternatives. When you are satisfied, exit plan mode and let the agent proceed.
 
 ### Checkpoint prompts
 
-Break large tasks into explicit phases so you review the output at each stage before moving forward:
+Break large tasks into explicit phases so you review the output at each stage before moving forward. This is useful whether or not you are in plan mode, since it scopes what the agent does even after you have approved the overall plan:
 
 ```
 Step 1 only: read the three CSV files and tell me what inconsistencies you find. Do not write any code yet.
@@ -230,13 +241,13 @@ A `PLAN.md` and your `CLAUDE.md` serve different purposes. The spec defines pers
 
 ## Challenge: Plan before you clean
 
-Practise the think-then-do pattern before moving on to the data cleaning episode. Inside your Claude Code session, type:
+Practise using plan mode before moving on to the data cleaning episode. Start (or switch into) plan mode, then inside your Claude Code session, type:
 
 ```
-Read the three site files in data/. They have inconsistent column names and date formats. Before writing any code, outline a step-by-step plan for cleaning and merging them into a single dataset. Do not write any files yet.
+Read the three site files in data/. They have inconsistent column names and date formats. Outline a step-by-step plan for cleaning and merging them into a single dataset.
 ```
 
-Review the plan. Does it include an audit step? Does it address missing values? Revise the plan in the conversation until you are satisfied, then save it by asking: "Write this plan to PLAN.md."
+You do not need to add "do not write any files yet" here — plan mode already guarantees that. Review the plan. Does it include an audit step? Does it address missing values? Revise the plan in the conversation until you are satisfied, then exit plan mode and save it by asking: "Write this plan to PLAN.md."
 
 :::::::::::::::::::::::::::::::::::::::: solution
 
@@ -260,8 +271,8 @@ AI agents are designed to be helpful, which can lead them to take shortcuts.
 
 ### Common failure modes
 
-*   **Determinism collapse:** Small variations in prompts or model updates can lead to different outputs for the same task, which affects reproducibility. 
-    *   *Fix:* Use `temperature=0` (if available) and log your model versions and prompts.
+*   **Determinism collapse:** Small variations in prompts or model updates can lead to different outputs for the same task, which affects reproducibility.
+    *   *Fix:* There isn't a setting that makes an agentic run reproducible — tool calls, retries, and file-system state all vary run to run regardless of sampling settings. Instead, log the exact model, prompt, and relevant outputs (a provenance header, see the next episode) so a different run can be compared, not guaranteed identical.
 *   **Over-correction loops:** If an agent runs its own tests, it might fix the test to match its buggy code.
     *   *Fix:* Write your own requirements and key tests.
 *   **Synthetic data substitution:** The AI may generate fake data if it cannot find the real file.
@@ -351,9 +362,9 @@ In the shared Etherpad, paste one line of AI-generated code from this episode th
 ::::::::::::::::::::::::::::::::::::::: keypoints
 
 - Be specific and provide context.
-- Plan before you act: request a numbered plan and approve it before any files are written.
+- Plan before you act: use plan mode so the agent can't write files until you approve its approach, not just a prompt asking it to wait.
 - Prefer prompts that preserve learning: ask for plans, hints, and the simplest version, not the finished answer.
 - Always validate AI outputs, and never ship a line you cannot explain.
-- Introspection improves code quality.
+- Introspection can surface issues the first draft missed, but it is not a guarantee of correctness; treat what it finds as something to verify, not proof.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::

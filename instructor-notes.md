@@ -14,7 +14,7 @@ This lesson helps researchers work with AI coding agents without handing off the
 ### The worked example (one project all the way through)
 The whole lesson uses one fixture, `learners/files/coastal-water-quality/` (three messy site CSVs). Learners carry it from spec to clean merge to validation to a trend plot in the capstone. Two anchors to keep in mind:
 - **Expected result:** a merged `data/master_dataset.csv` with **60 rows** (3 sites x 20 weekly samples), all dates in 2023.
-- **The planted trap (the lesson's climax):** site C dates are day-month-year (`05-01-2023` is 5 January). If parsed as month-day, January samples land in May. The script still runs, the row count is still 60, and the trend plot is still wrong. This is the concrete "working code is not trustworthy code" moment; let it happen and use it.
+- **The planted trap (the lesson's climax):** site C dates are day-month-year (`05-01-2023` is 5 January). A naive `pd.to_datetime()` call with no explicit format actually *raises an error* on this file (day values like 19 and 26 can't be a month) — that's a loud, easy failure, and a fine outcome if it happens. The dangerous case is `format="mixed"`: it silently swaps day and month for some rows (`05-01-2023` becomes May 1) while accidentally parsing others correctly (`19-01-2023` still lands in January), so a handful of wrong dates hide among mostly-right ones. Either way the row count stays 60 and the trend plot is still wrong. This is the concrete "working code is not trustworthy code" moment; let it happen and use it.
 
 ---
 
@@ -26,7 +26,7 @@ The whole lesson uses one fixture, `learners/files/coastal-water-quality/` (thre
 
 ## Episode 1: Understanding CLI-Based AI
 - **Auth Check:** Ask learners to run `claude --version`. If it returns a version number they are ready. If not, have them launch `claude` once and complete sign-in before continuing.
-- **Model Check:** Have all learners set the same model with `/model` (e.g., `claude-sonnet-4-6`) before starting, so outputs are comparable and provenance records are meaningful.
+- **Model Check:** Have all learners set the same model with `/model` before starting (pick the current recommended model close to the session date), so outputs are comparable and provenance records are meaningful.
 - **Starter folder:** Everyone works in the provided `coastal-water-quality` folder (ships at `learners/files/coastal-water-quality/`). Confirm learners have it and can `ls data/` to see the three site CSVs before starting. Episode 1 has them inspect a real file and compare the agent's description to it, the first hands-on win.
 - **The Browser vs. CLI distinction:** Use the analogy of a "consultant" (Browser) vs. a "research assistant with keys to the lab" (CLI).
 - **Discussion:** The prompt about "ChatGPT writing code that looks correct but fails" is a great way to bond over shared frustration and set the stage for why we need the CLI (to run and test immediately).
@@ -38,7 +38,7 @@ The whole lesson uses one fixture, `learners/files/coastal-water-quality/` (thre
 
 ## Episode 3: Data Cleaning (Live Demo)
 - **High Intensity:** This is the most technically demanding episode.
-- **Expected output:** `data/master_dataset.csv` with 60 rows. The "Update the script" challenge (exclude January) should remove 12 rows, leaving 48; a different number usually means the site C date format was misparsed.
+- **Expected output:** `data/master_dataset.csv` with 60 rows, produced by `clean_and_merge.py`, which learners should not modify. The "Update the script" challenge writes a separate `clean_feb_onward.py` (12 rows removed, 48 remaining) instead of editing the canonical script in place, so Episodes 4 and 6 can still rely on the full 60-row file. A wrong row count on the filter usually means some site C dates were silently misparsed.
 - **The "Safety Net":** If a learner's AI fails to produce working code after two attempts, have them copy `instructors/files/backup_clean_and_merge.py` (it is written for this fixture and parses site C dates correctly). This keeps them on pace for the validate-and-judge steps, which are the point.
 - **Stop and Read:** Literally tell the class to "hands off keyboards" for two minutes to read the generated script before they run it.
 

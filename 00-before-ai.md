@@ -4,6 +4,18 @@ teaching: 15
 exercises: 10
 ---
 
+<style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style>
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- What are we actually practising in this lesson?
+- When does an AI coding tool help me learn, and when does it get in the way?
+- How do I decide whether to trust a result the AI gave me?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ::::::::::::::::::::::::::::::::::::::: objectives
 
 ## Objectives
@@ -11,14 +23,6 @@ exercises: 10
 - Distinguish between code generation, code understanding, and code validation.
 - Explain why AI-generated code can increase cognitive load for novices.
 - Use a structured checkpoint to decide whether an AI-generated result is safe to run, revise, or reject.
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::: questions
-
-- What are we actually practising in this lesson?
-- When does an AI coding tool help me learn, and when does it get in the way?
-- How do I decide whether to trust a result the AI gave me?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

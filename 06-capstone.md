@@ -1,27 +1,31 @@
 ---
-title: "From AI Output to Research-Ready Code"
+title: "From AI Output to a Review-Ready Bundle"
 teaching: 10
 exercises: 40
 ---
+
+<style>
+pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
+</style>
+
+:::::::::::::::::::::::::::::::::::::::: questions
+
+- Can I take one task from prompt to trustworthy, documented result?
+- What does "review-ready" actually include, beyond a script that runs?
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
 ## Objectives
 
 - Run the full workflow on one project, from messy files to a validated, documented result.
-- Produce a research-ready bundle: spec, plan, code, validation, a result, and provenance.
+- Produce a review-ready bundle: spec, plan, code, validation, a result, and provenance.
 - Make and defend an approve / revise / reject decision on your own output.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::::: questions
-
-- Can I take one task from prompt to trustworthy, documented result?
-- What does "research-ready" actually include, beyond a script that runs?
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-So far you have practised each move on its own: a spec, a plan, a cleaning script, a validator. The capstone puts them together on the project you have been carrying all along, the coastal water quality data, and ends with an actual finding: **is the water quality score trending up or down, and does it differ by site?**
+So far you have practised each move on its own: a spec, a plan, a cleaning script, a validator. The capstone puts them together on the project you have been carrying all along, the coastal water quality data, and ends with an actual finding: **what pattern is visible in the water quality score at each site over the monitoring period?** (A descriptive line plot can show a visible pattern; it does not by itself establish a statistically significant trend or a difference between sites — that would need a stated method and uncertainty, which is out of scope here.)
 
 Work through the steps below. The goal is not just a plot. It is a bundle you could hand to a collaborator, or your future self, and have them trust.
 
@@ -36,7 +40,7 @@ Run these as checkpoints, the same pattern as the cleaning episode. Do not rush 
 5. **Explain one block.** Pick one function or section and explain, out loud or in a comment, what it does and why. If you cannot, that block is not validated yet.
 6. **Validate.** Run `python validate_data.py` (with your finished checks). Confirm 60 rows, dates in 2023, scores in range, no lost IDs.
 7. **Run the analysis.** Produce the plot. Look at it.
-8. **Judge the result (domain plausibility).** Does the trend make sense? Do all three site lines span January to May, or does site C only appear at the May edge, the sign the date trap bit you? A plot can render cleanly and still be wrong.
+8. **Judge the result (domain plausibility).** Does the trend make sense? Do all three site lines span January to May with a continuous weekly pattern, or does site C look scattered or out of order, the sign the date trap bit you? A plot can render cleanly and still be wrong.
 9. **Document provenance.** Add a header or a short `PROVENANCE.md`: model used, date, the prompt summary, and which checks passed.
 10. **Decide.** Approve, revise, or reject, and write one line saying why.
 
@@ -44,13 +48,13 @@ Run these as checkpoints, the same pattern as the cleaning episode. Do not rush 
 
 ## What can go wrong here (and that is the point)
 
-The most likely failure is silent: site C's `05-01-2023` dates parsed as month-day, so its January samples land in May. The script runs, the row count is 60, and the trend plot still misleads. This is exactly the kind of error that "it ran" would have hidden, and exactly what your validator and your eyes on the plot are for.
+The most likely failure is silent: if the cleaning script parses site C's dates with `format="mixed"` instead of the explicit `%d-%m-%Y`, some rows silently swap day and month (`05-01-2023` becomes May 1) while others accidentally parse correctly. The script runs, the row count is 60, and the trend plot still misleads — but the wrong points scatter rather than bunching neatly at one edge, so eyeballing the plot alone won't reliably catch it. This is exactly the kind of error that "it ran" would have hidden, and exactly what your validator (checking exact per-sample dates, not just "falls in 2023") and your eyes on the plot are for.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::: challenge
 
-## Capstone challenge: the research-ready bundle
+## Capstone challenge: the review-ready bundle
 
 Produce and submit (or share with a partner) a bundle for the coastal project:
 
@@ -96,7 +100,7 @@ Look back at the sticky note from Episode 1, what you wanted from AI and what yo
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- Research-ready means spec, plan, code, validation, a result, provenance, and a decision, not just a script that runs.
+- Review-ready means spec, plan, code, validation, a result, provenance, and a decision, not just a script that runs — a descriptive plot is not itself a statistical finding.
 - The same checkpoint pattern scales from one script to a whole small project.
 - A plot can render cleanly and still be wrong; domain plausibility is your job.
 - "Revise" is a valid, honest outcome when the evidence does not yet cover the claim.
