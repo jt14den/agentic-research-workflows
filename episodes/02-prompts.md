@@ -4,10 +4,6 @@ teaching: 40
 exercises: 35
 ---
 
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
-
 :::::::::::::::::::::::::::::::::::::::: questions
 
 - How do I write effective prompts?
@@ -18,8 +14,6 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
-
-## Objectives
 
 - Refine a vague prompt into one with context, specificity, and output instructions.
 - Use Claude Code's plan mode to review an agent's approach before it writes any files.

@@ -4,10 +4,6 @@ teaching: 35
 exercises: 15
 ---
 
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
-
 :::::::::::::::::::::::::::::::::::::::: questions
 
 - What can each kind of AI tool see, and what can it change?
@@ -17,8 +13,6 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
-
-## Objectives
 
 - Describe what different AI tools can see and what they can change.
 - Create a Living Spec (CLAUDE.md) that states your hard constraints, and explain why doing so keeps you the active reviewer of the agent's output.
@@ -267,7 +261,7 @@ A few things to notice. Claude Code scanned the directory and described the real
 
 ## The Living Spec
 
-To get the most out of a CLI agent, provide it with persistent context about your project. This acts as a "Living Spec", a set of rules 
+To get the most out of a CLI agent, provide it with persistent context about your project. This acts as a "Living Spec", a set of rules
 and goals the agent must follow across every session.
 
 Every major CLI tool has its own **native** spec file that it loads automatically when you start a session:

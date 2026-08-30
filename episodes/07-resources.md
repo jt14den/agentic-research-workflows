@@ -4,10 +4,6 @@ teaching: 20
 exercises: 25
 ---
 
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
-
 :::::::::::::::::::::::::::::::::::::::::::::::::: questions
 
 - Which tool should I reach for, and when?
@@ -16,8 +12,6 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::::::::: objectives
-
-## Objectives
 
 - Choose an appropriate AI coding tool for a given task and data sensitivity.
 - Draft a workflow plan for one of your own datasets specifying tool, backend, no-go zones, opening prompt, validation check, and provenance record.

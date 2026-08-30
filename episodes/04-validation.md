@@ -4,10 +4,6 @@ teaching: 35
 exercises: 60
 ---
 
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
-
 :::::::::::::::::::::::::::::::::::::::::::::::::::: questions
 
 - What evidence makes AI-generated code safe to approve?
@@ -17,8 +13,6 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::::::::: objectives
-
-## Objectives
 
 - Given an AI-generated script, state the evidence supporting it, name the missing evidence, and decide to approve, revise, or reject.
 - Describe the four-layer validation stack (immutable requirements, automated checks, metamorphic tests, domain plausibility).

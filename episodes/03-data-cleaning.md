@@ -4,10 +4,6 @@ teaching: 50
 exercises: 45
 ---
 
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
-
 :::::::::::::::::::::::::::::::::::::::: questions
 
 - Can I trust AI to standardise inconsistent files?
@@ -16,8 +12,6 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
-
-## Objectives
 
 - Predict what a cleaning script must handle before you prompt for it.
 - Build a data processing pipeline for inconsistent files using a spec.

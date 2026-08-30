@@ -4,10 +4,6 @@ teaching: 15
 exercises: 10
 ---
 
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
-
 :::::::::::::::::::::::::::::::::::::::: questions
 
 - What are we actually practising in this lesson?
@@ -17,8 +13,6 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
-
-## Objectives
 
 - Distinguish between code generation, code understanding, and code validation.
 - Use a structured checkpoint to decide whether an AI-generated result is safe to run, revise, or reject.

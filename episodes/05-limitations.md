@@ -4,10 +4,6 @@ teaching: 30
 exercises: 20
 ---
 
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
-
 :::::::::::::::::::::::::::::::::::::::: questions
 
 - When should I not use AI?
@@ -16,8 +12,6 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
-
-## Objectives
 
 - Identify a hallucinated package name using the official package registry.
 
@@ -113,7 +107,7 @@ To code responsibly:
 ::::::::::::::::::::::::::::::::::::::::: instructor
 
 ## Managing expectations
-Current models tend to flag uncertainty more often than older ones, but they still hallucinate. Do not promise learners it won't happen. 
+Current models tend to flag uncertainty more often than older ones, but they still hallucinate. Do not promise learners it won't happen.
 *   **If it refuses:** Acknowledge that the model correctly identified its own limitations.
 *   **Backup:** Have a screenshot of a known hallucination ready to show if the AI performs perfectly during the session.
 

@@ -4,10 +4,6 @@ teaching: 20
 exercises: 90
 ---
 
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
-
 :::::::::::::::::::::::::::::::::::::::: questions
 
 - Can I take one task from prompt to trustworthy, documented result?
@@ -16,8 +12,6 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
-
-## Objectives
 
 - Run the full workflow on one project, from messy files to a validated, documented result.
 - Produce a review-ready bundle: spec, plan, code, validation, a result, and provenance.
