@@ -151,3 +151,5 @@ Vibe Coding
 2. Teo, S. (2023). *How I Won Singapore’s GPT-4 Prompt Engineering Competition*. Towards Data Science. [https://towardsdatascience.com/how-i-won-singapores-gpt-4-prompt-engineering-competition-34c195a93d41](https://towardsdatascience.com/how-i-won-singapores-gpt-4-prompt-engineering-competition-34c195a93d41)
 3. Smaniotto, B. & van Nuenen, T. (2024). Vibe Coding for Research: AI-Assisted Programming with Validation Best Practices. UC Berkeley D-Lab. [https://github.com/dlab-berkeley/Vibe-Coding-for-Research](https://github.com/dlab-berkeley/Vibe-Coding-for-Research)
 4. Claude Code Documentation: [https://docs.anthropic.com/en/docs/claude-code](https://docs.anthropic.com/en/docs/claude-code)
+5. O'Brien, G., Parker, A., Eisty, N., & Carver, J. (2025). *A survey of generative AI adoption and perceived productivity among scientists who program*. [https://arxiv.org/abs/2512.19644](https://arxiv.org/abs/2512.19644)
+6. Churilov, A. (2026). *The Range Shrinks, the Threat Remains: Re-evaluating LLM Package Hallucinations on the 2026 Frontier-Model Cohort*. [https://arxiv.org/abs/2605.17062](https://arxiv.org/abs/2605.17062)

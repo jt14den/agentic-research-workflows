@@ -38,7 +38,7 @@ Run these as checkpoints, the same pattern as the cleaning episode. Do not rush 
 3. **Ask for a plan only.** Have the agent outline the steps from raw files to merged dataset to trend plot. Do not let it write code yet. Review the plan against your spec.
 4. **Generate the cleaning + analysis code.** If you already have `clean_and_merge.py`, reuse it. Then ask for a short analysis script that loads `data/master_dataset.csv` and plots `score` over `date` with one line per site, saved to `fig/score_trend.png`.
 5. **Explain one block.** Pick one function or section and explain, out loud or in a comment, what it does and why. If you cannot, that block is not validated yet.
-6. **Validate.** Run `python validate_data.py` (with your finished checks). Confirm 60 rows, dates in 2023, scores in range, no lost IDs.
+6. **Validate.** Run `python validate_data.py` (with your finished checks). Confirm 60 rows, each date matches its source record exactly (not just "falls in 2023," a misparsed date can still land in range), scores in range, no lost IDs.
 7. **Run the analysis.** Produce the plot. Look at it.
 8. **Judge the result (domain plausibility).** Does the trend make sense? Do all three site lines span January to May with a continuous weekly pattern, or does site C look scattered or out of order, the sign the date trap bit you? A plot can render cleanly and still be wrong.
 9. **Document provenance.** Add a header or a short `PROVENANCE.md`: model used, date, the prompt summary, and which checks passed.

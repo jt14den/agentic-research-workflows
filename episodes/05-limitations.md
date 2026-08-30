@@ -99,7 +99,7 @@ Semantic drift occurs when an agent makes a change that alters data assumptions 
 
 Data centers consume large amounts of electricity and water. Frequent, iterative prompting can be resource-intensive.
 
-*   **Energy use:** Every AI query requires complex calculations. Some estimates suggest a single generative AI query uses significantly more energy than a standard web search.
+*   **Energy use:** Every AI query requires complex calculations, and running them costs real electricity and water. Published estimates of exactly how a single query compares to a web search vary widely by methodology and model size, and the comparison is genuinely disputed, but the underlying point holds regardless of the exact multiplier: iterative, exploratory prompting has a real resource cost that a single web search does not.
 *   **Code efficiency:** AI models often prioritise working code over efficient code. Inefficient software uses more energy and resources over time.
 
 ### Sustainable practices
@@ -137,7 +137,7 @@ Note whether the model admits it does not know, hedges with uncertainty, or conf
 
 ## Discussion
 
-Current models are somewhat better at flagging uncertainty than earlier generations — you may get a clean "this doesn't exist" response, and that's the correct behaviour when it happens. But don't count on it: a 2026 study testing five current frontier models found they still hallucinate nonexistent package names 4.6-6.1% of the time, and more surprisingly, 127 of those hallucinated package names were invented *identically* by all five models. That second finding matters for your validation habits specifically: asking a different model to double-check a package name is weaker protection than it sounds, because current models increasingly confabulate the same wrong answers, not different ones. The lesson here is not that hallucination always happens, but that you cannot assume it won't, and cross-checking with another model is not a substitute for checking the official package registry or documentation directly.
+Current models are somewhat better at flagging uncertainty than earlier generations — you may get a clean "this doesn't exist" response, and that's the correct behaviour when it happens. But don't count on it: a 2026 study testing five frontier models found they still hallucinate nonexistent package names 4.6-6.1% of the time, and more surprisingly, 127 of those hallucinated package names were invented *identically* by all five models ([Churilov, 2026](https://arxiv.org/abs/2605.17062)). That second finding matters for your validation habits specifically: asking a different model to double-check a package name is weaker protection than it sounds, because current models increasingly confabulate the same wrong answers, not different ones. The lesson here is not that hallucination always happens, but that you cannot assume it won't, and cross-checking with another model is not a substitute for checking the official package registry or documentation directly.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

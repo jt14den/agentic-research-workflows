@@ -22,7 +22,7 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 
 - Use the approval gate to take responsibility for AI-generated code.
 - Use rewrite time as a formative signal about your workflow, not a productivity score.
-- Use a four-layer validation stack with explicit requirement constraints.
+- Use a four-layer validation stack with explicit immutable requirements.
 - Turn validation into checks you can run, by finishing `validate_data.py`.
 - Use a multi-model critique, in a fresh session, to widen review without treating it as an authority.
 
@@ -76,8 +76,8 @@ Afterward, discuss as a group: what one change to the prompt, spec, or validatio
 
 To minimise rewrite time and ensure research rigor, use a structured validation stack.
 
-### Layer 1: Requirement constraints (No-Go Zones)
-Before the AI writes code, define requirement constraints in your `CLAUDE.md`. These are rules the AI is not allowed to break.
+### Layer 1: Immutable Requirements (No-Go Zones)
+Before the AI writes code, define immutable requirements in your `CLAUDE.md`. These are rules the AI is not allowed to break.
 
 *Example (from our project):* "Do not change the column names in `data/site_*.csv`" and "Do not drop any rows: the merge must have 60."
 
@@ -199,7 +199,7 @@ A strong answer names the output precisely, points to *specific* checks as evide
 
 - The approval gate separates experimental prototypes from validated research.
 - Rewrite time is a local, formative signal about your workflow, not a productivity score.
-- Requirement constraints prevent the AI from drifting away from research specs.
+- Immutable requirements prevent the AI from drifting away from research specs.
 - A multi-model critique, run in a fresh session, is a reviewer, not an authority.
 - You cannot validate what you cannot explain.
 
