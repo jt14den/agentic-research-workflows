@@ -21,7 +21,7 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 
 - Choose an appropriate AI coding tool for a given task and data sensitivity.
 - Plan how you will apply this workflow to your own research.
-- Know where to keep learning and how to spot hype.
+- Identify resources for continued learning and recognize signs of AI hype.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

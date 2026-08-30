@@ -315,7 +315,7 @@ Practise the CLEAR framework on a file you already have: one raw site file, `dat
 Using data/site_A.csv, create a Python script that plots WaterQualityScore over Collection_Date as a scatterplot with a linear trendline. Label the axes. Save the plot to fig/site_A_trend.png (create the directory if it does not exist).
 ```
 
-### Reflection
+### Reflection: prompt refinement
 
 *   How much longer was your refined prompt compared to your first one?
 *   Did defining the output filename save you from searching for the file?
@@ -343,7 +343,7 @@ Test the AI as a verifier principle. Ask the AI to find flaws in its code before
 
 :::::::::::::::::::::::::::::::::::::::: solution
 
-### Reflection
+### Reflection: introspection loop
 
 A second, critique-focused pass often catches issues the first draft missed. Treat it as a prompt to look harder yourself, not as a guarantee the code is now correct.
 
