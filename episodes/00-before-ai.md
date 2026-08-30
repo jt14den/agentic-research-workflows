@@ -21,7 +21,6 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 ## Objectives
 
 - Distinguish between code generation, code understanding, and code validation.
-- Explain why AI-generated code can increase cognitive load for novices.
 - Use a structured checkpoint to decide whether an AI-generated result is safe to run, revise, or reject.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::

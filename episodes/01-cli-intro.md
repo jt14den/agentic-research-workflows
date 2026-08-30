@@ -1,7 +1,7 @@
 ---
 title: "CLI-Based AI"
-teaching: 15
-exercises: 10
+teaching: 35
+exercises: 15
 ---
 
 <style>
@@ -21,9 +21,7 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 ## Objectives
 
 - Describe what different AI tools can see and what they can change.
-- Compare chatbot, IDE assistant, CLI agent, and fully agentic workflows.
-- Create a Living Spec (CLAUDE.md) to guide an agent.
-- Explain why you remain the active reviewer of AI-generated code.
+- Create a Living Spec (CLAUDE.md) that states your hard constraints, and explain why doing so keeps you the active reviewer of the agent's output.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

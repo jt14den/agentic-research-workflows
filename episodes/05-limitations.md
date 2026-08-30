@@ -1,7 +1,7 @@
 ---
 title: "Limitations and Cautions"
-teaching: 15
-exercises: 10
+teaching: 30
+exercises: 20
 ---
 
 <style>
@@ -19,9 +19,7 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 
 ## Objectives
 
-- Recognise high-risk scenarios for AI use.
-- Identify hallucinated or outdated code.
-- Distinguish between open and proprietary models.
+- Identify a hallucinated package name using the official package registry.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

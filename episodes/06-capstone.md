@@ -1,7 +1,7 @@
 ---
 title: "From AI Output to a Review-Ready Bundle"
-teaching: 10
-exercises: 40
+teaching: 20
+exercises: 90
 ---
 
 <style>

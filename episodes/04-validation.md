@@ -1,7 +1,7 @@
 ---
 title: "Validation Strategies: The Approval Gate"
-teaching: 30
-exercises: 20
+teaching: 35
+exercises: 60
 ---
 
 <style>
@@ -20,9 +20,8 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 
 ## Objectives
 
-- Use the approval gate to take responsibility for AI-generated code.
-- Use rewrite time as a formative signal about your workflow, not a productivity score.
-- Use a four-layer validation stack with explicit immutable requirements.
+- Given an AI-generated script, state the evidence supporting it, name the missing evidence, and decide to approve, revise, or reject.
+- Describe the four-layer validation stack (immutable requirements, automated checks, metamorphic tests, domain plausibility).
 - Turn validation into checks you can run, by finishing `validate_data.py`.
 - Use a multi-model critique, in a fresh session, to widen review without treating it as an authority.
 

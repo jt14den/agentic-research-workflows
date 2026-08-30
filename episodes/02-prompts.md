@@ -1,7 +1,7 @@
 ---
 title: "Best Practices for Prompting"
-teaching: 20
-exercises: 20
+teaching: 40
+exercises: 35
 ---
 
 <style>
@@ -21,10 +21,9 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 
 ## Objectives
 
-- Apply the CLEAR framework.
+- Refine a vague prompt into one with context, specificity, and output instructions.
 - Use Claude Code's plan mode to review an agent's approach before it writes any files.
-- Identify common AI failures.
-- Use introspection to refine code, and know its limits.
+- Use introspection to refine AI-generated code.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

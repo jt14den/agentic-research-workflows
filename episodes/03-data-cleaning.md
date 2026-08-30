@@ -1,7 +1,7 @@
 ---
 title: "Data Cleaning with AI"
-teaching: 30
-exercises: 20
+teaching: 50
+exercises: 45
 ---
 
 <style>

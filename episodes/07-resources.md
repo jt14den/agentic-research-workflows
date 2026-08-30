@@ -1,7 +1,7 @@
 ---
 title: "Resources and Next Steps"
-teaching: 10
-exercises: 15
+teaching: 20
+exercises: 25
 ---
 
 <style>
@@ -20,8 +20,7 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 ## Objectives
 
 - Choose an appropriate AI coding tool for a given task and data sensitivity.
-- Plan how you will apply this workflow to your own research.
-- Identify resources for continued learning and recognize signs of AI hype.
+- Draft a workflow plan for one of your own datasets specifying tool, backend, no-go zones, opening prompt, validation check, and provenance record.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -96,5 +95,6 @@ For the tool used here, see the [Claude Code documentation][claude-code-docs]. F
 - The workflow transfers across tools; match the tool and backend to the task and data sensitivity.
 - Attribute AI use transparently; it cannot be an author.
 - Leave with a concrete plan for your own data, including the one check that would catch a silent error.
+- Before adopting a new tool, check its scope claims, transparency, citations, and data-privacy terms; new tools appear daily, and many are more marketing than substance.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
