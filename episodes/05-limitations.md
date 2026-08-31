@@ -1,7 +1,7 @@
 ---
 title: "Limitations and Cautions"
 teaching: 30
-exercises: 20
+exercises: 24
 ---
 
 :::::::::::::::::::::::::::::::::::::::: questions
@@ -14,6 +14,7 @@ exercises: 20
 ::::::::::::::::::::::::::::::::::::::: objectives
 
 - Identify a hallucinated package name using the official package registry.
+- Choose between a proprietary and an open-weight model given a task's reproducibility needs and data sensitivity.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -145,6 +146,26 @@ Claude Code is not open source, which creates a tension in open research.
 **Recommendation:**
 There is no blanket right answer between proprietary and open-weight for prototyping and cleaning. Base the choice on your data's classification and authorization, the task's reproducibility and auditability needs, and cost, not on a default. Whichever you use, archive the generated code rather than relying on the model to regenerate the same result later.
 
+::::::::::::::::::::::::::::::::::::::::: challenge
+
+## Quick check: which model class fits the scenario?
+
+For each scenario, would a proprietary model (Claude, GPT, Gemini) or an open-weight model (Qwen3, Gemma, gpt-oss, run locally) fit better, and why?
+
+1. Cleaning a throwaway exploratory script you will discard by the end of the day.
+2. A pipeline that must reproduce the same output in five years for a methods reviewer.
+3. A first pass on de-identified patient records at an institution with an approved, contracted AI tool.
+
+:::::::::::::::::::::::::::::::::::::::: solution
+
+1. **Either.** Cost and convenience win here; nothing about the task needs reproducibility or data controls.
+2. **Open-weight.** You can pin the exact model revision and re-run it unchanged; a proprietary model can update or be deprecated out from under you, and an institutional agreement does not fix that.
+3. **Whichever the institution's approved tool actually is**, not "proprietary" by default. An institutional agreement can cover data privacy and compliance, but it does not by itself solve reproducibility, that is a separate question from #2, and the two can both apply to the same project.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ::::::::::::::::::::::::::::::::::::::::: callout
 
 ## Key lesson
@@ -157,7 +178,7 @@ AI can generate code, but it does not take on your expertise or your responsibil
 
 ## Feedback checkpoint: certainty vs evidence
 
-In the shared Etherpad, post one thing an AI tool told you this session that it made sound certain, but that you have not actually verified. These are the items most worth a second look.
+In the shared Etherpad, post one thing an AI tool told you this session that it made sound certain, but that you have not actually verified. These are the items most worth a second look. Working alone? Write it in your notes file, then actually go verify it before you move on, that follow-through is the point of the exercise.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

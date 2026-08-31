@@ -1,7 +1,7 @@
 ---
 title: "Before We Use AI: What Are We Practising?"
 teaching: 15
-exercises: 10
+exercises: 13
 ---
 
 :::::::::::::::::::::::::::::::::::::::: questions
@@ -112,11 +112,30 @@ Without running anything, answer in a sentence or two each:
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+::::::::::::::::::::::::::::::::::::::::: challenge
+
+## Quick check: what does `dropna()` actually remove?
+
+Given a table with columns `site`, `date`, `score`, and `notes`, where only `notes` has some blank cells, what does `df.dropna()` (no arguments) do?
+
+1. Drops rows where every column is blank.
+2. Drops rows where the `notes` column specifically is blank.
+3. Drops rows where *any* column is blank, including `notes`.
+4. Drops the `notes` column entirely, keeping all rows.
+
+:::::::::::::::::::::::::::::::::::::::: solution
+
+**3.** `dropna()` with no arguments checks every column and drops a row if *any* of them is blank, even if the missing value is in a column you would consider optional, like `notes`. Options 1 and 2 describe common but wrong assumptions about how it scopes the check; option 4 confuses dropping rows with dropping a column, which is a different method (`drop(columns=...)`) entirely.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 :::::::::::::::::::::::::::::::::::::::::: discussion
 
 ## Feedback checkpoint: what do you want from AI?
 
-On a sticky note or in the shared Etherpad, write one line: *what do you most want an AI tool to do for your research, and what are you most worried it will get wrong?*
+On a sticky note or in the shared Etherpad, write one line: *what do you most want an AI tool to do for your research, and what are you most worried it will get wrong?* Working through this alone? Write the line in your own notes file instead, you will revisit it at the end of the lesson either way.
 
 We will come back to these at the end of the lesson.
 

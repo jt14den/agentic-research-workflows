@@ -348,7 +348,7 @@ A second, critique-focused pass often catches issues the first draft missed. Tre
 
 ## Feedback checkpoint: paste one line you don't understand
 
-In the shared Etherpad, paste one line of AI-generated code from this episode that you cannot fully explain yet. We will pick a few and work through them together. There is no penalty for not understanding a line; the penalty is shipping it without knowing what it does.
+In the shared Etherpad, paste one line of AI-generated code from this episode that you cannot fully explain yet. We will pick a few and work through them together. There is no penalty for not understanding a line; the penalty is shipping it without knowing what it does. Working alone? Ask the agent to explain that line back to you, then check its explanation line by line against what you already know before accepting it.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::
 

@@ -337,7 +337,7 @@ To analyse trends in sea ice extent from 1980-2020.
 
 ## Feedback checkpoint: describe the agent's context
 
-Before we move on, turn to the person next to you and answer out loud: when you ran `/init`, what did the agent look at, and what file did it create? If you are not sure, say so. In the shared Etherpad, paste one thing the agent did that surprised you.
+Before we move on, turn to the person next to you and answer out loud: when you ran `/init`, what did the agent look at, and what file did it create? If you are not sure, say so. In the shared Etherpad, paste one thing the agent did that surprised you. Working alone? Answer out loud to yourself, or write it as a comment at the top of your `CLAUDE.md`, saying it out loud (or writing it down) is what surfaces the gaps, not who is listening.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

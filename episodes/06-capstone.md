@@ -88,7 +88,7 @@ Budget most of the time for doing, not explaining. Expect the site C date bug to
 
 ## Feedback checkpoint: revisit your opening note
 
-Look back at the sticky note from Episode 1, what you wanted from AI and what you feared it would get wrong. Did the workshop change either answer? Post one line in the Etherpad.
+Look back at the sticky note (or notes-file line, if you worked through Episode 1 alone) from Episode 1, what you wanted from AI and what you feared it would get wrong. Did the workshop change either answer? Post one line in the Etherpad, or add it to your notes file.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

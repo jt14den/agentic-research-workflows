@@ -1,7 +1,7 @@
 ---
 title: "Validation Strategies: The Approval Gate"
 teaching: 35
-exercises: 60
+exercises: 65
 ---
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::: questions
@@ -62,6 +62,8 @@ Work in pairs. One person uses the AI for five minutes on a small, constrained t
 The observer takes notes: Where did the worker hesitate? Where did they trust the output without checking? Where did they backtrack or get confused?
 
 Afterward, discuss as a group: what one change to the prompt, spec, or validation step would have helped most? That is what rewrite time is really pointing at.
+
+Working alone? Keep a two-column log instead: what you expected before each step, and what you actually had to change afterward. The gap between the two columns is what the observer would have noticed.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -132,6 +134,25 @@ If your validator still passes on the misparsed data, the date check is too weak
 :::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::: challenge
+
+## Quick check: what does a passing validator actually tell you?
+
+Your `validate_data.py` reports all five checks passed: row count, date accuracy, ID uniqueness, score range, and no lost rows. Which of the following can you now claim?
+
+1. The data is correct, no further review is needed.
+2. The five specific properties you wrote checks for hold on this run; anything you didn't write a check for is still unverified.
+3. The AI's cleaning logic is correct in general, since it produced data that passes validation.
+4. The result would validate the same way on a re-run with a different model.
+
+:::::::::::::::::::::::::::::::::::::::: solution
+
+**2.** A passing validator tells you exactly what it checked, nothing more. Option 1 overclaims: domain plausibility (Layer 4) and anything outside your five checks are still unverified. Option 3 mistakes passing output for correct logic, the same misparse bug could resurface on a different input the checks don't happen to cover. Option 4 assumes determinism the lesson has already ruled out, a different run or model could produce different intermediate code that still happens to pass, or fail differently. A validator earns trust by what it would catch, not by passing once.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ---
 
