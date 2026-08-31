@@ -1,12 +1,8 @@
 ---
 title: "Data Cleaning with AI"
-teaching: 30
-exercises: 20
+teaching: 50
+exercises: 48
 ---
-
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
@@ -16,8 +12,6 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
-
-## Objectives
 
 - Predict what a cleaning script must handle before you prompt for it.
 - Build a data processing pipeline for inconsistent files using a spec.
@@ -95,6 +89,25 @@ Keep your list. It is your yardstick for judging what the AI proposes. If you wa
 Write a Python script called 'inspect_data.py' that reads every CSV in data/. For each file, print the filename, the column names, and the number of missing values per column. Do not change any files.
 ```
 
+::::::::::::::::::::::::::::::::::::::::: challenge
+
+## Quick check: site C's date format
+
+Site C stores dates as `05-01-2023`, day-month-year. Under that format, what date does `05-01-2023` represent, and what would a parser that assumes month-day-year (the common US default) silently produce instead?
+
+1. 5 January; a month-day-year parser would also read it as 5 January.
+2. 5 January; a month-day-year parser would silently read it as 1 May.
+3. 1 May; a month-day-year parser would silently read it as 5 January.
+4. There is not enough information to tell.
+
+:::::::::::::::::::::::::::::::::::::::: solution
+
+**2.** `05-01-2023` in day-month-year is day 05, month 01, 5 January 2023. A parser that assumes month-day-year instead reads the same string as month 05, day 01, 1 May 2023, silently, with no error. This is exactly the trap this episode's cleaning script has to avoid: the string never changes, only which format you tell the parser to assume.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ### B. Ask the AI for a plan only
 
 Do not ask for code yet. Inside your Claude Code session:
@@ -141,7 +154,7 @@ If a learner's AI fails to generate working code on the coastal data, provide th
 
 ### E. Explain before you run
 
-Hands off the keyboard. Open `clean_and_merge.py` and read it. In pairs, **each person explains one section of the script out loud** to the other: what it does and which spec rule it serves. If a section uses something you have not seen, that is exactly the line to ask about.
+Hands off the keyboard. Open `clean_and_merge.py` and read it. In pairs, **each person explains one section of the script out loud** to the other: what it does and which spec rule it serves. If a section uses something you have not seen, that is exactly the line to ask about. Working alone? Explain each section out loud to yourself, or write the explanation as a comment above it, then ask the agent to check your explanation against what the code actually does.
 
 You are responsible for the final output. You cannot validate what you cannot explain.
 
@@ -165,7 +178,7 @@ You can ask the AI to write these checks, but read them before you trust them. T
 
 ## Feedback checkpoint: surprises and uncertainty
 
-In the shared Etherpad, post two short lines: one thing the AI did that surprised you, and one thing it made sound certain that you are still unsure about. Bring these back into the room.
+In the shared Etherpad, post two short lines: one thing the AI did that surprised you, and one thing it made sound certain that you are still unsure about. Bring these back into the room. Working alone? Write both lines in your notes file, and follow up on the uncertain one before moving on.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::
 
