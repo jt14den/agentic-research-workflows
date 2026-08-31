@@ -1,12 +1,8 @@
 ---
 title: "Resources and Next Steps"
-teaching: 10
-exercises: 15
+teaching: 20
+exercises: 32
 ---
-
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
 
 :::::::::::::::::::::::::::::::::::::::::::::::::: questions
 
@@ -17,11 +13,9 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 
 :::::::::::::::::::::::::::::::::::::::::::::::::: objectives
 
-## Objectives
-
 - Choose an appropriate AI coding tool for a given task and data sensitivity.
-- Plan how you will apply this workflow to your own research.
-- Know where to keep learning and how to spot hype.
+- Draft a workflow plan for one of your own datasets specifying tool, backend, no-go zones, opening prompt, validation check, and provenance record.
+- Recognize signs of AI hype using a stated set of criteria (scope, transparency, citations, privacy).
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -37,6 +31,25 @@ This episode is a short reference and a plan for what you do next. The detail is
 | **NotebookLM**, **Elicit**, **Consensus** | document/literature tools | grounding answers in your own PDFs or the literature, not coding |
 
 Local models (run via Ollama) keep data on your hardware and let you pin a frozen version for reproducibility, at the cost of needing a capable GPU. Many researchers use a hybrid approach: a cloud model for general scripting, a local model for sensitive data.
+
+::::::::::::::::::::::::::::::::::::::::: challenge
+
+## Quick check: which pairing is a problem?
+
+Which of these tool-and-data pairings should give you pause?
+
+1. Claude Code, for cleaning a public, already-published dataset.
+2. Aider + Ollama, for a pipeline that must reproduce identically in five years.
+3. Claude Code (default cloud backend, no institutional agreement), for a first pass on sensitive, unpublished human-subjects data.
+4. NotebookLM, for asking questions grounded in a folder of your own PDFs.
+
+:::::::::::::::::::::::::::::::::::::::: solution
+
+**3.** Sending sensitive, unpublished human-subjects data to a general cloud endpoint with no institutional agreement or approved backend behind it is exactly the pairing to avoid, that is what "which approved backend" in the workflow card is asking you to check before you start, not after. The other three are reasonable defaults: public data carries no sensitivity constraint (1), a local pinned model fits a reproducibility requirement well (2), and a document-grounding tool used on your own files is what it is built for (4).
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::: caution
 
@@ -87,6 +100,26 @@ New tools appear daily, and many are more marketing than substance. Before adopt
 - **Citations:** does it give real, checkable DOIs and URLs?
 - **Privacy:** if it is free, is your data used for training?
 
+::::::::::::::::::::::::::::::::::::::::: challenge
+
+## Quick check: spot the hype
+
+For each tool description, name the one criterion above it fails most clearly.
+
+1. "Answers any research question instantly, across any field, no setup required."
+2. "Summarises your uploaded PDFs and gives you a final answer, no need to see the underlying search or reasoning."
+3. "Free forever. Just sign up and start uploading your data today."
+
+:::::::::::::::::::::::::::::::::::::::: solution
+
+1. **Scope.** "Any field, any question" is the specialised-vs-does-everything red flag, a tool that claims no domain limits usually has no domain depth either.
+2. **Transparency.** Hiding the intermediate steps means you cannot check its work, only trust its answer.
+3. **Privacy.** A free tool that just wants your data uploaded, with no mention of what happens to it, is the exact case the privacy criterion is asking you to check before you use it, not after.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 A few sources that stay practical and skeptical: [Simon Willison](https://simonwillison.net/) (AI engineering and security), [Ethan Mollick](https://www.oneusefulthing.org/) (AI and cognitive work), [Hamel Husain](https://hamel.dev/) (systematic evaluation), and [The Batch](https://www.deeplearning.ai/the-batch/) (balanced industry coverage).
 
 For the tool used here, see the [Claude Code documentation][claude-code-docs]. For definitions of terms used throughout this lesson (Living Spec, external brain, approval gates, and more), see the [learner reference page](../learners/reference.md).
@@ -96,5 +129,6 @@ For the tool used here, see the [Claude Code documentation][claude-code-docs]. F
 - The workflow transfers across tools; match the tool and backend to the task and data sensitivity.
 - Attribute AI use transparently; it cannot be an author.
 - Leave with a concrete plan for your own data, including the one check that would catch a silent error.
+- Before adopting a new tool, check its scope claims, transparency, citations, and data-privacy terms; new tools appear daily, and many are more marketing than substance.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::

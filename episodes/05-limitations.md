@@ -1,12 +1,8 @@
 ---
 title: "Limitations and Cautions"
-teaching: 15
-exercises: 10
+teaching: 30
+exercises: 24
 ---
-
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
@@ -17,11 +13,8 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-## Objectives
-
-- Recognise high-risk scenarios for AI use.
-- Identify hallucinated or outdated code.
-- Distinguish between open and proprietary models.
+- Identify a hallucinated package name using the official package registry.
+- Choose between a proprietary and an open-weight model given a task's reproducibility needs and data sensitivity.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -99,7 +92,7 @@ Semantic drift occurs when an agent makes a change that alters data assumptions 
 
 Data centers consume large amounts of electricity and water. Frequent, iterative prompting can be resource-intensive.
 
-*   **Energy use:** Every AI query requires complex calculations. Some estimates suggest a single generative AI query uses significantly more energy than a standard web search.
+*   **Energy use:** Every AI query requires complex calculations, and running them costs real electricity and water. Published estimates of exactly how a single query compares to a web search vary widely by methodology and model size, and the comparison is genuinely disputed, but the underlying point holds regardless of the exact multiplier: iterative, exploratory prompting has a real resource cost that a single web search does not.
 *   **Code efficiency:** AI models often prioritise working code over efficient code. Inefficient software uses more energy and resources over time.
 
 ### Sustainable practices
@@ -115,7 +108,7 @@ To code responsibly:
 ::::::::::::::::::::::::::::::::::::::::: instructor
 
 ## Managing expectations
-Current models tend to flag uncertainty more often than older ones, but they still hallucinate. Do not promise learners it won't happen. 
+Current models tend to flag uncertainty more often than older ones, but they still hallucinate. Do not promise learners it won't happen.
 *   **If it refuses:** Acknowledge that the model correctly identified its own limitations.
 *   **Backup:** Have a screenshot of a known hallucination ready to show if the AI performs perfectly during the session.
 
@@ -137,7 +130,7 @@ Note whether the model admits it does not know, hedges with uncertainty, or conf
 
 ## Discussion
 
-Current models are somewhat better at flagging uncertainty than earlier generations — you may get a clean "this doesn't exist" response, and that's the correct behaviour when it happens. But don't count on it: a 2026 study testing five current frontier models found they still hallucinate nonexistent package names 4.6-6.1% of the time, and more surprisingly, 127 of those hallucinated package names were invented *identically* by all five models. That second finding matters for your validation habits specifically: asking a different model to double-check a package name is weaker protection than it sounds, because current models increasingly confabulate the same wrong answers, not different ones. The lesson here is not that hallucination always happens, but that you cannot assume it won't, and cross-checking with another model is not a substitute for checking the official package registry or documentation directly.
+Current models are somewhat better at flagging uncertainty than earlier generations — you may get a clean "this doesn't exist" response, and that's the correct behaviour when it happens. But don't count on it: a 2026 study testing five frontier models found they still hallucinate nonexistent package names 4.6-6.1% of the time, and more surprisingly, 127 of those hallucinated package names were invented *identically* by all five models ([Churilov, 2026](https://arxiv.org/abs/2605.17062)). That second finding matters for your validation habits specifically: asking a different model to double-check a package name is weaker protection than it sounds, because current models increasingly confabulate the same wrong answers, not different ones. The lesson here is not that hallucination always happens, but that you cannot assume it won't, and cross-checking with another model is not a substitute for checking the official package registry or documentation directly.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -153,6 +146,26 @@ Claude Code is not open source, which creates a tension in open research.
 **Recommendation:**
 There is no blanket right answer between proprietary and open-weight for prototyping and cleaning. Base the choice on your data's classification and authorization, the task's reproducibility and auditability needs, and cost, not on a default. Whichever you use, archive the generated code rather than relying on the model to regenerate the same result later.
 
+::::::::::::::::::::::::::::::::::::::::: challenge
+
+## Quick check: which model class fits the scenario?
+
+For each scenario, would a proprietary model (Claude, GPT, Gemini) or an open-weight model (Qwen3, Gemma, gpt-oss, run locally) fit better, and why?
+
+1. Cleaning a throwaway exploratory script you will discard by the end of the day.
+2. A pipeline that must reproduce the same output in five years for a methods reviewer.
+3. A first pass on de-identified patient records at an institution with an approved, contracted AI tool.
+
+:::::::::::::::::::::::::::::::::::::::: solution
+
+1. **Either.** Cost and convenience win here; nothing about the task needs reproducibility or data controls.
+2. **Open-weight.** You can pin the exact model revision and re-run it unchanged; a proprietary model can update or be deprecated out from under you, and an institutional agreement does not fix that.
+3. **Whichever the institution's approved tool actually is**, not "proprietary" by default. An institutional agreement can cover data privacy and compliance, but it does not by itself solve reproducibility, that is a separate question from #2, and the two can both apply to the same project.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ::::::::::::::::::::::::::::::::::::::::: callout
 
 ## Key lesson
@@ -165,7 +178,7 @@ AI can generate code, but it does not take on your expertise or your responsibil
 
 ## Feedback checkpoint: certainty vs evidence
 
-In the shared Etherpad, post one thing an AI tool told you this session that it made sound certain, but that you have not actually verified. These are the items most worth a second look.
+In the shared Etherpad, post one thing an AI tool told you this session that it made sound certain, but that you have not actually verified. These are the items most worth a second look. Working alone? Write it in your notes file, then actually go verify it before you move on, that follow-through is the point of the exercise.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

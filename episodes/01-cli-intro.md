@@ -1,12 +1,8 @@
 ---
 title: "CLI-Based AI"
-teaching: 15
-exercises: 10
+teaching: 35
+exercises: 15
 ---
-
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
@@ -18,12 +14,8 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-## Objectives
-
 - Describe what different AI tools can see and what they can change.
-- Compare chatbot, IDE assistant, CLI agent, and fully agentic workflows.
-- Create a Living Spec (CLAUDE.md) to guide an agent.
-- Explain why you remain the active reviewer of AI-generated code.
+- Create a Living Spec (CLAUDE.md) that states your hard constraints, and explain why doing so keeps you the active reviewer of the agent's output.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -269,7 +261,7 @@ A few things to notice. Claude Code scanned the directory and described the real
 
 ## The Living Spec
 
-To get the most out of a CLI agent, provide it with persistent context about your project. This acts as a "Living Spec", a set of rules 
+To get the most out of a CLI agent, provide it with persistent context about your project. This acts as a "Living Spec", a set of rules
 and goals the agent must follow across every session.
 
 Every major CLI tool has its own **native** spec file that it loads automatically when you start a session:
@@ -345,7 +337,7 @@ To analyse trends in sea ice extent from 1980-2020.
 
 ## Feedback checkpoint: describe the agent's context
 
-Before we move on, turn to the person next to you and answer out loud: when you ran `/init`, what did the agent look at, and what file did it create? If you are not sure, say so. In the shared Etherpad, paste one thing the agent did that surprised you.
+Before we move on, turn to the person next to you and answer out loud: when you ran `/init`, what did the agent look at, and what file did it create? If you are not sure, say so. In the shared Etherpad, paste one thing the agent did that surprised you. Working alone? Answer out loud to yourself, or write it as a comment at the top of your `CLAUDE.md`, saying it out loud (or writing it down) is what surfaces the gaps, not who is listening.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

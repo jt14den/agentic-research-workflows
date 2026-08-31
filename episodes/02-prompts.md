@@ -1,12 +1,8 @@
 ---
 title: "Best Practices for Prompting"
-teaching: 20
-exercises: 20
+teaching: 40
+exercises: 35
 ---
-
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
@@ -19,12 +15,9 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-## Objectives
-
-- Apply the CLEAR framework.
+- Refine a vague prompt into one with context, specificity, and output instructions.
 - Use Claude Code's plan mode to review an agent's approach before it writes any files.
-- Identify common AI failures.
-- Use introspection to refine code, and know its limits.
+- Use introspection to refine AI-generated code.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -315,7 +308,7 @@ Practise the CLEAR framework on a file you already have: one raw site file, `dat
 Using data/site_A.csv, create a Python script that plots WaterQualityScore over Collection_Date as a scatterplot with a linear trendline. Label the axes. Save the plot to fig/site_A_trend.png (create the directory if it does not exist).
 ```
 
-### Reflection
+### Reflection: prompt refinement
 
 *   How much longer was your refined prompt compared to your first one?
 *   Did defining the output filename save you from searching for the file?
@@ -343,7 +336,7 @@ Test the AI as a verifier principle. Ask the AI to find flaws in its code before
 
 :::::::::::::::::::::::::::::::::::::::: solution
 
-### Reflection
+### Reflection: introspection loop
 
 A second, critique-focused pass often catches issues the first draft missed. Treat it as a prompt to look harder yourself, not as a guarantee the code is now correct.
 
@@ -355,7 +348,7 @@ A second, critique-focused pass often catches issues the first draft missed. Tre
 
 ## Feedback checkpoint: paste one line you don't understand
 
-In the shared Etherpad, paste one line of AI-generated code from this episode that you cannot fully explain yet. We will pick a few and work through them together. There is no penalty for not understanding a line; the penalty is shipping it without knowing what it does.
+In the shared Etherpad, paste one line of AI-generated code from this episode that you cannot fully explain yet. We will pick a few and work through them together. There is no penalty for not understanding a line; the penalty is shipping it without knowing what it does. Working alone? Ask the agent to explain that line back to you, then check its explanation line by line against what you already know before accepting it.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::
 
