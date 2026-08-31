@@ -313,12 +313,12 @@
       <div class="d-none d-sm-none d-md-block">
         <a class="chapter-link" href="../instructor/index.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: Agentic Research
+          Previous: Agentic Research Workflows: AI Coding,...
         </a>
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Reference</h1>
-        <p>Last updated on 2026-08-24 |
+        <p>Last updated on 2026-08-31 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/learners/reference.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -357,6 +357,12 @@ Strategic points of friction in an agentic workflow (e.g., reviewing a
 diff before accepting, running tests before merging) designed to prevent
 approval fatigue and ensure human oversight.
 </dd>
+<dt>Backend</dt>
+<dd>
+The specific model and hosting arrangement an agent sends your data to
+(a vendor’s cloud API, an institutionally approved endpoint, or a local
+model), as distinct from the tool you type into.
+</dd>
 <dt>Bootstrap Workflow</dt>
 <dd>
 An iterative process where an AI agent scans a researcher’s raw data and
@@ -386,11 +392,25 @@ system. Essential for giving AI agents direct access to the file system.
 A prompt engineering framework (Context, Objective, Style, Tone,
 Audience, Response) emphasizing the importance of persona and audience.
 </dd>
+<dt>Closed-weight Models</dt>
+<dd>
+Models whose weights are not published (e.g., Claude, GPT, Gemini),
+sometimes called proprietary models. You cannot verify their training
+data, and providers may update them silently, which can affect
+reproducibility. Institutional agreements may cover data privacy but do
+not solve this. See also: Open-weight Models.
+</dd>
 <dt>Context Poisoning</dt>
 <dd>
 A failure mode where irrelevant, stale, or contradictory information
 within a long context window (e.g., an <code>/archive</code> folder)
 causes the AI to hallucinate or generate incorrect code.
+</dd>
+<dt>Context Window</dt>
+<dd>
+The total amount of text an agent can hold in view at once during a
+session: your prompts, the files it has read, and its own output. When
+it fills up, earlier instructions can be lost. See also: Token.
 </dd>
 <dt>Intent Specification</dt>
 <dd>
@@ -406,6 +426,25 @@ executable.
 The risk that small variations in prompts or silent updates to AI model
 weights will result in different code outputs for the same task,
 threatening research reproducibility.
+</dd>
+<dt>Deterministic Check</dt>
+<dd>
+An executable test that returns the same pass/fail answer every time it
+runs on the same input, unlike asking a model whether code looks
+correct.
+</dd>
+<dt>Domain Plausibility</dt>
+<dd>
+A check on whether a result is credible given what you actually know
+about the subject matter (for example, whether weekly sampling should
+produce evenly spaced points), as distinct from checking that the code
+ran without error.
+</dd>
+<dt>Etherpad</dt>
+<dd>
+The shared, browser-based collaborative notes document used during a
+live workshop for posting answers, questions, and feedback.
+Self-directed learners can substitute a personal notes file.
 </dd>
 <dt>Evidence Mantra (“No Evidence, No Merge”)</dt>
 <dd>
@@ -424,6 +463,12 @@ popularized by Andrej Karpathy. In research it doubles as provenance.
 <dt>Few-shot Prompting</dt>
 <dd>
 Providing examples in the prompt to guide the AI’s output.
+</dd>
+<dt>Frontier Model</dt>
+<dd>
+The most capable commercially released models at a given moment
+(currently the top Claude, GPT, and Gemini tiers). The term is
+time-relative; what counts as frontier changes every few months.
 </dd>
 <dt>CLAUDE.md (Living Spec)</dt>
 <dd>
@@ -444,6 +489,18 @@ Human-authored domain rules and constraints (e.g., “dates must be
 chronological”) that act as the “Ground Truth” and cannot be modified by
 the AI agent.
 </dd>
+<dt>Imputation / Impute</dt>
+<dd>
+Filling in a missing value with an estimate (a group mean, a model
+prediction) instead of dropping the row that contains it. Which estimate
+to use is a research decision, not a technical default.
+</dd>
+<dt>Invariant (Check)</dt>
+<dd>
+A property of your data that must hold true no matter how the pipeline
+is run (e.g., a fixed row count), expressed as a check that fails loudly
+when it stops holding. See also: Metamorphic Testing.
+</dd>
 <dt>LLM (Large Language Model)</dt>
 <dd>
 A deep learning model trained on vast amounts of text data to generate
@@ -459,6 +516,12 @@ install a tool like <code>zotero-mcp</code>, you are giving the agent a
 structured interface to that tool via MCP. You configure it once; the
 agent handles the rest.
 </dd>
+<dt>MCP Server</dt>
+<dd>
+A single connector that exposes one tool or data source (a database, a
+filesystem, Zotero) to an agent over MCP. See also: MCP (Model Context
+Protocol).
+</dd>
 <dt>Metamorphic Testing</dt>
 <dd>
 A validation strategy that checks the <em>relationships</em> between
@@ -469,6 +532,30 @@ double?”) rather than checking for a single fixed value.
 <dd>
 Using natural language to guide an AI agent in performing complex,
 multi-step tasks across multiple files in a project.
+</dd>
+<dt>Open-weight Models</dt>
+<dd>
+Models whose weights are downloadable and can be run locally (e.g.,
+Qwen3, Gemma, OpenAI’s gpt-oss), often via tools like Ollama.
+“Open-weight” is the precise term: downloadable weights alone don’t make
+a model open source under the fuller definition (training data, code,
+and license may still be closed or restricted). Offer better
+reproducibility since you can pin a specific, frozen revision, but
+license terms still vary by model. See also: Closed-weight Models.
+</dd>
+<dt>Plan Mode</dt>
+<dd>
+A Claude Code session mode in which the agent can read files and propose
+an approach but is blocked by the tool itself from writing files or
+running mutating commands until you approve the plan.
+</dd>
+<dt>Prompt Injection</dt>
+<dd>
+An attack where instructions hidden in content an agent processes (a
+file, a web page, an MCP tool’s returned data) get executed as if you
+had typed them yourself. A risk whenever an agent reads untrusted input,
+not just when it calls external tools, though MCP tool descriptions and
+returned data are a common vector.
 </dd>
 <dt>Provenance Tracking</dt>
 <dd>
@@ -483,10 +570,35 @@ how much a model reasons before responding, on the same model rather
 than a separate “reasoning model” line. Higher effort costs more time
 and tokens and does not guarantee a better answer.
 </dd>
+<dt>Review-ready Bundle</dt>
+<dd>
+The complete set of artifacts that makes an AI-assisted result auditable
+by someone else: spec, plan, code, validation script, result, provenance
+note, and approval decision.
+</dd>
+<dt>Sandboxing</dt>
+<dd>
+Running an agent or an MCP server with deliberately restricted
+filesystem and network access, so a compromised tool cannot reach data
+outside a defined boundary.
+</dd>
+<dt>Schema</dt>
+<dd>
+The agreed set of column names, types, and formats a cleaned dataset
+must conform to, defined in advance and used as the target for any
+AI-generated cleaning code.
+</dd>
 <dt>Silent Semantic Drift</dt>
 <dd>
 A failure mode where an AI’s code runs and passes basic tests but
 quietly changes the underlying research assumptions or data meanings.
+</dd>
+<dt>Slash Command</dt>
+<dd>
+A command typed inside a running Claude Code session (beginning with
+<code>/</code>, such as <code>/init</code>, <code>/model</code>,
+<code>/status</code>, or <code>/clear</code>) that controls the agent or
+session itself rather than being sent to the model as a prompt.
 </dd>
 <dt>Spec-Driven Research Orchestration</dt>
 <dd>
@@ -499,6 +611,18 @@ workflow.
 <dd>
 Artificially generated data used for testing validation pipelines
 without risking sensitive real-world data.
+</dd>
+<dt>Token</dt>
+<dd>
+The unit an LLM processes text in, roughly a word-fragment. Context
+window sizes and usage are measured in tokens, not words or lines. See
+also: Context Window.
+</dd>
+<dt>Verification Load</dt>
+<dd>
+The work of checking that an agent’s actions actually match your
+specification and your data, which grows as the agent produces more code
+faster than you can read it.
 </dd>
 <dt>Vibe Coding</dt>
 <dd>
@@ -521,6 +645,14 @@ D-Lab. <a href="https://github.com/dlab-berkeley/Vibe-Coding-for-Research" class
 </li>
 <li>Claude Code Documentation: <a href="https://docs.anthropic.com/en/docs/claude-code" class="external-link">https://docs.anthropic.com/en/docs/claude-code</a>
 </li>
+<li>O’Brien, G., Parker, A., Eisty, N., &amp; Carver, J. (2025). <em>A
+survey of generative AI adoption and perceived productivity among
+scientists who program</em>. <a href="https://arxiv.org/abs/2512.19644" class="external-link">https://arxiv.org/abs/2512.19644</a>
+</li>
+<li>Churilov, A. (2026). <em>The Range Shrinks, the Threat Remains:
+Re-evaluating LLM Package Hallucinations on the 2026 Frontier-Model
+Cohort</em>. <a href="https://arxiv.org/abs/2605.17062" class="external-link">https://arxiv.org/abs/2605.17062</a>
+</li>
 </ol><!--
 Links referenced two or more times across the lesson source. Use as
 [link text][label] in episode/learner/instructor markdown; Sandpaper resolves
@@ -533,7 +665,7 @@ these at build time.
       <div class="d-none d-sm-none d-md-block">
         <a class="chapter-link" href="../instructor/index.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: Agentic Research
+          Previous: Agentic Research Workflows: AI Coding,...
         </a>
       </div>
     </nav></div> <!-- / div.primary-content.col-xs-12 -->
@@ -558,7 +690,7 @@ these at build time.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.20.2" class="external-link">sandpaper (0.20.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.1" class="external-link">varnish (1.1.1)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.21.0" class="external-link">sandpaper (0.21.0)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.2" class="external-link">varnish (1.1.2)</a></p>
 		</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -580,8 +712,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/reference.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/reference.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-08-24",
-  "datePublished": "2026-08-25"
+  "dateModified": "2026-08-31",
+  "datePublished": "2026-08-31"
 }
 
   </script><script>

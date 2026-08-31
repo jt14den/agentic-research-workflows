@@ -118,7 +118,7 @@
     <a id="search-button" class="btn btn-primary" href="aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
 </nav><aside class="col-md-12 lesson-progress"><div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 31%" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">31%</div>
+    <div class="progress-bar incubator" role="progressbar" style="width: 27%" aria-valuenow="27" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">27%</div>
   </div>
 </aside><div class="container">
       <div class="row">
@@ -330,16 +330,16 @@
       <div class="d-none d-sm-none d-md-block">
         <a class="chapter-link" href="02-prompts.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: Best Practices for
+          Previous: Best Practices for Prompting...
         </a>
         <a class="chapter-link float-end" href="04-validation.html" rel="next">
-          Next: Validation...
+          Next: Validation Strategies: The Approval Gate...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Data Cleaning with AI</h1>
-        <p>Last updated on 2026-08-24 |
+        <p>Last updated on 2026-08-31 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/03-data-cleaning.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -351,10 +351,7 @@
 
         
 
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style><div class="overview card">
+<div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
 <div class="col-md-4">
@@ -474,6 +471,45 @@ C: <code>05-01-2023</code> is day-month-year, so it means 5 January, not
 proposes. If you want a faster overview, you can have the AI write an
 inspection script, but read its output against your own list:</p>
 <pre><code>Write a Python script called 'inspect_data.py' that reads every CSV in data/. For each file, print the filename, the column names, and the number of missing values per column. Do not change any files.</code></pre>
+<div id="quick-check-site-cs-date-format" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="quick-check-site-cs-date-format" class="callout-inner">
+<h3 class="callout-title">Quick check: site C’s date format</h3>
+<div class="callout-content">
+<p>Site C stores dates as <code>05-01-2023</code>, day-month-year. Under
+that format, what date does <code>05-01-2023</code> represent, and what
+would a parser that assumes month-day-year (the common US default)
+silently produce instead?</p>
+<ol style="list-style-type: decimal"><li>5 January; a month-day-year parser would also read it as 5
+January.</li>
+<li>5 January; a month-day-year parser would silently read it as 1
+May.</li>
+<li>1 May; a month-day-year parser would silently read it as 5
+January.</li>
+<li>There is not enough information to tell.</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<p><strong>2.</strong> <code>05-01-2023</code> in day-month-year is day
+05, month 01, 5 January 2023. A parser that assumes month-day-year
+instead reads the same string as month 05, day 01, 1 May 2023, silently,
+with no error. This is exactly the trap this episode’s cleaning script
+has to avoid: the string never changes, only which format you tell the
+parser to assume.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="section level3">
 <h3 id="b--ask-the-ai-for-a-plan-only">B. Ask the AI for a plan only<a class="anchor" aria-label="anchor" href="#b--ask-the-ai-for-a-plan-only"></a></h3>
@@ -524,7 +560,9 @@ below, not against someone else’s code.</p>
 it. In pairs, <strong>each person explains one section of the script out
 loud</strong> to the other: what it does and which spec rule it serves.
 If a section uses something you have not seen, that is exactly the line
-to ask about.</p>
+to ask about. Working alone? Explain each section out loud to yourself,
+or write the explanation as a comment above it, then ask the agent to
+check your explanation against what the code actually does.</p>
 <p>You are responsible for the final output. You cannot validate what
 you cannot explain.</p>
 </div>
@@ -570,7 +608,9 @@ uncertainty</h3>
 <div class="callout-content">
 <p>In the shared Etherpad, post two short lines: one thing the AI did
 that surprised you, and one thing it made sound certain that you are
-still unsure about. Bring these back into the room.</p>
+still unsure about. Bring these back into the room. Working alone? Write
+both lines in your notes file, and follow up on the uncertain one before
+moving on.</p>
 </div>
 </div>
 </div>
@@ -608,14 +648,12 @@ others land inside it and wrongly survive.</li>
 </ol></div>
 </div>
 </div>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1">
-  What to expect
-  </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> What to expect </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>January has four weekly sampling dates per site (5, 12, 19, 26), so a
 correct filter removes 12 rows, leaving 48. If you get a different
@@ -664,14 +702,12 @@ line for the exact name)</li>
 </ol></div>
 </div>
 </div>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2">
-  Example command
-  </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Example command </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <pre><code>Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the exact model name from this session (check /status if unsure), today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'</code></pre>
 <div class="section level3">
@@ -717,10 +753,10 @@ these at build time.
       <div class="d-none d-sm-none d-md-block">
         <a class="chapter-link" href="02-prompts.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: Best Practices for
+          Previous: Best Practices for Prompting...
         </a>
         <a class="chapter-link float-end" href="04-validation.html" rel="next">
-          Next: Validation...
+          Next: Validation Strategies: The Approval Gate...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -746,7 +782,7 @@ these at build time.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.20.2" class="external-link">sandpaper (0.20.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.1" class="external-link">varnish (1.1.1)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.21.0" class="external-link">sandpaper (0.21.0)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.2" class="external-link">varnish (1.1.2)</a></p>
 		</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -768,8 +804,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/03-data-cleaning.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/03-data-cleaning.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-08-24",
-  "datePublished": "2026-08-25"
+  "dateModified": "2026-08-31",
+  "datePublished": "2026-08-31"
 }
 
   </script><script>

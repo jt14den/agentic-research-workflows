@@ -387,17 +387,13 @@
         
 <section id="aio-00-before-ai"><p>Content from <a href="00-before-ai.html">Before We Use AI: What Are We Practising?</a></p>
 <hr>
-<p>Last updated on 2026-08-24 |
+<p>Last updated on 2026-08-31 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/00-before-ai.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
-<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 25 minutes</p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 28 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -421,8 +417,6 @@ the way?</li>
 <ul>
 <li>Distinguish between code generation, code understanding, and code
 validation.</li>
-<li>Explain why AI-generated code can increase cognitive load for
-novices.</li>
 <li>Use a structured checkpoint to decide whether an AI-generated result
 is safe to run, revise, or reject.</li>
 </ul>
@@ -596,6 +590,48 @@ still wrong for your question.</li>
 </div>
 </div>
 </div>
+<div id="quick-check-what-does-dropna-actually-remove" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="quick-check-what-does-dropna-actually-remove" class="callout-inner">
+<h3 class="callout-title">Quick check: what does <code>dropna()</code>
+actually remove?</h3>
+<div class="callout-content">
+<p>Given a table with columns <code>site</code>, <code>date</code>,
+<code>score</code>, and <code>notes</code>, where only
+<code>notes</code> has some blank cells, what does
+<code>df.dropna()</code> (no arguments) do?</p>
+<ol style="list-style-type: decimal">
+<li>Drops rows where every column is blank.</li>
+<li>Drops rows where the <code>notes</code> column specifically is
+blank.</li>
+<li>Drops rows where <em>any</em> column is blank, including
+<code>notes</code>.</li>
+<li>Drops the <code>notes</code> column entirely, keeping all rows.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<p><strong>3.</strong> <code>dropna()</code> with no arguments checks
+every column and drops a row if <em>any</em> of them is blank, even if
+the missing value is in a column you would consider optional, like
+<code>notes</code>. Options 1 and 2 describe common but wrong
+assumptions about how it scopes the check; option 4 confuses dropping
+rows with dropping a column, which is a different method
+(<code>drop(columns=...)</code>) entirely.</p>
+</div>
+</div>
+</div>
+</div>
 <div id="feedback-checkpoint-what-do-you-want-from-ai" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
@@ -607,7 +643,9 @@ AI?</h3>
 <div class="callout-content">
 <p>On a sticky note or in the shared Etherpad, write one line: <em>what
 do you most want an AI tool to do for your research, and what are you
-most worried it will get wrong?</em></p>
+most worried it will get wrong?</em> Working through this alone? Write
+the line in your own notes file instead, you will revisit it at the end
+of the lesson either way.</p>
 <p>We will come back to these at the end of the lesson.</p>
 </div>
 </div>
@@ -639,17 +677,13 @@ these at build time.
 -->
 </section></section><section id="aio-01-cli-intro"><p>Content from <a href="01-cli-intro.html">CLI-Based AI</a></p>
 <hr>
-<p>Last updated on 2026-08-24 |
+<p>Last updated on 2026-08-31 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/01-cli-intro.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
-<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 25 minutes</p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 50 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -672,11 +706,9 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 <ul>
 <li>Describe what different AI tools can see and what they can
 change.</li>
-<li>Compare chatbot, IDE assistant, CLI agent, and fully agentic
-workflows.</li>
-<li>Create a Living Spec (CLAUDE.md) to guide an agent.</li>
-<li>Explain why you remain the active reviewer of AI-generated
-code.</li>
+<li>Create a Living Spec (CLAUDE.md) that states your hard constraints,
+and explain why doing so keeps you the active reviewer of the agent’s
+output.</li>
 </ul>
 </div>
 </div>
@@ -691,7 +723,7 @@ code.</li>
   Setup check
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>Ask all learners to run:</p>
 <div class="codewrapper sourceCode" id="cb1">
@@ -825,7 +857,7 @@ understand the result.</p>
   Instructor note: access is not understanding
   </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
 <div class="accordion-body">
 <p>Learners are often impressed that a CLI agent can read their files
 and run their code. Impressive access is not the same as a correct
@@ -924,7 +956,7 @@ gate.</em></p>
   Discussion prompt
   </h3>
 </button>
-<div id="collapseInstructor3" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor3" aria-labelledby="headingInstructor3">
+<div id="collapseInstructor3" class="accordion-collapse collapse" aria-labelledby="headingInstructor3" data-bs-parent="#accordionInstructor3">
 <div class="accordion-body">
 <p>Ask learners: “Have you ever used ChatGPT to write code that looked
 correct but failed when you ran it?” This is a good time to introduce
@@ -1275,7 +1307,7 @@ Metric” (how you know it’s done).</p>
   Example spec file
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1309,7 +1341,10 @@ context</h3>
 <p>Before we move on, turn to the person next to you and answer out
 loud: when you ran <code>/init</code>, what did the agent look at, and
 what file did it create? If you are not sure, say so. In the shared
-Etherpad, paste one thing the agent did that surprised you.</p>
+Etherpad, paste one thing the agent did that surprised you. Working
+alone? Answer out loud to yourself, or write it as a comment at the top
+of your <code>CLAUDE.md</code>, saying it out loud (or writing it down)
+is what surfaces the gaps, not who is listening.</p>
 </div>
 </div>
 </div>
@@ -1344,17 +1379,13 @@ these at build time.
 </div>
 </section></section><section id="aio-02-prompts"><p>Content from <a href="02-prompts.html">Best Practices for Prompting</a></p>
 <hr>
-<p>Last updated on 2026-08-24 |
+<p>Last updated on 2026-08-31 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/02-prompts.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
-<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 40 minutes</p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 75 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -1378,11 +1409,11 @@ trust that it has?</li>
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul>
-<li>Apply the CLEAR framework.</li>
+<li>Refine a vague prompt into one with context, specificity, and output
+instructions.</li>
 <li>Use Claude Code’s plan mode to review an agent’s approach before it
 writes any files.</li>
-<li>Identify common AI failures.</li>
-<li>Use introspection to refine code, and know its limits.</li>
+<li>Use introspection to refine AI-generated code.</li>
 </ul>
 </div>
 </div>
@@ -1619,7 +1650,7 @@ one step at a time.”</td>
   Instructor note: watch for cognitive load
   </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>Generated prompts often pull in syntax, libraries, or abstractions
 the lesson has not introduced. Signs that AI output is adding extraneous
@@ -1648,7 +1679,7 @@ a detour.</p>
   Teaching tip: Visual aids
   </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
 <div class="accordion-body">
 <p>Write CLEAR vertically on a whiteboard. As you explain each letter,
 add the keyword (Concise, Logical, Explicit, Adaptive, Reflective). This
@@ -1692,7 +1723,7 @@ to critique its own output. This is often called self-correction.</p>
   The introspection concept
   </h3>
 </button>
-<div id="collapseInstructor3" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor3" aria-labelledby="headingInstructor3">
+<div id="collapseInstructor3" class="accordion-collapse collapse" aria-labelledby="headingInstructor3" data-bs-parent="#accordionInstructor3">
 <div class="accordion-body">
 <p>Emphasize this section. Most learners treat AI output as final. The
 idea that they can ask the AI to fix its own work is often a new
@@ -1833,7 +1864,7 @@ until you are satisfied, then exit plan mode and save it by asking:
   What a good plan includes
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <ul>
 <li>An <strong>audit step</strong>, inspect files before changing
@@ -1945,11 +1976,11 @@ it).</p></li>
   Example refined prompt
   </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <pre><code>Using data/site_A.csv, create a Python script that plots WaterQualityScore over Collection_Date as a scatterplot with a linear trendline. Label the axes. Save the plot to fig/site_A_trend.png (create the directory if it does not exist).</code></pre>
 <div class="section level3">
-<h3 id="reflection">Reflection<a class="anchor" aria-label="anchor" href="#reflection"></a>
+<h3 id="reflection-prompt-refinement">Reflection: prompt refinement<a class="anchor" aria-label="anchor" href="#reflection-prompt-refinement"></a>
 </h3>
 <ul>
 <li>How much longer was your refined prompt compared to your first
@@ -1995,10 +2026,10 @@ draft? Did it add a guard clause like
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3">
-  Reflection
+  Reflection: introspection loop
   </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>A second, critique-focused pass often catches issues the first draft
 missed. Treat it as a prompt to look harder yourself, not as a guarantee
@@ -2019,7 +2050,10 @@ understand</h3>
 <p>In the shared Etherpad, paste one line of AI-generated code from this
 episode that you cannot fully explain yet. We will pick a few and work
 through them together. There is no penalty for not understanding a line;
-the penalty is shipping it without knowing what it does.</p>
+the penalty is shipping it without knowing what it does. Working alone?
+Ask the agent to explain that line back to you, then check its
+explanation line by line against what you already know before accepting
+it.</p>
 </div>
 </div>
 </div>
@@ -2054,17 +2088,13 @@ these at build time.
 </div>
 </section></section><section id="aio-03-data-cleaning"><p>Content from <a href="03-data-cleaning.html">Data Cleaning with AI</a></p>
 <hr>
-<p>Last updated on 2026-08-24 |
+<p>Last updated on 2026-08-31 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/03-data-cleaning.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
-<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 50 minutes</p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 98 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -2114,12 +2144,9 @@ your project folder. Generating scripts can take 10-30 seconds.</p>
 <div id="accordionInstructor1" class="accordion instructor-note accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
-  <h3 class="accordion-header" id="headingInstructor1">
-  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div>
-  Live coding
-  </h3>
+  <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Live coding </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>This episode uses live coding. Learners should follow along by
 running commands on their own machines.</p>
@@ -2213,6 +2240,47 @@ C: <code>05-01-2023</code> is day-month-year, so it means 5 January, not
 proposes. If you want a faster overview, you can have the AI write an
 inspection script, but read its output against your own list:</p>
 <pre><code>Write a Python script called 'inspect_data.py' that reads every CSV in data/. For each file, print the filename, the column names, and the number of missing values per column. Do not change any files.</code></pre>
+<div id="quick-check-site-cs-date-format" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="quick-check-site-cs-date-format" class="callout-inner">
+<h3 class="callout-title">Quick check: site C’s date format</h3>
+<div class="callout-content">
+<p>Site C stores dates as <code>05-01-2023</code>, day-month-year. Under
+that format, what date does <code>05-01-2023</code> represent, and what
+would a parser that assumes month-day-year (the common US default)
+silently produce instead?</p>
+<ol style="list-style-type: decimal">
+<li>5 January; a month-day-year parser would also read it as 5
+January.</li>
+<li>5 January; a month-day-year parser would silently read it as 1
+May.</li>
+<li>1 May; a month-day-year parser would silently read it as 5
+January.</li>
+<li>There is not enough information to tell.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<p><strong>2.</strong> <code>05-01-2023</code> in day-month-year is day
+05, month 01, 5 January 2023. A parser that assumes month-day-year
+instead reads the same string as month 05, day 01, 1 May 2023, silently,
+with no error. This is exactly the trap this episode’s cleaning script
+has to avoid: the string never changes, only which format you tell the
+parser to assume.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="section level3">
 <h3 id="b--ask-the-ai-for-a-plan-only">B. Ask the AI for a plan only<a class="anchor" aria-label="anchor" href="#b--ask-the-ai-for-a-plan-only"></a>
@@ -2261,12 +2329,9 @@ below, not against someone else’s code.</p>
 <div id="accordionInstructor2" class="accordion instructor-note accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor2" aria-expanded="false" aria-controls="collapseInstructor2">
-  <h3 class="accordion-header" id="headingInstructor2">
-  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div>
-  Backup scripts
-  </h3>
+  <h3 class="accordion-header" id="headingInstructor2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Backup scripts </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
 <div class="accordion-body">
 <p>If a learner’s AI fails to generate working code on the coastal data,
 provide the pre-written versions from <code>instructors/files/</code>: -
@@ -2284,7 +2349,9 @@ provide the pre-written versions from <code>instructors/files/</code>: -
 it. In pairs, <strong>each person explains one section of the script out
 loud</strong> to the other: what it does and which spec rule it serves.
 If a section uses something you have not seen, that is exactly the line
-to ask about.</p>
+to ask about. Working alone? Explain each section out loud to yourself,
+or write the explanation as a comment above it, then ask the agent to
+check your explanation against what the code actually does.</p>
 <p>You are responsible for the final output. You cannot validate what
 you cannot explain.</p>
 </div>
@@ -2336,19 +2403,18 @@ uncertainty</h3>
 <div class="callout-content">
 <p>In the shared Etherpad, post two short lines: one thing the AI did
 that surprised you, and one thing it made sound certain that you are
-still unsure about. Bring these back into the room.</p>
+still unsure about. Bring these back into the room. Working alone? Write
+both lines in your notes file, and follow up on the uncertain one before
+moving on.</p>
 </div>
 </div>
 </div>
 <div id="accordionInstructor3" class="accordion instructor-note accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor3" aria-expanded="false" aria-controls="collapseInstructor3">
-  <h3 class="accordion-header" id="headingInstructor3">
-  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div>
-  Instructor note: cognitive load in this episode
-  </h3>
+  <h3 class="accordion-header" id="headingInstructor3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor note: cognitive load in this episode </h3>
 </button>
-<div id="collapseInstructor3" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor3" aria-labelledby="headingInstructor3">
+<div id="collapseInstructor3" class="accordion-collapse collapse" aria-labelledby="headingInstructor3" data-bs-parent="#accordionInstructor3">
 <div class="accordion-body">
 <p>This is the most technically demanding episode, and generated
 cleaning code is where extraneous load shows up most. Watch for scripts
@@ -2364,12 +2430,9 @@ feedback checkpoint: it is where you find out who is lost.</p>
 <div id="accordionInstructor4" class="accordion instructor-note accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor4" aria-expanded="false" aria-controls="collapseInstructor4">
-  <h3 class="accordion-header" id="headingInstructor4">
-  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div>
-  Challenge tip
-  </h3>
+  <h3 class="accordion-header" id="headingInstructor4">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Challenge tip </h3>
 </button>
-<div id="collapseInstructor4" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor4" aria-labelledby="headingInstructor4">
+<div id="collapseInstructor4" class="accordion-collapse collapse" aria-labelledby="headingInstructor4" data-bs-parent="#accordionInstructor4">
 <div class="accordion-body">
 <p>This challenge requires modifying existing code. If learners are
 stuck, suggest they ask the AI to read <code>clean_and_merge.py</code>
@@ -2412,14 +2475,12 @@ others land inside it and wrongly survive.</li>
 </div>
 </div>
 </div>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1">
-  What to expect
-  </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> What to expect </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>January has four weekly sampling dates per site (5, 12, 19, 26), so a
 correct filter removes 12 rows, leaving 48. If you get a different
@@ -2473,14 +2534,12 @@ line for the exact name)</li>
 </div>
 </div>
 </div>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2">
-  Example command
-  </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Example command </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <pre><code>Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the exact model name from this session (check /status if unsure), today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'</code></pre>
 <div class="section level3">
@@ -2524,17 +2583,13 @@ these at build time.
 </div>
 </section></section><section id="aio-04-validation"><p>Content from <a href="04-validation.html">Validation Strategies: The Approval Gate</a></p>
 <hr>
-<p>Last updated on 2026-08-24 |
+<p>Last updated on 2026-08-31 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/04-validation.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
-<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 50 minutes</p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 100 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -2557,12 +2612,10 @@ it as an authority?</li>
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul>
-<li>Use the approval gate to take responsibility for AI-generated
-code.</li>
-<li>Use rewrite time as a formative signal about your workflow, not a
-productivity score.</li>
-<li>Use a four-layer validation stack with explicit requirement
-constraints.</li>
+<li>Given an AI-generated script, state the evidence supporting it, name
+the missing evidence, and decide to approve, revise, or reject.</li>
+<li>Describe the four-layer validation stack (immutable requirements,
+automated checks, metamorphic tests, domain plausibility).</li>
 <li>Turn validation into checks you can run, by finishing
 <code>validate_data.py</code>.</li>
 <li>Use a multi-model critique, in a fresh session, to widen review
@@ -2659,6 +2712,9 @@ confused?</p>
 <p>Afterward, discuss as a group: what one change to the prompt, spec,
 or validation step would have helped most? That is what rewrite time is
 really pointing at.</p>
+<p>Working alone? Keep a two-column log instead: what you expected
+before each step, and what you actually had to change afterward. The gap
+between the two columns is what the observer would have noticed.</p>
 </div>
 </div>
 </div>
@@ -2668,9 +2724,9 @@ really pointing at.</p>
 <p>To minimise rewrite time and ensure research rigor, use a structured
 validation stack.</p>
 <div class="section level3">
-<h3 id="layer-1-requirement-constraints-no-go-zones">Layer 1: Requirement constraints (No-Go Zones)<a class="anchor" aria-label="anchor" href="#layer-1-requirement-constraints-no-go-zones"></a>
+<h3 id="layer-1-immutable-requirements-no-go-zones">Layer 1: Immutable Requirements (No-Go Zones)<a class="anchor" aria-label="anchor" href="#layer-1-immutable-requirements-no-go-zones"></a>
 </h3>
-<p>Before the AI writes code, define requirement constraints in your
+<p>Before the AI writes code, define immutable requirements in your
 <code>CLAUDE.md</code>. These are rules the AI is not allowed to
 break.</p>
 <p><em>Example (from our project):</em> “Do not change the column names
@@ -2790,7 +2846,7 @@ your date check is too weak (see the solution).</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>If your validator still passes on the misparsed data, the date check
 is too weak. A good check reconstructs the expected date for each sample
@@ -2800,6 +2856,50 @@ error, or that the year is 2023. See
 <code>instructors/files/backup_validate_data.py</code> for a complete
 reference implementation. A validator that cannot fail on a known-bad
 input is not protecting you.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="quick-check-what-does-a-passing-validator-actually-tell-you" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="quick-check-what-does-a-passing-validator-actually-tell-you" class="callout-inner">
+<h3 class="callout-title">Quick check: what does a passing validator
+actually tell you?</h3>
+<div class="callout-content">
+<p>Your <code>validate_data.py</code> reports all five checks passed:
+row count, date accuracy, ID uniqueness, score range, and no lost rows.
+Which of the following can you now claim?</p>
+<ol style="list-style-type: decimal">
+<li>The data is correct, no further review is needed.</li>
+<li>The five specific properties you wrote checks for hold on this run;
+anything you didn’t write a check for is still unverified.</li>
+<li>The AI’s cleaning logic is correct in general, since it produced
+data that passes validation.</li>
+<li>The result would validate the same way on a re-run with a different
+model.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<p><strong>2.</strong> A passing validator tells you exactly what it
+checked, nothing more. Option 1 overclaims: domain plausibility (Layer
+4) and anything outside your five checks are still unverified. Option 3
+mistakes passing output for correct logic, the same misparse bug could
+resurface on a different input the checks don’t happen to cover. Option
+4 assumes determinism the lesson has already ruled out, a different run
+or model could produce different intermediate code that still happens to
+pass, or fail differently. A validator earns trust by what it would
+catch, not by passing once.</p>
 </div>
 </div>
 </div>
@@ -2845,12 +2945,12 @@ domain judgment before you’d act on them?</p></li>
 </div>
 </div>
 </div>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2"> Why this works, and its limit </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Why this works, and its limit </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>Models have different blind spots, so a second read can surface edge
 cases and review questions the first one glossed over. But it is a
@@ -2868,7 +2968,7 @@ with a deterministic check or your own expertise, not as proof.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Teaching tip: approval fatigue </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>Warn learners about approval fatigue, the tendency to accept AI
 suggestions without reading them. The four-layer stack is designed to
@@ -2897,12 +2997,12 @@ the approval gate out loud or in writing. Answer all five:</p>
 </div>
 </div>
 </div>
-<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
-  <h4 class="accordion-header" id="headingSolution3"> What a good answer looks like </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
+  <h4 class="accordion-header" id="headingSolution4"> What a good answer looks like </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <p>A strong answer names the output precisely, points to
 <em>specific</em> checks as evidence (row counts, invariant checks, a
@@ -2927,7 +3027,7 @@ evidence covers the claim; otherwise the honest answer is “revise.”</p>
 research.</li>
 <li>Rewrite time is a local, formative signal about your workflow, not a
 productivity score.</li>
-<li>Requirement constraints prevent the AI from drifting away from
+<li>Immutable requirements prevent the AI from drifting away from
 research specs.</li>
 <li>A multi-model critique, run in a fresh session, is a reviewer, not
 an authority.</li>
@@ -2943,17 +3043,13 @@ these at build time.
 -->
 </section></section><section id="aio-05-limitations"><p>Content from <a href="05-limitations.html">Limitations and Cautions</a></p>
 <hr>
-<p>Last updated on 2026-08-24 |
+<p>Last updated on 2026-08-31 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/05-limitations.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
-<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 25 minutes</p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 54 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -2973,9 +3069,10 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul>
-<li>Recognise high-risk scenarios for AI use.</li>
-<li>Identify hallucinated or outdated code.</li>
-<li>Distinguish between open and proprietary models.</li>
+<li>Identify a hallucinated package name using the official package
+registry.</li>
+<li>Choose between a proprietary and an open-weight model given a task’s
+reproducibility needs and data sensitivity.</li>
 </ul>
 </div>
 </div>
@@ -3132,8 +3229,12 @@ Frequent, iterative prompting can be resource-intensive.</p>
 <ul>
 <li>
 <strong>Energy use:</strong> Every AI query requires complex
-calculations. Some estimates suggest a single generative AI query uses
-significantly more energy than a standard web search.</li>
+calculations, and running them costs real electricity and water.
+Published estimates of exactly how a single query compares to a web
+search vary widely by methodology and model size, and the comparison is
+genuinely disputed, but the underlying point holds regardless of the
+exact multiplier: iterative, exploratory prompting has a real resource
+cost that a single web search does not.</li>
 <li>
 <strong>Code efficiency:</strong> AI models often prioritise working
 code over efficient code. Inefficient software uses more energy and
@@ -3161,10 +3262,7 @@ the documentation instead of querying an LLM.</li>
 <div id="accordionInstructor1" class="accordion instructor-note accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
-  <h3 class="accordion-header" id="headingInstructor1">
-  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div>
-  Managing expectations
-  </h3>
+  <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Managing expectations </h3>
 </button>
 <div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
@@ -3202,26 +3300,24 @@ it sounded?</p>
 <div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1">
-  Discussion
-  </h4>
+  <h4 class="accordion-header" id="headingSolution1"> Discussion </h4>
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>Current models are somewhat better at flagging uncertainty than
 earlier generations — you may get a clean “this doesn’t exist” response,
 and that’s the correct behaviour when it happens. But don’t count on it:
-a 2026 study testing five current frontier models found they still
-hallucinate nonexistent package names 4.6-6.1% of the time, and more
-surprisingly, 127 of those hallucinated package names were invented
-<em>identically</em> by all five models. That second finding matters for
-your validation habits specifically: asking a different model to
-double-check a package name is weaker protection than it sounds, because
-current models increasingly confabulate the same wrong answers, not
-different ones. The lesson here is not that hallucination always
-happens, but that you cannot assume it won’t, and cross-checking with
-another model is not a substitute for checking the official package
-registry or documentation directly.</p>
+a 2026 study testing five frontier models found they still hallucinate
+nonexistent package names 4.6-6.1% of the time, and more surprisingly,
+127 of those hallucinated package names were invented
+<em>identically</em> by all five models (<a href="https://arxiv.org/abs/2605.17062" class="external-link">Churilov, 2026</a>). That second
+finding matters for your validation habits specifically: asking a
+different model to double-check a package name is weaker protection than
+it sounds, because current models increasingly confabulate the same
+wrong answers, not different ones. The lesson here is not that
+hallucination always happens, but that you cannot assume it won’t, and
+cross-checking with another model is not a substitute for checking the
+official package registry or documentation directly.</p>
 </div>
 </div>
 </div>
@@ -3254,6 +3350,56 @@ the choice on your data’s classification and authorization, the task’s
 reproducibility and auditability needs, and cost, not on a default.
 Whichever you use, archive the generated code rather than relying on the
 model to regenerate the same result later.</p>
+<div id="quick-check-which-model-class-fits-the-scenario" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="quick-check-which-model-class-fits-the-scenario" class="callout-inner">
+<h3 class="callout-title">Quick check: which model class fits the
+scenario?</h3>
+<div class="callout-content">
+<p>For each scenario, would a proprietary model (Claude, GPT, Gemini) or
+an open-weight model (Qwen3, Gemma, gpt-oss, run locally) fit better,
+and why?</p>
+<ol style="list-style-type: decimal">
+<li>Cleaning a throwaway exploratory script you will discard by the end
+of the day.</li>
+<li>A pipeline that must reproduce the same output in five years for a
+methods reviewer.</li>
+<li>A first pass on de-identified patient records at an institution with
+an approved, contracted AI tool.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<ol style="list-style-type: decimal">
+<li>
+<strong>Either.</strong> Cost and convenience win here; nothing
+about the task needs reproducibility or data controls.</li>
+<li>
+<strong>Open-weight.</strong> You can pin the exact model revision
+and re-run it unchanged; a proprietary model can update or be deprecated
+out from under you, and an institutional agreement does not fix
+that.</li>
+<li>
+<strong>Whichever the institution’s approved tool actually
+is</strong>, not “proprietary” by default. An institutional agreement
+can cover data privacy and compliance, but it does not by itself solve
+reproducibility, that is a separate question from #2, and the two can
+both apply to the same project.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
 <div id="key-lesson" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -3280,7 +3426,9 @@ evidence</h3>
 <div class="callout-content">
 <p>In the shared Etherpad, post one thing an AI tool told you this
 session that it made sound certain, but that you have not actually
-verified. These are the items most worth a second look.</p>
+verified. These are the items most worth a second look. Working alone?
+Write it in your notes file, then actually go verify it before you move
+on, that follow-through is the point of the exercise.</p>
 </div>
 </div>
 </div>
@@ -3310,17 +3458,13 @@ these at build time.
 -->
 </section></section><section id="aio-06-capstone"><p>Content from <a href="06-capstone.html">From AI Output to a Review-Ready Bundle</a></p>
 <hr>
-<p>Last updated on 2026-08-24 |
+<p>Last updated on 2026-08-31 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/06-capstone.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
-<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 50 minutes</p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 110 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -3397,8 +3541,9 @@ explain, out loud or in a comment, what it does and why. If you cannot,
 that block is not validated yet.</li>
 <li>
 <strong>Validate.</strong> Run <code>python validate_data.py</code>
-(with your finished checks). Confirm 60 rows, dates in 2023, scores in
-range, no lost IDs.</li>
+(with your finished checks). Confirm 60 rows, each date matches its
+source record exactly (not just “falls in 2023,” a misparsed date can
+still land in range), scores in range, no lost IDs.</li>
 <li>
 <strong>Run the analysis.</strong> Produce the plot. Look at
 it.</li>
@@ -3532,9 +3677,10 @@ the best teaching.</p>
 <h3 class="callout-title">Feedback checkpoint: revisit your opening
 note</h3>
 <div class="callout-content">
-<p>Look back at the sticky note from Episode 1, what you wanted from AI
-and what you feared it would get wrong. Did the workshop change either
-answer? Post one line in the Etherpad.</p>
+<p>Look back at the sticky note (or notes-file line, if you worked
+through Episode 1 alone) from Episode 1, what you wanted from AI and
+what you feared it would get wrong. Did the workshop change either
+answer? Post one line in the Etherpad, or add it to your notes file.</p>
 </div>
 </div>
 </div>
@@ -3566,17 +3712,13 @@ these at build time.
 -->
 </section></section><section id="aio-07-resources"><p>Content from <a href="07-resources.html">Resources and Next Steps</a></p>
 <hr>
-<p>Last updated on 2026-08-24 |
+<p>Last updated on 2026-08-31 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/07-resources.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
-<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 25 minutes</p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 52 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style>
 <div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
@@ -3598,8 +3740,11 @@ pre code { white-space: pre-wrap !important; word-break: break-word !important; 
 <ul>
 <li>Choose an appropriate AI coding tool for a given task and data
 sensitivity.</li>
-<li>Plan how you will apply this workflow to your own research.</li>
-<li>Know where to keep learning and how to spot hype.</li>
+<li>Draft a workflow plan for one of your own datasets specifying tool,
+backend, no-go zones, opening prompt, validation check, and provenance
+record.</li>
+<li>Recognize signs of AI hype using a stated set of criteria (scope,
+transparency, citations, privacy).</li>
 </ul>
 </div>
 </div>
@@ -3660,6 +3805,46 @@ coding</td>
 pin a frozen version for reproducibility, at the cost of needing a
 capable GPU. Many researchers use a hybrid approach: a cloud model for
 general scripting, a local model for sensitive data.</p>
+<div id="quick-check-which-pairing-is-a-problem" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="quick-check-which-pairing-is-a-problem" class="callout-inner">
+<h3 class="callout-title">Quick check: which pairing is a problem?</h3>
+<div class="callout-content">
+<p>Which of these tool-and-data pairings should give you pause?</p>
+<ol style="list-style-type: decimal">
+<li>Claude Code, for cleaning a public, already-published dataset.</li>
+<li>Aider + Ollama, for a pipeline that must reproduce identically in
+five years.</li>
+<li>Claude Code (default cloud backend, no institutional agreement), for
+a first pass on sensitive, unpublished human-subjects data.</li>
+<li>NotebookLM, for asking questions grounded in a folder of your own
+PDFs.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<p><strong>3.</strong> Sending sensitive, unpublished human-subjects
+data to a general cloud endpoint with no institutional agreement or
+approved backend behind it is exactly the pairing to avoid, that is what
+“which approved backend” in the workflow card is asking you to check
+before you start, not after. The other three are reasonable defaults:
+public data carries no sensitivity constraint (1), a local pinned model
+fits a reproducibility requirement well (2), and a document-grounding
+tool used on your own files is what it is built for (4).</p>
+</div>
+</div>
+</div>
+</div>
 <div id="mcp-and-the-shadow-it-risk" class="callout caution">
 <div class="callout-square">
 <i class="callout-icon" data-feather="alert-triangle"></i>
@@ -3737,12 +3922,12 @@ prompt.</li>
 </div>
 </div>
 </div>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>A good card is specific to your data. The validation line is the
 tell: if you cannot name a check that would fail when the result is
@@ -3772,6 +3957,52 @@ URLs?</li>
 <strong>Privacy:</strong> if it is free, is your data used for
 training?</li>
 </ul>
+<div id="quick-check-spot-the-hype" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="quick-check-spot-the-hype" class="callout-inner">
+<h3 class="callout-title">Quick check: spot the hype</h3>
+<div class="callout-content">
+<p>For each tool description, name the one criterion above it fails most
+clearly.</p>
+<ol style="list-style-type: decimal">
+<li>“Answers any research question instantly, across any field, no setup
+required.”</li>
+<li>“Summarises your uploaded PDFs and gives you a final answer, no need
+to see the underlying search or reasoning.”</li>
+<li>“Free forever. Just sign up and start uploading your data
+today.”</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
+</button>
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div class="accordion-body">
+<ol style="list-style-type: decimal">
+<li>
+<strong>Scope.</strong> “Any field, any question” is the
+specialised-vs-does-everything red flag, a tool that claims no domain
+limits usually has no domain depth either.</li>
+<li>
+<strong>Transparency.</strong> Hiding the intermediate steps means
+you cannot check its work, only trust its answer.</li>
+<li>
+<strong>Privacy.</strong> A free tool that just wants your data
+uploaded, with no mention of what happens to it, is the exact case the
+privacy criterion is asking you to check before you use it, not
+after.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
 <p>A few sources that stay practical and skeptical: <a href="https://simonwillison.net/" class="external-link">Simon Willison</a> (AI engineering and
 security), <a href="https://www.oneusefulthing.org/" class="external-link">Ethan Mollick</a>
 (AI and cognitive work), <a href="https://hamel.dev/" class="external-link">Hamel Husain</a>
@@ -3793,6 +4024,9 @@ the task and data sensitivity.</li>
 <li>Attribute AI use transparently; it cannot be an author.</li>
 <li>Leave with a concrete plan for your own data, including the one
 check that would catch a silent error.</li>
+<li>Before adopting a new tool, check its scope claims, transparency,
+citations, and data-privacy terms; new tools appear daily, and many are
+more marketing than substance.</li>
 </ul>
 </div>
 </div>
@@ -3829,7 +4063,7 @@ these at build time.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.20.2" class="external-link">sandpaper (0.20.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.1" class="external-link">varnish (1.1.1)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.21.0" class="external-link">sandpaper (0.21.0)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.2" class="external-link">varnish (1.1.2)</a></p>
 		</div>
 		</footer>
 </div> <!-- / div.container -->
@@ -3852,8 +4086,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/aio.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/aio.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-08-25",
-  "datePublished": "2026-08-25"
+  "dateModified": "2026-08-31",
+  "datePublished": "2026-08-31"
 }
 
   </script><script>

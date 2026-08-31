@@ -118,7 +118,7 @@
     <a id="search-button" class="btn btn-primary" href="aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
 </nav><aside class="col-md-12 lesson-progress"><div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 48%" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">48%</div>
+    <div class="progress-bar incubator" role="progressbar" style="width: 44%" aria-valuenow="44" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">44%</div>
   </div>
 </aside><div class="container">
       <div class="row">
@@ -331,16 +331,16 @@
       <div class="d-none d-sm-none d-md-block">
         <a class="chapter-link" href="03-data-cleaning.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: Data Cleaning with
+          Previous: Data Cleaning with AI...
         </a>
         <a class="chapter-link float-end" href="05-limitations.html" rel="next">
-          Next: Limitations and...
+          Next: Limitations and Cautions...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Validation Strategies: The Approval Gate</h1>
-        <p>Last updated on 2026-08-24 |
+        <p>Last updated on 2026-08-31 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/04-validation.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -352,10 +352,7 @@
 
         
 
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style><div class="overview card">
+<div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
 <div class="col-md-4">
@@ -374,12 +371,10 @@ it as an authority?</li>
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Use the approval gate to take responsibility for AI-generated
-code.</li>
-<li>Use rewrite time as a formative signal about your workflow, not a
-productivity score.</li>
-<li>Use a four-layer validation stack with explicit requirement
-constraints.</li>
+<ul><li>Given an AI-generated script, state the evidence supporting it, name
+the missing evidence, and decide to approve, revise, or reject.</li>
+<li>Describe the four-layer validation stack (immutable requirements,
+automated checks, metamorphic tests, domain plausibility).</li>
 <li>Turn validation into checks you can run, by finishing
 <code>validate_data.py</code>.</li>
 <li>Use a multi-model critique, in a fresh session, to widen review
@@ -469,6 +464,9 @@ confused?</p>
 <p>Afterward, discuss as a group: what one change to the prompt, spec,
 or validation step would have helped most? That is what rewrite time is
 really pointing at.</p>
+<p>Working alone? Keep a two-column log instead: what you expected
+before each step, and what you actually had to change afterward. The gap
+between the two columns is what the observer would have noticed.</p>
 </div>
 </div>
 </div>
@@ -476,8 +474,8 @@ really pointing at.</p>
 <hr class="half-width"><p>To minimise rewrite time and ensure research rigor, use a structured
 validation stack.</p>
 <div class="section level3">
-<h3 id="layer-1-requirement-constraints-no-go-zones">Layer 1: Requirement constraints (No-Go Zones)<a class="anchor" aria-label="anchor" href="#layer-1-requirement-constraints-no-go-zones"></a></h3>
-<p>Before the AI writes code, define requirement constraints in your
+<h3 id="layer-1-immutable-requirements-no-go-zones">Layer 1: Immutable Requirements (No-Go Zones)<a class="anchor" aria-label="anchor" href="#layer-1-immutable-requirements-no-go-zones"></a></h3>
+<p>Before the AI writes code, define immutable requirements in your
 <code>CLAUDE.md</code>. These are rules the AI is not allowed to
 break.</p>
 <p><em>Example (from our project):</em> “Do not change the column names
@@ -590,7 +588,7 @@ your date check is too weak (see the solution).</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>If your validator still passes on the misparsed data, the date check
 is too weak. A good check reconstructs the expected date for each sample
@@ -600,6 +598,48 @@ error, or that the year is 2023. See
 <code>instructors/files/backup_validate_data.py</code> for a complete
 reference implementation. A validator that cannot fail on a known-bad
 input is not protecting you.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="quick-check-what-does-a-passing-validator-actually-tell-you" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="quick-check-what-does-a-passing-validator-actually-tell-you" class="callout-inner">
+<h3 class="callout-title">Quick check: what does a passing validator
+actually tell you?</h3>
+<div class="callout-content">
+<p>Your <code>validate_data.py</code> reports all five checks passed:
+row count, date accuracy, ID uniqueness, score range, and no lost rows.
+Which of the following can you now claim?</p>
+<ol style="list-style-type: decimal"><li>The data is correct, no further review is needed.</li>
+<li>The five specific properties you wrote checks for hold on this run;
+anything you didn’t write a check for is still unverified.</li>
+<li>The AI’s cleaning logic is correct in general, since it produced
+data that passes validation.</li>
+<li>The result would validate the same way on a re-run with a different
+model.</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<p><strong>2.</strong> A passing validator tells you exactly what it
+checked, nothing more. Option 1 overclaims: domain plausibility (Layer
+4) and anything outside your five checks are still unverified. Option 3
+mistakes passing output for correct logic, the same misparse bug could
+resurface on a different input the checks don’t happen to cover. Option
+4 assumes determinism the lesson has already ruled out, a different run
+or model could produce different intermediate code that still happens to
+pass, or fail differently. A validator earns trust by what it would
+catch, not by passing once.</p>
 </div>
 </div>
 </div>
@@ -640,12 +680,12 @@ domain judgment before you’d act on them?</p></li>
 </ol></div>
 </div>
 </div>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2"> Why this works, and its limit </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Why this works, and its limit </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>Models have different blind spots, so a second read can surface edge
 cases and review questions the first one glossed over. But it is a
@@ -677,12 +717,12 @@ the approval gate out loud or in writing. Answer all five:</p>
 </ol></div>
 </div>
 </div>
-<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
-  <h4 class="accordion-header" id="headingSolution3"> What a good answer looks like </h4>
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
+  <h4 class="accordion-header" id="headingSolution4"> What a good answer looks like </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
 <div class="accordion-body">
 <p>A strong answer names the output precisely, points to
 <em>specific</em> checks as evidence (row counts, invariant checks, a
@@ -706,7 +746,7 @@ evidence covers the claim; otherwise the honest answer is “revise.”</p>
 research.</li>
 <li>Rewrite time is a local, formative signal about your workflow, not a
 productivity score.</li>
-<li>Requirement constraints prevent the AI from drifting away from
+<li>Immutable requirements prevent the AI from drifting away from
 research specs.</li>
 <li>A multi-model critique, run in a fresh session, is a reviewer, not
 an authority.</li>
@@ -728,10 +768,10 @@ these at build time.
       <div class="d-none d-sm-none d-md-block">
         <a class="chapter-link" href="03-data-cleaning.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: Data Cleaning with
+          Previous: Data Cleaning with AI...
         </a>
         <a class="chapter-link float-end" href="05-limitations.html" rel="next">
-          Next: Limitations and...
+          Next: Limitations and Cautions...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -757,7 +797,7 @@ these at build time.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.20.2" class="external-link">sandpaper (0.20.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.1" class="external-link">varnish (1.1.1)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.21.0" class="external-link">sandpaper (0.21.0)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.2" class="external-link">varnish (1.1.2)</a></p>
 		</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -779,8 +819,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/04-validation.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/04-validation.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-08-24",
-  "datePublished": "2026-08-25"
+  "dateModified": "2026-08-31",
+  "datePublished": "2026-08-31"
 }
 
   </script><script>

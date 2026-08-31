@@ -330,7 +330,7 @@
       <div class="d-none d-sm-none d-md-block">
         <a class="chapter-link" href="index.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: Agentic Research
+          Previous: Agentic Research Workflows: AI Coding,...
         </a>
         <a class="chapter-link float-end" href="01-cli-intro.html" rel="next">
           Next: CLI-Based AI...
@@ -339,7 +339,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Before We Use AI: What Are We Practising?</h1>
-        <p>Last updated on 2026-08-24 |
+        <p>Last updated on 2026-08-31 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/00-before-ai.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -351,10 +351,7 @@
 
         
 
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
-pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style><div class="overview card">
+<div class="overview card">
 <h2 class="card-header">Overview</h2>
 <div class="row g-0">
 <div class="col-md-4">
@@ -374,8 +371,6 @@ the way?</li>
 <h3 class="card-title">Objectives</h3>
 <ul><li>Distinguish between code generation, code understanding, and code
 validation.</li>
-<li>Explain why AI-generated code can increase cognitive load for
-novices.</li>
 <li>Use a structured checkpoint to decide whether an AI-generated result
 is safe to run, revise, or reject.</li>
 </ul></div>
@@ -507,6 +502,46 @@ still wrong for your question.</li>
 </div>
 </div>
 </div>
+<div id="quick-check-what-does-dropna-actually-remove" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="quick-check-what-does-dropna-actually-remove" class="callout-inner">
+<h3 class="callout-title">Quick check: what does <code>dropna()</code>
+actually remove?</h3>
+<div class="callout-content">
+<p>Given a table with columns <code>site</code>, <code>date</code>,
+<code>score</code>, and <code>notes</code>, where only
+<code>notes</code> has some blank cells, what does
+<code>df.dropna()</code> (no arguments) do?</p>
+<ol style="list-style-type: decimal"><li>Drops rows where every column is blank.</li>
+<li>Drops rows where the <code>notes</code> column specifically is
+blank.</li>
+<li>Drops rows where <em>any</em> column is blank, including
+<code>notes</code>.</li>
+<li>Drops the <code>notes</code> column entirely, keeping all rows.</li>
+</ol></div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<p><strong>3.</strong> <code>dropna()</code> with no arguments checks
+every column and drops a row if <em>any</em> of them is blank, even if
+the missing value is in a column you would consider optional, like
+<code>notes</code>. Options 1 and 2 describe common but wrong
+assumptions about how it scopes the check; option 4 confuses dropping
+rows with dropping a column, which is a different method
+(<code>drop(columns=...)</code>) entirely.</p>
+</div>
+</div>
+</div>
+</div>
 <div id="feedback-checkpoint-what-do-you-want-from-ai" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
@@ -518,7 +553,9 @@ AI?</h3>
 <div class="callout-content">
 <p>On a sticky note or in the shared Etherpad, write one line: <em>what
 do you most want an AI tool to do for your research, and what are you
-most worried it will get wrong?</em></p>
+most worried it will get wrong?</em> Working through this alone? Write
+the line in your own notes file instead, you will revisit it at the end
+of the lesson either way.</p>
 <p>We will come back to these at the end of the lesson.</p>
 </div>
 </div>
@@ -555,7 +592,7 @@ these at build time.
       <div class="d-none d-sm-none d-md-block">
         <a class="chapter-link" href="index.html" rel="prev">
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
-          Previous: Agentic Research
+          Previous: Agentic Research Workflows: AI Coding,...
         </a>
         <a class="chapter-link float-end" href="01-cli-intro.html" rel="next">
           Next: CLI-Based AI...
@@ -584,7 +621,7 @@ these at build time.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.20.2" class="external-link">sandpaper (0.20.2)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.1" class="external-link">varnish (1.1.1)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.21.0" class="external-link">sandpaper (0.21.0)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.2" class="external-link">varnish (1.1.2)</a></p>
 		</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -606,8 +643,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/00-before-ai.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/00-before-ai.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-08-24",
-  "datePublished": "2026-08-25"
+  "dateModified": "2026-08-31",
+  "datePublished": "2026-08-31"
 }
 
   </script><script>
