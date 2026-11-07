@@ -6,26 +6,32 @@ title: Setup
 pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
 </style>
 
-To follow this lesson, you will need [Claude Code][claude-code-docs] and Python installed on your machine. Claude Code is Anthropic's terminal-based AI coding agent. The steps below get you set up with a direct local install, which is the approach used throughout the lesson.
+To follow this lesson you need [Claude Code][claude-code-docs] and Python on your machine. Claude Code is Anthropic's terminal-based AI coding agent. The steps below set up a direct local install.
+
+If you cannot use Claude Code, for example because you have no supported account, you can still follow the lesson. Ask your instructor for the saved-output route. It uses the same terminal and Python files, with saved plans, diffs and command transcripts. You make the same approval decisions and run the same checks.
+
+Allow 20 to 30 minutes before the workshop for this setup. Your instructor may run a separate setup clinic.
 
 ## 1. Install Python and two Python packages
 
-- **Python**: Ensure you have Python 3.11+ installed (current Matplotlib requires it). Check with `python --version`.
-- **Python packages**: the lesson scripts use `pandas` (data handling) and `matplotlib` (the trend plot). Install both, ideally in a project-scoped environment rather than globally (a `venv`, `pixi`, or `uv` environment all work):
+- Python: use the workshop's tested environment and the exact versions your instructor gives you. Current Matplotlib needs Python 3.11 or newer. Check with `python --version`.
+- Python packages: the lesson scripts use `pandas` for data and `matplotlib` for the plot. Install both in a project environment and not globally. A `venv`, `pixi` or `uv` environment all work:
 
 ```bash
 python -m pip install pandas matplotlib
 ```
 
+A bare, unpinned install is not an environment record. Your instructor will give you the tested versions to record.
+
 ## 2. Install Claude Code
 
-Use the native installer as your primary path:
+Use the native installer first:
 
 ```bash
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
-(Windows: `irm https://claude.ai/install.ps1 | iex` in PowerShell.) If your institution requires installing via npm instead, that also works, but needs Node.js 22 or newer:
+On Windows, use `irm https://claude.ai/install.ps1 | iex` in PowerShell. The shell examples in the lesson use Unix commands, so ask your instructor which route they have tested on Windows. If your institution requires npm, that works too and needs Node.js 22 or newer:
 
 ```bash
 npm install -g @anthropic-ai/claude-code
@@ -33,62 +39,61 @@ npm install -g @anthropic-ai/claude-code
 
 ## 3. Authenticate
 
-How you authenticate depends on which path you are using (see "Institutional context and access" below). For the workshop, most learners will sign in with a personal Claude account:
+Confirm a supported account before the workshop. Claude Code can sign in with a Claude subscription or an Anthropic API key, and your organisation may offer other routes. These are not the only options. Subscription usage and API billing differ. A plan name does not promise that you can complete the workshop. Your instructor provides a fallback if access or quota fails.
 
 ```bash
 claude
 ```
 
-On first launch, Claude Code walks you through signing in. A Claude Pro or Max subscription, or an Anthropic API key, will work. The credentials are stored locally; you will not need to repeat this step.
+On first launch, Claude Code walks you through signing in. It stores your credentials locally.
 
-## 4. Verify the install
+## 4. Get the project folder
 
-```bash
-claude --version
-```
-
-If you see a version number, you are ready. If the command is not found, restart your terminal and try again.
-
-## 5. Get the project folder
-
-The whole lesson works in one project: a small, messy water quality dataset. Download the `coastal-water-quality` folder that ships with this lesson (from the [lesson repository](https://github.com/jt14den/agentic-research-workflows) under `learners/files/coastal-water-quality`, or from a copy your instructor provides), then move into it:
+The lesson works in one project: a small, messy, synthetic water quality dataset. The data describe no real study. Download the `coastal-water-quality` folder from the [lesson repository](https://github.com/jt14den/agentic-research-workflows) under `learners/files/coastal-water-quality`, or use the copy your instructor provides. Then move into it:
 
 ```bash
 cd coastal-water-quality
 ls data/
 ```
 
-You should see `site_A.csv`, `site_B.csv`, and `site_C.csv`. Throughout the lesson, start Claude Code from inside this folder.
+You should see `site_A.csv`, `site_B.csv` and `site_C.csv`. Start Claude Code from inside this folder throughout the lesson.
 
-## 6. Setup check
+## 5. Setup check
 
-Run these from inside the `coastal-water-quality` folder. Each should produce the output shown:
+A version number confirms that the program is installed. It does not confirm that you can use it. Run these from inside the `coastal-water-quality` folder:
 
 ```bash
+pwd                       # the folder you are working in
 claude --version          # prints a version number
 python --version          # prints Python 3.11 or newer
 python -c "import pandas, matplotlib; print('packages ok')"   # prints: packages ok
 ls data/                  # site_A.csv  site_B.csv  site_C.csv
 ```
 
-If all four work, you are ready. If any fails, see the troubleshooting notes below.
+Then confirm account access with one read-only agent action:
+
+```bash
+claude -p "List the files in data/. Do not change anything."
+```
+
+If the files come back, you are ready. If any step fails, see the troubleshooting notes below, or tell your instructor so you can use the saved-output route.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::: callout
 
 ### Troubleshooting
 
-- **`claude: command not found`**: the install did not finish or your `PATH` is not updated. Re-run the install command and restart your terminal, or run `claude doctor` for a diagnostic.
-- **`ModuleNotFoundError: No module named 'pandas'`**: the packages went to a different Python than the one you are running. Use the same interpreter: `python -m pip install pandas matplotlib`.
-- **Claude Code asks to sign in again**: that is normal on a new machine; complete the sign-in once.
-- **The agent produces different code or output than the lesson shows**: that is expected, AI output varies. The lesson teaches you to check it, not to match it. If you fall behind, your instructor can share a known-good script from `instructors/files/`.
+- `claude: command not found`: the install did not finish, or your `PATH` is not updated. Re-run the install command and restart your terminal, or run `claude doctor` for a diagnostic.
+- `ModuleNotFoundError: No module named 'pandas'`: the packages went to a different Python than the one you run. Use the same interpreter: `python -m pip install pandas matplotlib`.
+- Claude Code asks you to sign in again: that is normal on a new machine. Sign in once.
+- The agent writes different code than the lesson shows: that is expected. AI output varies. The lesson teaches you to check it and not to match it. If you fall behind, your instructor can share a known-good script from `instructors/files/`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::: callout
 
-### Keep everyone on the same model
+### Use the same model, and record it
 
-Inside a Claude Code session you can set the model with the `/model` command. Pinning the whole class to one model keeps outputs comparable and makes provenance records meaningful. Your instructor will tell you which model to select (check `/status` to confirm the exact model and version once you've set it).
+Inside a Claude Code session, the `/model` command sets the model. Select the same available model as the rest of the class so outputs are comparable. Then record the resolved model name, the Claude Code version and the relevant settings, which `/status` shows. An alias or an identical selection does not guarantee identical output.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -96,50 +101,57 @@ Inside a Claude Code session you can set the model with the `/model` command. Pi
 
 ### Security and working directory
 
-Claude Code runs in your terminal and has direct access to the files in your current folder. A few habits to keep in mind:
+Claude Code runs in your terminal and works with the files in your current folder. Starting in a project folder sets its working context. It does not by itself create a security boundary. Check what the agent can read, write and reach on the network, and which integrations are on. Some habits:
 
-1. Always start it from a dedicated project folder, not your home directory.
-2. Keep files under version control (Git) so you can revert unwanted changes.
-3. Never start it in folders with sensitive system files, credentials, or private data.
+1. Start from a dedicated project folder, not your home folder.
+2. Keep files under version control (Git) so you can revert a change.
+3. Do not start it in a folder with credentials, private data or sensitive system files.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::::::::: callout
 
-### Running in a sandbox (optional, and currently untested)
+### Running in a sandbox (optional, and untested)
 
-Some researchers prefer to isolate the agent from their personal files entirely. The repository's `Dockerfile` and `.devcontainer/` are a starting point for that, but as of this writing they have not been rebuilt and smoke-tested against the current Claude Code toolchain — don't rely on them working out of the box for a workshop. Options worth knowing about generally:
+Some researchers isolate the agent from their personal files. The repository's `Dockerfile` and `.devcontainer/` are a starting point, but they have not been rebuilt and smoke-tested with the current Claude Code. Do not rely on them for a workshop. The devcontainer uses its own image and does not use the Dockerfile.
 
-- **Docker**: see the [Docker documentation](https://docs.docker.com/), or [Docker AI Sandboxes](https://docs.docker.com/ai/sandboxes/) for a purpose-built option, and expect to update this repo's `Dockerfile` yourself before using it.
-- **Claude Code's own sandboxing**: see the [sandboxing documentation](https://code.claude.com/docs/en/sandboxing) for filesystem/network isolation options built into the tool itself, which need less setup than a full container.
-- **Agent Safehouse**: [agent-safehouse.dev](https://agent-safehouse.dev/) is a dedicated environment for running AI agents with built-in isolation controls.
+Claude Code's Bash sandbox does not cover every file tool, MCP server or hook, and native Windows and WSL2 differ. Test the exact route you plan to offer. Options to know about:
 
-None of these are needed for this workshop. If you want a tested container path, budget time to rebuild and verify the `Dockerfile` first.
+- Docker: see the [Docker documentation](https://docs.docker.com/), or [Docker AI Sandboxes](https://docs.docker.com/ai/sandboxes/).
+- Claude Code's own sandboxing: see the [sandboxing documentation](https://code.claude.com/docs/en/sandboxing). It supports macOS, Linux and WSL2, and it needs less setup than a container. On native Windows, commands run unsandboxed.
+- A dedicated agent-isolation tool such as [Agent Safehouse](https://agent-safehouse.dev/).
+
+UCLA published no guidance on agent sandboxes when we checked in October 2026. If your research needs one, ask `grc@ucla.edu`, and do not assume that a sandbox you build yourself is approved for sensitive data.
+
+You do not need any of these for this workshop.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Institutional context and access
 
-This is the most important section to read before using these tools with real research data. Your institution decides which AI tools are approved for which kinds of data.
+Read this section before you use these tools with real research data. Your institution decides which AI tools are approved for which kinds of data.
 
-**At UCLA**, the centrally provided free AI tools (Gemini Basic, Microsoft Copilot, ChatGPT web) are **web-only** and approved for data classified **P1-P3** (P4 requires CISO/Unit Head approval). They are not terminal agents and cannot run this lesson. See [UCLA's available AI tools list][ucla-ai-tools] for the current details and data-tier rules.
+In this workshop, use only the supplied synthetic data. Do not read permission for institutional research data into a personal subscription or into the name of a campus-approved product.
 
-For the terminal workflow this lesson teaches, there are two paths:
+At UCLA, consult [the current campus tool comparison][ucla-ai-tools] for eligibility, price and data classifications. Approved access is tied to a UCLA account and a specific service. The campus tools listed there are not terminal agents, so they cannot run this lesson. When we checked in October 2026, UCLA listed its Anthropic products as "coming soon" and published no guidance on terminal coding agents or on sandboxes for agents. Check the page again before you rely on this.
 
-- **Personal plan or API key (P1-P3, non-sensitive data).** A personal Claude Pro/Max subscription or Anthropic API key. This is the simplest setup and what most workshop exercises assume. Do not use it with sensitive or restricted research data.
-- **UCLA Amazon Bedrock (sensitive data).** Claude Code can run against Anthropic models hosted in **Amazon Bedrock**, which UCLA provides as an enterprise, privacy-bounded service. The same lesson commands work; only the backend changes. Use this path for P3/P4 research data, and confirm your unit's Bedrock access and data-tier approval first. See your instructor or UCLA DTS for setup.
+UCLA's footnote on that page says P1 to P3 data are allowed in a UCLA account, and P4 data need approval from the Unit Head and the Chief Information Security Officer (CISO). The protection levels come from the [UC Protection Level Classification Guide][uc-protection-levels]. For example, it lists student education records (FERPA) at P3 and protected health information at P4.
 
-**Always follow your institution's data privacy policies.** PHI and attorney-client privileged information are not approved for these tools; UCLA Health users should use the HIPAA-compliant alternative (nebulaOne).
+UCLA's [AI use and recommendation guide][ucla-ai-guide] says some data must not go into AI tools "unless explicitly approved in a secure environment": FERPA-protected student information, HIPAA-protected health data, employee personnel data, unpublished research, intellectual property and grant proposals, and export-controlled data. Send questions about these to `grc@ucla.edu`, the intake address that guide names.
+
+To use a backend with sensitive data, first get confirmation from the responsible campus or unit authority for the specific account, configuration and data category. UCLA's guide lists Amazon Bedrock models, including Claude, among its tools but gives no data tier for them. A tool that can run on a given cloud service, such as Amazon Bedrock, is not thereby approved for sensitive data.
+
+The campus comparison excludes protected health information from the listed campus AI tools and points eligible UCLA Health users to nebulaOne. Check current policy for other restricted categories.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::: callout
 
-### What does a personal Pro/Max subscription actually give you?
+### Consumer accounts, retention and local transcripts
 
-The two paths above differ in a way that is easy to miss: they are governed by different terms with different defaults, not just different backends.
+Retention and data use depend on the account type, the provider and your settings. Check the current policy and do not assume.
 
-- **Personal Pro/Max/Free (Consumer Terms):** you get an explicit, changeable choice whether your conversations, including Claude Code sessions, are used to train future models — set it at [claude.ai/settings/data-privacy-controls](https://claude.ai/settings/data-privacy-controls). That choice changes how long Anthropic retains your data: **5 years if training is on, 30 days if it is off.** Even with training off, Claude Code also keeps a local plaintext copy of session transcripts on your own machine for 30 days by default. The `/feedback`, `/bug`, and `/share` commands are a separate path: they send your actual conversation history, including code, to Anthropic regardless of your training setting, unless you disable it.
-- **UCLA Amazon Bedrock and other commercial/API paths (Commercial Terms):** training on your data is contractually prohibited by default, not a toggle you set. Standard retention is 30 days; Zero Data Retention is available to qualifying Enterprise accounts.
-
-If you are using a personal subscription for this workshop, check your own setting rather than assuming: see [Claude Code's current data usage policy](https://code.claude.com/docs/en/data-usage) for the full, current breakdown by account type.
+- On consumer accounts, a training preference affects how long Anthropic keeps data. Consult [Claude Code's current data usage policy](https://code.claude.com/docs/en/data-usage) for the present figures, because they change.
+- Claude Code also keeps local transcripts of your sessions on your machine.
+- Commands that share feedback or transcripts are a separate control from your training preference.
+- First-party API terms, third-party hosting terms such as those of a cloud provider, and your organisation's settings all differ. Check the arrangement that applies to your backend. Do not apply one retention period to all backends. Cloud providers also describe the customer's own configuration duties, for example in [AWS data protection](https://docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html).
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::

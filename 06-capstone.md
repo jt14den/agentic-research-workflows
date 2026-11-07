@@ -6,71 +6,96 @@ exercises: 90
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- Can I take one task from prompt to trustworthy, documented result?
-- What does "review-ready" actually include, beyond a script that runs?
+- Can I take one task from prompt to a documented result that someone else can rerun?
+- What does "review-ready" include, beyond a script that runs?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Run the full workflow on one project, from messy files to a validated, documented result.
-- Produce a review-ready bundle: spec, plan, code, validation, a result, and provenance.
-- Make and defend an approve / revise / reject decision on your own output.
+- Run the full workflow on one project, from messy files to a checked, documented result.
+- Assemble a bundle that another person can rerun without AI.
+- Make and defend an approve, revise or reject decision on your own output.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-So far you have practised each move on its own: a spec, a plan, a cleaning script, a validator. The capstone puts them together on the project you have been carrying all along, the coastal water quality data, and ends with an actual finding: **what pattern is visible in the water quality score at each site over the monitoring period?** (A descriptive line plot can show a visible pattern; it does not by itself establish a statistically significant trend or a difference between sites — that would need a stated method and uncertainty, which is out of scope here.)
+You have practised each move on its own: requirements, a plan, a cleaning script, a validator. The capstone puts them together on the coastal water quality data. It ends with a descriptive statement: what pattern is visible in the water quality score at each site over the monitoring period?
 
-Work through the steps below. The goal is not just a plot. It is a bundle you could hand to a collaborator, or your future self, and have them trust.
+A line plot can show a visible pattern. It does not establish a significant trend or a difference between sites. That needs a stated method and a measure of uncertainty, which this lesson does not cover. The data are synthetic, so the statement describes the exercise and not real coastal conditions.
+
+The goal is not only a plot. It is a bundle that a collaborator, or you in six months, can rerun and trust.
 
 ## The workflow, end to end
 
-Run these as checkpoints, the same pattern as the cleaning episode. Do not rush to the plot.
+Reuse the cleaning script and the validator you already built. Do not repeat their planning and generation.
 
-1. **Confirm the task.** In one sentence, write what "done" means here. (Example: a merged 60-row dataset and a per-site trend plot, both validated and documented.)
-2. **Check the spec.** Open your `CLAUDE.md`. Does it state the schema, the no-go zones (no dropped rows, parse site C dates explicitly), and how missing values are handled? Fix it before generating anything.
-3. **Ask for a plan only.** Have the agent outline the steps from raw files to merged dataset to trend plot. Do not let it write code yet. Review the plan against your spec.
-4. **Generate the cleaning + analysis code.** If you already have `clean_and_merge.py`, reuse it. Then ask for a short analysis script that loads `data/master_dataset.csv` and plots `score` over `date` with one line per site, saved to `fig/score_trend.png`.
-5. **Explain one block.** Pick one function or section and explain, out loud or in a comment, what it does and why. If you cannot, that block is not validated yet.
-6. **Validate.** Run `python validate_data.py` (with your finished checks). Confirm 60 rows, each date matches its source record exactly (not just "falls in 2023," a misparsed date can still land in range), scores in range, no lost IDs.
-7. **Run the analysis.** Produce the plot. Look at it.
-8. **Judge the result (domain plausibility).** Does the trend make sense? Do all three site lines span January to May with a continuous weekly pattern, or does site C look scattered or out of order, the sign the date trap bit you? A plot can render cleanly and still be wrong.
-9. **Document provenance.** Add a header or a short `PROVENANCE.md`: model used, date, the prompt summary, and which checks passed.
-10. **Decide.** Approve, revise, or reject, and write one line saying why.
+1. **Confirm the task.** Write one sentence for what "done" means. For example: a merged 60-row dataset and a per-site plot, both checked and documented.
+2. **Check your requirements.** Open `CLAUDE.md`. Does it state the schema, the rules about dropped rows and site C dates, and the missing-value rule? Fix it before you generate anything.
+3. **Reuse the pipeline.** Run your `clean_and_merge.py` and `validate_data.py`. Every check must pass. An unfinished check is not a pass.
+4. **Plan the plot.** Ask the agent to outline a short script that reads `data/master_dataset.csv` and plots `score` over `date`, one line per site. Do not let it write code yet. Review the plan against your requirements.
+5. **Generate and read the plot script.** Ask for `plot_trend.py`, which saves `fig/score_trend.png`. Read the code. Explain one block aloud or in a comment. If you cannot, that block is not checked yet.
+6. **Run it and look at the plot.** Do all three lines run from January to May as a continuous weekly series? Does site C look scattered or out of order? That would suggest the date trap bit you. A plot can render cleanly and still be wrong.
+7. **Record the environment.** Save the Python and package versions you used, for example with `python --version` and `pip freeze` into `environment.txt`.
+8. **Write the run instructions.** Create `RUN.md` with the working directory and the exact commands, in order. A partner will follow it with no help from you.
+9. **Write the provenance note.** Record the tool version, the model name if you know it, the date, the relevant prompts, the changes you reviewed and the checks that passed.
+10. **Decide.** Approve, revise or reject. Write one line of evidence and one remaining uncertainty.
 
 ::::::::::::::::::::::::::::::::::::::::: callout
 
-## What can go wrong here (and that is the point)
+## The likely failure is silent
 
-The most likely failure is silent: if the cleaning script parses site C's dates with `format="mixed"` instead of the explicit `%d-%m-%Y`, some rows silently swap day and month (`05-01-2023` becomes May 1) while others accidentally parse correctly. The script runs, the row count is 60, and the trend plot still misleads — but the wrong points scatter rather than bunching neatly at one edge, so eyeballing the plot alone won't reliably catch it. This is exactly the kind of error that "it ran" would have hidden, and exactly what your validator (checking exact per-sample dates, not just "falls in 2023") and your eyes on the plot are for.
+If the cleaning script parses site C dates with `format="mixed"` and not the explicit `%d-%m-%Y`, some rows swap day and month. `05-01-2023` becomes 1 May. Other rows parse correctly by accident. The script runs, the row count is 60, and the plot misleads. The wrong points scatter, so looking at the plot alone will not reliably catch the error.
+
+"It ran" would hide this. Your validator, which compares each sample's date with its raw source, would not.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::::::: challenge
+:::::::::::::::::::::::::::::::::::::::: challenge
 
-## Capstone challenge: the review-ready bundle
+## Can another researcher rerun and assess your result?
 
-Produce and submit (or share with a partner) a bundle for the coastal project:
+Share one folder with a partner. Include:
 
-- `CLAUDE.md` (your spec, with constraints)
-- `PLAN.md` (the approved plan, or a one-paragraph summary)
-- `clean_and_merge.py` (generates `data/master_dataset.csv`)
-- `validate_data.py` (all five checks implemented and passing)
-- `fig/score_trend.png` (the per-site trend)
-- a provenance note (model, date, prompt summary, checks passed)
-- a short **approval decision**: approve, revise, or reject, and why
+- The three unchanged synthetic source CSVs and their description.
+- `CLAUDE.md`, plus the approved plan or a short plan summary.
+- `clean_and_merge.py`, `validate_data.py` and `plot_trend.py`.
+- `environment.txt` with the Python and package versions you used.
+- `RUN.md` with the working directory and the exact commands, in order.
+- `data/master_dataset.csv` and `fig/score_trend.png`.
+- A provenance note: tool version, model name if known, date, relevant prompts, reviewed changes and test results.
+- Your approval decision, its evidence and one remaining uncertainty.
 
-Then write three sentences of reflection:
+Your partner regenerates the dataset and the plot in a fresh copy of the folder, without AI. They confirm that:
 
-- **What did I understand?** Name one part of the pipeline you could rebuild without AI.
-- **What did I verify?** Name the evidence, not the feeling.
-- **What remains uncertain?** Name one thing you would check before using this for real.
+1. All 60 source IDs occur once, and each ID has the right site.
+2. Every date matches its source record under the documented source format.
+3. Every score is a number, none is blank, and all are between 0 and 100.
+4. Observed scores are unchanged. The three missing scores use their site's median of observed scores: A004 = 72.0, B-006 = 71.5, SC002 = 71.6.
+5. Missing pH and temperature values stay missing, and all other values are preserved.
+6. The raw inputs are unchanged. The plot is regenerated from the checked output, with one labelled line per site and dates in order.
+7. The validator rejects a copy with wrong dates and a copy where every site is `A`.
+
+Make the bad copies in a separate temporary folder. Restore the correct output before you make the plot.
+
+Then write one descriptive statement about the synthetic series. Do not infer a significant trend, a causal effect or real coastal conditions. In one sentence, say why the workshop's median rule is not automatically right for a real study.
+
+Finally, write three sentences:
+
+- What did I understand? Name one part of the pipeline you could rebuild without AI.
+- What did I verify? Name the evidence, not the feeling.
+- What remains uncertain? Name one thing you would check before real use.
 
 :::::::::::::::::::::::::::::::::::::::: solution
 
-## What a strong bundle shows
+## Review rubric
 
-The script running is the least interesting part. A strong bundle shows *judgement*: the spec names the date trap before the code is written; the validator would fail on a misparsed file; the provenance note lets someone reproduce the run; and the approval decision is honest about what is and is not yet checked. "Revise" is a perfectly good answer when the evidence does not yet cover the claim.
+A complete bundle reruns without hidden files, agent access or manual edits to the data. The reviewer records each command, its result and any missing dependency.
+
+A correct decision names the checks and limits its claim to those checks.
+
+**Transfer case.** A candidate has 60 rows, correct dates, unique IDs and scores in range, but every `site` value is `A`. A validator without a site check can pass this file. Reject the per-site plot until the ID-to-site check fails on the candidate and passes after repair. Row count and date accuracy do not show site identity.
+
+A "revise" decision that names a precise missing check is stronger than an unsupported approval. If a bundle cannot rerun, name the missing file or instruction. A prompt summary does not replace executable analysis code.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -80,7 +105,11 @@ The script running is the least interesting part. A strong bundle shows *judgeme
 
 ## Instructor note
 
-Budget most of the time for doing, not explaining. Expect the site C date bug to surface for several learners; treat it as the highlight, not a snag, it is the lesson's whole thesis in one concrete failure. If a group is far behind, have them use `instructors/files/backup_clean_and_merge.py` so they still reach the validate-and-judge steps, which are the point. Collect a few approval decisions and read them aloud; the honest "revise" answers are the best teaching.
+Spend most of the time on doing. Expect the site C date bug to surface for several learners. Treat it as the highlight, because it shows the lesson's central point in one failure.
+
+If a group falls behind, supply the reference cleaner and plot script from `instructors/files/`, and the completed validator. Label which parts you supplied. The learner must still explain one change, predict a failure and defend a decision on the transfer case.
+
+Record whether the partner actually reran the bundle or only inspected saved output. Collect a few approval decisions and read them aloud. The honest "revise" answers teach the most.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -88,15 +117,16 @@ Budget most of the time for doing, not explaining. Expect the site C date bug to
 
 ## Feedback checkpoint: revisit your opening note
 
-Look back at the sticky note (or notes-file line, if you worked through Episode 1 alone) from Episode 1, what you wanted from AI and what you feared it would get wrong. Did the workshop change either answer? Post one line in the Etherpad, or add it to your notes file.
+Look back at the note from Episode 1: what you wanted from AI and what you feared it would get wrong. Did the workshop change either answer? Post one line in the Etherpad, or add it to your notes file.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- Review-ready means spec, plan, code, validation, a result, provenance, and a decision, not just a script that runs — a descriptive plot is not itself a statistical finding.
-- The same checkpoint pattern scales from one script to a whole small project.
-- A plot can render cleanly and still be wrong; domain plausibility is your job.
-- "Revise" is a valid, honest outcome when the evidence does not yet cover the claim.
+- A review-ready bundle holds requirements, code, checks, a result, the environment, exact commands, provenance and a decision. A script that runs is not enough.
+- Another person rerunning your work without AI is the strongest test of the bundle.
+- A descriptive plot is not a statistical finding.
+- A plot can render cleanly and still be wrong. Domain plausibility is your job.
+- "Revise" is an honest outcome when the evidence does not yet cover the claim.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
