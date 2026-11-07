@@ -21,8 +21,11 @@ competent practitioner** in Python and the command line; **novice** with AI agen
 Personas are in `profiles/learner-profile.md` (Amara, ecology postdoc; Diego, cautious
 PhD first-timer; Priya, skeptical data analyst).
 
-Prerequisites: basic command line; basic Python (variables, functions, scripts). No
-prior AI-agent experience required.
+Prerequisites: basic command line; Python with pandas. Learners have cleaned a CSV and can
+read a short script that selects columns, filters rows, handles missing values and parses
+dates. No prior AI-agent experience required. The strongest fit is Amara or Priya; Diego
+can succeed with a refresher and partly completed checks. A ten-minute no-AI entry check
+(see `instructors/instructor-notes.md`) routes learners to a refresher or a supported pair.
 
 **Audiences we explicitly do not target (and why):**
 
@@ -46,8 +49,17 @@ At the end of this lesson, learners will be able to:
 4. Document an AI-assisted workflow (prompt, spec, validation, provenance) so another
    researcher could reproduce and judge the result.
 
-Scope check: ~5 hours of material (roughly a long half-day to one day); 4 lesson-level
-objectives is within the Carpentries guideline of 3-4 per 6 hours.
+Scope check: the episode front matter adds up to 567 minutes (9 hours 27 minutes) before
+breaks and installation. That is the extended course. A four-hour pilot route (timed
+agenda in `instructors/instructor-notes.md`) covers the same four objectives with less
+breadth. Planning estimates, not observed delivery times: measure them in the pilot.
+
+Four observable exit outcomes: (1) inspect a plan and identify one unsupported
+assumption; (2) run a check that passes on a correct input and fails on a seeded error;
+(3) explain a transformation and its data consequence; (4) hand another researcher a
+rerunnable bundle with a decision supported by evidence. The unaided transfer task uses a
+different failure (site relabelling or wrong imputation) so recall of the date trap cannot
+stand in for learning.
 
 ## Episode breakdown
 
@@ -91,8 +103,13 @@ is a research *result* to judge, not just a clean file.
   and formative assessment are tractable; AI-generated data is an optional aside.
 - **Executable validation.** `validate_data.py` ships incomplete; learners finish it, so
   "valid" means "checks passed," not "looked fine."
-- **Tool: Claude Code, dual-backend.** Personal plan for non-sensitive (P1-P3) data;
-  UCLA Amazon Bedrock for sensitive (P3/P4). Principles transfer to other CLI agents.
+- **Tool: Claude Code.** The workshop uses only the supplied synthetic data. No account
+  type implies permission for institutional research data; confirm with the responsible
+  campus authority first. Principles transfer to other CLI agents.
+- **Three methods, practices on demand.** Understand, delegate one small change, test and
+  hand off. Each practice appears when the task creates a need for it.
+- **Independent expected values.** Checks take expected values from the raw files and the
+  documentation, never from the cleaner under test. Unfinished checks fail closed.
 - **Style:** British English, Title Case episode titles (Carpentries style guide).
   **Contractions are kept** for an approachable tone; this departs from the lesson-dev
   accessibility checklist's "avoid contractions," a deliberate readability choice.
