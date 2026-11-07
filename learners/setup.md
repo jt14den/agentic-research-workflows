@@ -121,6 +121,8 @@ Claude Code's Bash sandbox does not cover every file tool, MCP server or hook, a
 - Claude Code's own sandboxing: see the [sandboxing documentation](https://code.claude.com/docs/en/sandboxing). It supports macOS, Linux and WSL2, and it needs less setup than a container. On native Windows, commands run unsandboxed.
 - A dedicated agent-isolation tool such as [Agent Safehouse](https://agent-safehouse.dev/).
 
+UCLA published no guidance on agent sandboxes when we checked in October 2026. If your research needs one, ask `grc@ucla.edu`, and do not assume that a sandbox you build yourself is approved for sensitive data.
+
 You do not need any of these for this workshop.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -131,9 +133,13 @@ Read this section before you use these tools with real research data. Your insti
 
 In this workshop, use only the supplied synthetic data. Do not read permission for institutional research data into a personal subscription or into the name of a campus-approved product.
 
-At UCLA, consult [the current campus tool comparison][ucla-ai-tools] for eligibility, price and data classifications. Approved access is tied to a UCLA account and a specific service. The campus tools listed there are not terminal agents, so they cannot run this lesson.
+At UCLA, consult [the current campus tool comparison][ucla-ai-tools] for eligibility, price and data classifications. Approved access is tied to a UCLA account and a specific service. The campus tools listed there are not terminal agents, so they cannot run this lesson. When we checked in October 2026, UCLA listed its Anthropic products as "coming soon" and published no guidance on terminal coding agents or on sandboxes for agents. Check the page again before you rely on this.
 
-To use a backend with sensitive data, first get confirmation from the responsible campus or unit authority for the specific account, configuration and data category. A tool that can run on a given cloud service, such as Amazon Bedrock, is not thereby approved for sensitive data.
+UCLA's footnote on that page says P1 to P3 data are allowed in a UCLA account, and P4 data need approval from the Unit Head and the Chief Information Security Officer (CISO). The protection levels come from the [UC Protection Level Classification Guide][uc-protection-levels]. For example, it lists student education records (FERPA) at P3 and protected health information at P4.
+
+UCLA's [AI use and recommendation guide][ucla-ai-guide] says some data must not go into AI tools "unless explicitly approved in a secure environment": FERPA-protected student information, HIPAA-protected health data, employee personnel data, unpublished research, intellectual property and grant proposals, and export-controlled data. Send questions about these to `grc@ucla.edu`, the intake address that guide names.
+
+To use a backend with sensitive data, first get confirmation from the responsible campus or unit authority for the specific account, configuration and data category. UCLA's guide lists Amazon Bedrock models, including Claude, among its tools but gives no data tier for them. A tool that can run on a given cloud service, such as Amazon Bedrock, is not thereby approved for sensitive data.
 
 The campus comparison excludes protected health information from the listed campus AI tools and points eligible UCLA Health users to nebulaOne. Check current policy for other restricted categories.
 

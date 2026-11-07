@@ -84,7 +84,7 @@ Before a learner approves a command that changes files, ask them to say aloud wh
 
 Use only the supplied synthetic data in this workshop. Do not read permission for institutional research data into a personal subscription or into the name of a campus-approved product.
 
-Your institution decides which AI tools may touch which kinds of data. At UCLA, consult [the current campus tool comparison][ucla-ai-tools] for eligibility, price and data classifications. Approved access is tied to a UCLA account and a specific service.
+Your institution decides which AI tools may touch which kinds of data. At UCLA, consult [the current campus tool comparison][ucla-ai-tools] for eligibility, price and data classifications. Approved access is tied to a UCLA account and a specific service. UCLA's footnote says P1 to P3 data are allowed in a UCLA account, and P4 data need approval from the Unit Head and the CISO. UCLA's [AI use guide][ucla-ai-guide] also names data that must not go into AI tools unless approved in a secure environment, such as FERPA records, health data, personnel data and unpublished research. Send questions to `grc@ucla.edu`.
 
 Use a backend with sensitive data only after the responsible campus or unit authority confirms the specific account, configuration and data category. A tool that can run on a given cloud service is not thereby approved for sensitive data. Consult your campus data policy before you use any AI tool with restricted data, including protected health information.
 

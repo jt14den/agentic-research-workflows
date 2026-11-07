@@ -202,6 +202,14 @@ Before each offering:
 
 Use the output two ways: confirm the claims in Episodes 5 and 7, and find one current hype example to take apart live in "Spotting hype."
 
+### UCLA sources (checked 2026-11-07)
+
+- Tool matrix: [campus AI tools comparison][ucla-ai-tools] (October 2026). Footnote 1: P1 to P3 in a UCLA account; P4 with Unit Head and CISO approval. Anthropic products: "coming soon," TBD.
+- [AI use and recommendation guide][ucla-ai-guide]: says Anthropic "has been reviewed and approved at P2 levels" with no access route, lists AWS Bedrock models (including Claude) with no tier, and gives `grc@ucla.edu` as the intake for questions about restricted data. The matrix and the guide disagree about Anthropic. Do not tell learners either is the final word.
+- Open question for GRC: the UC guide puts FERPA records at P3, and the matrix allows P1 to P3, but the UCLA guide says FERPA data need a secure environment. Ask before you tell learners whether FERPA data may go into a listed tool.
+- [UC Protection Level Classification Guide][uc-protection-levels] (revised July 2022): attorney-client privileged information P3; FERPA student records P3; PHI P4; human-subjects data with identifiers P4; export-controlled research P3 or P4 by case; de-identified patient information and unpublished research P2. UCLA's pages do not address attorney-client material. Do not claim approval for it.
+- Not found: a UCOP legal alert on AI tools, and the identifiers "BUS-43" and "RMP-7" that one reviewer cited. Do not quote them.
+
 ### Tooling status
 
 - The lesson uses Claude Code as its tested route. Other CLI products and access options change.
