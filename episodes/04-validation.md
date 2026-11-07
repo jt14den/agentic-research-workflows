@@ -1,55 +1,62 @@
 ---
 title: "Validation Strategies: The Approval Gate"
 teaching: 35
-exercises: 65
+exercises: 60
 ---
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::: questions
 
 - What evidence makes AI-generated code safe to approve?
 - What can rewrite time tell me about my workflow, and what can it not?
-- How can I use one AI to catch the errors of another without treating it as an authority?
+- How do I know my own check would catch a wrong result?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::::::::: objectives
 
 - Given an AI-generated script, state the evidence supporting it, name the missing evidence, and decide to approve, revise, or reject.
-- Describe the four-layer validation stack (immutable requirements, automated checks, metamorphic tests, domain plausibility).
-- Turn validation into checks you can run, by finishing `validate_data.py`.
-- Use a multi-model critique, in a fresh session, to widen review without treating it as an authority.
+- Describe the four-layer validation stack (recorded requirements, automated checks, metamorphic tests, domain plausibility).
+- Write one independent check in `validate_data.py` from the source documentation.
+- Show that a check fails on bad data and passes on good data.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## The approval gate: verification over generation
+## The approval gate
 
-In an agentic research workflow, you read, question, and approve code as much as you write it. The standard has shifted from vibe coding to a disciplined, validated workflow.
+When an agent writes your code, you spend more of your time reading, questioning and approving. The approval gate is the point where you decide a result is good enough to use.
 
-The approval gate is the point where you decide AI-generated code is robust enough for research production. It separates a working prototype from validated science.
+This gate supports one decision: whether to accept a bounded piece of code. Passing it does not validate your study design or your scientific claim.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::: callout
 
-## The review-first standard
-The bottleneck in research is no longer writing code; it is verifying it. A high-performance workflow follows this cycle:
-Plan → Agent Implementation → Automated AI-Powered Testing → Human Review.
+## A review cycle
+
+1. Write the requirements.
+2. Let the agent implement one bounded change.
+3. Run checks you trust.
+4. Read the changes and decide.
+
+The agent's confidence is not evidence. Your checks are.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Rewrite time: a signal, not a score
 
-Rewrite time is the manual effort, in minutes, you spend making AI-generated output ready to trust. It is useful, but be careful what you claim from it.
+Rewrite time is the effort, in minutes, you spend making AI output ready to trust. It is useful if you keep its limits in mind.
 
-Rewrite time does **not** prove AI makes researchers faster in general. Measuring programmer productivity is genuinely hard, and a single timing on a single task tells you almost nothing about productivity overall. This caution isn't hypothetical: a 2026 survey of 868 scientists who program found that *feeling* more productive with a genAI tool was associated with less programming experience and less use of practices like testing and code review, not with better outcomes. The single strongest predictor of feeling productive was simply how many lines of generated code someone accepted at once ([O'Brien et al., 2026][obrien-2026]) — the authors' own conclusion is that scientists may be "gauging productivity by code generation rather than validation." That gap between feeling productive and being correct is exactly what this validation stack exists to close. Treat rewrite time as a **formative signal** about *this* workflow, on *this* task:
+One timing on one task says little about productivity in general. People also misjudge their own productivity. A 2025 survey of 868 scientists who program, revised in 2026, found that *feeling* productive with a generative AI tool was linked to less programming experience and less use of testing and code review. The strongest predictor was how many lines of generated code a person accepted at once ([O'Brien et al.][obrien-2026]). The survey measures perceived productivity. It does not show better correctness or a causal speed-up.
 
-- It is local and contextual.
-- High rewrite time usually means the task was underspecified, the model overreached, or you did not yet have the mental model to evaluate the output.
-- It helps you decide what to improve next: the prompt, the spec, or the validation step.
+Treat rewrite time as a signal about this workflow on this task:
+
+- It is local.
+- High rewrite time usually means the task was underspecified, the model overreached, or you did not yet have the mental model to judge the output.
+- It tells you what to improve next: the prompt, the requirements, or the checks.
 
 ::::::::::::::::::::::::::::::::::::::::: caution
 
-## Don't turn rewrite time into a productivity claim
+## Do not turn rewrite time into a productivity claim
 
-A low rewrite time on one script is not evidence that AI saved you time overall. It does not count the time spent prompting, reviewing, debugging, or validating, and it says nothing about whether the result is scientifically correct. Use it to tune your workflow, not to justify it.
+A low rewrite time on one script does not show that AI saved you time. It leaves out the time you spent prompting, reviewing, debugging and validating. It also says nothing about whether the result is correct.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -57,133 +64,132 @@ A low rewrite time on one script is not evidence that AI saved you time overall.
 
 ## Think aloud while you work
 
-Work in pairs. One person uses the AI for five minutes on a small, constrained task (for example, adding a single validation check to the cleaning script). Say out loud what you are doing as you do it: what you expect, what you trust, where you hesitate.
+Work in pairs. One person uses the AI for five minutes on a small task, such as adding one check to the cleaning script. Say out loud what you expect, what you trust and where you hesitate.
 
-The observer takes notes: Where did the worker hesitate? Where did they trust the output without checking? Where did they backtrack or get confused?
+The observer takes notes. Where did the worker hesitate? Where did they trust the output without checking? Where did they backtrack?
 
-Afterward, discuss as a group: what one change to the prompt, spec, or validation step would have helped most? That is what rewrite time is really pointing at.
+Then discuss as a group. Which one change to the prompt, the requirements or the checks would have helped most?
 
-Working alone? Keep a two-column log instead: what you expected before each step, and what you actually had to change afterward. The gap between the two columns is what the observer would have noticed.
+Working alone? Keep a two-column log: what you expected before each step, and what you had to change afterward.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## The four-layer validation stack
 
-To minimise rewrite time and ensure research rigor, use a structured validation stack.
+### Layer 1: Recorded requirements
 
-### Layer 1: Immutable Requirements (No-Go Zones)
-Before the AI writes code, define immutable requirements in your `CLAUDE.md`. These are rules the AI is not allowed to break.
+Write down what the result must satisfy before the agent writes code. Put the requirements in your `CLAUDE.md` so you and the agent can both read them.
 
-*Example (from our project):* "Do not change the column names in `data/site_*.csv`" and "Do not drop any rows: the merge must have 60."
+*Example from our project:* "Do not change the column names in `data/site_*.csv`" and "Do not drop any rows: the merge must have 60."
+
+A requirement in a Markdown file is a request. It does not stop the agent from breaking it. Tool permissions and isolation enforce access limits. Tests show whether the output meets the requirements.
 
 ### Layer 2: Automated checks you can run
-Validation should be executable, not just a feeling. Your project ships `validate_data.py` with two checks written and three left as TODO. Ask the agent to help you implement the rest, then read and run them, so that "valid" means "these checks passed," not "it looked fine."
+
+Write checks that run. A check turns "it looked fine" into "these checks passed." Your project ships `validate_data.py` with most checks written and one left for you.
+
+Take your expected values from the raw files and the documentation. Do not take them from the cleaning script. If the script contains the error, a check that copies its logic copies the error.
 
 ### Layer 3: Metamorphic and invariant checks
-Test the relationships in your data that should never change.
-- **Invariants:** the merged file must have 60 rows (3 sites x 20 samples), and no `sample_id` should be lost.
-- **Metamorphic checks:** if you shuffle the order of the input rows, the merged mean score should not change.
+
+Test relationships in your data that should never change.
+
+- An invariant: the merged file has 60 rows (3 sites x 20 samples), and no `sample_id` is lost.
+- A metamorphic check: if you shuffle the input rows, the merged mean score does not change.
 
 ### Layer 4: Domain plausibility
-This is where your research expertise is irreplaceable. A check can pass while the science is wrong. In our data, a water quality score above 100 is impossible, and site C's January samples must not appear in May. The clearest case: if the date-format trap goes uncaught, the cleaning runs, the row count is right, and the **trend you plot is still wrong**.
+
+This is where your research expertise counts. A check can pass while the science is wrong. A water quality score above 100 is impossible. Site C's January samples should not appear in May.
+
+The clearest case is the date trap. If you miss it, the cleaning runs, the row count is right, and the trend you plot is still wrong.
 
 ::::::::::::::::::::::::::::::::::::::::: callout
 
 ## Validation is yours to own
 
-The stack only works if you stay in charge of it. Four things to keep in front of you:
-
-- **You cannot validate what you cannot explain.** If you cannot say what the code does, you are not validating it, you are hoping.
-- **Passing tests is not the same as being scientifically correct.** Tests check what you thought to check. They do not check the assumption you missed.
-- **A second AI model is a reviewer, not an authority.** It has its own blind spots. Use it to widen your view, not to settle the question.
-- **Domain plausibility is where your expertise matters most.** No model can replace knowing what a sensible result looks like in your field.
+- You cannot validate code you cannot explain. If you cannot say what it does, you are hoping.
+- Passing tests is not the same as being scientifically correct. Tests check what you thought to check.
+- A second model is a reviewer, not an authority. It has its own blind spots.
+- Domain plausibility is your job. No model knows what a sensible result looks like in your field better than you do.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge: build the validator
+## Challenge: write one independent check
 
-Open `validate_data.py`. Two checks are written for you; three are left as TODO (every sample's date matches the raw source, every `sample_id` is present exactly once, scores within 0-100).
+Open `validate_data.py`. Six checks exist. Five are written for you. One is a stub: every sample's date matches the raw source.
 
-1. Implement the three TODO checks. Write them yourself, or ask the agent and then read every line before you trust them. For the date check specifically: don't settle for "parses without error and falls in 2023" — a misparsed site C date can still produce a valid-looking 2023 date. Compare against the raw file instead (see the hint already in `validate_data.py`).
-2. Run `python validate_data.py` against your `data/master_dataset.csv`. Make the checks pass by fixing the data or the cleaning script, never by editing a value to satisfy a check. A passing run looks like this (captured from the reference implementation, `instructors/files/backup_validate_data.py`):
+An unfinished check makes the script exit with an error. Run it now and read what it reports.
+
+1. Open `README.md` and find each site's date format. Write them down. Do not copy them from `clean_and_merge.py`.
+2. Write the date check yourself, or ask the agent for a draft and read every line before you trust it. Re-parse each raw site file with its documented format and compare the result with `data/master_dataset.csv`, sample by sample. A check that only confirms the dates parse and fall in 2023 is too weak. A misparsed site C date still looks like a valid 2023 date.
+3. Run `python validate_data.py`. Fix the data or the cleaning script until every check passes. Never edit a value to satisfy a check. A passing run looks like this, captured from the reference validator (`instructors/files/backup_validate_data.py`, which has eight checks):
 
    ```
    [PASS] row count is 60
    [PASS] all canonical columns present
-   [PASS] every sample's date matches the raw source
    [PASS] every original sample_id is present exactly once
-   [PASS] score values fall within 0-100
+   [PASS] every sample_id carries its source site
+   [PASS] every sample's date matches the raw source
+   [PASS] every score is a number within 0-100 (none blank or text)
+   [PASS] observed scores are unchanged and missing scores use the site median
+   [PASS] pH and temp_c keep their source values (blanks stay blank)
 
-   All 5 checks passed.
+   All 8 checks passed.
    ```
 
-3. Now break it on purpose: ask the agent to re-clean site C's dates using `pd.to_datetime(..., format="mixed")` instead of the explicit `%d-%m-%Y` format. Run the validator again. A good date check should now fail, for example:
+4. Now test the check. Copy `data/master_dataset.csv` to `data/candidate.csv`. In the copy, make site C's dates month-first, as `pd.to_datetime(..., format="mixed")` would read them. Run `python validate_data.py data/candidate.csv`. A good date check fails:
 
    ```
    [FAIL] every sample's date matches the raw source - 8 mismatch(es), e.g. ['SC001', 'SC002', 'SC006']
    ```
 
-   Notice this doesn't crash, and it doesn't obviously bunch the whole site C line at one edge of a plot either — only some rows are wrong, because `format="mixed"` guesses each date individually and gets some of them right by accident. If instead everything still passes, your date check is too weak (see the solution).
+   The run does not crash. The plot would not bunch site C at one edge either. Only some rows are wrong, because `format="mixed"` guesses each date on its own and gets some right by accident.
+
+5. Delete `data/candidate.csv`. Confirm `data/master_dataset.csv` is still the correct output, and run the validator on it once more.
+
+If everything still passes in step 4, your date check is too weak.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::: solution
 
-If your validator still passes on the misparsed data, the date check is too weak. A good check reconstructs the expected date for each sample from the raw file (parsed with the explicit format) and compares it exactly — not merely that `pd.to_datetime` did not raise an error, or that the year is 2023. See `instructors/files/backup_validate_data.py` for a complete reference implementation. A validator that cannot fail on a known-bad input is not protecting you.
+A good date check rebuilds the expected date for each sample from the raw file and compares it exactly. It does not stop at "no error" or "the year is 2023." See `instructors/files/backup_validate_data.py` for a reference.
+
+A validator that cannot fail on a known-bad input does not protect you.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::::::: challenge
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: challenge
 
-## Quick check: what does a passing validator actually tell you?
+## Challenge: this check passes. Is the file right?
 
-Your `validate_data.py` reports all five checks passed: row count, date accuracy, ID uniqueness, score range, and no lost rows. Which of the following can you now claim?
+A colleague hands you a merged file. It has 60 rows. Every date matches the raw source. Every `sample_id` appears once. Every score is between 0 and 100. Every `site` value is `A`.
 
-1. The data is correct, no further review is needed.
-2. The five specific properties you wrote checks for hold on this run; anything you didn't write a check for is still unverified.
-3. The AI's cleaning logic is correct in general, since it produced data that passes validation.
-4. The result would validate the same way on a re-run with a different model.
+1. Which of the checks you have run would catch this?
+2. Would you approve the per-site plot?
+3. What check would you add, and where would its expected values come from?
 
-:::::::::::::::::::::::::::::::::::::::: solution
+::::::::::::::::::::::::::::::::::::::::::::::::::: solution
 
-**2.** A passing validator tells you exactly what it checked, nothing more. Option 1 overclaims: domain plausibility (Layer 4) and anything outside your five checks are still unverified. Option 3 mistakes passing output for correct logic, the same misparse bug could resurface on a different input the checks don't happen to cover. Option 4 assumes determinism the lesson has already ruled out, a different run or model could produce different intermediate code that still happens to pass, or fail differently. A validator earns trust by what it would catch, not by passing once.
+Row count, date accuracy, ID uniqueness and score range can all pass on this file. Reject the per-site plot. Row count and date accuracy do not show site identity.
 
-::::::::::::::::::::::::::::::::::::::::::::::::::
+The missing check compares each `sample_id` with the site its raw file says it belongs to. The reference validator and the starter both include it. Run it against the file and watch it fail, then fix the labels and watch it pass.
 
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
----
-
-## Multi-model critique
-
-A second model can widen your review, but switching models inside the same Claude Code session is not independent verification: it shares your conversation history, tools, and context with the first model. Treat what it returns as a hypothesis to check, not a second opinion from a clean slate.
-
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::: challenge
-
-## Challenge: get a multi-model critique
-
-1. Use Model A (Claude Code) to generate a data cleaning script.
-2. Provide the code to Model B, a *different* model, in a **fresh session** if you can (a new terminal, a different tool such as Codex CLI, or at minimum `/clear` first) — not just a `/model` switch inside the same conversation, which still carries the first model's framing. Give it the specification, the code, and any tests, not the first model's narrative about its own work. Then give it this prompt:
-
-   "Read this script. Act as a skeptical senior data scientist. Identify three potential edge cases where this script will fail, such as empty strings, NaN values, or encoding issues. Suggest specific assert statements to catch these."
-
-3. Reflect: Did the second model find something the first missed? Which of its findings still need a deterministic check or your own domain judgment before you'd act on them?
-
-::::::::::::::::::::::::::::::::::::::::::::::::: solution
-
-## Why this works, and its limit
-Models have different blind spots, so a second read can surface edge cases and review questions the first one glossed over. But it is a hypothesis generator, not an authority: it shares training data and general tendencies with the first model, and a same-session `/model` switch shares even more (conversation history, tools, framing). Treat its findings as more questions to investigate with a deterministic check or your own expertise, not as proof.
+A passing validator tells you only what it checked. Any property you did not write a check for is still unverified.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: instructor
 
 ## Teaching tip: approval fatigue
-Warn learners about approval fatigue, the tendency to accept AI suggestions without reading them. The four-layer stack is designed to make the AI prove it is correct before you review the code.
+
+Warn learners about approval fatigue, the habit of accepting suggestions without reading them. Ask for the check output before the diff discussion. Review the requirements and the critical changes yourself, and use independent checks to test defined properties. An agent's assurance that its code is correct is not proof.
+
+Before the session, run `python instructors/files/test_validators.py`. It builds a good file and eight bad ones in a temporary folder and confirms that the validator rejects each bad one for the right reason.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -191,30 +197,58 @@ Warn learners about approval fatigue, the tendency to accept AI suggestions with
 
 ## Challenge: explain the approval gate
 
-Take a script you (or a partner) generated earlier and walk through the approval gate out loud or in writing. Answer all five:
+Take a script you or a partner generated earlier. Walk through the gate out loud or in writing. Answer all five:
 
 1. What did the AI produce?
 2. What evidence do you have that it works?
-3. What evidence is still missing?
-4. What domain assumption could still be wrong?
-5. Would you approve, revise, or reject this output, and why?
+3. What evidence is missing?
+4. Which domain assumption could still be wrong?
+5. Would you approve, revise or reject this output, and why?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::: solution
 
 ## What a good answer looks like
 
-A strong answer names the output precisely, points to *specific* checks as evidence (row counts, invariant checks, a test that passed), and is honest about gaps ("I have not checked the date parsing on the 2019 files"). The domain-assumption answer is the hardest and the most important: it is where you show you are judging the science, not only the code. "Approve" is only justified when the evidence covers the claim; otherwise the honest answer is "revise."
+A strong answer names the output precisely and points to specific checks as evidence: row counts, a failing-then-passing test. It admits gaps, such as "I have not checked the date parsing on the 2019 files."
+
+The domain-assumption answer is hardest and most useful. It shows you are judging the science and not only the code. Approve only when the evidence covers the claim. Otherwise the honest answer is "revise."
 
 :::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: keypoints
+## Going further: a critique from a second model
 
-- The approval gate separates experimental prototypes from validated research.
-- Rewrite time is a local, formative signal about your workflow, not a productivity score.
-- Immutable requirements prevent the AI from drifting away from research specs.
-- A multi-model critique, run in a fresh session, is a reviewer, not an authority.
+This section is optional. A second model can widen your review. Switching models inside the same Claude Code session is not independent, because the second model sees the same conversation, tools and framing. Treat what it returns as a hypothesis to check.
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge: get a critique from a second model
+
+1. Use one model to generate a data cleaning script.
+2. Give the specification, the code and any tests to a different model in a fresh session. Use a new terminal, a different tool, or at least `/clear`. Do not pass along the first model's account of its own work. Then use this prompt:
+
+   "Read this script. Act as a skeptical senior data scientist. Name three edge cases where this script could fail, such as empty strings, NaN values or encoding problems. Suggest specific assert statements to catch each one."
+
+3. Reflect. Did the second model find something the first one missed? Which findings still need a deterministic check or your own judgment before you act on them?
+
+::::::::::::::::::::::::::::::::::::::::::::::::: solution
+
+## Why this works, and its limit
+
+Different models have different blind spots, so a second read can surface edge cases the first one skipped. But the second model shares training data and habits with the first, and a same-session switch shares even more. Treat its findings as questions to investigate with a check or your own expertise.
+
+:::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: keypoints
+
+- The approval gate supports one decision: accept, revise or reject a bounded piece of code.
+- Passing checks does not validate the study or the scientific claim.
+- Take expected values from the source documentation, not from the code under test.
+- A check earns trust when it fails on a known-bad input.
+- Rewrite time is a local signal about your workflow, not a productivity score.
 - You cannot validate what you cannot explain.
 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

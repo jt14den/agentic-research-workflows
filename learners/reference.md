@@ -5,7 +5,7 @@ title: "Reference"
 ## Glossary
 
 AGENTS.md
-: A portable Living Spec file supported across multiple AI coding tools (Claude Code, Codex CLI, Cursor, and others). Use it when you want your spec to travel with the project regardless of which agent you run. See also: CLAUDE.md.
+: A project instruction file convention used by several AI coding tools. Whether a tool loads it depends on the tool, its version and its settings, so check what loaded. See also: CLAUDE.md.
 
 Agent
 : An AI system capable of using tools (like reading files, running code, or searching the web) to complete autonomous tasks.
@@ -20,7 +20,7 @@ Backend
 : The specific model and hosting arrangement an agent sends your data to (a vendor's cloud API, an institutionally approved endpoint, or a local model), as distinct from the tool you type into.
 
 Bootstrap Workflow
-: An iterative process where an AI agent scans a researcher's raw data and goals to draft the initial `CLAUDE.md` spec, which the researcher then reviews and approves.
+: Having an agent draft a first `CLAUDE.md` from your files and goals (for example with `/init`), which you then review, edit and approve. In this lesson it is part of Episode 1, not a separate step.
 
 Chain of Thought
 : A prompting technique that encourages the AI to explain its reasoning step-by-step. Current frontier models build this in as an adjustable reasoning-effort or thinking setting on the same model, rather than requiring a separate "reasoning model." A displayed chain of thought is not necessarily a faithful record of the model's internal computation.
@@ -29,7 +29,7 @@ CLEAR Framework
 : A prompt engineering model (Concise, Logical, Explicit, Adaptive, Reflective) developed by Leo Lo to optimise AI interactions.
 
 CLI (Command Line Interface)
-: A text-based interface for interacting with your computer's operating system. Essential for giving AI agents direct access to the file system.
+: A text-based interface for working with your computer. A CLI agent can work with files, commands and output in one place, so paths and changes are easy to inspect. Which files it can reach depends on its configuration and permissions.
 
 CO-STAR Framework
 : A prompt engineering framework (Context, Objective, Style, Tone, Audience, Response) emphasizing the importance of persona and audience.
@@ -46,8 +46,8 @@ Context Window
 Intent Specification
 : A focus on describing the *desired outcome* (what the data should look like) and letting an agent draft the *mechanical steps* (how to write the loop), which you then read and verify rather than accept blindly. Not "declarative programming": the agent still writes an ordinary imperative implementation, and the spec itself is not executable.
 
-Determinism Collapse
-: The risk that small variations in prompts or silent updates to AI model weights will result in different code outputs for the same task, threatening research reproducibility.
+Run-to-run Variation
+: The risk that small differences in prompts, tool versions or silent model updates give different code or output for the same task. Logging the tool version, model and prompt lets you compare runs. It does not make them identical.
 
 Deterministic Check
 : An executable test that returns the same pass/fail answer every time it runs on the same input, unlike asking a model whether code looks correct.
@@ -61,8 +61,8 @@ Etherpad
 Evidence Mantra ("No Evidence, No Merge")
 : The principle that a researcher should never approve an AI-generated change without supporting evidence (passing tests, invariant reports, or a readable diff).
 
-External Brain
-: The practice of storing a project's persistent memory in plain markdown files (such as `CLAUDE.md`, `PLAN.md`, and a running notes log) that an AI agent reads and updates, rather than relying on the model's limited, disposable context. The framing was popularized by Andrej Karpathy. In research it doubles as provenance.
+Project Record
+: A short, version-controlled set of plain files (such as `CLAUDE.md`, `PLAN.md` and a dated notes log) that records constraints and decisions, so people can inspect them. It supports provenance. It does not guarantee that a model follows every instruction.
 
 Few-shot Prompting
 : Providing examples in the prompt to guide the AI's output.
@@ -70,14 +70,14 @@ Few-shot Prompting
 Frontier Model
 : The most capable commercially released models at a given moment (currently the top Claude, GPT, and Gemini tiers). The term is time-relative; what counts as frontier changes every few months.
 
-CLAUDE.md (Living Spec)
-: A project-level Markdown file that Claude Code loads automatically at the start of every session. It defines the project's goals, rules, constraints, and context, acting as the persistent source of truth that keeps the agent on track across sessions. The Claude Code native equivalent of the portable AGENTS.md.
+CLAUDE.md (instruction file)
+: A project-level Markdown file that Claude Code loads at the start of a session. It records goals, rules, constraints and context. The agent reads it as instructions. It is not an enforced boundary. See also: AGENTS.md.
 
 Hallucination
 : When an AI generates factually incorrect or nonsensical information confidently.
 
-Immutable Requirements
-: Human-authored domain rules and constraints (e.g., "dates must be chronological") that act as the "Ground Truth" and cannot be modified by the AI agent.
+Recorded Requirements
+: Human-approved domain rules and constraints (for example, "do not drop any rows") written down before code is generated. They are a request to the model. Tool permissions and isolation enforce access limits, and tests check whether the output meets the requirements.
 
 Imputation / Impute
 : Filling in a missing value with an estimate (a group mean, a model prediction) instead of dropping the row that contains it. Which estimate to use is a research decision, not a technical default.
@@ -104,19 +104,28 @@ Open-weight Models
 : Models whose weights are downloadable and can be run locally (e.g., Qwen3, Gemma, OpenAI's gpt-oss), often via tools like Ollama. "Open-weight" is the precise term: downloadable weights alone don't make a model open source under the fuller definition (training data, code, and license may still be closed or restricted). Offer better reproducibility since you can pin a specific, frozen revision, but license terms still vary by model. See also: Closed-weight Models.
 
 Plan Mode
-: A Claude Code session mode in which the agent can read files and propose an approach but is blocked by the tool itself from writing files or running mutating commands until you approve the plan.
+: A Claude Code session mode that restricts source edits and supports exploration while you review a plan. It is not a universal no-side-effect sandbox. Check the installed mode, tools and settings.
 
 Prompt Injection
 : An attack where instructions hidden in content an agent processes (a file, a web page, an MCP tool's returned data) get executed as if you had typed them yourself. A risk whenever an agent reads untrusted input, not just when it calls external tools, though MCP tool descriptions and returned data are a common vector.
 
 Provenance Tracking
-: The practice of documenting the metadata of an AI interaction (model version, prompt, context hashes) to ensure research accountability.
+: Documenting how a result was made: tool version, model name, date, relevant prompts, reviewed changes and test results. A provenance note is history. Rerunning needs the code, data, environment and commands too.
+
+Evidence Source
+: Where a claim comes from, such as the data documentation or a campus policy page. Name it so someone else can check it.
+
+Unchecked Claim
+: Something you are still taking on trust. Naming it is part of an honest approval decision.
+
+Rerun
+: Running the saved code on the saved inputs again. This differs from regenerating the code with a model, which can give different code.
 
 Reasoning Effort
 : An adjustable setting (in Claude Code, `low` through `xhigh`, with `max` on some models) that controls how much a model reasons before responding, on the same model rather than a separate "reasoning model" line. Higher effort costs more time and tokens and does not guarantee a better answer.
 
 Review-ready Bundle
-: The complete set of artifacts that makes an AI-assisted result auditable by someone else: spec, plan, code, validation script, result, provenance note, and approval decision.
+: The set of files that lets another person rerun and assess an AI-assisted result without AI: raw inputs, requirements, code, validation script, environment record, exact commands, result, provenance note and approval decision.
 
 Sandboxing
 : Running an agent or an MCP server with deliberately restricted filesystem and network access, so a compromised tool cannot reach data outside a defined boundary.
@@ -143,7 +152,7 @@ Verification Load
 : The work of checking that an agent's actions actually match your specification and your data, which grows as the agent produces more code faster than you can read it.
 
 Vibe Coding
-: The early (2023-2024) term for using AI intuition and natural-language prompts to handle the "grunt work" of coding. In research, this has evolved into the more rigorous **Spec-Driven Research Orchestration**.
+: An informal term for guiding AI with natural-language prompts and intuition. Research needs evidence as well as output, which is the purpose of this lesson's workflow.
 
 ## References
 

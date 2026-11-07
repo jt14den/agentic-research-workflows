@@ -2,139 +2,208 @@
 title: "Instructor Notes"
 ---
 
-## Teaching Philosophy: The Researcher Stays the Active Reviewer
+## Teaching approach: the researcher stays the active reviewer
 
-This lesson helps researchers work with AI coding agents without handing off the thinking. The shift is from writing every line of syntax towards reading, questioning, and validating code the agent produced. Resist framing this as "the AI does the work and you orchestrate", the episodes deliberately push back on that. The core challenge for learners isn't syntax; it's managing **cognitive load** and staying the **active reviewer** who can explain and judge the result.
+This lesson helps researchers work with AI coding agents without handing off the thinking. The shift is from writing every line toward reading, questioning and checking code the agent produced. The episodes push back on the idea that "the AI does the work and you orchestrate." The core challenge for learners is not syntax. It is managing cognitive load and staying the reviewer who can explain and judge the result.
 
-### Key Concepts to Emphasize:
-- **Verification Load:** It is often harder to *verify* code you didn't write than to write it yourself. Normalise this "friction" as a sign of high-quality research.
-- **Evidence Mantra:** "I do not approve changes; I approve evidence." This should be the recurring theme of the workshop.
-- **Sandboxing:** Always emphasize the security implications of giving an AI direct access to the filesystem.
+The lesson teaches three ways of working with AI, on one dataset:
 
-### The worked example (one project all the way through)
-The whole lesson uses one fixture, `learners/files/coastal-water-quality/` (three messy site CSVs). Learners carry it from spec to clean merge to validation to a trend plot in the capstone. Two anchors to keep in mind:
-- **Expected result:** a merged `data/master_dataset.csv` with **60 rows** (3 sites x 20 weekly samples), all dates in 2023.
-- **The planted trap (the lesson's climax):** site C dates are day-month-year (`05-01-2023` is 5 January). A naive `pd.to_datetime()` call with no explicit format actually *raises an error* on this file (day values like 19 and 26 can't be a month) — that's a loud, easy failure, and a fine outcome if it happens. The dangerous case is `format="mixed"`: it silently swaps day and month for some rows (`05-01-2023` becomes May 1) while accidentally parsing others correctly (`19-01-2023` still lands in January), so a handful of wrong dates hide among mostly-right ones. Either way the row count stays 60 and the trend plot is still wrong. This is the concrete "working code is not trustworthy code" moment; let it happen and use it.
+1. Ask AI to help you understand. Predict first, then ask for an explanation or hint, then compare it with the data.
+2. Delegate one small change. Introduce each practice when the task creates a need for it: state the expected result, review the plan, inspect the action, read the diff, compare the output with an independent expectation.
+3. Test and hand off a result. Complete one check, show that it fails on bad data, and have another pair rerun the work without AI.
 
----
+### Key ideas to emphasise
 
-## Episode: Before We Use AI (opening)
-- **Purpose:** Reset expectations before anyone opens a terminal. Some learners arrive expecting a speed demo; this episode says plainly that the workshop measures whether they can *explain and validate* AI output.
-- **Set the norm:** Make it safe to say "I don't understand this line." Treat confusing AI output as a shared teaching artefact, not a personal failure.
-- **The run / revise / reject checkpoint** introduced here is reused in every later episode. Refer back to it by name.
-- **Sticky-note opener:** Collect what learners want from AI and what they fear it will get wrong. Revisit at the end.
+- Reviewing unfamiliar generated code can add cognitive load, especially when it brings in concepts a learner does not know. Treat that friction as normal.
+- Permission to run an action is separate from approval of its result. Evidence supports approval.
+- A check earns trust when it fails on a known-bad input.
+- Access limits are enforced by tool permissions and isolation. A line in a Markdown file is a request.
 
-## Episode 1: Understanding CLI-Based AI
-- **Auth Check:** Ask learners to run `claude --version`. If it returns a version number they are ready. If not, have them launch `claude` once and complete sign-in before continuing.
-- **Model Check:** Have all learners set the same model with `/model` before starting (pick the current recommended model close to the session date), so outputs are comparable and provenance records are meaningful.
-- **Starter folder:** Everyone works in the provided `coastal-water-quality` folder (ships at `learners/files/coastal-water-quality/`). Confirm learners have it and can `ls data/` to see the three site CSVs before starting. Episode 1 has them inspect a real file and compare the agent's description to it, the first hands-on win.
-- **The Browser vs. CLI distinction:** Use the analogy of a "consultant" (Browser) vs. a "research assistant with keys to the lab" (CLI).
-- **Discussion:** The prompt about "ChatGPT writing code that looks correct but fails" is a great way to bond over shared frustration and set the stage for why we need the CLI (to run and test immediately).
+### The worked example
 
-## Episode 2: Best Practices for Prompting
-- **CO-STAR vs. CLEAR:** Don't get bogged down in the acronyms. The goal is *intentionality*.
-- **Live Demo Tip:** Show a "Bad Prompt" vs. a "Good Prompt" live. Purposely run a vague command and show how it fails or produces messy output before using the refined version.
-- **Self-Correction:** This is the "lightbulb" moment. Demonstrate asking the AI, "Are you sure? Review your code for edge cases."
+The whole lesson uses one synthetic fixture, `learners/files/coastal-water-quality/`: three messy site CSVs. The data describe no real study. Learners carry it from a plan to a clean merge, to checks, to a trend plot in the capstone.
 
-## Episode 3: Data Cleaning (Live Demo)
-- **High Intensity:** This is the most technically demanding episode.
-- **Expected output:** `data/master_dataset.csv` with 60 rows, produced by `clean_and_merge.py`, which learners should not modify. The "Update the script" challenge writes a separate `clean_feb_onward.py` (12 rows removed, 48 remaining) instead of editing the canonical script in place, so Episodes 4 and 6 can still rely on the full 60-row file. A wrong row count on the filter usually means some site C dates were silently misparsed.
-- **The "Safety Net":** If a learner's AI fails to produce working code after two attempts, have them copy `instructors/files/backup_clean_and_merge.py` (it is written for this fixture and parses site C dates correctly). This keeps them on pace for the validate-and-judge steps, which are the point.
-- **Stop and Read:** Literally tell the class to "hands off keyboards" for two minutes to read the generated script before they run it.
+- Expected result: `data/master_dataset.csv` with 60 rows (3 sites x 20 weekly samples), all dates in 2023. Missing scores are filled with the median of that site's observed scores: A004 = 72.0, B-006 = 71.5, SC002 = 71.6. This is the exercise's fixed choice and not a recommendation for real studies.
+- The planted trap: site C dates are day-month-year (`05-01-2023` is 5 January). A bare `pd.to_datetime()` with no format raises an error on this file, which is a loud and acceptable failure. The dangerous case is `format="mixed"`. It swaps day and month for some rows and parses others correctly by accident. The row count stays 60, and the plot is still wrong.
 
-## Episode 4: Validation Best Practices
-- **Four-Layer Validation Stack** (match the episode exactly):
-    1. Requirement constraints / No-Go Zones (human-authored ground truth in `CLAUDE.md`)
-    2. Executable checks you can run (finish the shipped `validate_data.py`)
-    3. Metamorphic and invariant checks (60-row invariant; mean unchanged when rows are shuffled)
-    4. Domain plausibility (where the researcher's expertise is irreplaceable; do not omit this layer)
-- **Build the validator:** the core activity. Learners finish the three TODO checks in `validate_data.py`, then deliberately misparse the site C dates and confirm the validator now fails. A validator that cannot fail on a known-bad input is not protecting them.
+### Before any session
 
-## Episode 5: Limitations and Cautions
-- **Silent Semantic Drift:** This is the most "dangerous" failure. The site C date trap from the worked example is the live version of this; refer back to it.
-- **Environmental Cost:** This is often a new topic for researchers. It grounds the workflow in physical reality.
+Run these from the lesson folder and keep the output:
 
-## Episode 6: From AI Output to Research-Ready Code (capstone)
-- **Mostly doing:** budget the time for work, not exposition. Learners assemble the full bundle (spec, plan, code, validator, plot, provenance, approval decision) on the coastal data.
-- **Expect the date trap to surface** for several learners during the plot step; that is the highlight. Collect a few approval decisions and read them aloud, especially the honest "revise" answers.
-- **Fallbacks:** `backup_clean_and_merge.py` and `backup_plot_trend.py` let a stuck group still reach the validate-and-judge steps.
+```bash
+python instructors/files/test_validators.py
+```
 
-## Episode 7: Resources and Next Steps
-- **The Toolscape:** Acknowledge that tools (Aider, Cursor, Claude Code) change weekly. Focus on the *principles* (CLI, validation, provenance) rather than specific software.
-- **Monday workflow card:** the takeaway exercise; push learners to name the one check that would catch a silent error in their own data.
-- **Attribution:** Remind learners that while AI can't be an author, transparency about its use is a core tenet of Open Science.
+It builds a good file and eight bad ones in a temporary folder, and confirms that the reference validator accepts the good file and rejects each bad one. Record the Claude Code version, the Python and package versions, the model name and the date. Test a learner route on each platform you will support: download, environment, one read-only agent action and one small diff.
 
 ---
 
-## Suggested first-pilot path (compressed)
+## Timed route: four-hour pilot
 
-For a first pilot, do not teach every section evenly. Protect the practical spine and let the rest be optional. The pilot should answer one question: **can learners use Claude Code to clean a small messy dataset, explain what changed, validate it with checks, and decide whether to approve the result?**
+Assume learners finish installation or receive a supplied environment before they arrive. Offer a separate 30-minute setup clinic. Send prework of 20 to 30 minutes: environment, download, the synthetic-data statement and a ten-minute no-AI entry check.
 
-**Teach live:** Before We Use AI (briefly); CLI setup, the early data inspection, and `/init`; the Living Spec; Data Cleaning with AI; the `validate_data.py` approval gate; the capstone bundle.
+| Elapsed | Min | Activity | Where |
+|---|---:|---|---|
+| 00:00 | 15 | Setup diagnostic and entry check. Assign the live-agent route or the saved-output route. | `learners/setup.md` |
+| 00:15 | 30 | `dropna` reading, then the date exercise: predict, pair trace, run, add checks, decide. | Episode 0 |
+| 00:45 | 25 | CLI scope, shell versus agent, `/init` once, one diff, one constraint plus check. | Episode 1 |
+| 01:10 | 10 | Catch-up checkpoint. Share a question the agent did not resolve. | |
+| 01:20 | 25 | Repair a prompt. Review a plan, mark one unsupported assumption, approve one bounded action. | Episode 2 |
+| 01:45 | 15 | Break. | |
+| 02:00 | 40 | Cleaning: predict, plan, one bounded change, read the diff, explain, run. | Episode 3 |
+| 02:40 | 35 | Complete the date check, run it on good and bad files, discuss what remains unchecked. | Episode 4 |
+| 03:15 | 10 | Catch-up using the checkpoint packs. Restore the canonical 60-row output. | |
+| 03:25 | 25 | Assemble and swap the bundle. The partner reruns without AI. | Episode 6 |
+| 03:50 | 10 | Unaided transfer decision and the Monday card. | Episode 7 |
 
-**Make optional / skim if short on time:** CO-STAR and reasoning-model detail; the advanced tool landscape, MCP, and local-model material in Resources; multi-model verification.
+Episode 5 is not taught as its own block in the pilot. Its scope and privacy points sit in Episode 1, and its failure modes sit in Episodes 2 and 4. The full eight-episode course is longer. The episode front matter adds up to about 9.5 hours, before breaks and installation.
 
-If you run short, cut whole objectives (and their assessments), not bits from everywhere. The data-cleaning-to-validation-to-capstone arc is the part that must survive.
+### Reference and follow-on
+
+- Reference: the CO-STAR framework, tool comparisons, reasoning-effort settings, MCP, the model taxonomy, the environmental discussion and publication policies.
+- Follow-on: write every validator check yourself, a metamorphic shuffle test, alternative missing-value methods, the February filter, registry verification, a multi-model critique, and Git recovery practice. Do not claim these objectives in the four-hour pilot.
+
+### Checkpoint packs
+
+Keep four folders ready, so a learner who falls behind can rejoin without skipping the judgment tasks:
+
+1. Raw inputs only.
+2. A working `clean_and_merge.py` (`instructors/files/backup_clean_and_merge.py`) with its output.
+3. The complete checks (`instructors/files/backup_validate_data.py`).
+4. The final bundle, including `plot_trend.py` (`instructors/files/backup_plot_trend.py`).
+
+A learner who uses a pack still predicts, explains, tests and decides. Label which parts were supplied.
+
+### When outputs differ
+
+Compare behaviour and not text. Stop after each bounded change. Ask every learner for the same prediction and the same evidence. After two failed generation attempts, use a supplied script.
+
+### No-account learners
+
+They use the same terminal and Python files, plus saved agent plans, diffs and transcripts. They make the same approval decisions and run the same tests. If Python is also unavailable, supply a pre-provisioned terminal or a loan device. A printed-output-only route can assess review, but it cannot honestly certify independent execution. Do not require a second vendor account for any pilot outcome.
+
+### Entry check (ten minutes, no AI)
+
+Learners should be able to: go to the supplied folder; list the three inputs; run a supplied script; say which rows `dropna()` removes; predict how four January records per site change the 60-row total; and see that `05-01-2023` needs the source metadata. Treat errors as information for routing. Offer a refresher or a supported pair. Do not surprise anyone with an exclusion after enrolment.
 
 ---
 
-## Troubleshooting & Common Issues
+## Helper observation sheet
 
-### API Quotas & Limits
-If learners hit "Resource Exhausted" errors, it's likely they've exceeded their free tier quota or are prompting too rapidly. Suggest they wait 60 seconds or use a smaller "context" (don't send every file in the folder).
+Ask helpers to record, for each learner who asks for help:
 
-### "claude: command not found"
-Ensure the global npm install (`npm install -g @anthropic-ai/claude-code`) worked and that their `PATH` is updated. In Docker, this is handled automatically. On host machines, they might need to restart their terminal.
+- The time and the episode.
+- The route: live agent or saved output.
+- What the help was about: installation, Python, shell, a concept, or the agent.
+- Whether a concept stayed unresolved at the end.
+
+Helpers route a learner to a known state. They do not do the learner's judgment task. Record whether the partner in the capstone actually reran the bundle or only inspected saved output.
+
+---
+
+## Episode notes
+
+### Episode 0: Before We Use AI
+- Purpose: reset expectations. The workshop measures whether learners can explain and check AI output, not how fast they can generate it.
+- Make it safe to say "I do not understand this line." Treat confusing output as a shared example.
+- The run, revise or reject checkpoint appears here and in every later episode. Refer to it by name.
+- The date exercise is deliberately faulty teaching code. Do not claim every agent makes this mistake.
+
+### Episode 1: CLI-Based AI
+- Run the setup check, including the read-only agent action. A version number confirms only the program.
+- Set the same available model with `/model`. Record the resolved model name, tool version and settings.
+- Everyone works in the provided `coastal-water-quality` folder. Confirm that `ls data/` shows three files.
+- The consultant versus research assistant analogy helps, but stress that access depends on configuration.
+
+### Episode 2: Prompting
+- Do not linger on acronyms. The goal is a prompt that names the input, the intended change, the constraints and the evidence.
+- Show a weak prompt and a better one live. Let the weak one fail first.
+
+### Episode 3: Data cleaning
+- This is the most demanding episode.
+- Expected output: `data/master_dataset.csv` with 60 rows. The February challenge writes `data/feb_onward.csv` (48 rows) and leaves the canonical file alone. A wrong count usually means some site C dates were misparsed.
+- Safety net: after two failed attempts, use `instructors/files/backup_clean_and_merge.py`.
+- Stop and read: ask the class to take their hands off the keyboards for two minutes.
+
+### Episode 4: Validation
+- The four layers: recorded requirements, executable checks, metamorphic and invariant checks, domain plausibility.
+- Learners write one check, the date check, from the source documentation. Unfinished checks fail closed.
+- Learners then break a copy of the output on purpose and confirm that the check fails. Restore the correct output afterward.
+- The reference validator has eight checks and covers more than the starter.
+
+### Episode 5: Limitations
+- Silent semantic drift is the dangerous failure. The date trap is its live version.
+- Spec drift: compare code with approved requirements. Do not sync requirements to code without evidence.
+
+### Episode 6: Capstone
+- Mostly doing. Reuse the existing cleaner and validator.
+- The partner reruns the bundle in a fresh copy without AI. Use the site-relabel case as the transfer error.
+- Read a few approval decisions aloud, especially honest "revise" answers.
+
+### Episode 7: Resources
+- Tools change fast. Focus on the principles.
+- Monday card: push learners to name one likely error, the check that would catch it and one unchecked claim.
+- AI cannot be an author. Openness about its use is part of open science.
+
+---
+
+## Troubleshooting
+
+### Account or quota failure
+If a learner hits a usage or quota error, switch them to the saved-output route. Check the account type and the current limits in the official documentation. Do not rely on a fixed waiting time.
+
+### `claude: command not found`
+Re-run the installer from `learners/setup.md` and restart the terminal. For an npm install, check Node.js 22 or newer and the `PATH`. Run `claude doctor` for a diagnostic.
 
 ### Hallucinations
-If a learner gets a script that imports a non-existent library (e.g., `import science_cleaner`), use it as a "teachable moment" for the whole class about verification.
+If a learner gets a script that imports a nonexistent library, use it as a teachable moment for the class.
 
 ---
 
 ## Maintainer checklist
 
-Run through this before teaching a pilot or merging substantial changes. It encodes the Carpentries guidance on teaching with generative AI.
+Run through this before teaching a pilot or merging substantial changes. It encodes Carpentries guidance on teaching with generative AI.
 
 ### Cognitive load
-- [ ] No exercise depends on syntax, libraries, or abstractions the lesson has not introduced.
-- [ ] Where generated code is likely to over-reach (lambdas, regex, extra files), there is an instructor note flagging it.
+- [ ] No exercise depends on syntax, libraries or abstractions the lesson has not introduced.
+- [ ] Where generated code is likely to over-reach (lambdas, regular expressions, extra files), an instructor note says so.
 - [ ] Small, interpretable tasks come before larger agentic workflows.
 
 ### Learner agency
-- [ ] No exercise can be completed by pasting the task into an AI and copying the answer.
-- [ ] Every challenge requires at least one of: explain, predict, trace, modify-and-justify, or validate.
-- [ ] Language frames the learner as the active reviewer and final judge, not a passive orchestrator.
+- [ ] No exercise can be finished by pasting the task into an AI and copying the answer.
+- [ ] Every challenge needs at least one of: explain, predict, trace, modify and justify, or validate.
+- [ ] The language frames the learner as the active reviewer and final judge.
 
 ### Feedback loop
-- [ ] Each episode has at least one pause-and-report checkpoint (sticky note / Etherpad / think-aloud).
-- [ ] Checkpoints surface where learners are confused, not only whether code ran.
+- [ ] Each episode has at least one pause-and-report checkpoint.
+- [ ] Checkpoints show where learners are confused, not only whether code ran.
 
 ### Validation and reproducibility
-- [ ] Exercises validate with concrete checks (counts, invariants, tests), not "it ran."
-- [ ] Provenance (model, date, prompt) is recorded for generated code.
-- [ ] Rewrite time is framed as a formative signal, never as proof AI is faster.
+- [ ] Exercises check with concrete evidence (counts, invariants, tests), not "it ran."
+- [ ] `python instructors/files/test_validators.py` passes.
+- [ ] Provenance (tool version, model, date, prompt) is recorded for generated code, and code, data, environment and commands are archived so a result reruns without the model.
+- [ ] Rewrite time is framed as a formative signal, never as proof that AI is faster.
 
 ### Privacy and security
-- [ ] Sensitive-data and security-critical tasks are explicitly flagged as out of scope for AI.
-- [ ] Institutional vs personal account privacy differences are stated where relevant.
+- [ ] Sensitive-data and security-critical tasks are flagged as out of scope for AI.
+- [ ] Institutional and personal account differences are stated where relevant, and policy wording was checked against the current campus source.
 
 ---
 
 ## Keeping the lesson current
 
-The AI tool landscape moves faster than a Carpentries release cycle. The most volatile parts of this lesson are the **tool landscape** and **reputable sources** in Episode 7, the **failure modes** in Episode 5, and any **named model or CLI command** in Episodes 1-4.
+The AI tool landscape moves faster than a release cycle. The most volatile parts are the tool table in Episode 7, the failure modes in Episode 5, the account and retention wording in `learners/setup.md`, and any named model or command in Episodes 1 to 4.
 
-Before each teaching, refresh these by running the `last30days` skill (see `~/projects/last30days-skill`):
+Before each offering:
 
-```bash
-python3 scripts/last30days.py "vibe coding" --include-web --emit=md --store --save-dir research
-python3 scripts/last30days.py "AI coding agents" --include-web --emit=md --save-dir research
-```
+1. Record the tested tool and package versions, the backend, the platform and the date, with a command transcript.
+2. Check official documentation and institutional policy first. News and the topic wiki help you find claims worth checking. They are not authority for account permissions or commands.
+3. The `last30days` workflow can discover changes. It cannot replace that verification.
 
-Use the output two ways: confirm the tool names and claims in Episodes 5 and 7 are still accurate, and pull one *current* hype example to debunk live in the Episode 7 "Spotting hype" section. A fresh example beats a canned one.
+Use the output two ways: confirm the claims in Episodes 5 and 7, and find one current hype example to take apart live in "Spotting hype."
 
-### Tooling status (last checked 2026-06-19)
+### Tooling status
 
-- **The lesson now uses Claude Code (Anthropic).** Learners run it on one of two backends: a personal Pro/Max plan or API key for non-sensitive (P1-P3) work, or **UCLA Amazon Bedrock** (Anthropic models) for sensitive (P3/P4) research data. The same commands work on both; only the backend changes. Confirm Bedrock access and data-tier approval with the learner's unit before using real sensitive data. See `learners/setup.md`.
-- **Historical note (why we migrated):** Google retired the free/consumer Gemini CLI on June 18, 2026 (folded into the paid Antigravity platform), which broke the lesson's original tooling. Paid Gemini Code Assist Standard/Enterprise and API-key access continued, but the free `gemini` command did not.
-- As of June 2026, the most common research-capable CLI agents are Claude Code (Anthropic), Codex CLI (OpenAI), Antigravity CLI (Google), Cursor Agent, and open-source OpenCode/Aider. The lesson's principles (Living Spec, plan-first, validation stack, provenance) transfer across all of them, see the `agentic-research/cli-agent-landscape` wiki note.
+- The lesson uses Claude Code as its tested route. Other CLI products and access options change.
+- Learners use a personal subscription or API key for the synthetic data in this workshop. Do not read permission for institutional data into any account type. Confirm the specific account, configuration and data category with the responsible campus authority before using real sensitive data. See `learners/setup.md`.
+- The lesson's principles (plan first, checks, provenance, review) transfer across CLI agents. See the `agentic-research/cli-agent-landscape` wiki note as a lead, and verify against current documentation.

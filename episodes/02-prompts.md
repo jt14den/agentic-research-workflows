@@ -1,23 +1,22 @@
 ---
 title: "Best Practices for Prompting"
-teaching: 40
-exercises: 35
+teaching: 25
+exercises: 30
 ---
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- How do I write effective prompts?
-- How do I review a plan before the agent acts on it, not just after?
-- What are common AI failures?
-- How can I make the AI fix its own mistakes, and when should I not trust that it has?
+- How do I write a prompt that gets a result I can check?
+- How do I review a plan before the agent acts on it?
+- How do common AI failures show up, and how do I catch them?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Refine a vague prompt into one with context, specificity, and output instructions.
-- Use Claude Code's plan mode to review an agent's approach before it writes any files.
-- Use introspection to refine AI-generated code.
+- Repair a vague prompt so it states the input, the intended change, the constraints and the evidence you will accept.
+- Review an agent's plan, mark one unsupported assumption and approve only a bounded action.
+- Name common AI failure modes and a check for each.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -25,90 +24,58 @@ exercises: 35
 
 ## Working inside Claude Code
 
-All prompts in this episode are typed inside an active Claude Code session. Start one in your project folder before the exercises:
+Type the prompts in this episode inside an active Claude Code session. Start one in your project folder:
 
 ```bash
 cd coastal-water-quality
 claude
 ```
 
-Then type prompts directly at the prompt. Shell commands (like `python script.py`) are run in a separate terminal window, or from inside the session by prefixing the line with `!`.
+Run shell commands such as `python script.py` in a separate terminal, or inside the session by starting the line with `!`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Five principles of effective prompting
+## A short prompt checklist
 
-Effective prompting is clear technical communication. To get the best results, start by being specific. Include constraints, filenames, and a description of your expected output. Vague requests lead to generic answers, while precise instructions result in usable code.
+Effective prompting is clear technical communication. A good prompt names four things:
 
-Provide context. Explain why you need the code and what data you have (e.g., "I am processing a CSV file with these columns..."). This helps the AI understand the goal. Specify outputs clearly, tell the AI where to save files or how to format tables.
+1. Input: which files and columns the agent should use.
+2. Intended change: what should happen.
+3. Constraints: what must not happen, and the facts the data documentation gives you.
+4. Evidence: how you will check the result.
 
-Treat prompting as an iterative process. Start with a simple request and add complexity in follow-up prompts. Include validation steps by asking the AI to verify or test its own work.
+Vague requests produce generic answers. Precise ones produce code you can test. Start with a small request and add detail in follow-up prompts.
 
-::::::::::::::::::::::::::::::::::::::::: callout
+The table shows each item at work.
 
-## The CO-STAR framework
-
-*Optional on a first pass. CLEAR (below) is enough to start; reach for CO-STAR when a prompt gets complex.* While CLEAR helps with conversation flow, CO-STAR structures complex research prompts that eventually become part of your `CLAUDE.md`:
-
-*   **Context**: Provide background (e.g., "I am a biologist analysing RNA-seq data").
-*   **Objective**: Define the specific task ("Write a script to normalise these counts").
-*   **Style**: Specify the coding style ("Use the Tidyverse style guide in R").
-*   **Tone**: Set the personality ("Be concise and prioritise readable code").
-*   **Audience**: Who is this for? ("For a graduate student who knows R but not bioinformatics").
-*   **Response**: Define the format ("A single R script with comments and a plot output").
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-## The Bootstrap Workflow
-
-Instead of writing a full `CLAUDE.md` by hand, use the **Bootstrap Workflow**. This lets the agent assist in defining the project spec from the start.
-
-1.  **Scan**: Ask the agent to scan your directory and data files.
-2.  **Draft**: Ask the agent to write an initial `CLAUDE.md` based on what it sees and your high-level goal.
-3.  **Gate**: You review, edit, and approve the spec before any code is written.
-
-::::::::::::::::::::::::::::::::::::::::: callout
-
-## Example bootstrap prompt
-"Scan the CSV files in `data/raw/`. Based on my goal of 'Analysing water quality trends', draft an `CLAUDE.md` file that defines the column schema, required libraries, and a plan for cleaning the data."
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::: callout
-
-## Concrete example: From bad to good
-
-| Aspect | Bad prompt | Good prompt |
+| Aspect | Weak prompt | Better prompt |
 | :--- | :--- | :--- |
-| Vague vs specific | "Clean this data." | "In `data.csv`, remove rows with missing values in the 'age' column and save as `clean_data.csv`." |
-| No context vs context | "Write a plot script." | "I am building a report for a climate study. Write a Python script using seaborn to create a line plot of 'temp' over 'year' from `results.csv`." |
-| Silent vs validated | "Run a t-test." | "Perform a paired t-test between 'pre' and 'post' columns. Print the t-statistic, p-value, and an interpretation of the result at alpha=0.05." |
+| Input and change | "Clean this data." | "In `data/site_C.csv`, convert `DateTime` to ISO `YYYY-MM-DD`. Do not change any other column." |
+| Constraint | "Fix the dates." | "Site C dates are day-month-year. Parse them with `%d-%m-%Y` and do not let pandas guess." |
+| Evidence | "Make sure it works." | "After the change, print SC001's date. It must be 2023-01-05." |
 
-::::::::::::::::::::::::::::::::::::::::::::::::::
+The CO-STAR framework is an optional way to structure longer prompts. It is on the [reference page](../learners/reference.md).
 
 ## Prompts that preserve learning
 
-Good prompting is technical communication, but in a learning setting it is also *learning design*. A prompt can be specific and well-formed and still rob you of the understanding you came to build. The prompts below are written to keep you in the loop: the AI helps, but you still do the thinking that makes the result yours.
-
-Prompts that preserve learning:
+A prompt can be specific and still take away the understanding you came to build. These prompts keep you in the loop. The AI helps, and you still do the thinking that makes the result yours.
 
 - "Do not give me the final code yet. Ask me three questions about the data first."
-- "Give me a plan using only concepts we have covered so far."
-- "Write the simplest possible version. Avoid list comprehensions, classes, and external libraries."
-- "Explain what assumptions you are making about my data."
-- "Give me one small change to make myself, and tell me where to make it."
-- "Ask me to predict the output before you show me the answer."
+- "Write the simplest version. Avoid list comprehensions, classes and extra libraries."
+- "State the assumptions you are making about my data."
+- "Give me one small change to make myself, and tell me where."
+- "Ask me to predict the output before you show it."
 - "Give me a hint, not the solution."
 
 ::::::::::::::::::::::::::::::::::::::::: callout
 
 ## Prompts to avoid, and what to ask instead
 
-The prompts on the left feel efficient but hand over the parts that make code trustworthy. The versions on the right keep you able to explain and validate the result.
+The left column feels efficient but hands over the parts that make code trustworthy.
 
 | Avoid | Ask instead |
 | :--- | :--- |
-| "Do this exercise for me." | "Walk me through how to approach this; do not write the final answer." |
+| "Do this exercise for me." | "Walk me through how to approach this. Do not write the final answer." |
 | "Fix everything." | "List the problems you see, ranked. I will choose which to fix first." |
 | "Make this production ready." | "Name the three biggest risks in this script for research use." |
 | "Clean this data." | "Tell me what inconsistencies you find in these files. Do not change anything yet." |
@@ -120,139 +87,112 @@ The prompts on the left feel efficient but hand over the parts that make code tr
 
 ## Instructor note: watch for cognitive load
 
-Generated prompts often pull in syntax, libraries, or abstractions the lesson has not introduced. Signs that AI output is adding extraneous load:
+Generated code often brings in syntax, libraries or abstractions the lesson has not introduced. Signs that AI output is adding extra load:
 
-- The agent uses an advanced feature (comprehensions, classes, decorators) before it has been taught.
-- It imports a library that is not installed locally.
-- It writes several files when one short script would do.
-- It buries the core logic under heavy comments.
-- The answer is correct but the learner cannot explain it.
+- The agent uses an advanced feature, such as a comprehension, a class or a decorator, before it has been taught.
+- It imports a library that is not installed.
+- It writes several files where one short script would do.
+- The answer is correct and the learner cannot explain it.
 
-Interventions: ask the learner to request a simpler version, to remove one abstraction, to trace the code line by line, or to compare it with a minimal reference solution. Slowing down here is the lesson, not a detour.
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::: instructor
-
-## Teaching tip: Visual aids
-Write CLEAR vertically on a whiteboard. As you explain each letter, add the keyword (Concise, Logical, Explicit, Adaptive, Reflective). This helps students remember the framework.
+Ask the learner to request a simpler version, remove one abstraction, trace the code line by line or compare it with a minimal reference. Slowing down here is the lesson, not a detour.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-## The CLEAR framework
+:::::::::::::::::::::::::::::::::::::::: challenge
 
-The CLEAR framework, developed by [Leo Lo](https://doi.org/10.1016/j.acalib.2023.102720), provides a structured approach to prompt engineering:
+## Challenge: repair a prompt
 
-```mermaid
-graph LR
-    accTitle: The CLEAR prompting loop
-    accDescr {Effective prompts move from Concise to Logical to Explicit to Adaptive to Reflective, with a feedback loop from Reflective back to Adaptive when the output needs another pass.}
-    C[Concise] --> L[Logical]
-    L --> E[Explicit]
-    E --> A[Adaptive]
-    A --> R[Reflective]
-    R -->|Feedback Loop| A
-    style R fill:#bbf,stroke:#333,stroke-width:2px
+Start with this prompt, typed inside your Claude Code session:
+
+```
+Plot my data.
 ```
 
-The diagram traces the CLEAR loop, from Concise to Logical to Explicit to Adaptive to Reflective, with a feedback arrow from Reflective back to Adaptive. Effective prompts are concise and logical, prioritising important information and following a sequence of steps. They are also explicit, specifying the scope, persona, and tone of the output. When the AI produces poor results, be adaptive by rephrasing or splitting tasks. Finally, be reflective, evaluate the output and verify facts using other sources rather than trusting the response.
+Notice which file it used, whether the plot is useful and where it saved it. Then write a repaired prompt that states the four checklist items for `data/site_A.csv`: the input (file and columns), the intended change (a scatterplot of `WaterQualityScore` over `Collection_Date`), the constraints (label the axes, do not change the data) and the evidence you will accept (the output path and the number of points plotted).
 
-## Introspection
+:::::::::::::::::::::::::::::::::::::::: solution
 
-The CLEAR framework guides your input, but you can also force the AI to critique its own output. This is often called self-correction.
+## Example repaired prompt
 
-::::::::::::::::::::::::::::::::::::::::: instructor
+```
+Using data/site_A.csv, write a Python script that plots WaterQualityScore over
+Collection_Date as a scatterplot. Label the axes. Do not modify the data file.
+Save the plot to fig/site_A_scatter.png and print the number of points plotted.
+```
 
-## The introspection concept
-Emphasize this section. Most learners treat AI output as final. The idea that they can ask the AI to fix its own work is often a new concept. It is like asking a student, "Are you sure you checked your work?", they often find their own mistakes when asked.
+Check that the printed count matches the number of rows with a score. Missing scores are not plotted, so the count may be one less than the row count.
+
+Did naming the output path save you from searching for the file? Did the evidence line give you something to check?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-Asking the AI to review its own code often surfaces problems, but it cannot decide which problems matter for your research; that judgement stays with you. Never accept the first draft. Follow up with an introspection prompt:
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
-*   "Review the code you just wrote. Are there any edge cases or security vulnerabilities?"
-*   "Did you hardcode any file paths?"
-*   "Critique your own implementation. Is there a more efficient way?"
-
-### Reasoning effort
-
-*Optional: useful once you are comfortable with the basics.* Frontier models no longer split cleanly into separate "standard" and "reasoning" model families the way they did in 2025. The current generation instead lets you turn up a reasoning-effort setting on the same model. In Claude Code this is the `effort` setting (`low` through `xhigh`, with `max` on some models); the default is `high`, which suits most complex reasoning and coding work.
-
-**When to raise it:**
-
-- Reach for more effort when a task has multiple interacting constraints, or chains many steps of tool use together, not just because it "feels hard."
-- Leave it at the default for routine formatting, quick scripts, and brainstorming.
-- Higher isn't free: it costs more time and tokens, and on some tasks it can lead to overthinking rather than a better answer. Check your session's `/status` for the exact model and effort level in use, since both change over time.
-
-At higher effort levels, a model already does more internal reasoning before answering, so you often need less explicit introspection prompting than you would at a lower setting.
+Many people find the CLEAR checklist (Concise, Logical, Explicit, Adaptive, Reflective, from [Leo Lo](https://doi.org/10.1016/j.acalib.2023.102720)) a useful reminder once they have repaired a prompt like this. It says: be concise, order your steps, state scope and format, rephrase or split a task when the result is poor, and check the output against other sources.
 
 ## Plan before you act
 
-As tasks grow more complex, asking the agent to write code immediately leads to more rewrite time. Claude Code has an actual enforced planning mode for this, not just a prompting convention: use it rather than relying on the agent to honor a polite request.
+For a larger task, asking for code at once costs more rewrite time. Ask for a plan first and review it.
 
-### Use plan mode, not just a polite request
+### Plan mode
 
-Start a session in plan mode from the command line:
+Claude Code has a plan mode. Start a session in it with:
 
 ```bash
 claude --permission-mode plan
 ```
 
-You can also switch into plan mode mid-session; check `/help` or your installed version's documentation for the current way to do that, since the exact command has changed across releases. While in plan mode, the agent can read files and reason, but is blocked from writing files or running mutating commands, no matter what it decides to do. That is a real difference from a prompt like "do not write any files yet": a prompt is a request the agent usually follows but is not required to, while plan mode is enforced by the tool itself.
+You can also switch modes in a session. Check `/help` for your version, because the command has changed between releases. Plan mode restricts source edits and supports exploration. It is not a universal no-side-effect sandbox. Check the installed mode, the available tools and your settings. Keep the active mode and the approved scope visible while you work.
 
-Review the plan, push back on steps you disagree with, and ask for alternatives. When you are satisfied, exit plan mode and let the agent proceed.
+Review the plan, push back on steps you disagree with and ask for alternatives. When you are satisfied, approve one bounded action and let the agent continue.
 
 ### Checkpoint prompts
 
-Break large tasks into explicit phases so you review the output at each stage before moving forward. This is useful whether or not you are in plan mode, since it scopes what the agent does even after you have approved the overall plan:
+Break a large task into phases and review each one:
 
 ```
 Step 1 only: read the three CSV files and tell me what inconsistencies you find. Do not write any code yet.
 ```
 
-This is especially valuable in research because it catches misunderstandings about your data before they propagate into broken code.
+This catches misunderstandings about your data before they spread into broken code.
 
 ### The plan file
 
-For complex projects, ask the agent to write a `PLAN.md` first:
+For a complex task, ask the agent to write the plan to a file that you can read and edit:
 
 ```
 Write a PLAN.md outlining the steps to clean and merge these files. I will review and edit it before you write any code.
 ```
 
-This makes the plan a reviewable, editable artefact, a more formal version of the Bootstrap Workflow. Once approved, refer back to it in follow-up prompts: "Proceed with step 2 from PLAN.md."
+`PLAN.md` and `CLAUDE.md` do different jobs. The instruction file holds rules that last across sessions. The plan holds the steps for one task. Plans are temporary, and instructions are durable.
 
-::::::::::::::::::::::::::::::::::::::::: callout
+:::::::::::::::::::::::::::::::::::::::: challenge
 
-## Plan files vs. the Living Spec
+## Challenge: review a plan against the evidence
 
-A `PLAN.md` and your `CLAUDE.md` serve different purposes. The spec defines persistent rules and constraints that apply across all sessions. The plan describes the steps for a specific task. Keep them separate: plans are temporary, specs are durable.
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::: challenge
-
-## Challenge: Plan before you clean
-
-Practise using plan mode before moving on to the data cleaning episode. Start (or switch into) plan mode, then inside your Claude Code session, type:
+In plan mode, type:
 
 ```
-Read the three site files in data/. They have inconsistent column names and date formats. Outline a step-by-step plan for cleaning and merging them into a single dataset.
+Read the three site files in data/ and README.md. They have inconsistent column names and date formats. Outline a step-by-step plan for cleaning and merging them into data/master_dataset.csv. Do not write files.
 ```
 
-You do not need to add "do not write any files yet" here — plan mode already guarantees that. Review the plan. Does it include an audit step? Does it address missing values? Revise the plan in the conversation until you are satisfied, then exit plan mode and save it by asking: "Write this plan to PLAN.md."
+Review the plan:
+
+1. Mark one step that rests on an assumption the files do not support.
+2. Revise that step from the evidence in the files and `README.md`.
+3. Write down the single action you approve, such as "write `clean_and_merge.py` and run it on a copy."
 
 :::::::::::::::::::::::::::::::::::::::: solution
 
 ## What a good plan includes
 
-- An **audit step**, inspect files before changing them
-- A **schema harmonisation step**, standardise column names
-- A **date standardisation step**
-- A **missing value strategy**
-- An **output verification step**
+- An audit step that inspects the files before changing them.
+- A step that harmonises column names.
+- A date step that names each site's format.
+- A missing-value rule.
+- A step that checks the output.
 
-If the agent skipped any of these, ask it to revise before you proceed. The goal is to catch gaps in the plan, not in the code.
+If the plan guesses a date format, a column meaning or a missing-value rule, send it back with the evidence that corrects it. The aim is to catch gaps in the plan and not only in the code.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -260,85 +200,63 @@ If the agent skipped any of these, ask it to revise before you proceed. The goal
 
 ## AI failures
 
-AI agents are designed to be helpful, which can lead them to take shortcuts.
+AI agents are built to be helpful, and that can lead them to take shortcuts.
 
 ### Common failure modes
 
-*   **Determinism collapse:** Small variations in prompts or model updates can lead to different outputs for the same task, which affects reproducibility.
-    *   *Fix:* There isn't a setting that makes an agentic run reproducible — tool calls, retries, and file-system state all vary run to run regardless of sampling settings. Instead, log the exact model, prompt, and relevant outputs (a provenance header, see the next episode) so a different run can be compared, not guaranteed identical.
-*   **Over-correction loops:** If an agent runs its own tests, it might fix the test to match its buggy code.
-    *   *Fix:* Write your own requirements and key tests.
-*   **Synthetic data substitution:** The AI may generate fake data if it cannot find the real file.
-*   **Silent failure:** The AI uses `try/except` blocks that hide errors.
+- Run-to-run variation. The same task can give different output across runs or after a model update. No setting makes an agentic run reproducible. Log the tool version, the model, the prompt and the relevant outputs so you can compare runs. A log lets you compare. It does not guarantee identical output.
+- Over-correction loops. An agent that runs its own tests may change the test to match its buggy code. Write your own requirements and key checks.
+- Synthetic data substitution. The agent may invent data if it cannot find the real file.
+- Silent failure. The agent may wrap code in `try/except` blocks that hide errors.
+- Plausible wrong results. Output can look right and be wrong, as the date exercise in Episode 0 showed.
 
 :::::::::::::::::::::::::::::::::::::: discussion
 
 ## How to catch failures
 
-Have you seen an AI make a confident mistake? In your research, what signs indicate the AI is hallucinating?
+Have you seen an AI make a confident mistake? What signs tell you an answer is wrong?
 
-**Common strategies:**
+Strategies to try:
 
-*   Always ask: "Show me the first 10 rows of the data you loaded."
-*   Demand proof: "How did you calculate that p-value? Show the intermediate steps."
-*   Check file sizes: Is the cleaned file 0 bytes?
+- Ask: "Show me the first 10 rows of the data you loaded."
+- Ask: "How did you calculate that value? Show the intermediate steps."
+- Check file sizes. Is the cleaned file 0 bytes?
+- Run an independent check you wrote from the source documentation.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::::::: challenge
+### Asking the agent to review its own work
 
-## Challenge: The prompt refinement loop
+You can ask an agent to critique its output:
 
-Practise the CLEAR framework on a file you already have: one raw site file, `data/site_A.csv`. (You have not cleaned the data yet, so use the raw column names.)
+- "Review the code you just wrote. Which edge cases could make it fail?"
+- "Did you hard-code any file paths?"
 
-1.  **Start with a vague prompt**, type this inside your Claude Code session:
-    ```
-    Plot my data.
-    ```
-    *Observe: Does it work? Which file did it use? Is the plot useful? Where did it save it?*
+This often surfaces problems. It cannot decide which problems matter for your research. Treat what it finds as something to verify and not as proof.
 
-2.  **Refine the prompt:**
-    Write a new prompt that applies context (what the data is), specificity (which file and columns, scatterplot with a trendline), and output instructions (where to save it).
+### Reasoning effort
+
+Some models let you raise a reasoning-effort setting. Availability and defaults depend on the model, the tool version and your organisation's settings. Use the setting your workshop tested, and record it. Check `/status` for the model and effort in use, since both change over time. Higher effort costs more time and tokens, and it does not always give a better answer.
+
+:::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge: ask for a check, then read it
+
+Ask the agent to draft a check for the coastal data:
+
+```
+Write a short Python script, check_site_C_dates.py, that reads data/site_C.csv and prints the ISO date for SC001 and SC002, using the day-month-year format. Do not change any files.
+```
+
+1. Before you run it, predict both dates.
+2. Read the script. Which line sets the date format? Did the agent use the format the documentation gives?
+3. Run it. Do the printed dates match your prediction? If the agent let pandas guess, how would you tell?
 
 :::::::::::::::::::::::::::::::::::::::: solution
 
-## Example refined prompt
+SC001 should print `2023-01-05` and SC002 `2023-01-12`. The script should name `%d-%m-%Y` explicitly.
 
-```
-Using data/site_A.csv, create a Python script that plots WaterQualityScore over Collection_Date as a scatterplot with a linear trendline. Label the axes. Save the plot to fig/site_A_trend.png (create the directory if it does not exist).
-```
-
-### Reflection: prompt refinement
-
-*   How much longer was your refined prompt compared to your first one?
-*   Did defining the output filename save you from searching for the file?
-*   Extra typing time can save debugging time.
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::::: challenge
-
-## Challenge: The introspection loop
-
-Test the AI as a verifier principle. Ask the AI to find flaws in its code before you run it.
-
-1.  **Generate a script**, type this prompt inside your Claude Code session:
-    ```
-    Write a Python script that reads 'data.csv' and calculates the rolling 7-day average of a 'score' column. Handle missing values.
-    ```
-2.  **Force introspection:** Once the code is generated, do not run it. Follow up in the same session:
-    ```
-    Review the rolling average script you just wrote. Are there any edge cases (like having fewer than 7 days of data) where this would fail? If so, provide an updated version.
-    ```
-3.  **Compare:** Did the AI find a mistake in its first draft? Did it add a guard clause like `min_periods=1`?
-
-:::::::::::::::::::::::::::::::::::::::: solution
-
-### Reflection: introspection loop
-
-A second, critique-focused pass often catches issues the first draft missed. Treat it as a prompt to look harder yourself, not as a guarantee the code is now correct.
+If the script lets pandas infer the format, the output can still look plausible. Your prediction is what shows the difference. A prediction written before the run is evidence. A check that only confirms the output looks like a date is not.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -348,16 +266,16 @@ A second, critique-focused pass often catches issues the first draft missed. Tre
 
 ## Feedback checkpoint: paste one line you don't understand
 
-In the shared Etherpad, paste one line of AI-generated code from this episode that you cannot fully explain yet. We will pick a few and work through them together. There is no penalty for not understanding a line; the penalty is shipping it without knowing what it does. Working alone? Ask the agent to explain that line back to you, then check its explanation line by line against what you already know before accepting it.
+In the shared Etherpad, paste one line of AI-generated code from this episode that you cannot fully explain. We will work through a few together. Not understanding a line carries no penalty. Shipping it without knowing what it does does. Working alone? Ask the agent to explain the line, then check its explanation against what you already know before you accept it.
 
 :::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::: keypoints
 
-- Be specific and provide context.
-- Plan before you act: use plan mode so the agent can't write files until you approve its approach, not just a prompt asking it to wait.
-- Prefer prompts that preserve learning: ask for plans, hints, and the simplest version, not the finished answer.
-- Always validate AI outputs, and never ship a line you cannot explain.
-- Introspection can surface issues the first draft missed, but it is not a guarantee of correctness; treat what it finds as something to verify, not proof.
+- Name four things in a prompt: input, intended change, constraints and evidence.
+- Review the plan before the agent acts. Mark an unsupported assumption and approve one bounded action.
+- Plan mode restricts source edits. It is not a universal sandbox.
+- Prefer prompts that preserve learning: ask for plans, hints and the simplest version.
+- An agent's self-review is a lead to check, not proof.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
