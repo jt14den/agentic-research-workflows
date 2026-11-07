@@ -54,5 +54,7 @@ Target file: `data/master_dataset.csv`, one row per sample, with these columns:
 - All dates parsed correctly and match the raw files exactly. Don't just check the
   visible range: a partial misparse can swap day and month for some site C rows and
   not others, so it won't always show up as an obviously-wrong month like May.
-- A documented strategy for the missing values.
+- Missing scores filled with the median of that site's observed scores (this
+  exercise's fixed rule: A004 = 72.0, B-006 = 71.5, SC002 = 71.6). Missing pH and
+  temperature values stay blank. A real study would have to justify its own method.
 - A trend plot of `score` over `date`, one line per site.

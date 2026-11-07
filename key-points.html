@@ -413,98 +413,100 @@
 <section id="00-before-ai"><h2 class="section-heading"><a href="00-before-ai.html">Before We Use AI: What Are We Practising?</a></h2>
 <hr class="half-width">
 <ul>
-<li>This lesson teaches you to inspect, question, constrain, and
-validate AI output, not to delegate your thinking.</li>
-<li>Generation, understanding, and validation are different skills.
+<li>This lesson teaches you to inspect, question, constrain and validate
+AI output. It does not teach you to hand off your thinking.</li>
+<li>Generation, understanding and validation are different skills.
 Generation is the easy one.</li>
-<li>For a novice, verifying generated code can cost more effort than
-writing it.</li>
-<li>Working code is not the same as trustworthy code. Use the run /
-revise / reject checkpoint every time.</li>
+<li>Reviewing unfamiliar generated code can cost real effort, especially
+when it brings in ideas you do not know.</li>
+<li>Working code is not the same as trustworthy code. A result can pass
+one check and still be wrong.</li>
+<li>Permission to run an action is separate from approval of its
+result.</li>
 </ul></section><section id="01-cli-intro"><h2 class="section-heading"><a href="01-cli-intro.html">CLI-Based AI</a></h2>
 <hr class="half-width">
 <ul>
-<li>Different AI tools see and change different things; always ask what
-a tool can see and do before trusting it.</li>
-<li>A CLI agent can read, run, and edit your real files, which makes
-verifying what it changed part of the workflow.</li>
-<li>Run <code>/init</code> inside Claude Code to create a
-<code>CLAUDE.md</code> Living Spec that reduces context drift.</li>
-<li>A portable <code>AGENTS.md</code> lets the same spec travel across
-different AI tools, but auto-loading it isn’t universal; check per tool
-(Claude Code needs an explicit <code>@AGENTS.md</code> import).</li>
-<li>The shift is from writing syntax to actively reviewing intent,
-assumptions, and evidence; it does not remove your responsibility.</li>
+<li>Ask what an AI tool can see and do, in its actual configuration,
+before you trust it.</li>
+<li>A CLI agent can read, run and edit your real files, so checking what
+it changed is part of the work.</li>
+<li>Run <code>/init</code> once to create <code>CLAUDE.md</code>, then
+edit it by hand.</li>
+<li>An instruction file records constraints for people and tools to
+read. It is not an enforced boundary. Tests check the result.</li>
+<li>Check which instruction file your tool loaded before you rely on
+it.</li>
 </ul></section><section id="02-prompts"><h2 class="section-heading"><a href="02-prompts.html">Best Practices for Prompting</a></h2>
 <hr class="half-width">
 <ul>
-<li>Be specific and provide context.</li>
-<li>Plan before you act: use plan mode so the agent can’t write files
-until you approve its approach, not just a prompt asking it to
-wait.</li>
-<li>Prefer prompts that preserve learning: ask for plans, hints, and the
-simplest version, not the finished answer.</li>
-<li>Always validate AI outputs, and never ship a line you cannot
-explain.</li>
-<li>Introspection can surface issues the first draft missed, but it is
-not a guarantee of correctness; treat what it finds as something to
-verify, not proof.</li>
+<li>Name four things in a prompt: input, intended change, constraints
+and evidence.</li>
+<li>Review the plan before the agent acts. Mark an unsupported
+assumption and approve one bounded action.</li>
+<li>Plan mode restricts source edits. It is not a universal
+sandbox.</li>
+<li>Prefer prompts that preserve learning: ask for plans, hints and the
+simplest version.</li>
+<li>An agent’s self-review is a lead to check, not proof.</li>
 </ul></section><section id="03-data-cleaning"><h2 class="section-heading"><a href="03-data-cleaning.html">Data Cleaning with AI</a></h2>
 <hr class="half-width">
 <ul>
-<li>Predict the inconsistencies yourself before prompting, so you can
+<li>Predict the inconsistencies yourself before you prompt, so you can
 judge the AI’s plan.</li>
-<li>Ask for a plan first, put constraints in the spec, then generate
-code.</li>
-<li>Explain the script before you run it; you cannot validate what you
-cannot explain.</li>
-<li>Validate with concrete checks (row count, missing values, date
-format), not because it ran.</li>
+<li>Ask for a plan first, mark the assumption the data do not support,
+then generate code.</li>
+<li>Read the diff and explain a changed line before you run it.</li>
+<li>Check with concrete evidence (row count, missing values, dates), not
+because the script ran.</li>
 </ul></section><section id="04-validation"><h2 class="section-heading"><a href="04-validation.html">Validation Strategies: The Approval Gate</a></h2>
 <hr class="half-width">
 <ul>
-<li>The approval gate separates experimental prototypes from validated
-research.</li>
-<li>Rewrite time is a local, formative signal about your workflow, not a
+<li>The approval gate supports one decision: accept, revise or reject a
+bounded piece of code.</li>
+<li>Passing checks does not validate the study or the scientific
+claim.</li>
+<li>Take expected values from the source documentation, not from the
+code under test.</li>
+<li>A check earns trust when it fails on a known-bad input.</li>
+<li>Rewrite time is a local signal about your workflow, not a
 productivity score.</li>
-<li>Immutable requirements prevent the AI from drifting away from
-research specs.</li>
-<li>A multi-model critique, run in a fresh session, is a reviewer, not
-an authority.</li>
 <li>You cannot validate what you cannot explain.</li>
 </ul></section><section id="05-limitations"><h2 class="section-heading"><a href="05-limitations.html">Limitations and Cautions</a></h2>
 <hr class="half-width">
 <ul>
-<li>Avoid AI for security-critical tasks, sensitive data, and basic
+<li>Avoid AI for security-critical tasks, sensitive data and basic
 syntax practice.</li>
 <li>Know when AI supports learning and when it gets in the way.</li>
+<li>Compare code with your approved requirements. Do not sync the
+requirements to the code without evidence.</li>
+<li>Check a package against the official registry. Existence on the
+registry is not proof of fit.</li>
+<li>Archive code, inputs, environment and commands so your analysis
+reruns without the model.</li>
 <li>You are responsible for the final output.</li>
-<li>Open-weight models offer better reproducibility (a pinned revision);
-the right choice for a task still depends on data sensitivity,
-auditability, and cost, not a default.</li>
 </ul></section><section id="06-capstone"><h2 class="section-heading"><a href="06-capstone.html">From AI Output to a Review-Ready Bundle</a></h2>
 <hr class="half-width">
 <ul>
-<li>Review-ready means spec, plan, code, validation, a result,
-provenance, and a decision, not just a script that runs — a descriptive
-plot is not itself a statistical finding.</li>
-<li>The same checkpoint pattern scales from one script to a whole small
-project.</li>
-<li>A plot can render cleanly and still be wrong; domain plausibility is
+<li>A review-ready bundle holds requirements, code, checks, a result,
+the environment, exact commands, provenance and a decision. A script
+that runs is not enough.</li>
+<li>Another person rerunning your work without AI is the strongest test
+of the bundle.</li>
+<li>A descriptive plot is not a statistical finding.</li>
+<li>A plot can render cleanly and still be wrong. Domain plausibility is
 your job.</li>
-<li>“Revise” is a valid, honest outcome when the evidence does not yet
-cover the claim.</li>
+<li>“Revise” is an honest outcome when the evidence does not yet cover
+the claim.</li>
 </ul></section><section id="07-resources"><h2 class="section-heading"><a href="07-resources.html">Resources and Next Steps</a></h2>
 <hr class="half-width">
 <ul>
-<li>The workflow transfers across tools; match the tool and backend to
-the task and data sensitivity.</li>
-<li>Attribute AI use transparently; it cannot be an author.</li>
-<li>Leave with a concrete plan for your own data, including the one
-check that would catch a silent error.</li>
-<li>Before adopting a new tool, check its scope claims, transparency,
-citations, and data-privacy terms; new tools appear daily, and many are
-more marketing than substance.</li>
+<li>The workflow transfers across tools. Match the tool and backend to
+the task and the data category.</li>
+<li>Credit AI use openly. It cannot be an author.</li>
+<li>Leave with a plan for your own data, including one check that would
+catch a likely error.</li>
+<li>Before adopting a tool, check its scope claims, transparency,
+citations and privacy terms.</li>
 </ul></section>
 </div>
     </main>
@@ -555,8 +557,8 @@ more marketing than substance.</li>
   "url": "https://jt14den.github.io/agentic-research-workflows/key-points.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/key-points.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-11-03",
-  "datePublished": "2026-11-03"
+  "dateModified": "2026-11-07",
+  "datePublished": "2026-11-07"
 }
 
   </script><script>

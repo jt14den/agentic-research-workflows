@@ -13,7 +13,8 @@ _e.g. merge three instrument exports into one clean table and check the totals._
 
 **2. Data sensitivity and tool**
 - Sensitivity level (public / internal / sensitive / regulated):
-- Approved tool and backend for that level (personal plan? institutional Bedrock? local model?):
+- Approved tool and backend for that level (personal plan? institutional service? local model?):
+- Evidence source for that approval (policy page, written confirmation):
 - Anything that must NOT be sent to a cloud tool:
 
 **3. No-go zones (for my `CLAUDE.md`)**
@@ -27,11 +28,13 @@ _e.g. "Read these files and CLAUDE.md. Give me a numbered plan to ... . Do not w
 - What "done" looks like:
 - A number or relationship that must hold (row count, totals, a value range):
 
-**6. The one check most likely to catch a silent error**
+**6. The one check most likely to catch a silent error, and one unchecked claim**
 _e.g. "every ID appears once," "no dates outside the study period," "no negative concentrations."_
+- Unchecked claim (what I am still taking on trust):
 
 **7. Provenance**
-- Where I will record the model, date, and prompt:
+- Where I will record the tool version, model, date, and prompt:
+- Where I will archive the code, data, environment, and exact commands so the work reruns without the model:
 
 **8. Decision**
 - How I will decide approve / revise / reject, and who reviews it:

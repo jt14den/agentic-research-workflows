@@ -1,7 +1,7 @@
 # CLAUDE.example.md
 
 This is a reference Living Spec for the coastal-water-quality project. You will build
-your own `CLAUDE.md` with `/init` in Episode 2 and grow it as you go. Use this only if
+your own `CLAUDE.md` with `/init` in Episode 1 and grow it as you go. Use this only if
 you get stuck or want to compare. (Claude Code auto-loads `CLAUDE.md`, not this file.)
 
 ---
@@ -24,8 +24,9 @@ trend in water quality score over time by site.
 - Use `pandas` for data handling and `matplotlib` for plots.
 - Site C dates are day-month-year (`05-01-2023` is 5 January). Parse them explicitly;
   do not let the tool guess the format.
-- Fill missing `score` with the site median. Leave missing `pH`/`temp_c` blank and note
-  them; do not invent values.
+- Fill a missing `score` with the median of that site's observed scores (this
+  exercise's fixed rule). Leave missing `pH`/`temp_c` blank and note them; do not
+  invent values.
 
 ## No-go zones (the AI must not do these)
 - Do not drop any sample rows. The merged file must have 60 rows.
@@ -33,8 +34,10 @@ trend in water quality score over time by site.
 - Do not change a value to make a check pass.
 
 ## Verification gates (how we know it is done)
-- `python validate_data.py` passes.
+- `python validate_data.py` passes. Every check must be finished: an unfinished
+  check does not count as a pass.
 - 60 rows, all six canonical columns present.
 - All dates match the raw source files exactly, not just "parses and falls in 2023"
   (that weaker check can pass on a partially misparsed file).
-- `score` values are within 0-100.
+- `score` values are numbers within 0-100, with none blank.
+- Every `sample_id` has its source site.

@@ -220,7 +220,7 @@
       <div class="accordion-body">
         <ul><li><a href="#this-is-not-a-lesson-about-letting-ai-do-the-work">This is not a lesson about letting AI do the work</a></li>
 <li><a href="#why-generated-code-can-raise-your-cognitive-load">Why generated code can raise your cognitive load</a></li>
-<li><a href="#the-run-revise-reject-checkpoint">The run / revise / reject checkpoint</a></li>
+<li><a href="#the-run-revise-or-reject-checkpoint">The run, revise or reject checkpoint</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -362,13 +362,13 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Before We Use AI: What Are We Practising?</h1>
-        <p>Last updated on 2026-08-31 |
+        <p>Last updated on 2026-11-07 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/00-before-ai.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
 
 
-        <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 28 minutes</p>
+        <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 45 minutes</p>
 
         <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
@@ -383,7 +383,7 @@
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
-<ul><li>What are we actually practising in this lesson?</li>
+<ul><li>What are we practising in this lesson?</li>
 <li>When does an AI coding tool help me learn, and when does it get in
 the way?</li>
 <li>How do I decide whether to trust a result the AI gave me?</li>
@@ -394,10 +394,12 @@ the way?</li>
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Distinguish between code generation, code understanding, and code
-validation.</li>
-<li>Use a structured checkpoint to decide whether an AI-generated result
-is safe to run, revise, or reject.</li>
+<ul><li>Tell code generation, code understanding and code validation
+apart.</li>
+<li>Use a checkpoint to decide whether to run, revise or reject an
+AI-generated result.</li>
+<li>Reject a plausible wrong result with evidence from a check you chose
+yourself.</li>
 </ul></div>
 </div>
 </div>
@@ -407,95 +409,86 @@ is safe to run, revise, or reject.</li>
 <hr class="half-width"><p>It is tempting to treat an AI coding agent as a machine that turns a
 sentence into a finished script. You type “clean this data,” code
 appears, it runs, and you move on.</p>
-<p>This lesson is about the opposite skill. The point is to learn how to
-<strong>inspect, question, constrain, and validate</strong> AI-generated
-code so that the result is trustworthy enough for research. Throughout
-the lesson you will be asked to explain what the AI did, not only run
-what it produced.</p>
-<p>Three things are easy to confuse:</p>
-<ul><li>
-<strong>Code generation</strong> is getting the AI to produce
-something that runs.</li>
-<li>
-<strong>Code understanding</strong> is being able to say, in plain
-language, what the code does and why.</li>
-<li>
-<strong>Code validation</strong> is having evidence that the code is
-correct for <em>your</em> data and <em>your</em> research question.</li>
-</ul><p>Generation is the easy part now. Understanding and validation are the
-parts that make code trustworthy, and they are still your job.</p>
-<div id="ai-can-make-code-appear-before-understanding-appears" class="callout">
+<p>This lesson teaches the opposite skill. You learn to inspect,
+question, constrain and validate AI-generated code until a result is
+trustworthy enough for research. You will often explain what the AI did,
+and not only run what it produced.</p>
+<p>Three skills are easy to confuse:</p>
+<ul><li>Code generation is getting the AI to produce something that
+runs.</li>
+<li>Code understanding is saying in plain language what the code does
+and why.</li>
+<li>Code validation is having evidence that the code is correct for your
+data and your research question.</li>
+</ul><p>Generation is the easy part now. Understanding and validation make
+code trustworthy, and they are still your job.</p>
+<div id="code-can-appear-before-understanding-does" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <span class="callout-header">Callout</span>
-<div id="ai-can-make-code-appear-before-understanding-appears" class="callout-inner">
-<h3 class="callout-title">AI can make code appear before understanding
-appears</h3>
+<div id="code-can-appear-before-understanding-does" class="callout-inner">
+<h3 class="callout-title">Code can appear before understanding does</h3>
 <div class="callout-content">
-<p>A chatbot or agent can produce a working-looking script faster than
-you can read it. That is the core risk for a learner. If the code shows
-up before you understand it, you have skipped the step where learning
-actually happens.</p>
-<p>In research this has a second cost. <strong>Working code is not the
-same as trustworthy code.</strong> A script can run cleanly, pass a
-quick check, and still quietly change a threshold, drop rows, or misread
-a date format in a way that changes your conclusion.</p>
+<p>An agent can produce a working-looking script faster than you can
+read it. If the code shows up before you understand it, you skip the
+step where learning happens.</p>
+<p>Research adds a second cost. Working code is not the same as
+trustworthy code. A script can run cleanly, pass a quick check, and
+still change a threshold, drop rows or misread a date format in a way
+that changes your conclusion.</p>
 </div>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="why-generated-code-can-raise-your-cognitive-load">Why generated code can raise your cognitive load<a class="anchor" aria-label="anchor" href="#why-generated-code-can-raise-your-cognitive-load"></a></h2>
-<hr class="half-width"><p>It sounds backwards: if the AI writes the code, shouldn’t that be
-<em>less</em> work? For a novice, often the opposite is true. To judge
-whether generated code is correct, you have to hold in your head:</p>
+<hr class="half-width"><p>It sounds backwards. If the AI writes the code, you should have less
+to do. But to judge generated code you have to hold four things in
+mind:</p>
 <ul><li>what you asked for,</li>
-<li>what the code actually does,</li>
+<li>what the code does,</li>
 <li>what assumptions it made,</li>
 <li>and whether those assumptions fit your data.</li>
-</ul><p>Verifying code you did not write is frequently harder than writing it
-yourself. When the AI also reaches for a library you have not seen, an
-advanced language feature, or an abstraction the lesson has not covered,
-the work of understanding grows instead of shrinks. We will name these
-moments when they come up.</p>
+</ul><p>Reviewing unfamiliar generated code can add load, especially when it
+uses a library, a language feature or an abstraction you have not met.
+We name these moments when they come up.</p>
 <div id="accordionInstructor1" class="accordion instructor-note accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor note: set the tone early </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
-<p>The goal of this episode is to reset expectations before learners
-open a terminal. Some will arrive expecting a productivity demo. Be
-explicit that the workshop measures whether they can <em>explain and
-validate</em> AI output, not how fast they can generate it.</p>
-<p>Signs to watch for across the whole workshop:</p>
+<p>Reset expectations before learners open a terminal. Some arrive
+expecting a productivity demo. Say clearly that the workshop measures
+whether they can explain and validate AI output, not how fast they can
+generate it.</p>
+<p>Watch for these signs throughout the workshop:</p>
 <ul><li>Learners who are impressed that the agent can read their files but
 cannot say what it changed.</li>
 <li>Learners who accept output they cannot explain because “it
 ran.”</li>
-<li>Learners who turn to the AI before turning to a helper, which hides
-where they are stuck.</li>
-</ul><p>Normalise bringing AI confusion back into the room. Treat confusing
-AI output as a shared teaching artefact, not a personal failure.</p>
+<li>Learners who turn to the AI before a helper, which hides where they
+are stuck.</li>
+</ul><p>Bring AI confusion back into the room. Treat confusing output as a
+shared teaching example and not a personal failure.</p>
 </div>
 </div>
 </div>
 </div>
-</section><section><h2 class="section-heading" id="the-run-revise-reject-checkpoint">The run / revise / reject checkpoint<a class="anchor" aria-label="anchor" href="#the-run-revise-reject-checkpoint"></a></h2>
+</section><section><h2 class="section-heading" id="the-run-revise-or-reject-checkpoint">The run, revise or reject checkpoint<a class="anchor" aria-label="anchor" href="#the-run-revise-or-reject-checkpoint"></a></h2>
 <hr class="half-width"><p>Every time the AI hands you something, you make a decision. Make it
-on purpose. Ask:</p>
-<ol style="list-style-type: decimal"><li>
-<strong>Can I explain what this does?</strong> If not, you are not
-ready to approve it.</li>
-<li>
-<strong>What did it assume about my data?</strong> Name at least one
-assumption.</li>
-<li>
-<strong>What evidence do I have that it is correct?</strong> “It
-ran” is not evidence of correctness.</li>
-<li>
-<strong>Decision:</strong> run it, revise it, or reject it.</li>
-</ol><p>You will use this same checkpoint, in more detail, throughout the
+on purpose. Two different questions are involved:</p>
+<ul><li>Action permission: may this command run? Check what it reads and
+writes.</li>
+<li>Result approval: is this result good enough to use? That needs
+evidence.</li>
+</ul><p>Permission to run an action is not approval of its result. Ask:</p>
+<ol style="list-style-type: decimal"><li>Can I explain what this does? If not, you are not ready to approve
+it.</li>
+<li>What did it assume about my data? Name at least one assumption.</li>
+<li>What evidence shows it is correct? “It ran” is not evidence.</li>
+<li>Decision: run it, revise it or reject it.</li>
+</ol><p>You will use this checkpoint, in more detail, throughout the
 lesson.</p>
 <div id="challenge-practise-the-checkpoint" class="callout challenge">
 <div class="callout-square">
@@ -505,8 +498,8 @@ lesson.</p>
 <div id="challenge-practise-the-checkpoint" class="callout-inner">
 <h3 class="callout-title">Challenge: practise the checkpoint</h3>
 <div class="callout-content">
-<p>Read this short snippet that an agent produced in response to “remove
-the bad rows from my data”:</p>
+<p>An agent produced this snippet when asked to “remove the bad rows
+from my data”:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -516,12 +509,12 @@ the bad rows from my data”:</p>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a>df.to_csv(<span class="st">"clean.csv"</span>, index<span class="op">=</span><span class="va">False</span>)</span></code></pre>
 </div>
 <p>Without running anything, answer in a sentence or two each:</p>
-<ol style="list-style-type: decimal"><li>In plain language, what does this script do?</li>
+<ol style="list-style-type: decimal"><li>What does this script do, in plain language?</li>
 <li>What does it assume “bad rows” means?</li>
-<li>Name one way this could quietly damage a real research dataset.</li>
-<li>Would you run it, revise it, or reject it for a dataset where
-missing values are meaningful (for example, a survey where “no answer”
-is a valid response)?</li>
+<li>Name one way it could quietly damage a real research dataset.</li>
+<li>Would you run it, revise it or reject it for a dataset where missing
+values carry meaning, such as a survey where “no answer” is a valid
+response?</li>
 </ol></div>
 </div>
 </div>
@@ -530,45 +523,43 @@ is a valid response)?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
-<ol style="list-style-type: decimal"><li>It reads <code>data.csv</code>, drops every row that has a missing
-value in <em>any</em> column, and writes the result to
-<code>clean.csv</code>.</li>
+<ol style="list-style-type: decimal"><li>It reads <code>data.csv</code>, drops every row with a missing value
+in any column, and writes the result to <code>clean.csv</code>.</li>
 <li>It assumes “bad rows” means “rows with any missing value.” That is
-the AI’s interpretation, not yours.</li>
+the AI’s reading, not yours.</li>
 <li>
-<code>dropna()</code> with no arguments removes a row if
-<em>any</em> column is empty. In a wide dataset, one empty optional
-field can delete an otherwise complete observation, silently shrinking
-your sample.</li>
-<li>Revise or reject. For data where missingness is meaningful, dropping
-those rows changes what the data represents. You would constrain which
-columns to check, or impute, instead. The code runs perfectly and is
-still wrong for your question.</li>
+<code>dropna()</code> with no arguments removes a row if any column
+is empty. In a wide dataset, one empty optional field deletes an
+otherwise complete observation, and the sample shrinks without
+notice.</li>
+<li>Revise or reject. If missingness has meaning, dropping those rows
+changes what the data represent. You would limit which columns to check,
+or impute. The code runs perfectly and is still wrong for your
+question.</li>
 </ol></div>
 </div>
 </div>
 </div>
-<div id="quick-check-what-does-dropna-actually-remove" class="callout challenge">
+<div id="quick-check-what-does-dropna-remove" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="quick-check-what-does-dropna-actually-remove" class="callout-inner">
+<div id="quick-check-what-does-dropna-remove" class="callout-inner">
 <h3 class="callout-title">Quick check: what does <code>dropna()</code>
-actually remove?</h3>
+remove?</h3>
 <div class="callout-content">
-<p>Given a table with columns <code>site</code>, <code>date</code>,
-<code>score</code>, and <code>notes</code>, where only
-<code>notes</code> has some blank cells, what does
-<code>df.dropna()</code> (no arguments) do?</p>
+<p>A table has columns <code>site</code>, <code>date</code>,
+<code>score</code> and <code>notes</code>. Only <code>notes</code> has
+blank cells. What does <code>df.dropna()</code> with no arguments
+do?</p>
 <ol style="list-style-type: decimal"><li>Drops rows where every column is blank.</li>
-<li>Drops rows where the <code>notes</code> column specifically is
-blank.</li>
-<li>Drops rows where <em>any</em> column is blank, including
+<li>Drops rows where the <code>notes</code> column is blank.</li>
+<li>Drops rows where any column is blank, including
 <code>notes</code>.</li>
-<li>Drops the <code>notes</code> column entirely, keeping all rows.</li>
+<li>Drops the <code>notes</code> column and keeps all rows.</li>
 </ol></div>
 </div>
 </div>
@@ -577,15 +568,115 @@ blank.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
-<p><strong>3.</strong> <code>dropna()</code> with no arguments checks
-every column and drops a row if <em>any</em> of them is blank, even if
-the missing value is in a column you would consider optional, like
-<code>notes</code>. Options 1 and 2 describe common but wrong
-assumptions about how it scopes the check; option 4 confuses dropping
+<p><strong>3.</strong> With no arguments, <code>dropna()</code> checks
+every column and drops a row if any of them is blank, even in a column
+you think of as optional. Options 1 and 2 describe common wrong
+assumptions about how it scopes the check. Option 4 confuses dropping
 rows with dropping a column, which is a different method
-(<code>drop(columns=...)</code>) entirely.</p>
+(<code>drop(columns=...)</code>).</p>
+</div>
+</div>
+</div>
+</div>
+<div id="a-result-can-pass-one-check-and-still-be-wrong" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="a-result-can-pass-one-check-and-still-be-wrong" class="callout-inner">
+<h3 class="callout-title">A result can pass one check and still be
+wrong</h3>
+<div class="callout-content">
+<p>The source documentation says site C writes dates as day-month-year.
+The first record in <code>data/site_C.csv</code> is
+<code>SC001,05-01-2023,69.4,7.0,14.2</code>.</p>
+<p>Before you run code or ask an agent, write down:</p>
+<ol style="list-style-type: decimal"><li>What ISO date should SC001 have?</li>
+<li>Would keeping all 20 site C rows prove the dates are correct?</li>
+<li>What must you see before you approve these dates for a plot?</li>
+</ol><p>With a partner, read this candidate transformation. It is in your
+project folder as <code>date_review.py</code>. Explain what each line
+does.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a>raw <span class="op">=</span> pd.read_csv(<span class="st">"data/site_C.csv"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a>candidate <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a>    <span class="st">"sample_id"</span>: raw[<span class="st">"StationID"</span>],</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1" aria-label="code-block-2-6"></a>    <span class="st">"date"</span>: pd.to_datetime(raw[<span class="st">"DateTime"</span>], <span class="bu">format</span><span class="op">=</span><span class="st">"mixed"</span>).dt.strftime(<span class="st">"%Y-%m-</span><span class="sc">%d</span><span class="st">"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1" aria-label="code-block-2-7"></a>})</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1" aria-label="code-block-2-8"></a><span class="bu">print</span>(<span class="st">"Rows:"</span>, <span class="bu">len</span>(candidate))</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1" aria-label="code-block-2-9"></a><span class="bu">print</span>(candidate.head(<span class="dv">2</span>).to_string(index<span class="op">=</span><span class="va">False</span>))</span></code></pre>
+</div>
+<p>Run <code>python date_review.py</code>. It reads the raw file and
+prints output. It does not change the raw data. Permission to run this
+action is separate from accepting its result.</p>
+<p>Now add these checks to the end of the script. Fill in the blank from
+the source format, without AI.</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="cf">assert</span> <span class="bu">len</span>(candidate) <span class="op">==</span> <span class="dv">20</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a>actual <span class="op">=</span> candidate.set_index(<span class="st">"sample_id"</span>).loc[<span class="st">"SC001"</span>, <span class="st">"date"</span>]</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a><span class="cf">assert</span> actual <span class="op">==</span> <span class="st">"__________"</span>, <span class="ss">f"SC001 became </span><span class="sc">{</span>actual<span class="sc">}</span><span class="ss">"</span></span></code></pre>
+</div>
+<p>Run it again. Which check fails? What does the passing check
+establish?</p>
+<p>Change the date parser, by hand or by asking for one change. Read the
+changed line, rerun, and write one of: approve, revise, reject. Add your
+evidence. Also say what a check on one record does not yet
+establish.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
+</button>
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div class="accordion-body">
+<p>SC001 should be <code>2023-01-05</code>. The faulty parser gives
+<code>2023-05-01</code>. Both are valid dates, and the row-count check
+still passes. SC002 becomes <code>2023-12-01</code> and not
+<code>2023-01-12</code>.</p>
+<p>Replace <code>format="mixed"</code> with
+<code>format="%d-%m-%Y"</code>. Both checks then pass. They cover the
+row count and one expected date. They do not show that every date and
+score is right. Before you approve the full output, compare every
+sample’s date with its source record under the documented format.</p>
+<p>A strong answer names the wrong value, the independent expected
+value, the failed assertion and the coverage that is still missing.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionInstructor2" class="accordion instructor-note accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor2" aria-expanded="false" aria-controls="collapseInstructor2">
+  <h3 class="accordion-header" id="headingInstructor2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Fallback and pacing for the date exercise </h3>
+</button>
+<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
+<div class="accordion-body">
+<p>If a learner cannot run the script, give them the saved output in
+<code>instructors/files/date-review-output.txt</code>:</p>
+<pre class="text"><code>Rows: 20
+sample_id       date
+    SC001 2023-05-01
+    SC002 2023-12-01
+AssertionError: SC001 became 2023-05-01</code></pre>
+<p>Ask for the same prediction, explanation and decision. Do not wait
+for a live agent to make this mistake. The script is deliberately
+faulty, and nothing here claims that every agent makes it.</p>
+<p>After two failed attempts, give the learner a working script. After
+the repair, show the reference validator catching eight mismatched dates
+in the faulty version and none in the repaired one
+(<code>instructors/files/backup_validate_data.py</code>). Do not present
+the saved transcript as the learner’s own run.</p>
 </div>
 </div>
 </div>
@@ -599,12 +690,10 @@ rows with dropping a column, which is a different method
 <h3 class="callout-title">Feedback checkpoint: what do you want from
 AI?</h3>
 <div class="callout-content">
-<p>On a sticky note or in the shared Etherpad, write one line: <em>what
-do you most want an AI tool to do for your research, and what are you
-most worried it will get wrong?</em> Working through this alone? Write
-the line in your own notes file instead, you will revisit it at the end
-of the lesson either way.</p>
-<p>We will come back to these at the end of the lesson.</p>
+<p>On a sticky note or in the shared Etherpad, write one line: what do
+you most want an AI tool to do for your research, and what worries you
+most about it? Working alone? Write the line in your notes file. You
+will return to it at the end of the lesson.</p>
 </div>
 </div>
 </div>
@@ -615,14 +704,16 @@ of the lesson either way.</p>
 <span class="callout-header">Key Points</span>
 <div class="callout-inner">
 <div class="callout-content">
-<ul><li>This lesson teaches you to inspect, question, constrain, and
-validate AI output, not to delegate your thinking.</li>
-<li>Generation, understanding, and validation are different skills.
+<ul><li>This lesson teaches you to inspect, question, constrain and validate
+AI output. It does not teach you to hand off your thinking.</li>
+<li>Generation, understanding and validation are different skills.
 Generation is the easy one.</li>
-<li>For a novice, verifying generated code can cost more effort than
-writing it.</li>
-<li>Working code is not the same as trustworthy code. Use the run /
-revise / reject checkpoint every time.</li>
+<li>Reviewing unfamiliar generated code can cost real effort, especially
+when it brings in ideas you do not know.</li>
+<li>Working code is not the same as trustworthy code. A result can pass
+one check and still be wrong.</li>
+<li>Permission to run an action is separate from approval of its
+result.</li>
 </ul></div>
 </div>
 </div>
@@ -691,8 +782,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/00-before-ai.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/00-before-ai.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-08-31",
-  "datePublished": "2026-11-03"
+  "dateModified": "2026-11-07",
+  "datePublished": "2026-11-07"
 }
 
   </script><script>

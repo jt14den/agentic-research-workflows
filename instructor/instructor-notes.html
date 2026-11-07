@@ -413,279 +413,398 @@
         <h1>Instructor Notes</h1>
         
 
-<section><h2 class="section-heading" id="teaching-philosophy-the-researcher-stays-the-active-reviewer">Teaching Philosophy: The Researcher Stays the Active Reviewer<a class="anchor" aria-label="anchor" href="#teaching-philosophy-the-researcher-stays-the-active-reviewer"></a>
+<section><h2 class="section-heading" id="teaching-approach-the-researcher-stays-the-active-reviewer">Teaching approach: the researcher stays the active reviewer<a class="anchor" aria-label="anchor" href="#teaching-approach-the-researcher-stays-the-active-reviewer"></a>
 </h2>
 <hr class="half-width">
 <p>This lesson helps researchers work with AI coding agents without
-handing off the thinking. The shift is from writing every line of syntax
-towards reading, questioning, and validating code the agent produced.
-Resist framing this as “the AI does the work and you orchestrate”, the
-episodes deliberately push back on that. The core challenge for learners
-isn’t syntax; it’s managing <strong>cognitive load</strong> and staying
-the <strong>active reviewer</strong> who can explain and judge the
-result.</p>
+handing off the thinking. The shift is from writing every line toward
+reading, questioning and checking code the agent produced. The episodes
+push back on the idea that “the AI does the work and you orchestrate.”
+The core challenge for learners is not syntax. It is managing cognitive
+load and staying the reviewer who can explain and judge the result.</p>
+<p>The lesson teaches three ways of working with AI, on one dataset:</p>
+<ol style="list-style-type: decimal">
+<li>Ask AI to help you understand. Predict first, then ask for an
+explanation or hint, then compare it with the data.</li>
+<li>Delegate one small change. Introduce each practice when the task
+creates a need for it: state the expected result, review the plan,
+inspect the action, read the diff, compare the output with an
+independent expectation.</li>
+<li>Test and hand off a result. Complete one check, show that it fails
+on bad data, and have another pair rerun the work without AI.</li>
+</ol>
 <div class="section level3">
-<h3 id="key-concepts-to-emphasize">Key Concepts to Emphasize:<a class="anchor" aria-label="anchor" href="#key-concepts-to-emphasize"></a>
+<h3 id="key-ideas-to-emphasise">Key ideas to emphasise<a class="anchor" aria-label="anchor" href="#key-ideas-to-emphasise"></a>
 </h3>
 <ul>
-<li>
-<strong>Verification Load:</strong> It is often harder to
-<em>verify</em> code you didn’t write than to write it yourself.
-Normalise this “friction” as a sign of high-quality research.</li>
-<li>
-<strong>Evidence Mantra:</strong> “I do not approve changes; I
-approve evidence.” This should be the recurring theme of the
-workshop.</li>
-<li>
-<strong>Sandboxing:</strong> Always emphasize the security
-implications of giving an AI direct access to the filesystem.</li>
+<li>Reviewing unfamiliar generated code can add cognitive load,
+especially when it brings in concepts a learner does not know. Treat
+that friction as normal.</li>
+<li>Permission to run an action is separate from approval of its result.
+Evidence supports approval.</li>
+<li>A check earns trust when it fails on a known-bad input.</li>
+<li>Access limits are enforced by tool permissions and isolation. A line
+in a Markdown file is a request.</li>
 </ul>
 </div>
 <div class="section level3">
-<h3 id="the-worked-example-one-project-all-the-way-through">The worked example (one project all the way through)<a class="anchor" aria-label="anchor" href="#the-worked-example-one-project-all-the-way-through"></a>
+<h3 id="the-worked-example">The worked example<a class="anchor" aria-label="anchor" href="#the-worked-example"></a>
 </h3>
-<p>The whole lesson uses one fixture,
-<code>learners/files/coastal-water-quality/</code> (three messy site
-CSVs). Learners carry it from spec to clean merge to validation to a
-trend plot in the capstone. Two anchors to keep in mind: -
-<strong>Expected result:</strong> a merged
-<code>data/master_dataset.csv</code> with <strong>60 rows</strong> (3
-sites x 20 weekly samples), all dates in 2023. - <strong>The planted
-trap (the lesson’s climax):</strong> site C dates are day-month-year
-(<code>05-01-2023</code> is 5 January). A naive
-<code>pd.to_datetime()</code> call with no explicit format actually
-<em>raises an error</em> on this file (day values like 19 and 26 can’t
-be a month) — that’s a loud, easy failure, and a fine outcome if it
-happens. The dangerous case is <code>format="mixed"</code>: it silently
-swaps day and month for some rows (<code>05-01-2023</code> becomes May
-1) while accidentally parsing others correctly (<code>19-01-2023</code>
-still lands in January), so a handful of wrong dates hide among
-mostly-right ones. Either way the row count stays 60 and the trend plot
-is still wrong. This is the concrete “working code is not trustworthy
-code” moment; let it happen and use it.</p>
+<p>The whole lesson uses one synthetic fixture,
+<code>learners/files/coastal-water-quality/</code>: three messy site
+CSVs. The data describe no real study. Learners carry it from a plan to
+a clean merge, to checks, to a trend plot in the capstone.</p>
+<ul>
+<li>Expected result: <code>data/master_dataset.csv</code> with 60 rows
+(3 sites x 20 weekly samples), all dates in 2023. Missing scores are
+filled with the median of that site’s observed scores: A004 = 72.0,
+B-006 = 71.5, SC002 = 71.6. This is the exercise’s fixed choice and not
+a recommendation for real studies.</li>
+<li>The planted trap: site C dates are day-month-year
+(<code>05-01-2023</code> is 5 January). A bare
+<code>pd.to_datetime()</code> with no format raises an error on this
+file, which is a loud and acceptable failure. The dangerous case is
+<code>format="mixed"</code>. It swaps day and month for some rows and
+parses others correctly by accident. The row count stays 60, and the
+plot is still wrong.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="before-any-session">Before any session<a class="anchor" aria-label="anchor" href="#before-any-session"></a>
+</h3>
+<p>Run these from the lesson folder and keep the output:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">python</span> instructors/files/test_validators.py</span></code></pre>
+</div>
+<p>It builds a good file and eight bad ones in a temporary folder, and
+confirms that the reference validator accepts the good file and rejects
+each bad one. Record the Claude Code version, the Python and package
+versions, the model name and the date. Test a learner route on each
+platform you will support: download, environment, one read-only agent
+action and one small diff.</p>
 <hr>
 </div>
-</section><section><h2 class="section-heading" id="episode-before-we-use-ai-opening">Episode: Before We Use AI (opening)<a class="anchor" aria-label="anchor" href="#episode-before-we-use-ai-opening"></a>
+</section><section><h2 class="section-heading" id="timed-route-four-hour-pilot">Timed route: four-hour pilot<a class="anchor" aria-label="anchor" href="#timed-route-four-hour-pilot"></a>
 </h2>
 <hr class="half-width">
-<ul>
-<li>
-<strong>Purpose:</strong> Reset expectations before anyone opens a
-terminal. Some learners arrive expecting a speed demo; this episode says
-plainly that the workshop measures whether they can <em>explain and
-validate</em> AI output.</li>
-<li>
-<strong>Set the norm:</strong> Make it safe to say “I don’t
-understand this line.” Treat confusing AI output as a shared teaching
-artefact, not a personal failure.</li>
-<li>
-<strong>The run / revise / reject checkpoint</strong> introduced
-here is reused in every later episode. Refer back to it by name.</li>
-<li>
-<strong>Sticky-note opener:</strong> Collect what learners want from
-AI and what they fear it will get wrong. Revisit at the end.</li>
-</ul></section><section><h2 class="section-heading" id="episode-1-understanding-cli-based-ai">Episode 1: Understanding CLI-Based AI<a class="anchor" aria-label="anchor" href="#episode-1-understanding-cli-based-ai"></a>
-</h2>
-<hr class="half-width">
-<ul>
-<li>
-<strong>Auth Check:</strong> Ask learners to run
-<code>claude --version</code>. If it returns a version number they are
-ready. If not, have them launch <code>claude</code> once and complete
-sign-in before continuing.</li>
-<li>
-<strong>Model Check:</strong> Have all learners set the same model
-with <code>/model</code> before starting (pick the current recommended
-model close to the session date), so outputs are comparable and
-provenance records are meaningful.</li>
-<li>
-<strong>Starter folder:</strong> Everyone works in the provided
-<code>coastal-water-quality</code> folder (ships at
-<code>learners/files/coastal-water-quality/</code>). Confirm learners
-have it and can <code>ls data/</code> to see the three site CSVs before
-starting. Episode 1 has them inspect a real file and compare the agent’s
-description to it, the first hands-on win.</li>
-<li>
-<strong>The Browser vs. CLI distinction:</strong> Use the analogy of
-a “consultant” (Browser) vs. a “research assistant with keys to the lab”
-(CLI).</li>
-<li>
-<strong>Discussion:</strong> The prompt about “ChatGPT writing code
-that looks correct but fails” is a great way to bond over shared
-frustration and set the stage for why we need the CLI (to run and test
-immediately).</li>
-</ul></section><section><h2 class="section-heading" id="episode-2-best-practices-for-prompting">Episode 2: Best Practices for Prompting<a class="anchor" aria-label="anchor" href="#episode-2-best-practices-for-prompting"></a>
-</h2>
-<hr class="half-width">
-<ul>
-<li>
-<strong>CO-STAR vs. CLEAR:</strong> Don’t get bogged down in the
-acronyms. The goal is <em>intentionality</em>.</li>
-<li>
-<strong>Live Demo Tip:</strong> Show a “Bad Prompt” vs. a “Good
-Prompt” live. Purposely run a vague command and show how it fails or
-produces messy output before using the refined version.</li>
-<li>
-<strong>Self-Correction:</strong> This is the “lightbulb” moment.
-Demonstrate asking the AI, “Are you sure? Review your code for edge
-cases.”</li>
-</ul></section><section><h2 class="section-heading" id="episode-3-data-cleaning-live-demo">Episode 3: Data Cleaning (Live Demo)<a class="anchor" aria-label="anchor" href="#episode-3-data-cleaning-live-demo"></a>
-</h2>
-<hr class="half-width">
-<ul>
-<li>
-<strong>High Intensity:</strong> This is the most technically
-demanding episode.</li>
-<li>
-<strong>Expected output:</strong>
-<code>data/master_dataset.csv</code> with 60 rows, produced by
-<code>clean_and_merge.py</code>, which learners should not modify. The
-“Update the script” challenge writes a separate
-<code>clean_feb_onward.py</code> (12 rows removed, 48 remaining) instead
-of editing the canonical script in place, so Episodes 4 and 6 can still
-rely on the full 60-row file. A wrong row count on the filter usually
-means some site C dates were silently misparsed.</li>
-<li>
-<strong>The “Safety Net”:</strong> If a learner’s AI fails to
-produce working code after two attempts, have them copy
-<code>instructors/files/backup_clean_and_merge.py</code> (it is written
-for this fixture and parses site C dates correctly). This keeps them on
-pace for the validate-and-judge steps, which are the point.</li>
-<li>
-<strong>Stop and Read:</strong> Literally tell the class to “hands
-off keyboards” for two minutes to read the generated script before they
-run it.</li>
-</ul></section><section><h2 class="section-heading" id="episode-4-validation-best-practices">Episode 4: Validation Best Practices<a class="anchor" aria-label="anchor" href="#episode-4-validation-best-practices"></a>
-</h2>
-<hr class="half-width">
-<ul>
-<li>
-<strong>Four-Layer Validation Stack</strong> (match the episode
-exactly):
-<ol style="list-style-type: decimal">
-<li>Requirement constraints / No-Go Zones (human-authored ground truth
-in <code>CLAUDE.md</code>)</li>
-<li>Executable checks you can run (finish the shipped
-<code>validate_data.py</code>)</li>
-<li>Metamorphic and invariant checks (60-row invariant; mean unchanged
-when rows are shuffled)</li>
-<li>Domain plausibility (where the researcher’s expertise is
-irreplaceable; do not omit this layer)</li>
-</ol>
-</li>
-<li>
-<strong>Build the validator:</strong> the core activity. Learners
-finish the three TODO checks in <code>validate_data.py</code>, then
-deliberately misparse the site C dates and confirm the validator now
-fails. A validator that cannot fail on a known-bad input is not
-protecting them.</li>
-</ul></section><section><h2 class="section-heading" id="episode-5-limitations-and-cautions">Episode 5: Limitations and Cautions<a class="anchor" aria-label="anchor" href="#episode-5-limitations-and-cautions"></a>
-</h2>
-<hr class="half-width">
-<ul>
-<li>
-<strong>Silent Semantic Drift:</strong> This is the most “dangerous”
-failure. The site C date trap from the worked example is the live
-version of this; refer back to it.</li>
-<li>
-<strong>Environmental Cost:</strong> This is often a new topic for
-researchers. It grounds the workflow in physical reality.</li>
-</ul></section><section><h2 class="section-heading" id="episode-6-from-ai-output-to-research-ready-code-capstone">Episode 6: From AI Output to Research-Ready Code (capstone)<a class="anchor" aria-label="anchor" href="#episode-6-from-ai-output-to-research-ready-code-capstone"></a>
-</h2>
-<hr class="half-width">
-<ul>
-<li>
-<strong>Mostly doing:</strong> budget the time for work, not
-exposition. Learners assemble the full bundle (spec, plan, code,
-validator, plot, provenance, approval decision) on the coastal
-data.</li>
-<li>
-<strong>Expect the date trap to surface</strong> for several
-learners during the plot step; that is the highlight. Collect a few
-approval decisions and read them aloud, especially the honest “revise”
-answers.</li>
-<li>
-<strong>Fallbacks:</strong> <code>backup_clean_and_merge.py</code>
-and <code>backup_plot_trend.py</code> let a stuck group still reach the
-validate-and-judge steps.</li>
-</ul></section><section><h2 class="section-heading" id="episode-7-resources-and-next-steps">Episode 7: Resources and Next Steps<a class="anchor" aria-label="anchor" href="#episode-7-resources-and-next-steps"></a>
-</h2>
-<hr class="half-width">
-<ul>
-<li>
-<strong>The Toolscape:</strong> Acknowledge that tools (Aider,
-Cursor, Claude Code) change weekly. Focus on the <em>principles</em>
-(CLI, validation, provenance) rather than specific software.</li>
-<li>
-<strong>Monday workflow card:</strong> the takeaway exercise; push
-learners to name the one check that would catch a silent error in their
-own data.</li>
-<li>
-<strong>Attribution:</strong> Remind learners that while AI can’t be
-an author, transparency about its use is a core tenet of Open
-Science.</li>
-</ul>
-<hr></section><section><h2 class="section-heading" id="suggested-first-pilot-path-compressed">Suggested first-pilot path (compressed)<a class="anchor" aria-label="anchor" href="#suggested-first-pilot-path-compressed"></a>
-</h2>
-<hr class="half-width">
-<p>For a first pilot, do not teach every section evenly. Protect the
-practical spine and let the rest be optional. The pilot should answer
-one question: <strong>can learners use Claude Code to clean a small
-messy dataset, explain what changed, validate it with checks, and decide
-whether to approve the result?</strong></p>
-<p><strong>Teach live:</strong> Before We Use AI (briefly); CLI setup,
-the early data inspection, and <code>/init</code>; the Living Spec; Data
-Cleaning with AI; the <code>validate_data.py</code> approval gate; the
-capstone bundle.</p>
-<p><strong>Make optional / skim if short on time:</strong> CO-STAR and
-reasoning-model detail; the advanced tool landscape, MCP, and
-local-model material in Resources; multi-model verification.</p>
-<p>If you run short, cut whole objectives (and their assessments), not
-bits from everywhere. The data-cleaning-to-validation-to-capstone arc is
-the part that must survive.</p>
-<hr></section><section><h2 class="section-heading" id="troubleshooting-common-issues">Troubleshooting &amp; Common Issues<a class="anchor" aria-label="anchor" href="#troubleshooting-common-issues"></a>
-</h2>
-<hr class="half-width">
+<p>Assume learners finish installation or receive a supplied environment
+before they arrive. Offer a separate 30-minute setup clinic. Send
+prework of 20 to 30 minutes: environment, download, the synthetic-data
+statement and a ten-minute no-AI entry check.</p>
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="23%">
+<col width="30%">
+<col width="23%">
+<col width="23%">
+</colgroup>
+<thead><tr>
+<th>Elapsed</th>
+<th align="right">Min</th>
+<th>Activity</th>
+<th>Where</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>00:00</td>
+<td align="right">15</td>
+<td>Setup diagnostic and entry check. Assign the live-agent route or the
+saved-output route.</td>
+<td><code>learners/setup.md</code></td>
+</tr>
+<tr>
+<td>00:15</td>
+<td align="right">30</td>
+<td>
+<code>dropna</code> reading, then the date exercise: predict, pair
+trace, run, add checks, decide.</td>
+<td>Episode 0</td>
+</tr>
+<tr>
+<td>00:45</td>
+<td align="right">25</td>
+<td>CLI scope, shell versus agent, <code>/init</code> once, one diff,
+one constraint plus check.</td>
+<td>Episode 1</td>
+</tr>
+<tr>
+<td>01:10</td>
+<td align="right">10</td>
+<td>Catch-up checkpoint. Share a question the agent did not
+resolve.</td>
+<td></td>
+</tr>
+<tr>
+<td>01:20</td>
+<td align="right">25</td>
+<td>Repair a prompt. Review a plan, mark one unsupported assumption,
+approve one bounded action.</td>
+<td>Episode 2</td>
+</tr>
+<tr>
+<td>01:45</td>
+<td align="right">15</td>
+<td>Break.</td>
+<td></td>
+</tr>
+<tr>
+<td>02:00</td>
+<td align="right">40</td>
+<td>Cleaning: predict, plan, one bounded change, read the diff, explain,
+run.</td>
+<td>Episode 3</td>
+</tr>
+<tr>
+<td>02:40</td>
+<td align="right">35</td>
+<td>Complete the date check, run it on good and bad files, discuss what
+remains unchecked.</td>
+<td>Episode 4</td>
+</tr>
+<tr>
+<td>03:15</td>
+<td align="right">10</td>
+<td>Catch-up using the checkpoint packs. Restore the canonical 60-row
+output.</td>
+<td></td>
+</tr>
+<tr>
+<td>03:25</td>
+<td align="right">25</td>
+<td>Assemble and swap the bundle. The partner reruns without AI.</td>
+<td>Episode 6</td>
+</tr>
+<tr>
+<td>03:50</td>
+<td align="right">10</td>
+<td>Unaided transfer decision and the Monday card.</td>
+<td>Episode 7</td>
+</tr>
+</tbody>
+</table>
+<p>Episode 5 is not taught as its own block in the pilot. Its scope and
+privacy points sit in Episode 1, and its failure modes sit in Episodes 2
+and 4. The full eight-episode course is longer. The episode front matter
+adds up to about 9.5 hours, before breaks and installation.</p>
 <div class="section level3">
-<h3 id="api-quotas-limits">API Quotas &amp; Limits<a class="anchor" aria-label="anchor" href="#api-quotas-limits"></a>
+<h3 id="reference-and-follow-on">Reference and follow-on<a class="anchor" aria-label="anchor" href="#reference-and-follow-on"></a>
 </h3>
-<p>If learners hit “Resource Exhausted” errors, it’s likely they’ve
-exceeded their free tier quota or are prompting too rapidly. Suggest
-they wait 60 seconds or use a smaller “context” (don’t send every file
-in the folder).</p>
+<ul>
+<li>Reference: the CO-STAR framework, tool comparisons, reasoning-effort
+settings, MCP, the model taxonomy, the environmental discussion and
+publication policies.</li>
+<li>Follow-on: write every validator check yourself, a metamorphic
+shuffle test, alternative missing-value methods, the February filter,
+registry verification, a multi-model critique, and Git recovery
+practice. Do not claim these objectives in the four-hour pilot.</li>
+</ul>
 </div>
 <div class="section level3">
-<h3 id="claude-command-not-found">“claude: command not found”<a class="anchor" aria-label="anchor" href="#claude-command-not-found"></a>
+<h3 id="checkpoint-packs">Checkpoint packs<a class="anchor" aria-label="anchor" href="#checkpoint-packs"></a>
 </h3>
-<p>Ensure the global npm install
-(<code>npm install -g @anthropic-ai/claude-code</code>) worked and that
-their <code>PATH</code> is updated. In Docker, this is handled
-automatically. On host machines, they might need to restart their
-terminal.</p>
+<p>Keep four folders ready, so a learner who falls behind can rejoin
+without skipping the judgment tasks:</p>
+<ol style="list-style-type: decimal">
+<li>Raw inputs only.</li>
+<li>A working <code>clean_and_merge.py</code>
+(<code>instructors/files/backup_clean_and_merge.py</code>) with its
+output.</li>
+<li>The complete checks
+(<code>instructors/files/backup_validate_data.py</code>).</li>
+<li>The final bundle, including <code>plot_trend.py</code>
+(<code>instructors/files/backup_plot_trend.py</code>).</li>
+</ol>
+<p>A learner who uses a pack still predicts, explains, tests and
+decides. Label which parts were supplied.</p>
+</div>
+<div class="section level3">
+<h3 id="when-outputs-differ">When outputs differ<a class="anchor" aria-label="anchor" href="#when-outputs-differ"></a>
+</h3>
+<p>Compare behaviour and not text. Stop after each bounded change. Ask
+every learner for the same prediction and the same evidence. After two
+failed generation attempts, use a supplied script.</p>
+</div>
+<div class="section level3">
+<h3 id="no-account-learners">No-account learners<a class="anchor" aria-label="anchor" href="#no-account-learners"></a>
+</h3>
+<p>They use the same terminal and Python files, plus saved agent plans,
+diffs and transcripts. They make the same approval decisions and run the
+same tests. If Python is also unavailable, supply a pre-provisioned
+terminal or a loan device. A printed-output-only route can assess
+review, but it cannot honestly certify independent execution. Do not
+require a second vendor account for any pilot outcome.</p>
+</div>
+<div class="section level3">
+<h3 id="entry-check-ten-minutes-no-ai">Entry check (ten minutes, no AI)<a class="anchor" aria-label="anchor" href="#entry-check-ten-minutes-no-ai"></a>
+</h3>
+<p>Learners should be able to: go to the supplied folder; list the three
+inputs; run a supplied script; say which rows <code>dropna()</code>
+removes; predict how four January records per site change the 60-row
+total; and see that <code>05-01-2023</code> needs the source metadata.
+Treat errors as information for routing. Offer a refresher or a
+supported pair. Do not surprise anyone with an exclusion after
+enrolment.</p>
+<hr>
+</div>
+</section><section><h2 class="section-heading" id="helper-observation-sheet">Helper observation sheet<a class="anchor" aria-label="anchor" href="#helper-observation-sheet"></a>
+</h2>
+<hr class="half-width">
+<p>Ask helpers to record, for each learner who asks for help:</p>
+<ul>
+<li>The time and the episode.</li>
+<li>The route: live agent or saved output.</li>
+<li>What the help was about: installation, Python, shell, a concept, or
+the agent.</li>
+<li>Whether a concept stayed unresolved at the end.</li>
+</ul>
+<p>Helpers route a learner to a known state. They do not do the
+learner’s judgment task. Record whether the partner in the capstone
+actually reran the bundle or only inspected saved output.</p>
+<hr></section><section><h2 class="section-heading" id="episode-notes">Episode notes<a class="anchor" aria-label="anchor" href="#episode-notes"></a>
+</h2>
+<hr class="half-width">
+<div class="section level3">
+<h3 id="episode-0-before-we-use-ai">Episode 0: Before We Use AI<a class="anchor" aria-label="anchor" href="#episode-0-before-we-use-ai"></a>
+</h3>
+<ul>
+<li>Purpose: reset expectations. The workshop measures whether learners
+can explain and check AI output, not how fast they can generate it.</li>
+<li>Make it safe to say “I do not understand this line.” Treat confusing
+output as a shared example.</li>
+<li>The run, revise or reject checkpoint appears here and in every later
+episode. Refer to it by name.</li>
+<li>The date exercise is deliberately faulty teaching code. Do not claim
+every agent makes this mistake.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="episode-1-cli-based-ai">Episode 1: CLI-Based AI<a class="anchor" aria-label="anchor" href="#episode-1-cli-based-ai"></a>
+</h3>
+<ul>
+<li>Run the setup check, including the read-only agent action. A version
+number confirms only the program.</li>
+<li>Set the same available model with <code>/model</code>. Record the
+resolved model name, tool version and settings.</li>
+<li>Everyone works in the provided <code>coastal-water-quality</code>
+folder. Confirm that <code>ls data/</code> shows three files.</li>
+<li>The consultant versus research assistant analogy helps, but stress
+that access depends on configuration.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="episode-2-prompting">Episode 2: Prompting<a class="anchor" aria-label="anchor" href="#episode-2-prompting"></a>
+</h3>
+<ul>
+<li>Do not linger on acronyms. The goal is a prompt that names the
+input, the intended change, the constraints and the evidence.</li>
+<li>Show a weak prompt and a better one live. Let the weak one fail
+first.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="episode-3-data-cleaning">Episode 3: Data cleaning<a class="anchor" aria-label="anchor" href="#episode-3-data-cleaning"></a>
+</h3>
+<ul>
+<li>This is the most demanding episode.</li>
+<li>Expected output: <code>data/master_dataset.csv</code> with 60 rows.
+The February challenge writes <code>data/feb_onward.csv</code> (48 rows)
+and leaves the canonical file alone. A wrong count usually means some
+site C dates were misparsed.</li>
+<li>Safety net: after two failed attempts, use
+<code>instructors/files/backup_clean_and_merge.py</code>.</li>
+<li>Stop and read: ask the class to take their hands off the keyboards
+for two minutes.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="episode-4-validation">Episode 4: Validation<a class="anchor" aria-label="anchor" href="#episode-4-validation"></a>
+</h3>
+<ul>
+<li>The four layers: recorded requirements, executable checks,
+metamorphic and invariant checks, domain plausibility.</li>
+<li>Learners write one check, the date check, from the source
+documentation. Unfinished checks fail closed.</li>
+<li>Learners then break a copy of the output on purpose and confirm that
+the check fails. Restore the correct output afterward.</li>
+<li>The reference validator has eight checks and covers more than the
+starter.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="episode-5-limitations">Episode 5: Limitations<a class="anchor" aria-label="anchor" href="#episode-5-limitations"></a>
+</h3>
+<ul>
+<li>Silent semantic drift is the dangerous failure. The date trap is its
+live version.</li>
+<li>Spec drift: compare code with approved requirements. Do not sync
+requirements to code without evidence.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="episode-6-capstone">Episode 6: Capstone<a class="anchor" aria-label="anchor" href="#episode-6-capstone"></a>
+</h3>
+<ul>
+<li>Mostly doing. Reuse the existing cleaner and validator.</li>
+<li>The partner reruns the bundle in a fresh copy without AI. Use the
+site-relabel case as the transfer error.</li>
+<li>Read a few approval decisions aloud, especially honest “revise”
+answers.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="episode-7-resources">Episode 7: Resources<a class="anchor" aria-label="anchor" href="#episode-7-resources"></a>
+</h3>
+<ul>
+<li>Tools change fast. Focus on the principles.</li>
+<li>Monday card: push learners to name one likely error, the check that
+would catch it and one unchecked claim.</li>
+<li>AI cannot be an author. Openness about its use is part of open
+science.</li>
+</ul>
+<hr>
+</div>
+</section><section><h2 class="section-heading" id="troubleshooting">Troubleshooting<a class="anchor" aria-label="anchor" href="#troubleshooting"></a>
+</h2>
+<hr class="half-width">
+<div class="section level3">
+<h3 id="account-or-quota-failure">Account or quota failure<a class="anchor" aria-label="anchor" href="#account-or-quota-failure"></a>
+</h3>
+<p>If a learner hits a usage or quota error, switch them to the
+saved-output route. Check the account type and the current limits in the
+official documentation. Do not rely on a fixed waiting time.</p>
+</div>
+<div class="section level3">
+<h3 id="claude-command-not-found">
+<code>claude: command not found</code><a class="anchor" aria-label="anchor" href="#claude-command-not-found"></a>
+</h3>
+<p>Re-run the installer from <code>learners/setup.md</code> and restart
+the terminal. For an npm install, check Node.js 22 or newer and the
+<code>PATH</code>. Run <code>claude doctor</code> for a diagnostic.</p>
 </div>
 <div class="section level3">
 <h3 id="hallucinations">Hallucinations<a class="anchor" aria-label="anchor" href="#hallucinations"></a>
 </h3>
-<p>If a learner gets a script that imports a non-existent library (e.g.,
-<code>import science_cleaner</code>), use it as a “teachable moment” for
-the whole class about verification.</p>
+<p>If a learner gets a script that imports a nonexistent library, use it
+as a teachable moment for the class.</p>
 <hr>
 </div>
 </section><section><h2 class="section-heading" id="maintainer-checklist">Maintainer checklist<a class="anchor" aria-label="anchor" href="#maintainer-checklist"></a>
 </h2>
 <hr class="half-width">
 <p>Run through this before teaching a pilot or merging substantial
-changes. It encodes the Carpentries guidance on teaching with generative
+changes. It encodes Carpentries guidance on teaching with generative
 AI.</p>
 <div class="section level3">
 <h3 id="cognitive-load">Cognitive load<a class="anchor" aria-label="anchor" href="#cognitive-load"></a>
 </h3>
 <ul class="task-list">
 <li><label><input type="checkbox">No exercise depends on syntax,
-libraries, or abstractions the lesson has not introduced.</label></li>
+libraries or abstractions the lesson has not introduced.</label></li>
 <li><label><input type="checkbox">Where generated code is likely to
-over-reach (lambdas, regex, extra files), there is an instructor note
-flagging it.</label></li>
+over-reach (lambdas, regular expressions, extra files), an instructor
+note says so.</label></li>
 <li><label><input type="checkbox">Small, interpretable tasks come
 before larger agentic workflows.</label></li>
 </ul>
@@ -694,14 +813,13 @@ before larger agentic workflows.</label></li>
 <h3 id="learner-agency">Learner agency<a class="anchor" aria-label="anchor" href="#learner-agency"></a>
 </h3>
 <ul class="task-list">
-<li><label><input type="checkbox">No exercise can be completed by
+<li><label><input type="checkbox">No exercise can be finished by
 pasting the task into an AI and copying the answer.</label></li>
-<li><label><input type="checkbox">Every challenge requires at least
-one of: explain, predict, trace, modify-and-justify, or
+<li><label><input type="checkbox">Every challenge needs at least one
+of: explain, predict, trace, modify and justify, or
 validate.</label></li>
-<li><label><input type="checkbox">Language frames the learner as the
-active reviewer and final judge, not a passive
-orchestrator.</label></li>
+<li><label><input type="checkbox">The language frames the learner as
+the active reviewer and final judge.</label></li>
 </ul>
 </div>
 <div class="section level3">
@@ -709,22 +827,25 @@ orchestrator.</label></li>
 </h3>
 <ul class="task-list">
 <li><label><input type="checkbox">Each episode has at least one
-pause-and-report checkpoint (sticky note / Etherpad /
-think-aloud).</label></li>
-<li><label><input type="checkbox">Checkpoints surface where learners
-are confused, not only whether code ran.</label></li>
+pause-and-report checkpoint.</label></li>
+<li><label><input type="checkbox">Checkpoints show where learners are
+confused, not only whether code ran.</label></li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="validation-and-reproducibility">Validation and reproducibility<a class="anchor" aria-label="anchor" href="#validation-and-reproducibility"></a>
 </h3>
 <ul class="task-list">
-<li><label><input type="checkbox">Exercises validate with concrete
-checks (counts, invariants, tests), not “it ran.”</label></li>
-<li><label><input type="checkbox">Provenance (model, date, prompt) is
-recorded for generated code.</label></li>
+<li><label><input type="checkbox">Exercises check with concrete
+evidence (counts, invariants, tests), not “it ran.”</label></li>
+<li><label><input type="checkbox"><code>python instructors/files/test_validators.py</code>
+passes.</label></li>
+<li><label><input type="checkbox">Provenance (tool version, model,
+date, prompt) is recorded for generated code, and code, data,
+environment and commands are archived so a result reruns without the
+model.</label></li>
 <li><label><input type="checkbox">Rewrite time is framed as a
-formative signal, never as proof AI is faster.</label></li>
+formative signal, never as proof that AI is faster.</label></li>
 </ul>
 </div>
 <div class="section level3">
@@ -732,57 +853,80 @@ formative signal, never as proof AI is faster.</label></li>
 </h3>
 <ul class="task-list">
 <li><label><input type="checkbox">Sensitive-data and security-critical
-tasks are explicitly flagged as out of scope for AI.</label></li>
-<li><label><input type="checkbox">Institutional vs personal account
-privacy differences are stated where relevant.</label></li>
+tasks are flagged as out of scope for AI.</label></li>
+<li><label><input type="checkbox">Institutional and personal account
+differences are stated where relevant, and policy wording was checked
+against the current campus source.</label></li>
 </ul>
 <hr>
 </div>
 </section><section><h2 class="section-heading" id="keeping-the-lesson-current">Keeping the lesson current<a class="anchor" aria-label="anchor" href="#keeping-the-lesson-current"></a>
 </h2>
 <hr class="half-width">
-<p>The AI tool landscape moves faster than a Carpentries release cycle.
-The most volatile parts of this lesson are the <strong>tool
-landscape</strong> and <strong>reputable sources</strong> in Episode 7,
-the <strong>failure modes</strong> in Episode 5, and any <strong>named
-model or CLI command</strong> in Episodes 1-4.</p>
-<p>Before each teaching, refresh these by running the
-<code>last30days</code> skill (see
-<code>~/projects/last30days-skill</code>):</p>
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">python3</span> scripts/last30days.py <span class="st">"vibe coding"</span> <span class="at">--include-web</span> <span class="at">--emit</span><span class="op">=</span>md <span class="at">--store</span> <span class="at">--save-dir</span> research</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="ex">python3</span> scripts/last30days.py <span class="st">"AI coding agents"</span> <span class="at">--include-web</span> <span class="at">--emit</span><span class="op">=</span>md <span class="at">--save-dir</span> research</span></code></pre>
-</div>
-<p>Use the output two ways: confirm the tool names and claims in
-Episodes 5 and 7 are still accurate, and pull one <em>current</em> hype
-example to debunk live in the Episode 7 “Spotting hype” section. A fresh
-example beats a canned one.</p>
+<p>The AI tool landscape moves faster than a release cycle. The most
+volatile parts are the tool table in Episode 7, the failure modes in
+Episode 5, the account and retention wording in
+<code>learners/setup.md</code>, and any named model or command in
+Episodes 1 to 4.</p>
+<p>Before each offering:</p>
+<ol style="list-style-type: decimal">
+<li>Record the tested tool and package versions, the backend, the
+platform and the date, with a command transcript.</li>
+<li>Check official documentation and institutional policy first. News
+and the topic wiki help you find claims worth checking. They are not
+authority for account permissions or commands.</li>
+<li>The <code>last30days</code> workflow can discover changes. It cannot
+replace that verification.</li>
+</ol>
+<p>Use the output two ways: confirm the claims in Episodes 5 and 7, and
+find one current hype example to take apart live in “Spotting hype.”</p>
 <div class="section level3">
-<h3 id="tooling-status-last-checked-2026-06-19">Tooling status (last checked 2026-06-19)<a class="anchor" aria-label="anchor" href="#tooling-status-last-checked-2026-06-19"></a>
+<h3 id="ucla-sources-checked-2026-11-07">UCLA sources (checked 2026-11-07)<a class="anchor" aria-label="anchor" href="#ucla-sources-checked-2026-11-07"></a>
 </h3>
 <ul>
+<li>Tool matrix: <a href="https://dts.ucla.edu/products-services/ai-tools/campus-ai-tools-comparison" class="external-link">campus
+AI tools comparison</a> (October 2026). Footnote 1: P1 to P3 in a UCLA
+account; P4 with Unit Head and CISO approval. Anthropic products:
+“coming soon,” TBD.</li>
 <li>
-<strong>The lesson now uses Claude Code (Anthropic).</strong>
-Learners run it on one of two backends: a personal Pro/Max plan or API
-key for non-sensitive (P1-P3) work, or <strong>UCLA Amazon
-Bedrock</strong> (Anthropic models) for sensitive (P3/P4) research data.
-The same commands work on both; only the backend changes. Confirm
-Bedrock access and data-tier approval with the learner’s unit before
-using real sensitive data. See <code>learners/setup.md</code>.</li>
+<a href="https://dts.ucla.edu/initiatives/ai/ai-use-recommendation-guide" class="external-link">AI
+use and recommendation guide</a>: says Anthropic “has been reviewed and
+approved at P2 levels” with no access route, lists AWS Bedrock models
+(including Claude) with no tier, and gives <code>grc@ucla.edu</code> as
+the intake for questions about restricted data. The matrix and the guide
+disagree about Anthropic. Do not tell learners either is the final
+word.</li>
+<li>Open question for GRC: the UC guide puts FERPA records at P3, and
+the matrix allows P1 to P3, but the UCLA guide says FERPA data need a
+secure environment. Ask before you tell learners whether FERPA data may
+go into a listed tool.</li>
 <li>
-<strong>Historical note (why we migrated):</strong> Google retired
-the free/consumer Gemini CLI on June 18, 2026 (folded into the paid
-Antigravity platform), which broke the lesson’s original tooling. Paid
-Gemini Code Assist Standard/Enterprise and API-key access continued, but
-the free <code>gemini</code> command did not.</li>
-<li>As of June 2026, the most common research-capable CLI agents are
-Claude Code (Anthropic), Codex CLI (OpenAI), Antigravity CLI (Google),
-Cursor Agent, and open-source OpenCode/Aider. The lesson’s principles
-(Living Spec, plan-first, validation stack, provenance) transfer across
-all of them, see the <code>agentic-research/cli-agent-landscape</code>
-wiki note.</li>
+<a href="https://security.ucop.edu/files/documents/uc-protection-level-classification-guide.pdf" class="external-link">UC
+Protection Level Classification Guide</a> (revised July 2022):
+attorney-client privileged information P3; FERPA student records P3; PHI
+P4; human-subjects data with identifiers P4; export-controlled research
+P3 or P4 by case; de-identified patient information and unpublished
+research P2. UCLA’s pages do not address attorney-client material. Do
+not claim approval for it.</li>
+<li>Not found: a UCOP legal alert on AI tools, and the identifiers
+“BUS-43” and “RMP-7” that one reviewer cited. Do not quote them.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="tooling-status">Tooling status<a class="anchor" aria-label="anchor" href="#tooling-status"></a>
+</h3>
+<ul>
+<li>The lesson uses Claude Code as its tested route. Other CLI products
+and access options change.</li>
+<li>Learners use a personal subscription or API key for the synthetic
+data in this workshop. Do not read permission for institutional data
+into any account type. Confirm the specific account, configuration and
+data category with the responsible campus authority before using real
+sensitive data. See <code>learners/setup.md</code>.</li>
+<li>The lesson’s principles (plan first, checks, provenance, review)
+transfer across CLI agents. See the
+<code>agentic-research/cli-agent-landscape</code> wiki note as a lead,
+and verify against current documentation.</li>
 </ul>
 <!--
 Links referenced two or more times across the lesson source. Use as
@@ -795,163 +939,196 @@ these at build time.
 <h3 id="00-before-ai-headingInstructor1">
 <a href="00-before-ai.html#headingInstructor1">Instructor note: set the tone early</a><a class="anchor" aria-label="anchor" href="#00-before-ai-headingInstructor1"></a>
 </h3>
-<p>The goal of this episode is to reset expectations before learners
-open a terminal. Some will arrive expecting a productivity demo. Be
-explicit that the workshop measures whether they can <em>explain and
-validate</em> AI output, not how fast they can generate it.</p>
-<p>Signs to watch for across the whole workshop:</p>
+<p>Reset expectations before learners open a terminal. Some arrive
+expecting a productivity demo. Say clearly that the workshop measures
+whether they can explain and validate AI output, not how fast they can
+generate it.</p>
+<p>Watch for these signs throughout the workshop:</p>
 <ul>
 <li>Learners who are impressed that the agent can read their files but
 cannot say what it changed.</li>
 <li>Learners who accept output they cannot explain because “it
 ran.”</li>
-<li>Learners who turn to the AI before turning to a helper, which hides
-where they are stuck.</li>
+<li>Learners who turn to the AI before a helper, which hides where they
+are stuck.</li>
 </ul>
-<p>Normalise bringing AI confusion back into the room. Treat confusing
-AI output as a shared teaching artefact, not a personal failure.</p>
+<p>Bring AI confusion back into the room. Treat confusing output as a
+shared teaching example and not a personal failure.</p>
+<hr>
+<br><h3 id="00-before-ai-headingInstructor2">
+<a href="00-before-ai.html#headingInstructor2">Fallback and pacing for the date exercise</a><a class="anchor" aria-label="anchor" href="#00-before-ai-headingInstructor2"></a>
+</h3>
+<p>If a learner cannot run the script, give them the saved output in
+<code>instructors/files/date-review-output.txt</code>:</p>
+<pre class="text"><code>Rows: 20
+sample_id       date
+    SC001 2023-05-01
+    SC002 2023-12-01
+AssertionError: SC001 became 2023-05-01</code></pre>
+<p>Ask for the same prediction, explanation and decision. Do not wait
+for a live agent to make this mistake. The script is deliberately
+faulty, and nothing here claims that every agent makes it.</p>
+<p>After two failed attempts, give the learner a working script. After
+the repair, show the reference validator catching eight mismatched dates
+in the faulty version and none in the repaired one
+(<code>instructors/files/backup_validate_data.py</code>). Do not present
+the saved transcript as the learner’s own run.</p>
 <hr>
 <br></section><section id="01-cli-intro"><h2 class="section-heading"><a href="01-cli-intro.html">CLI-Based AI</a></h2>
 <hr class="half-width">
 <h3 id="01-cli-intro-headingInstructor1">
 <a href="01-cli-intro.html#headingInstructor1">Setup check</a><a class="anchor" aria-label="anchor" href="#01-cli-intro-headingInstructor1"></a>
 </h3>
-<p>Ask all learners to run:</p>
+<p>A version number confirms the executable. It does not confirm that
+learners can use the tool. Ask every learner to check five things:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">claude</span> <span class="at">--version</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">claude</span> <span class="at">--version</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="ex">python</span> <span class="at">--version</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="fu">ls</span> data/</span></code></pre>
 </div>
-<p>If it returns a version number, they are ready. If the command is not
-found, they need to complete the install and sign in (launch
-<code>claude</code> once and follow the prompts) before continuing.
-Confirm everyone has selected the same model with
-<code>/model</code>.</p>
+<ul>
+<li>Python runs and imports <code>pandas</code>.</li>
+<li>The three input files are listed.</li>
+<li>The account works and one read-only agent action succeeds (the
+<code>claude -p</code> check below).</li>
+<li>Everyone selected the same available model with <code>/model</code>.
+Record the resolved model name, the tool version and the relevant
+settings. An identical selection does not guarantee identical
+output.</li>
+</ul>
+<p>A learner without an account uses the saved-output route. It has the
+same terminal and Python files, with saved plans, diffs and command
+transcripts, and the same approval decisions and tests.</p>
 <hr>
 <br><h3 id="01-cli-intro-headingInstructor2">
 <a href="01-cli-intro.html#headingInstructor2">Instructor note: access is not understanding</a><a class="anchor" aria-label="anchor" href="#01-cli-intro-headingInstructor2"></a>
 </h3>
-<p>Learners are often impressed that a CLI agent can read their files
-and run their code. Impressive access is not the same as a correct
-result. Watch for learners who can describe what the agent <em>can
-do</em> but not what it <em>just did</em>.</p>
-<p>Before any learner approves a command that changes files, ask them to
-say out loud: what did the agent read, what is it about to change, and
-why. If they cannot answer, that is the moment to slow down, not speed
-up.</p>
+<p>Learners are often impressed that an agent can read their files and
+run their code. Impressive access is not a correct result. Watch for
+learners who can say what the agent can do but not what it just did.</p>
+<p>Before a learner approves a command that changes files, ask them to
+say aloud what the agent read, what it will change and why. If they
+cannot, slow down.</p>
 <hr>
 <br><h3 id="01-cli-intro-headingInstructor3">
 <a href="01-cli-intro.html#headingInstructor3">Discussion prompt</a><a class="anchor" aria-label="anchor" href="#01-cli-intro-headingInstructor3"></a>
 </h3>
-<p>Ask learners: “Have you ever used ChatGPT to write code that looked
-correct but failed when you ran it?” This is a good time to introduce
-the concept of orchestration. The goal is not only to “fix” code, but to
-ensure the AI’s <em>intent</em> (the spec) is correct.</p>
+<p>Ask learners whether they have used a chatbot to write code that
+looked right and failed when they ran it. Use their answers to show that
+the goal is to check the AI’s intent against yours, and not only to fix
+code.</p>
 <hr>
 <br></section><section id="02-prompts"><h2 class="section-heading"><a href="02-prompts.html">Best Practices for Prompting</a></h2>
 <hr class="half-width">
 <h3 id="02-prompts-headingInstructor1">
 <a href="02-prompts.html#headingInstructor1">Instructor note: watch for cognitive load</a><a class="anchor" aria-label="anchor" href="#02-prompts-headingInstructor1"></a>
 </h3>
-<p>Generated prompts often pull in syntax, libraries, or abstractions
-the lesson has not introduced. Signs that AI output is adding extraneous
+<p>Generated code often brings in syntax, libraries or abstractions the
+lesson has not introduced. Signs that AI output is adding extra
 load:</p>
 <ul>
-<li>The agent uses an advanced feature (comprehensions, classes,
-decorators) before it has been taught.</li>
-<li>It imports a library that is not installed locally.</li>
-<li>It writes several files when one short script would do.</li>
-<li>It buries the core logic under heavy comments.</li>
-<li>The answer is correct but the learner cannot explain it.</li>
+<li>The agent uses an advanced feature, such as a comprehension, a class
+or a decorator, before it has been taught.</li>
+<li>It imports a library that is not installed.</li>
+<li>It writes several files where one short script would do.</li>
+<li>The answer is correct and the learner cannot explain it.</li>
 </ul>
-<p>Interventions: ask the learner to request a simpler version, to
-remove one abstraction, to trace the code line by line, or to compare it
-with a minimal reference solution. Slowing down here is the lesson, not
-a detour.</p>
-<hr>
-<br><h3 id="02-prompts-headingInstructor2">
-<a href="02-prompts.html#headingInstructor2">Teaching tip: Visual aids</a><a class="anchor" aria-label="anchor" href="#02-prompts-headingInstructor2"></a>
-</h3>
-<p>Write CLEAR vertically on a whiteboard. As you explain each letter,
-add the keyword (Concise, Logical, Explicit, Adaptive, Reflective). This
-helps students remember the framework.</p>
-<hr>
-<br><h3 id="02-prompts-headingInstructor3">
-<a href="02-prompts.html#headingInstructor3">The introspection concept</a><a class="anchor" aria-label="anchor" href="#02-prompts-headingInstructor3"></a>
-</h3>
-<p>Emphasize this section. Most learners treat AI output as final. The
-idea that they can ask the AI to fix its own work is often a new
-concept. It is like asking a student, “Are you sure you checked your
-work?”, they often find their own mistakes when asked.</p>
+<p>Ask the learner to request a simpler version, remove one abstraction,
+trace the code line by line or compare it with a minimal reference.
+Slowing down here is the lesson, not a detour.</p>
 <hr>
 <br></section><section id="03-data-cleaning"><h2 class="section-heading"><a href="03-data-cleaning.html">Data Cleaning with AI</a></h2>
 <hr class="half-width">
 <h3 id="03-data-cleaning-headingInstructor1">
 <a href="03-data-cleaning.html#headingInstructor1">Live coding</a><a class="anchor" aria-label="anchor" href="#03-data-cleaning-headingInstructor1"></a>
 </h3>
-<p>This episode uses live coding. Learners should follow along by
-running commands on their own machines.</p>
+<p>This episode uses live coding. Learners follow along on their own
+machines.</p>
 <hr>
 <br><h3 id="03-data-cleaning-headingInstructor2">
 <a href="03-data-cleaning.html#headingInstructor2">Backup scripts</a><a class="anchor" aria-label="anchor" href="#03-data-cleaning-headingInstructor2"></a>
 </h3>
-<p>If a learner’s AI fails to generate working code on the coastal data,
-provide the pre-written versions from <code>instructors/files/</code>: -
-<code>backup_inspect_data.py</code> -
-<code>backup_clean_and_merge.py</code></p>
+<p>If a learner’s AI fails to produce working code twice, hand over the
+prepared versions from <code>instructors/files/</code>:</p>
+<ul>
+<li><code>backup_inspect_data.py</code></li>
+<li><code>backup_clean_and_merge.py</code></li>
+</ul>
+<p>The learner still predicts, explains, tests and decides. Label which
+parts were supplied.</p>
 <hr>
 <br><h3 id="03-data-cleaning-headingInstructor3">
 <a href="03-data-cleaning.html#headingInstructor3">Instructor note: cognitive load in this episode</a><a class="anchor" aria-label="anchor" href="#03-data-cleaning-headingInstructor3"></a>
 </h3>
-<p>This is the most technically demanding episode, and generated
-cleaning code is where extraneous load shows up most. Watch for scripts
-that reach for <code>apply</code> with lambdas, regex date parsing, or
-multiple helper files when a short linear script would do. If a learner
-cannot explain a block in step E, have them ask the agent for a simpler
-version before continuing. The “hands off keyboard” read in step E is a
-feedback checkpoint: it is where you find out who is lost.</p>
+<p>This is the most demanding episode. Generated cleaning code is where
+extra load shows up most. Watch for <code>apply</code> with lambdas,
+regular-expression date parsing, or several helper files where a short
+linear script would do. If a learner cannot explain a block in step E,
+ask them to request a simpler version before they continue.</p>
+<p>Step E is a feedback checkpoint. It shows you who is lost. Ask
+helpers to note unresolved concepts, not only installation problems.</p>
 <hr>
 <br><h3 id="03-data-cleaning-headingInstructor4">
 <a href="03-data-cleaning.html#headingInstructor4">Challenge tip</a><a class="anchor" aria-label="anchor" href="#03-data-cleaning-headingInstructor4"></a>
 </h3>
-<p>This challenge requires modifying existing code. If learners are
-stuck, suggest they ask the AI to read <code>clean_and_merge.py</code>
-before asking for modifications.</p>
+<p>The next challenge changes existing code. If learners get stuck,
+suggest that they ask the AI to read <code>clean_and_merge.py</code>
+first.</p>
 <hr>
 <br></section><section id="04-validation"><h2 class="section-heading"><a href="04-validation.html">Validation Strategies: The Approval Gate</a></h2>
 <hr class="half-width">
 <h3 id="04-validation-headingInstructor1">
 <a href="04-validation.html#headingInstructor1">Teaching tip: approval fatigue</a><a class="anchor" aria-label="anchor" href="#04-validation-headingInstructor1"></a>
 </h3>
-<p>Warn learners about approval fatigue, the tendency to accept AI
-suggestions without reading them. The four-layer stack is designed to
-make the AI prove it is correct before you review the code.</p>
+<p>Warn learners about approval fatigue, the habit of accepting
+suggestions without reading them. Ask for the check output before the
+diff discussion. Review the requirements and the critical changes
+yourself, and use independent checks to test defined properties. An
+agent’s assurance that its code is correct is not proof.</p>
+<p>Before the session, run
+<code>python instructors/files/test_validators.py</code>. It builds a
+good file and eight bad ones in a temporary folder and confirms that the
+validator rejects each bad one for the right reason.</p>
 <hr>
 <br></section><section id="05-limitations"><h2 class="section-heading"><a href="05-limitations.html">Limitations and Cautions</a></h2>
 <hr class="half-width">
 <h3 id="05-limitations-headingInstructor1">
-<a href="05-limitations.html#headingInstructor1">Managing expectations</a><a class="anchor" aria-label="anchor" href="#05-limitations-headingInstructor1"></a>
+<a href="05-limitations.html#headingInstructor1">Pilot route</a><a class="anchor" aria-label="anchor" href="#05-limitations-headingInstructor1"></a>
 </h3>
-<p>Current models tend to flag uncertainty more often than older ones,
-but they still hallucinate. Do not promise learners it won’t happen. *
-<strong>If it refuses:</strong> Acknowledge that the model correctly
-identified its own limitations. * <strong>Backup:</strong> Have a
-screenshot of a known hallucination ready to show if the AI performs
-perfectly during the session.</p>
+<p>The four-hour pilot does not teach this episode as its own block. It
+folds the scope and privacy points into Episode 1 and the failure modes
+into Episodes 2 and 4. Use this episode in the extended course, or as a
+follow-on.</p>
+<hr>
+<br><h3 id="05-limitations-headingInstructor2">
+<a href="05-limitations.html#headingInstructor2">Managing expectations</a><a class="anchor" aria-label="anchor" href="#05-limitations-headingInstructor2"></a>
+</h3>
+<p>Current models flag uncertainty more often than older ones, but they
+still hallucinate. Do not promise learners that it will not happen.</p>
+<ul>
+<li>If the model refuses or hedges, point out that it recognised its own
+limit.</li>
+<li>Keep a screenshot of a known hallucination ready in case the AI
+performs perfectly during the session.</li>
+</ul>
 <hr>
 <br></section><section id="06-capstone"><h2 class="section-heading"><a href="06-capstone.html">From AI Output to a Review-Ready Bundle</a></h2>
 <hr class="half-width">
 <h3 id="06-capstone-headingInstructor1">
 <a href="06-capstone.html#headingInstructor1">Instructor note</a><a class="anchor" aria-label="anchor" href="#06-capstone-headingInstructor1"></a>
 </h3>
-<p>Budget most of the time for doing, not explaining. Expect the site C
-date bug to surface for several learners; treat it as the highlight, not
-a snag, it is the lesson’s whole thesis in one concrete failure. If a
-group is far behind, have them use
-<code>instructors/files/backup_clean_and_merge.py</code> so they still
-reach the validate-and-judge steps, which are the point. Collect a few
-approval decisions and read them aloud; the honest “revise” answers are
-the best teaching.</p>
+<p>Spend most of the time on doing. Expect the site C date bug to
+surface for several learners. Treat it as the highlight, because it
+shows the lesson’s central point in one failure.</p>
+<p>If a group falls behind, supply the reference cleaner and plot script
+from <code>instructors/files/</code>, and the completed validator. Label
+which parts you supplied. The learner must still explain one change,
+predict a failure and defend a decision on the transfer case.</p>
+<p>Record whether the partner actually reran the bundle or only
+inspected saved output. Collect a few approval decisions and read them
+aloud. The honest “revise” answers teach the most.</p>
 <hr>
 <br></section><section id="07-resources"><h2 class="section-heading"><a href="07-resources.html">Resources and Next Steps</a></h2>
 <hr class="half-width"></section></section>
@@ -1004,8 +1181,8 @@ the best teaching.</p>
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/instructor-notes.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/instructor-notes.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-11-03",
-  "datePublished": "2026-11-03"
+  "dateModified": "2026-11-07",
+  "datePublished": "2026-11-07"
 }
 
   </script><script>

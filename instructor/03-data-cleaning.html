@@ -123,7 +123,7 @@
     <a id="search-button-nav" class="btn btn-primary" href="../instructor/aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
 </nav><aside class="col-md-12 lesson-progress"><div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 27%" aria-valuenow="27" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">27%</div>
+    <div class="progress-bar incubator" role="progressbar" style="width: 28%" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">28%</div>
   </div>
 </aside><div class="container">
       <div class="row">
@@ -362,7 +362,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Data Cleaning with AI</h1>
-        <p>Last updated on 2026-08-31 |
+        <p>Last updated on 2026-11-07 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/03-data-cleaning.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -384,8 +384,8 @@
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul><li>Can I trust AI to standardise inconsistent files?</li>
-<li>How do I check that a cleaning script did what I needed, not only
-what the AI assumed?</li>
+<li>How do I check that a cleaning script did what I needed, and not
+only what the AI assumed?</li>
 </ul></div>
 </div>
 </div>
@@ -395,11 +395,12 @@ what the AI assumed?</li>
 <h3 class="card-title">Objectives</h3>
 <ul><li>Predict what a cleaning script must handle before you prompt for
 it.</li>
-<li>Build a data processing pipeline for inconsistent files using a
-spec.</li>
-<li>Explain and validate AI-generated code before you trust its
-output.</li>
-<li>Document the cleaning process and record its provenance.</li>
+<li>Build a processing pipeline for inconsistent files from a plan and a
+set of requirements.</li>
+<li>Read a diff and explain the changed lines before you run the
+code.</li>
+<li>Validate AI-generated code against checks, and record where it came
+from.</li>
 </ul></div>
 </div>
 </div>
@@ -413,8 +414,8 @@ output.</li>
 <div id="prerequisites" class="callout-inner">
 <h3 class="callout-title">Prerequisites</h3>
 <div class="callout-content">
-<p>Ensure you are signed in to Claude Code and have a session running in
-your project folder. Generating scripts can take 10-30 seconds.</p>
+<p>Sign in to Claude Code and keep a session running in your project
+folder. Generating a script can take 10 to 30 seconds.</p>
 </div>
 </div>
 </div>
@@ -423,10 +424,10 @@ your project folder. Generating scripts can take 10-30 seconds.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Live coding </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
-<p>This episode uses live coding. Learners should follow along by
-running commands on their own machines.</p>
+<p>This episode uses live coding. Learners follow along on their own
+machines.</p>
 </div>
 </div>
 </div>
@@ -439,34 +440,37 @@ running commands on their own machines.</p>
 <div id="working-inside-claude-code" class="callout-inner">
 <h3 class="callout-title">Working inside Claude Code</h3>
 <div class="callout-content">
-<p>All prompts in this episode are typed inside an active Claude Code
-session. Start one in your project folder before the exercises:</p>
+<p>Type the prompts in this episode inside an active Claude Code
+session. Start one in your project folder:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="bu">cd</span> coastal-water-quality</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="ex">claude</span></span></code></pre>
 </div>
-<p>Run Python scripts in a separate terminal window when instructed.</p>
+<p>Run Python scripts in a separate terminal window when the text tells
+you to.</p>
 </div>
 </div>
 </div>
 <section><h2 class="section-heading" id="cleaning-messy-data">Cleaning messy data<a class="anchor" aria-label="anchor" href="#cleaning-messy-data"></a></h2>
-<hr class="half-width"><p>Cleaning and merging inconsistent files is a common bottleneck in
-research. We will use Claude Code to clean and merge the coastal water
-quality files into one analysis-ready dataset.</p>
+<hr class="half-width"><p>Cleaning and merging inconsistent files takes a lot of research time.
+In this episode you clean and merge the coastal water quality files into
+one analysis-ready dataset.</p>
 </section><section><h2 class="section-heading" id="the-project-data">The project data<a class="anchor" aria-label="anchor" href="#the-project-data"></a></h2>
-<hr class="half-width"><p>Your project folder (<code>coastal-water-quality</code>) contains
-three files in <code>data/</code>, one per monitoring site, collected
-weekly from January to May 2023: <code>site_A.csv</code>,
-<code>site_B.csv</code>, and <code>site_C.csv</code> (20 samples each,
-60 in total). They are messy in exactly the ways real multi-site data
-is: the site, date, and score columns are named differently in each
-file, the date formats differ, and a few values are missing. The
-folder’s <code>README.md</code> describes the target schema and what
-“done” looks like. Our goal is one clean
-<code>data/master_dataset.csv</code>, then (in the capstone) a trend
-plot of score over time by site.</p>
+<hr class="half-width"><p>The data are synthetic. They were built for this lesson and describe
+no real study.</p>
+<p>Your project folder (<code>coastal-water-quality</code>) holds three
+files in <code>data/</code>, one per monitoring site. Samples were taken
+weekly from January to May 2023. The files are <code>site_A.csv</code>,
+<code>site_B.csv</code> and <code>site_C.csv</code>, with 20 samples
+each and 60 in total.</p>
+<p>The files are messy in the ways real multi-site data often are.
+Column names differ, date formats differ and a few values are missing.
+The folder’s <code>README.md</code> describes the target schema and what
+“done” looks like. The goal is one clean
+<code>data/master_dataset.csv</code>. In the capstone you plot score
+over time by site.</p>
 <div id="optional-generate-your-own-messy-data" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -475,38 +479,35 @@ plot of score over time by site.</p>
 <div id="optional-generate-your-own-messy-data" class="callout-inner">
 <h3 class="callout-title">Optional: generate your own messy data</h3>
 <div class="callout-content">
-<p>To practise on a fresh problem later, you can have the AI synthesise
-a similar dataset:</p>
+<p>To practise on a new problem later, ask the AI to synthesise a
+similar dataset:</p>
 <pre><code>Create a python script named 'make_messy_data.py' that generates 3 CSV files with inconsistent column names, varied date formats, and some missing values, mimicking a multi-site study.</code></pre>
-<p>For the lesson, use the provided files so everyone is working from
-the same data.</p>
+<p>For the lesson, use the provided files so everyone works from the
+same data.</p>
 </div>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="cleaning-with-ai-one-checkpoint-at-a-time">Cleaning with AI, one checkpoint at a time<a class="anchor" aria-label="anchor" href="#cleaning-with-ai-one-checkpoint-at-a-time"></a></h2>
 <hr class="half-width"><p>It is tempting to type “clean and merge these files” and run whatever
-comes back. Resist that. We will work the task as a sequence of
-checkpoints so that you can explain and validate the result, not only
-produce one. This is the pattern you will reuse for the rest of the
-lesson: <strong>predict, prompt for a plan, inspect, modify, validate,
-reflect.</strong></p>
+comes back. Do not. Work through checkpoints so you can explain the
+result and not only produce it. The pattern is: predict, plan, inspect,
+change, read the diff, check, reflect.</p>
 <div class="section level3">
 <h3 id="a--predict-before-you-prompt">A. Predict before you prompt<a class="anchor" aria-label="anchor" href="#a--predict-before-you-prompt"></a></h3>
-<p>Open the three files in <code>data/</code> and look at them yourself
-first. Without using the AI, write down <strong>two inconsistencies you
-expect any cleaning script will have to handle</strong>. Real examples
-in this data:</p>
-<ul><li>The site column is <code>SiteID</code> in site A, <code>id</code> in
-site B, and <code>StationID</code> in site C.</li>
+<p>Open the three files in <code>data/</code> and look at them yourself.
+Do not use the AI yet. Write down two inconsistencies that any cleaning
+script has to handle. Real examples in this data:</p>
+<ul><li>The ID column is <code>SiteID</code> in site A, <code>id</code> in
+site B and <code>StationID</code> in site C.</li>
 <li>The score column is <code>WaterQualityScore</code>,
-<code>score</code>, and <code>Quality_Index</code>.</li>
+<code>score</code> and <code>Quality_Index</code>.</li>
 <li>The dates differ: <code>2023/01/05</code> (A),
-<code>Jan 5 2023</code> (B), and <code>05-01-2023</code> (C). Watch site
-C: <code>05-01-2023</code> is day-month-year, so it means 5 January, not
-1 May.</li>
-</ul><p>Keep your list. It is your yardstick for judging what the AI
-proposes. If you want a faster overview, you can have the AI write an
-inspection script, but read its output against your own list:</p>
+<code>Jan 5 2023</code> (B) and <code>05-01-2023</code> (C). Site C
+writes day-month-year, so <code>05-01-2023</code> is 5 January and not 1
+May.</li>
+</ul><p>Keep your list. You will judge the AI’s proposal against it. For a
+faster overview, ask the AI to write an inspection script, and read its
+output against your list:</p>
 <pre><code>Write a Python script called 'inspect_data.py' that reads every CSV in data/. For each file, print the filename, the column names, and the number of missing values per column. Do not change any files.</code></pre>
 <div id="quick-check-site-cs-date-format" class="callout challenge">
 <div class="callout-square">
@@ -516,16 +517,12 @@ inspection script, but read its output against your own list:</p>
 <div id="quick-check-site-cs-date-format" class="callout-inner">
 <h3 class="callout-title">Quick check: site C’s date format</h3>
 <div class="callout-content">
-<p>Site C stores dates as <code>05-01-2023</code>, day-month-year. Under
-that format, what date does <code>05-01-2023</code> represent, and what
-would a parser that assumes month-day-year (the common US default)
-silently produce instead?</p>
-<ol style="list-style-type: decimal"><li>5 January; a month-day-year parser would also read it as 5
-January.</li>
-<li>5 January; a month-day-year parser would silently read it as 1
-May.</li>
-<li>1 May; a month-day-year parser would silently read it as 5
-January.</li>
+<p>Site C stores dates as <code>05-01-2023</code>, in day-month-year
+order. What date is that, and what would a parser that assumes
+month-day-year produce without warning?</p>
+<ol style="list-style-type: decimal"><li>5 January. A month-day-year parser also reads it as 5 January.</li>
+<li>5 January. A month-day-year parser reads it as 1 May.</li>
+<li>1 May. A month-day-year parser reads it as 5 January.</li>
 <li>There is not enough information to tell.</li>
 </ol></div>
 </div>
@@ -535,14 +532,13 @@ January.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<p><strong>2.</strong> <code>05-01-2023</code> in day-month-year is day
-05, month 01, 5 January 2023. A parser that assumes month-day-year
-instead reads the same string as month 05, day 01, 1 May 2023, silently,
-with no error. This is exactly the trap this episode’s cleaning script
-has to avoid: the string never changes, only which format you tell the
-parser to assume.</p>
+<p><strong>2.</strong> In day-month-year order, <code>05-01-2023</code>
+is day 05 of month 01, which is 5 January 2023. A parser that assumes
+month-day-year reads the same string as month 05, day 01, which is 1 May
+2023. It raises no error. The string never changes. Only the format you
+tell the parser to assume changes.</p>
 </div>
 </div>
 </div>
@@ -550,42 +546,46 @@ parser to assume.</p>
 </div>
 <div class="section level3">
 <h3 id="b--ask-the-ai-for-a-plan-only">B. Ask the AI for a plan only<a class="anchor" aria-label="anchor" href="#b--ask-the-ai-for-a-plan-only"></a></h3>
-<p>Do not ask for code yet. Inside your Claude Code session:</p>
+<p>Do not ask for code yet. Inside your Claude Code session, type:</p>
 <pre><code>Read 'CLAUDE.md' and the three CSVs in data/. Before writing any code, give me a numbered plan for cleaning and merging them into data/master_dataset.csv. Do not write any files yet.</code></pre>
-<p>Compare the plan with the inconsistencies you wrote down in step A.
-Did it catch the site C date format? Did it say how it will handle
-missing values? Did it propose anything you did not expect?</p>
+<p>Compare the plan with your list from step A. Did it catch the site C
+date format? Does it say how it will handle missing values? Does it
+propose anything you did not expect?</p>
 </div>
 <div class="section level3">
 <h3 id="c--approve-or-revise-the-plan">C. Approve or revise the plan<a class="anchor" aria-label="anchor" href="#c--approve-or-revise-the-plan"></a></h3>
-<p>If the plan is missing a constraint you care about, add it to
-<code>CLAUDE.md</code> rather than only mentioning it in chat. The spec
-is what travels across sessions. For example:</p>
+<p>Mark one step in the plan that rests on an assumption the data do not
+support. Revise it from the evidence in the files and
+<code>README.md</code>. Approve only the bounded action you can
+describe.</p>
+<p>If the plan lacks a constraint you care about, add it to
+<code>CLAUDE.md</code>. Do not only mention it in chat, because the file
+travels with the project. For example:</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ss">- </span>Site C dates are day-month-year; parse them explicitly, do not let the tool guess.</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="ss">- </span>Fill missing score with the site median. Do not drop any rows: the merge must have 60.</span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ss">- </span>Site C dates are day-month-year. Parse them explicitly. Do not let the tool guess.</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="ss">- </span>Fill a missing score with the median of that site's observed scores. Do not drop any rows. The merge must have 60.</span></code></pre>
 </div>
+<p>The median rule is this exercise’s fixed choice. It is not
+automatically right for a real study. A real analysis would justify its
+method for missing values.</p>
 </div>
 <div class="section level3">
 <h3 id="d--generate-the-code">D. Generate the code<a class="anchor" aria-label="anchor" href="#d--generate-the-code"></a></h3>
-<p>Now ask for the script, pointing it at the spec:</p>
-<pre><code>Read 'CLAUDE.md' and the three CSVs in data/. Write a script called 'clean_and_merge.py' that follows the plan and the spec rules. Save the result to data/master_dataset.csv. Add comments linking code steps to spec rules.</code></pre>
-<div id="your-script-will-not-match-the-lessons-and-that-is-fine" class="callout">
+<p>Now ask for the script and point it at your requirements:</p>
+<pre><code>Read 'CLAUDE.md' and the three CSVs in data/. Write a script called 'clean_and_merge.py' that follows the plan and the rules in CLAUDE.md. Save the result to data/master_dataset.csv. Add comments that link each code step to a rule.</code></pre>
+<div id="your-script-will-not-match-the-lessons" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <span class="callout-header">Callout</span>
-<div id="your-script-will-not-match-the-lessons-and-that-is-fine" class="callout-inner">
-<h3 class="callout-title">Your script will not match the lesson’s, and
-that is fine</h3>
+<div id="your-script-will-not-match-the-lessons" class="callout-inner">
+<h3 class="callout-title">Your script will not match the lesson’s</h3>
 <div class="callout-content">
-<p>AI output varies, so your <code>clean_and_merge.py</code> will look
-different from your neighbour’s and from any example. That is the point:
-the goal is not to match a reference, it is to read what you got and
-decide whether it is correct. Judge it against your spec and the checks
-below, not against someone else’s code.</p>
+<p>AI output varies, so your <code>clean_and_merge.py</code> will differ
+from your neighbour’s and from any example. Judge it against your
+requirements and the checks below, not against someone else’s code.</p>
 </div>
 </div>
 </div>
@@ -594,12 +594,14 @@ below, not against someone else’s code.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor2" aria-expanded="false" aria-controls="collapseInstructor2">
   <h3 class="accordion-header" id="headingInstructor2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Backup scripts </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
 <div class="accordion-body">
-<p>If a learner’s AI fails to generate working code on the coastal data,
-provide the pre-written versions from <code>instructors/files/</code>: -
-<code>backup_inspect_data.py</code> -
-<code>backup_clean_and_merge.py</code></p>
+<p>If a learner’s AI fails to produce working code twice, hand over the
+prepared versions from <code>instructors/files/</code>:</p>
+<ul><li><code>backup_inspect_data.py</code></li>
+<li><code>backup_clean_and_merge.py</code></li>
+</ul><p>The learner still predicts, explains, tests and decides. Label which
+parts were supplied.</p>
 </div>
 </div>
 </div>
@@ -607,45 +609,42 @@ provide the pre-written versions from <code>instructors/files/</code>: -
 </div>
 <div class="section level3">
 <h3 id="e--explain-before-you-run">E. Explain before you run<a class="anchor" aria-label="anchor" href="#e--explain-before-you-run"></a></h3>
-<p>Hands off the keyboard. Open <code>clean_and_merge.py</code> and read
-it. In pairs, <strong>each person explains one section of the script out
-loud</strong> to the other: what it does and which spec rule it serves.
-If a section uses something you have not seen, that is exactly the line
-to ask about. Working alone? Explain each section out loud to yourself,
-or write the explanation as a comment above it, then ask the agent to
-check your explanation against what the code actually does.</p>
+<p>Take your hands off the keyboard and read
+<code>clean_and_merge.py</code>. In pairs, each person explains one
+section aloud: what it does and which rule it serves. If a section uses
+something you have not seen, ask about that line. Working alone? Explain
+each section aloud, or write the explanation as a comment above it. Then
+ask the agent to compare your explanation with what the code does.</p>
 <p>You are responsible for the final output. You cannot validate what
 you cannot explain.</p>
 </div>
 <div class="section level3">
-<h3 id="f--validate-against-checks-not-vibes">F. Validate against checks, not vibes<a class="anchor" aria-label="anchor" href="#f--validate-against-checks-not-vibes"></a></h3>
+<h3 id="f--check-against-evidence">F. Check against evidence<a class="anchor" aria-label="anchor" href="#f--check-against-evidence"></a></h3>
 <p>Run <code>python clean_and_merge.py</code>. A correct run prints
 something like <code>Wrote data/master_dataset.csv with 60 rows.</code>
-Then confirm the result with concrete checks. “It ran” is not one of
-them.</p>
+Then test the result with concrete checks. “It ran” is not a check.</p>
 <ul><li>
-<strong>Row-count check:</strong> 60 rows (3 sites x 20 samples),
-nothing dropped.</li>
+<strong>Row count.</strong> There are 60 rows (3 sites x 20
+samples). Nothing was dropped.</li>
 <li>
-<strong>Missing-value check:</strong> missing scores filled per your
-strategy; nothing filled that should have stayed blank.</li>
+<strong>Missing values.</strong> Missing scores are filled by your
+rule. Nothing was filled that should stay blank.</li>
 <li>
-<strong>Date check:</strong> don’t just confirm the dates parse
-without error and fall in 2023 — a wrong parse can still produce
-valid-looking 2023 dates. Compare a few site C sample dates against the
-raw file by hand (<code>05-01-2023</code> must become
-<code>2023-01-05</code>, not <code>2023-05-01</code>), or better,
+<strong>Dates.</strong> Do not stop at “the dates parse and fall in
+2023”. A wrong parse still produces valid-looking 2023 dates. Compare a
+few site C dates with the raw file by hand. <code>05-01-2023</code> must
+become <code>2023-01-05</code> and not <code>2023-05-01</code>. Better,
 re-parse site C’s raw dates with the explicit <code>%d-%m-%Y</code>
-format and compare the result to your merged file row by row.</li>
-</ul><p>You can ask the AI to write these checks, but read them before you
-trust them. The project folder already ships a
-<code>validate_data.py</code> with some checks written and others left
-as TODO; you will finish it in the next episode.</p>
+format and compare the result with your merged file row by row.</li>
+</ul><p>You can ask the AI to write these checks. Read them before you trust
+them. The project folder ships a <code>validate_data.py</code> with most
+checks written and one left for you. You finish it in the next
+episode.</p>
 </div>
 <div class="section level3">
 <h3 id="g--reflect">G. Reflect<a class="anchor" aria-label="anchor" href="#g--reflect"></a></h3>
 <ul><li>What did the AI handle well?</li>
-<li>What did you have to already know in order to judge its answer?</li>
+<li>What did you already need to know to judge its answer?</li>
 <li>Did anything in the script change the data in a way the plan did not
 mention?</li>
 </ul><div id="feedback-checkpoint-surprises-and-uncertainty" class="callout discussion">
@@ -657,11 +656,11 @@ mention?</li>
 <h3 class="callout-title">Feedback checkpoint: surprises and
 uncertainty</h3>
 <div class="callout-content">
-<p>In the shared Etherpad, post two short lines: one thing the AI did
-that surprised you, and one thing it made sound certain that you are
-still unsure about. Bring these back into the room. Working alone? Write
-both lines in your notes file, and follow up on the uncertain one before
-moving on.</p>
+<p>Post two short lines in the shared Etherpad. Write one thing the AI
+did that surprised you, and one thing it sounded certain about that you
+still doubt. Bring both back to the room. Working alone? Write both
+lines in your notes file and follow up on the doubt before you move
+on.</p>
 </div>
 </div>
 </div>
@@ -670,15 +669,15 @@ moving on.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor3" aria-expanded="false" aria-controls="collapseInstructor3">
   <h3 class="accordion-header" id="headingInstructor3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor note: cognitive load in this episode </h3>
 </button>
-<div id="collapseInstructor3" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor3" aria-labelledby="headingInstructor3">
+<div id="collapseInstructor3" class="accordion-collapse collapse" aria-labelledby="headingInstructor3" data-bs-parent="#accordionInstructor3">
 <div class="accordion-body">
-<p>This is the most technically demanding episode, and generated
-cleaning code is where extraneous load shows up most. Watch for scripts
-that reach for <code>apply</code> with lambdas, regex date parsing, or
-multiple helper files when a short linear script would do. If a learner
-cannot explain a block in step E, have them ask the agent for a simpler
-version before continuing. The “hands off keyboard” read in step E is a
-feedback checkpoint: it is where you find out who is lost.</p>
+<p>This is the most demanding episode. Generated cleaning code is where
+extra load shows up most. Watch for <code>apply</code> with lambdas,
+regular-expression date parsing, or several helper files where a short
+linear script would do. If a learner cannot explain a block in step E,
+ask them to request a simpler version before they continue.</p>
+<p>Step E is a feedback checkpoint. It shows you who is lost. Ask
+helpers to note unresolved concepts, not only installation problems.</p>
 </div>
 </div>
 </div>
@@ -688,44 +687,52 @@ feedback checkpoint: it is where you find out who is lost.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor4" aria-expanded="false" aria-controls="collapseInstructor4">
   <h3 class="accordion-header" id="headingInstructor4">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Challenge tip </h3>
 </button>
-<div id="collapseInstructor4" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor4" aria-labelledby="headingInstructor4">
+<div id="collapseInstructor4" class="accordion-collapse collapse" aria-labelledby="headingInstructor4" data-bs-parent="#accordionInstructor4">
 <div class="accordion-body">
-<p>This challenge requires modifying existing code. If learners are
-stuck, suggest they ask the AI to read <code>clean_and_merge.py</code>
-before asking for modifications.</p>
+<p>The next challenge changes existing code. If learners get stuck,
+suggest that they ask the AI to read <code>clean_and_merge.py</code>
+first.</p>
 </div>
 </div>
 </div>
 </div>
-<div id="challenge-update-the-script" class="callout challenge">
+<div id="challenge-read-a-diff-then-run-it" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-update-the-script" class="callout-inner">
-<h3 class="callout-title">Challenge: Update the script</h3>
+<div id="challenge-read-a-diff-then-run-it" class="callout-inner">
+<h3 class="callout-title">Challenge: read a diff, then run it</h3>
 <div class="callout-content">
-<p>Imagine your analysis should cover February to May only, so you need
-to exclude the January samples.</p>
+<p>Imagine your analysis should cover February to May only, so you must
+leave out the January samples.</p>
 <ol style="list-style-type: decimal"><li>
-<strong>Predict first.</strong> Before prompting, write down how
-many rows you expect this to remove and the row count you expect
-afterward. (Samples are weekly; January has four sampling dates per
-site.)</li>
+<strong>Predict first.</strong> Before you prompt, write down how
+many rows you expect to remove and how many you expect to keep. Samples
+are weekly, and January has four sampling dates per site.</li>
 <li>
-<strong>Then update.</strong> Use Claude Code to write a
-<strong>new</strong> script, <code>clean_feb_onward.py</code>, that
-reuses <code>clean_and_merge.py</code>’s cleaning logic but filters to
-February 2023 onward. Do not modify <code>clean_and_merge.py</code>
-itself: the capstone and later episodes reuse it and expect the full
-60-row dataset, so it needs to stay untouched.</li>
+<strong>Ask for a new script.</strong> Ask Claude Code to write a
+new script, <code>clean_feb_onward.py</code>. It reuses the cleaning
+logic from <code>clean_and_merge.py</code>, keeps only samples from
+February 2023 onward, and writes <code>data/feb_onward.csv</code>. It
+must not touch <code>clean_and_merge.py</code> or
+<code>data/master_dataset.csv</code>. The capstone and later episodes
+expect the full 60-row dataset.</li>
 <li>
-<strong>Verify against your prediction.</strong> Run the new script
-and compare the actual row count to what you predicted. If they differ,
-explain why in one sentence. Pay special attention to site C: a naive
-parse can silently swap day and month for some rows and not others, so
-some misparsed January rows may land outside the window and vanish while
-others land inside it and wrongly survive.</li>
+<strong>Read before you run.</strong> Compare the new script with
+<code>clean_and_merge.py</code> (for example,
+<code>diff clean_and_merge.py clean_feb_onward.py</code>). Pick one
+changed line and explain it to a partner. Check that the output path is
+<code>data/feb_onward.csv</code>.</li>
+<li>
+<strong>Check against your prediction.</strong> Run the new script.
+Compare the row count with your prediction. If they differ, explain why
+in one sentence. Then confirm that both files kept the counts you
+intended: 60 rows in <code>data/master_dataset.csv</code> and your
+predicted count in <code>data/feb_onward.csv</code>. Pay attention to
+site C. A naive parse can swap day and month for some rows and not
+others, so some misparsed January rows can land outside the window and
+vanish, while others land inside it and wrongly stay.</li>
 </ol></div>
 </div>
 </div>
@@ -734,22 +741,22 @@ others land inside it and wrongly survive.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> What to expect </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
-<p>January has four weekly sampling dates per site (5, 12, 19, 26), so a
-correct filter removes 12 rows, leaving 48. If you get a different
-number, the most likely cause is the site C date format: a naive parse
-can silently swap day and month for <em>some</em> rows and not others.
-For example, <code>05-01-2023</code> can silently become May 1 and
-<code>12-01-2023</code> can become December 1, while
-<code>19-01-2023</code> happens to parse correctly regardless, since 19
-can’t be a month. So a partial misparse doesn’t move cleanly to one edge
-of the range, it scatters. This is a small, safe version of a silent
-error that would quietly bias a real trend analysis.</p>
-<pre><code>Read 'clean_and_merge.py'. Write a new script, 'clean_feb_onward.py', that reuses its cleaning logic but keeps only samples collected in February 2023 or later. Do not modify clean_and_merge.py.</code></pre>
-<p>Did the AI edit the relevant part or rewrite the whole file? Did it
-parse the dates correctly before filtering? Did you check the changes
-before running?</p>
+<p>January has four weekly sampling dates per site (the 5th, 12th, 19th
+and 26th). A correct filter removes 12 rows and leaves 48.</p>
+<p>A different number most likely comes from the site C date format. A
+naive parse swaps day and month for some rows only. For example,
+<code>05-01-2023</code> becomes 1 May and <code>12-01-2023</code>
+becomes 1 December, while <code>19-01-2023</code> parses correctly
+either way because 19 cannot be a month. A partial misparse does not
+shift the whole series to one edge. It scatters points. This is a small,
+safe version of a silent error that would bias a real trend
+analysis.</p>
+<pre><code>Read 'clean_and_merge.py'. Write a new script, 'clean_feb_onward.py', that reuses its cleaning logic, keeps only samples collected in February 2023 or later, and writes data/feb_onward.csv. Do not modify clean_and_merge.py or data/master_dataset.csv.</code></pre>
+<p>Did the AI edit the right part or rewrite the whole file? Did it
+parse the dates before it filtered? Did you read the changes before you
+ran the script?</p>
 </div>
 </div>
 </div>
@@ -757,10 +764,9 @@ before running?</p>
 </div>
 <div class="section level3">
 <h3 id="automating-documentation">Automating documentation<a class="anchor" aria-label="anchor" href="#automating-documentation"></a></h3>
-<p>For the final step, have the AI generate a short pipeline summary.
-This folder already ships a <code>README.md</code> describing the schema
-and target output, so ask for a differently-named file rather than
-letting the agent overwrite it:</p>
+<p>Ask the AI for a short pipeline summary. The folder already has a
+<code>README.md</code> that describes the schema and the target output,
+so ask for a differently named file:</p>
 <pre><code>Create a PIPELINE.md file that explains the data processing pipeline we just built. List the original files, the cleaning steps performed, and the final output format. Do not modify or overwrite README.md.</code></pre>
 <div id="challenge-provenance-tracking" class="callout challenge">
 <div class="callout-square">
@@ -768,16 +774,16 @@ letting the agent overwrite it:</p>
 </div>
 <span class="callout-header">Challenge</span>
 <div id="challenge-provenance-tracking" class="callout-inner">
-<h3 class="callout-title">Challenge: Provenance tracking</h3>
+<h3 class="callout-title">Challenge: provenance tracking</h3>
 <div class="callout-content">
-<p>To ensure research is reproducible, track which model generated your
+<p>For research to be reproducible, record which tool generated your
 code and when.</p>
 <ol style="list-style-type: decimal"><li>Use Claude Code to add a provenance header to
 <code>clean_and_merge.py</code>.</li>
-<li>The header should be a Python docstring containing:
-<ul><li>The model used (check your session’s <code>/status</code> or status
-line for the exact name)</li>
-<li>The date</li>
+<li>The header is a Python docstring with:
+<ul><li>The tool version and the model name, if your session shows it (check
+<code>/status</code> or the status line).</li>
+<li>The date.</li>
 <li>A summary of the prompt.</li>
 </ul></li>
 </ol></div>
@@ -786,16 +792,18 @@ line for the exact name)</li>
 <div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
-  <h4 class="accordion-header" id="headingSolution3"> Example command </h4>
+  <h4 class="accordion-header" id="headingSolution3"> Example prompt </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
-<pre><code>Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the exact model name from this session (check /status if unsure), today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'</code></pre>
+<pre><code>Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the tool version and the exact model name from this session (check /status if unsure), today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'</code></pre>
 <div class="section level3">
 <h3 id="reflection">Reflection<a class="anchor" aria-label="anchor" href="#reflection"></a></h3>
-<ul><li>Why record the model version and date?</li>
-<li>Does it matter if the AI model is updated later?</li>
-<li>How does this header help with reproducibility?</li>
+<ul><li>Why record the tool version, model name and date?</li>
+<li>Does it matter if the model is updated later?</li>
+<li>How does the header help someone rerun your work? A header records
+history. The code, the data, the environment and the commands are what
+let another person rerun it.</li>
 </ul></div>
 </div>
 </div>
@@ -808,14 +816,13 @@ line for the exact name)</li>
 <span class="callout-header">Key Points</span>
 <div class="callout-inner">
 <div class="callout-content">
-<ul><li>Predict the inconsistencies yourself before prompting, so you can
+<ul><li>Predict the inconsistencies yourself before you prompt, so you can
 judge the AI’s plan.</li>
-<li>Ask for a plan first, put constraints in the spec, then generate
-code.</li>
-<li>Explain the script before you run it; you cannot validate what you
-cannot explain.</li>
-<li>Validate with concrete checks (row count, missing values, date
-format), not because it ran.</li>
+<li>Ask for a plan first, mark the assumption the data do not support,
+then generate code.</li>
+<li>Read the diff and explain a changed line before you run it.</li>
+<li>Check with concrete evidence (row count, missing values, dates), not
+because the script ran.</li>
 </ul></div>
 </div>
 </div>
@@ -885,8 +892,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/03-data-cleaning.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/03-data-cleaning.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-08-31",
-  "datePublished": "2026-11-03"
+  "dateModified": "2026-11-07",
+  "datePublished": "2026-11-07"
 }
 
   </script><script>

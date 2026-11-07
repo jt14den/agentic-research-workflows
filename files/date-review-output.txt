@@ -1,0 +1,24 @@
+Saved output for the Episode 0 date exercise (python date_review.py), for a learner
+who cannot run the script. Do not present it as the learner's own execution.
+
+First run, faulty parser (format="mixed"):
+
+Rows: 20
+sample_id       date
+    SC001 2023-05-01
+    SC002 2023-12-01
+
+After adding the checks:
+
+AssertionError: SC001 became 2023-05-01
+
+After the repair (format="%d-%m-%Y"), the same checks pass and the head prints:
+
+Rows: 20
+sample_id       date
+    SC001 2023-01-05
+    SC002 2023-01-12
+
+Answer key: SC001 should be 2023-01-05. The reference validator
+(instructors/files/backup_validate_data.py) reports 8 mismatched dates on the
+faulty version and none on the repaired version.

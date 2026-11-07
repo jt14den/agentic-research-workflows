@@ -341,7 +341,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Reference</h1>
-        <p>Last updated on 2026-08-31 |
+        <p>Last updated on 2026-11-07 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/learners/reference.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -356,10 +356,9 @@
 <section><h2 class="section-heading" id="glossary">Glossary<a class="anchor" aria-label="anchor" href="#glossary"></a></h2>
 <hr class="half-width"><dl><dt>AGENTS.md</dt>
 <dd>
-A portable Living Spec file supported across multiple AI coding tools
-(Claude Code, Codex CLI, Cursor, and others). Use it when you want your
-spec to travel with the project regardless of which agent you run. See
-also: CLAUDE.md.
+A project instruction file convention used by several AI coding tools.
+Whether a tool loads it depends on the tool, its version and its
+settings, so check what loaded. See also: CLAUDE.md.
 </dd>
 <dt>Agent</dt>
 <dd>
@@ -386,9 +385,10 @@ model), as distinct from the tool you type into.
 </dd>
 <dt>Bootstrap Workflow</dt>
 <dd>
-An iterative process where an AI agent scans a researcher’s raw data and
-goals to draft the initial <code>CLAUDE.md</code> spec, which the
-researcher then reviews and approves.
+Having an agent draft a first <code>CLAUDE.md</code> from your files and
+goals (for example with <code>/init</code>), which you then review, edit
+and approve. In this lesson it is part of Episode 1, not a separate
+step.
 </dd>
 <dt>Chain of Thought</dt>
 <dd>
@@ -405,8 +405,10 @@ Reflective) developed by Leo Lo to optimise AI interactions.
 </dd>
 <dt>CLI (Command Line Interface)</dt>
 <dd>
-A text-based interface for interacting with your computer’s operating
-system. Essential for giving AI agents direct access to the file system.
+A text-based interface for working with your computer. A CLI agent can
+work with files, commands and output in one place, so paths and changes
+are easy to inspect. Which files it can reach depends on its
+configuration and permissions.
 </dd>
 <dt>CO-STAR Framework</dt>
 <dd>
@@ -442,11 +444,12 @@ blindly. Not “declarative programming”: the agent still writes an
 ordinary imperative implementation, and the spec itself is not
 executable.
 </dd>
-<dt>Determinism Collapse</dt>
+<dt>Run-to-run Variation</dt>
 <dd>
-The risk that small variations in prompts or silent updates to AI model
-weights will result in different code outputs for the same task,
-threatening research reproducibility.
+The risk that small differences in prompts, tool versions or silent
+model updates give different code or output for the same task. Logging
+the tool version, model and prompt lets you compare runs. It does not
+make them identical.
 </dd>
 <dt>Deterministic Check</dt>
 <dd>
@@ -473,13 +476,13 @@ The principle that a researcher should never approve an AI-generated
 change without supporting evidence (passing tests, invariant reports, or
 a readable diff).
 </dd>
-<dt>External Brain</dt>
+<dt>Project Record</dt>
 <dd>
-The practice of storing a project’s persistent memory in plain markdown
-files (such as <code>CLAUDE.md</code>, <code>PLAN.md</code>, and a
-running notes log) that an AI agent reads and updates, rather than
-relying on the model’s limited, disposable context. The framing was
-popularized by Andrej Karpathy. In research it doubles as provenance.
+A short, version-controlled set of plain files (such as
+<code>CLAUDE.md</code>, <code>PLAN.md</code> and a dated notes log) that
+records constraints and decisions, so people can inspect them. It
+supports provenance. It does not guarantee that a model follows every
+instruction.
 </dd>
 <dt>Few-shot Prompting</dt>
 <dd>
@@ -491,24 +494,24 @@ The most capable commercially released models at a given moment
 (currently the top Claude, GPT, and Gemini tiers). The term is
 time-relative; what counts as frontier changes every few months.
 </dd>
-<dt>CLAUDE.md (Living Spec)</dt>
+<dt>CLAUDE.md (instruction file)</dt>
 <dd>
-A project-level Markdown file that Claude Code loads automatically at
-the start of every session. It defines the project’s goals, rules,
-constraints, and context, acting as the persistent source of truth that
-keeps the agent on track across sessions. The Claude Code native
-equivalent of the portable AGENTS.md.
+A project-level Markdown file that Claude Code loads at the start of a
+session. It records goals, rules, constraints and context. The agent
+reads it as instructions. It is not an enforced boundary. See also:
+AGENTS.md.
 </dd>
 <dt>Hallucination</dt>
 <dd>
 When an AI generates factually incorrect or nonsensical information
 confidently.
 </dd>
-<dt>Immutable Requirements</dt>
+<dt>Recorded Requirements</dt>
 <dd>
-Human-authored domain rules and constraints (e.g., “dates must be
-chronological”) that act as the “Ground Truth” and cannot be modified by
-the AI agent.
+Human-approved domain rules and constraints (for example, “do not drop
+any rows”) written down before code is generated. They are a request to
+the model. Tool permissions and isolation enforce access limits, and
+tests check whether the output meets the requirements.
 </dd>
 <dt>Imputation / Impute</dt>
 <dd>
@@ -566,9 +569,9 @@ license terms still vary by model. See also: Closed-weight Models.
 </dd>
 <dt>Plan Mode</dt>
 <dd>
-A Claude Code session mode in which the agent can read files and propose
-an approach but is blocked by the tool itself from writing files or
-running mutating commands until you approve the plan.
+A Claude Code session mode that restricts source edits and supports
+exploration while you review a plan. It is not a universal
+no-side-effect sandbox. Check the installed mode, tools and settings.
 </dd>
 <dt>Prompt Injection</dt>
 <dd>
@@ -580,8 +583,25 @@ returned data are a common vector.
 </dd>
 <dt>Provenance Tracking</dt>
 <dd>
-The practice of documenting the metadata of an AI interaction (model
-version, prompt, context hashes) to ensure research accountability.
+Documenting how a result was made: tool version, model name, date,
+relevant prompts, reviewed changes and test results. A provenance note
+is history. Rerunning needs the code, data, environment and commands
+too.
+</dd>
+<dt>Evidence Source</dt>
+<dd>
+Where a claim comes from, such as the data documentation or a campus
+policy page. Name it so someone else can check it.
+</dd>
+<dt>Unchecked Claim</dt>
+<dd>
+Something you are still taking on trust. Naming it is part of an honest
+approval decision.
+</dd>
+<dt>Rerun</dt>
+<dd>
+Running the saved code on the saved inputs again. This differs from
+regenerating the code with a model, which can give different code.
 </dd>
 <dt>Reasoning Effort</dt>
 <dd>
@@ -593,9 +613,10 @@ and tokens and does not guarantee a better answer.
 </dd>
 <dt>Review-ready Bundle</dt>
 <dd>
-The complete set of artifacts that makes an AI-assisted result auditable
-by someone else: spec, plan, code, validation script, result, provenance
-note, and approval decision.
+The set of files that lets another person rerun and assess an
+AI-assisted result without AI: raw inputs, requirements, code,
+validation script, environment record, exact commands, result,
+provenance note and approval decision.
 </dd>
 <dt>Sandboxing</dt>
 <dd>
@@ -647,10 +668,9 @@ faster than you can read it.
 </dd>
 <dt>Vibe Coding</dt>
 <dd>
-The early (2023-2024) term for using AI intuition and natural-language
-prompts to handle the “grunt work” of coding. In research, this has
-evolved into the more rigorous <strong>Spec-Driven Research
-Orchestration</strong>.
+An informal term for guiding AI with natural-language prompts and
+intuition. Research needs evidence as well as output, which is the
+purpose of this lesson’s workflow.
 </dd>
 </dl></section><section><h2 class="section-heading" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
 <hr class="half-width"><ol style="list-style-type: decimal"><li>Lo, L. S. (2023). The CLEAR path: A framework for enhancing
@@ -733,8 +753,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/reference.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/reference.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-08-31",
-  "datePublished": "2026-11-03"
+  "dateModified": "2026-11-07",
+  "datePublished": "2026-11-07"
 }
 
   </script><script>

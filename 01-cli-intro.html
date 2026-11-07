@@ -123,7 +123,7 @@
     <a id="search-button-nav" class="btn btn-primary" href="aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
 </nav><aside class="col-md-12 lesson-progress"><div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 5%" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">5%</div>
+    <div class="progress-bar incubator" role="progressbar" style="width: 8%" aria-valuenow="8" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">8%</div>
   </div>
 </aside><div class="container">
       <div class="row">
@@ -227,12 +227,11 @@
 
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
-        <ul><li><a href="#why-cli-matters-for-research">Why CLI matters for research</a></li>
+        <ul><li><a href="#why-a-command-line-tool-for-this-lesson">Why a command-line tool for this lesson</a></li>
 <li><a href="#what-the-tool-can-see-and-what-it-can-change">What the tool can see, and what it can change</a></li>
 <li><a href="#from-writer-to-active-reviewer">From writer to active reviewer</a></li>
-<li><a href="#file-system-access">File system access</a></li>
 <li><a href="#lets-make-sure-this-works">Let’s make sure this works</a></li>
-<li><a href="#the-living-spec">The Living Spec</a></li>
+<li><a href="#the-instruction-file">The instruction file</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -365,7 +364,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>CLI-Based AI</h1>
-        <p>Last updated on 2026-08-31 |
+        <p>Last updated on 2026-11-07 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/01-cli-intro.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -385,8 +384,9 @@
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul><li>What can each kind of AI tool see, and what can it change?</li>
-<li>Why use a CLI for AI instead of a browser?</li>
-<li>What is the Living Spec and why does it matter?</li>
+<li>Why use a command-line tool for this lesson?</li>
+<li>What goes in a project instruction file, and what does it not
+do?</li>
 </ul></div>
 </div>
 </div>
@@ -394,101 +394,74 @@
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Describe what different AI tools can see and what they can
-change.</li>
-<li>Create a Living Spec (CLAUDE.md) that states your hard constraints,
-and explain why doing so keeps you the active reviewer of the agent’s
-output.</li>
+<ul><li>Describe what an AI tool can read and change in your
+configuration.</li>
+<li>Show the working directory, the files an agent can see and one
+change as a diff.</li>
+<li>Create a short instruction file (<code>CLAUDE.md</code>) with a
+source-backed constraint and a check you can run.</li>
 </ul></div>
 </div>
 </div>
 </div>
 </div>
 
-<section><h2 class="section-heading" id="why-cli-matters-for-research">Why CLI matters for research<a class="anchor" aria-label="anchor" href="#why-cli-matters-for-research"></a></h2>
-<hr class="half-width"><p>Most researchers start with chat-based AI in a browser. Browser and
-desktop AI products increasingly ship connectors, uploaded-file access,
-or even their own coding/agentic surfaces, so “browser tools are
-sandboxed, CLI tools aren’t” is no longer a reliable rule. What actually
-matters is the <em>configured</em> surface for the specific tool in
-front of you: what it’s connected to and what permissions it has, not
-which category it falls in. Check that directly rather than assuming
-from “browser” vs. “CLI.”</p>
-<p>If you have not used a CLI agent before, that puts you with most of
-your peers, not behind them: a 2026 survey of 868 scientists who program
-found browser-based general-purpose chat tools accounted for the large
-majority of primary tool choice, with CLI/agentic tools a small minority
-(<a href="https://arxiv.org/abs/2512.19644" class="external-link">O’Brien et al., 2026</a>).
-This lesson teaches the less-common path deliberately, not because it is
-trendy, but because of a structural advantage a stateless chat interface
-cannot match: the persistent external brain described later in this
-episode. A browser chat forgets your project’s rules the moment you
-close the tab; a file like <code>CLAUDE.md</code> reloads them at the
-start of every session, under version control, reviewable by you or
-anyone else.</p>
-<p>A CLI (Command Line Interface) agent runs in your terminal, the same
-place you run Python scripts or navigate your filesystem with
-<code>ls</code> and <code>cd</code>, and has access to three things a
-browser tool does not.</p>
-<p><strong>Your files and data.</strong> The agent can read your actual
-datasets, inspect your directory structure, and write scripts directly
-to disk. You are not copying and pasting between a chat window and a
-code editor. The agent works in your project the way a collaborator
-sitting at your machine would.</p>
-<p><strong>Your installed tools.</strong> Your machine probably has
-domain-specific software on it: geospatial tools like GDAL,
-bioinformatics pipelines, R packages, custom scripts, institutional data
-connectors. A browser AI has no idea these exist. A CLI agent can call
-them directly, pass output between them, and build on what you already
-have installed.</p>
-<p><strong>An iterative loop.</strong> When a script fails, the agent
-sees the error output in the terminal and can try again. You are not
-copying stack traces back into a chat window. The feedback loop is tight
-and stays in one place.</p>
-</section><section><h2 class="section-heading" id="what-the-tool-can-see-and-what-it-can-change">What the tool can see, and what it can change<a class="anchor" aria-label="anchor" href="#what-the-tool-can-see-and-what-it-can-change"></a></h2>
-<hr class="half-width"><p>Before you trust any AI tool, the first question is always: <em>what
-can it see, and what can it do?</em> The more access a tool has, the
-more it can help, and the more it can quietly get wrong. These four
-kinds of tools sit along that spectrum.</p>
+<section><h2 class="section-heading" id="why-a-command-line-tool-for-this-lesson">Why a command-line tool for this lesson<a class="anchor" aria-label="anchor" href="#why-a-command-line-tool-for-this-lesson"></a></h2>
+<hr class="half-width"><p>An agent in your terminal works with files, commands, output and
+diffs in one place. That is why this lesson uses one. You can see which
+folder it works in, what it ran and what it changed.</p>
+<p>The reason is visibility for learning, not capability. Browser and
+editor assistants increasingly offer connectors, file upload and coding
+features of their own. What an AI tool can do depends on its configured
+tools, integrations and permissions, and not on its category. Check the
+actual configuration of the tool in front of you.</p>
+<p>If you have not used a command-line agent before, you are in good
+company. A survey of 868 scientists who program (a 2025 preprint,
+revised in 2026) found that browser-based chat tools made up most
+primary tool choices, and command-line or agentic tools a small minority
+(<a href="https://arxiv.org/abs/2512.19644" class="external-link">O’Brien et al.</a>).</p>
+<p>A command-line interface (CLI) agent runs in your terminal, where you
+run Python scripts and move around with <code>ls</code> and
+<code>cd</code>. In your configured setup it can:</p>
+<ul><li>Read your files and data, inspect the directory structure and write
+scripts to disk. You do not copy and paste between a chat window and an
+editor.</li>
+<li>Call software you have installed, such as GDAL, R packages or your
+own scripts.</li>
+<li>See an error in the terminal and try again.</li>
+</ul></section><section><h2 class="section-heading" id="what-the-tool-can-see-and-what-it-can-change">What the tool can see, and what it can change<a class="anchor" aria-label="anchor" href="#what-the-tool-can-see-and-what-it-can-change"></a></h2>
+<hr class="half-width"><p>Before you trust an AI tool, ask what it can see and what it can do.
+More access helps more, and gives it more chances to go quietly wrong.
+These kinds of tools sit along that range.</p>
 <table class="table"><colgroup><col width="20%"><col width="20%"><col width="20%"><col width="20%"><col width="20%"></colgroup><thead><tr><th>Tool type</th>
 <th>What context it has</th>
 <th>What it can do</th>
 <th>What can go wrong</th>
-<th>What a novice should verify</th>
-</tr></thead><tbody><tr><td>
-<strong>Chatbot</strong> (browser, e.g., ChatGPT, Gemini web)</td>
-<td>Only what you paste in</td>
+<th>What to verify</th>
+</tr></thead><tbody><tr><td>Chatbot</td>
+<td>What you paste in, plus any files or connectors you enable</td>
 <td>Suggests code and text</td>
-<td>No view of your real files; guesses at structure; you copy code by
-hand</td>
-<td>That the code matches your <em>actual</em> columns and files, not
-the example it imagined</td>
-</tr><tr><td>
-<strong>IDE assistant</strong> (e.g., Copilot in VS Code)</td>
-<td>The file you have open, sometimes nearby files</td>
+<td>May guess your file structure; you copy code by hand</td>
+<td>That the code matches your actual columns and files</td>
+</tr><tr><td>IDE assistant</td>
+<td>The open file, sometimes nearby files</td>
 <td>Suggests and inserts code inline</td>
-<td>Sees only part of the project; may complete code that fits the line
-but not the goal</td>
-<td>That the suggestion does what you intended, not only what looks
-plausible</td>
-</tr><tr><td>
-<strong>CLI agent</strong> (e.g., Claude Code, Codex CLI)</td>
-<td>Your project directory: files, data, structure</td>
-<td>Reads files, runs code, writes scripts to disk</td>
+<td>Sees part of the project; may fit the line and miss the goal</td>
+<td>That the suggestion does what you intended</td>
+</tr><tr><td>CLI agent</td>
+<td>Your project folder, as configured</td>
+<td>Reads files, runs code, writes scripts</td>
 <td>Can edit or delete real files; can act on a misread of your
 data</td>
-<td>What files it read, what it changed, and what it ran, before you
-approve</td>
-</tr><tr><td>
-<strong>Fully agentic workflow</strong> (multi-step, runs tools on
-its own)</td>
+<td>What it read, changed and ran, before you approve</td>
+</tr><tr><td>Multi-step agent workflow</td>
 <td>Whatever you grant, across many steps</td>
-<td>Plans and executes a chain of actions with little input</td>
-<td>Errors compound across steps; hard to see where it went wrong</td>
-<td>That you can still explain each step and reproduce the result</td>
-</tr></tbody></table><p>As you move down the table, the tool can do more for you and more
-<em>to</em> you. Nothing in this table removes your responsibility to
-understand the result.</p>
+<td>Plans and runs a chain of actions</td>
+<td>Errors compound; hard to see where it went wrong</td>
+<td>That you can explain each step and reproduce the result</td>
+</tr></tbody></table><p>Further down the table, the tool can do more for you and more to you.
+Nothing in the table removes your responsibility to understand the
+result.</p>
 
 <div id="data-privacy-and-institutional-context" class="callout caution">
 <div class="callout-square">
@@ -498,55 +471,50 @@ understand the result.</p>
 <div id="data-privacy-and-institutional-context" class="callout-inner">
 <h3 class="callout-title">Data privacy and institutional context</h3>
 <div class="callout-content">
-<p>Your institution decides which AI tools are approved for which kinds
-of data, and the free tools are usually not the ones you can point at
-sensitive research data. At UCLA, the centrally provided free tools
-(Gemini Basic, Microsoft Copilot, ChatGPT web) are web-only and approved
-for data classified P1-P3, with P4 requiring approval. None of them is a
-terminal agent. See <a href="https://dts.ucla.edu/initiatives/ai/available-tools" class="external-link">UCLA’s
-available AI tools list</a>.</p>
-<p>For the terminal workflow in this lesson, think in two paths:</p>
-<ul><li>
-<strong>Personal plan or API key</strong> for non-sensitive (P1-P3)
-work. Simple to set up; this is what most workshop exercises assume. Do
-not use it with sensitive or restricted data.</li>
-<li>
-<strong>UCLA Amazon Bedrock</strong> (Anthropic models) for
-sensitive (P3/P4) research data. Claude Code can run against Bedrock
-with the same commands; only the backend changes. Confirm your unit’s
-access and data-tier approval first.</li>
-</ul><p><strong>Warning:</strong> Personal accounts often lack the privacy
-protections of an institutional agreement. Consult your campus data
-policy before using any AI tool with sensitive data. PHI and
-attorney-client privileged information are not approved for these
-tools.</p>
-<p><strong>Looking ahead:</strong> If your research requires fully local
-processing, these same skills transfer to open-weight models (like
-Qwen3, Gemma, or OpenAI’s gpt-oss) run via Ollama. Check both the
-license and the specific version before you rely on one for
-reproducibility.</p>
+<p>Use only the supplied synthetic data in this workshop. Do not read
+permission for institutional research data into a personal subscription
+or into the name of a campus-approved product.</p>
+<p>Your institution decides which AI tools may touch which kinds of
+data. At UCLA, consult <a href="https://dts.ucla.edu/products-services/ai-tools/campus-ai-tools-comparison" class="external-link">the
+current campus tool comparison</a> for eligibility, price and data
+classifications. Approved access is tied to a UCLA account and a
+specific service. UCLA’s footnote says P1 to P3 data are allowed in a
+UCLA account, and P4 data need approval from the Unit Head and the CISO.
+UCLA’s <a href="https://dts.ucla.edu/initiatives/ai/ai-use-recommendation-guide" class="external-link">AI
+use guide</a> also names data that must not go into AI tools unless
+approved in a secure environment, such as FERPA records, health data,
+personnel data and unpublished research. Send questions to
+<code>grc@ucla.edu</code>.</p>
+<p>Use a backend with sensitive data only after the responsible campus
+or unit authority confirms the specific account, configuration and data
+category. A tool that can run on a given cloud service is not thereby
+approved for sensitive data. Consult your campus data policy before you
+use any AI tool with restricted data, including protected health
+information.</p>
+<p>If your research needs fully local processing, these skills transfer
+to open-weight models run on your own machine. Check the licence and the
+exact version first. Hardware needs depend on the model and the speed
+you want, so test your chosen configuration.</p>
 </div>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="from-writer-to-active-reviewer">From writer to active reviewer<a class="anchor" aria-label="anchor" href="#from-writer-to-active-reviewer"></a></h2>
 <hr class="half-width"><p>People sometimes describe this shift as moving from “writer” to
-“orchestrator,” as if the AI now does the work and you just conduct.
-That framing is misleading, and for a learner it is risky.</p>
-<p>A more honest version: <strong>AI may reduce the need to recall every
-detail of syntax, but it increases the need to understand intent,
-dependencies, assumptions, tests, and failure modes.</strong> You are
-not handing off the thinking. You are moving the work from typing
-towards reading, questioning, and judging. That is harder to do well,
-not easier.</p>
-<p>You guide the agent using a <strong>Living Spec</strong>, and then
-you review what it produces against that spec. The diagram below shows
-the loop: you define the goal, the agent proposes a plan, <em>you</em>
-approve before any code is written, and <em>you</em> verify the result
-before it counts as done.</p>
+“orchestrator”, as if the AI does the work and you conduct. That picture
+misleads a learner.</p>
+<p>AI can reduce the need to remember every detail of syntax. It
+increases the need to understand intent, dependencies, assumptions,
+tests and failure modes. You do not hand off the thinking. You move your
+effort from typing toward reading, questioning and judging. That is
+harder to do well.</p>
+<p>You guide the agent with a short instruction file, and you review
+what it produces against your requirements. The diagram shows the loop.
+You state the goal, the agent proposes a plan, you approve it before any
+code is written, and you verify the result before it counts as done.</p>
 <pre class="mermaid"><code>graph TD
-    accTitle: Living Spec approval and verification loop
+    accTitle: Approval and verification loop
     accDescr {A researcher defines a goal in CLAUDE.md, the agent proposes a plan, and the researcher approves it or sends it back at an approval gate. Only after approval does the agent draft code, which then passes a verification step or returns for refinement.}
-    A[Researcher] --&gt;|Define goal| B(CLAUDE.md\nLiving Spec)
+    A[Researcher] --&gt;|Define goal| B(CLAUDE.md\ninstruction file)
     B --&gt; C[Request a plan]
     C --&gt; D{Approval Gate}
     D --&gt;|Approve| E(AI Agent executes)
@@ -558,15 +526,13 @@ before it counts as done.</p>
     style D fill:#bbf,stroke:#333,stroke-width:2px
     style F fill:#f9f,stroke:#333,stroke-width:2px</code></pre>
 <p><em>Description of the diagram: a loop. The researcher defines a goal
-in <code>CLAUDE.md</code>, the agent proposes a plan, and the researcher
-approves it or sends it back at an approval gate. Only after approval
-does the agent draft code, which then passes a verification step or
-returns for refinement. The researcher stays in control at every
-gate.</em></p>
+in <code>CLAUDE.md</code>, and the agent proposes a plan. The researcher
+approves the plan or sends it back at an approval gate. Only after
+approval does the agent draft code. The code then passes a verification
+step or returns for refinement.</em></p>
 
-<p>This introduces a new challenge: <strong>verification load</strong>.
-You must coordinate and validate the agent’s actions against your
-requirements.</p>
+<p>Reviewing generated code adds verification load. You check the
+agent’s actions against your requirements.</p>
 <div id="managing-cognitive-load" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -575,19 +541,13 @@ requirements.</p>
 <div id="managing-cognitive-load" class="callout-inner">
 <h3 class="callout-title">Managing cognitive load</h3>
 <div class="callout-content">
-<p>It is common to feel “out of the loop” when the AI generates many
-lines of code quickly. To manage this, focus on anchoring your
-understanding. Read the comments the AI generates and test small pieces
-of code frequently. If a block of logic is confusing, ask the AI to
-explain it before moving on.</p>
+<p>You may feel out of the loop when an AI writes many lines quickly.
+Anchor your understanding. Read the comments it generates, and test
+small pieces often. If a block is confusing, ask the AI to explain it
+before you move on.</p>
 </div>
 </div>
 </div>
-</section><section><h2 class="section-heading" id="file-system-access">File system access<a class="anchor" aria-label="anchor" href="#file-system-access"></a></h2>
-<hr class="half-width"><p>Unlike browser tools, Claude Code has access to your working
-environment. It can read project context from the directory structure
-and modify files. Instead of copying and pasting code, the agent writes
-scripts to your disk and can iterate based on terminal errors.</p>
 <div id="security-responsibility" class="callout caution">
 <div class="callout-square">
 <i class="callout-icon" data-feather="alert-triangle"></i>
@@ -596,32 +556,22 @@ scripts to your disk and can iterate based on terminal errors.</p>
 <div id="security-responsibility" class="callout-inner">
 <h3 class="callout-title">Security responsibility</h3>
 <div class="callout-content">
-<p>Giving an AI agent access to your filesystem is a security
-responsibility. A buggy or misconfigured agent could delete files or
-access sensitive data, such as passwords.</p>
-<p>Always consider that your tools can have unintended consequences.
-Ensure files are backed up or under version control (like Git) so you
-can revert unwanted changes.</p>
+<p>Starting an agent in your project folder sets its working context. It
+does not on its own create a security boundary. Inspect what the agent
+can actually read, write and reach over the network, and which
+integrations are on.</p>
+<p>A buggy or misconfigured agent could delete files or reach sensitive
+data such as passwords. Keep your files backed up or under version
+control (such as Git) so you can revert a change.</p>
 </div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="long-context">Long context<a class="anchor" aria-label="anchor" href="#long-context"></a></h3>
-<p>Like humans, we only have a certain amount of working memory, and
-large language models (LLMs) operate in a similar way. This is called
-the <strong>context window</strong> in LLM tools. Current models like
-Claude have long context windows (hundreds of thousands of tokens, up to
-a million in some configurations), but a large window doesn’t mean the
-agent should load your entire project at once. The more useful pattern
-is that the agent inspects and retrieves the specific files it needs
-within its configured access, rather than everything being crammed in up
-front.</p>
-<p>This allows you to describe the desired state of your project, and
-the agent coordinates changes across multiple files. Call this
-<strong>intent specification</strong>, not “declarative programming”:
-you’re describing what you want, but the agent still writes an ordinary,
-imperative implementation, and the spec itself is not executable the way
-real declarative code is.</p>
+<p>A model has limited working memory. In LLM tools this is the context
+window. Current models have long windows, but a large window does not
+mean the agent should load your whole project. A better pattern has the
+agent open the files it needs, within the access you configured.</p>
 <div id="a-large-context-window-is-not-a-free-pass" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -631,59 +581,54 @@ real declarative code is.</p>
 <h3 class="callout-title">A large context window is not a free pass</h3>
 <div class="callout-content">
 <p>The more you load into a session, the more the model has to track.
-Beyond a certain point, quality degrades, the model may lose track of
-earlier instructions, produce inconsistent output, or fixate on the
-wrong files. This is sometimes called context poisoning.</p>
-<p>A large context window makes this easier to run into, not harder.
-Managing what goes into your context is part of the workflow, not an
-afterthought.</p>
+Past some point quality can fall. The model may lose earlier
+instructions, produce inconsistent output or fixate on the wrong files.
+Choosing what goes into the context is part of the workflow.</p>
 </div>
 </div>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="lets-make-sure-this-works">Let’s make sure this works<a class="anchor" aria-label="anchor" href="#lets-make-sure-this-works"></a></h2>
-<hr class="half-width"><p>Open a terminal window and type <code>claude --help</code>. You
-should see a usage summary listing the options and slash commands
-available. Claude Code defaults to an interactive session; the
-<code>-p</code> (or <code>--print</code>) flag runs a single prompt
-non-interactively (headless mode), which we use for quick one-off
-checks.</p>
-<p>Navigate to your project folder, <code>coastal-water-quality</code>,
-and run a quick headless check:</p>
+<hr class="half-width"><p>Open a terminal and type <code>claude --help</code>. This lists the
+command-line flags. Use the in-session help for interactive commands.
+Claude Code starts an interactive session by default. The
+<code>-p</code> (or <code>--print</code>) flag runs one prompt
+non-interactively and prints the answer. We use it for quick checks.</p>
+<p>Go to your project folder and run a read-only check:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="bu">cd</span> coastal-water-quality</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a><span class="ex">claude</span> <span class="at">-p</span> <span class="st">"What operating system am I on? List the files here and in data/."</span></span></code></pre>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a><span class="bu">pwd</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a><span class="ex">claude</span> <span class="at">-p</span> <span class="st">"What operating system am I on? List the files here and in data/."</span></span></code></pre>
 </div>
-<p>Compare the output to what you see when you run <code>ls</code> and
-<code>ls data/</code>. Did the AI describe your project accurately? The
-AI should return something like:</p>
+<p>Compare the answer with what <code>ls</code> and
+<code>ls data/</code> show. Did the AI describe your project accurately?
+It should return something like:</p>
 <pre><code>You are on macOS (Darwin). This looks like a data-cleaning project.
 Top level: README.md, CLAUDE.example.md, validate_data.py, data/, expected_outputs/
 data/: site_A.csv, site_B.csv, site_C.csv</code></pre>
+<p>Note three things: the folder where you started (<code>pwd</code>),
+the files the agent could see, and whether it changed anything. It
+should not have changed anything.</p>
 <div class="section level3">
 <h3 id="a-first-look-at-the-data">A first look at the data<a class="anchor" aria-label="anchor" href="#a-first-look-at-the-data"></a></h3>
-<p>Before you let the agent touch anything, look yourself. In your
-terminal:</p>
+<p>Look at the data yourself before the agent touches anything:</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="fu">head</span> data/site_A.csv</span></code></pre>
 </div>
-<p>Then ask the agent to describe the same file, and compare:</p>
+<p>Then ask the agent to describe the same file and compare:</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">claude</span> <span class="at">-p</span> <span class="st">"Describe the columns in data/site_A.csv and note anything inconsistent or risky for analysis."</span></span></code></pre>
 </div>
-<p>Did its description match what you saw with <code>head</code>? Where
-it added an interpretation (for example, guessing what a column means),
-note that as the agent’s <em>assumption</em>, not fact. This habit,
-checking what the tool claims against the data itself, is the whole
-point of the lesson.</p>
-<p>Now let’s initialize the project so the agent has persistent
-context.</p>
+<p>Did its description match what <code>head</code> showed? Where it
+added an interpretation, such as a guess at what a column means, treat
+that as the agent’s assumption and not as fact. Checking what the tool
+claims against the data is the habit this lesson builds.</p>
 <div id="working-directory-matters" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -692,167 +637,140 @@ context.</p>
 <div id="working-directory-matters" class="callout-inner">
 <h3 class="callout-title">Working directory matters</h3>
 <div class="callout-content">
-<p>Always start Claude Code from inside your project folder. The agent
-uses the current directory to find your files and spec. Starting from
-the wrong folder, such as your home directory, is one of the most common
-sources of confusion in a workshop.</p>
+<p>Start Claude Code from inside your project folder. The agent uses the
+current directory to find your files and instructions. Starting from the
+wrong folder, such as your home folder, is a common source of
+confusion.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="section level3">
-<h3 id="initialize-your-project">Initialize your project<a class="anchor" aria-label="anchor" href="#initialize-your-project"></a></h3>
-<p>Claude Code includes an <code>/init</code> command that creates a
-<code>CLAUDE.md</code> file describing your project in your working
-directory:</p>
+<h3 id="create-the-instruction-file">Create the instruction file<a class="anchor" aria-label="anchor" href="#create-the-instruction-file"></a></h3>
+<p>Claude Code has an <code>/init</code> command. It creates a
+<code>CLAUDE.md</code> file that describes your project. Run it once,
+here.</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="ex">claude</span></span></code></pre>
 </div>
-<p>You are now inside a Claude Code session. Type <code>/</code> to see
-the available slash commands and page through the full list. Notice
-<code>/init</code>, this is the command that will initialize our
-project. Let’s run it:</p>
+<p>You are now in a Claude Code session. Type <code>/</code> to see the
+slash commands. Run:</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="ex">/init</span></span></code></pre>
 </div>
-<p>Notice that it inspects your files and folders. After it finishes,
-let’s see what new files have been created. You can run a shell command
-from inside the session by starting the line with <code>!</code>:</p>
+<p>Watch what it inspects. When it finishes, look at what it made. Start
+a line with <code>!</code> to run a shell command inside the
+session:</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="ex">!ls</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="ex">!ls</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a><span class="ex">!cat</span> CLAUDE.md</span></code></pre>
 </div>
-<p>This shows the files that are present. You should see a file named
-<code>CLAUDE.md</code>. Let’s look inside it:</p>
+<p>The generated file looks something like this:</p>
 <div class="codewrapper sourceCode" id="cb10">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="ex">!cat</span> CLAUDE.md</span></code></pre>
-</div>
-<p>Here is the kind of thing Claude Code generates for this project:</p>
-<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="fu"># CLAUDE.md</span></span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a><span class="fu">## Project Overview</span></span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a></span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a>This is a data-cleaning project. The <span class="in">`data/`</span> directory holds three water quality</span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1" aria-label="code-block-11-6"></a>files (<span class="in">`site_A.csv`</span>, <span class="in">`site_B.csv`</span>, <span class="in">`site_C.csv`</span>) with inconsistent column names and</span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1" aria-label="code-block-11-7"></a>date formats. The goal is to merge them into <span class="in">`data/master_dataset.csv`</span> and analyse</span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1" aria-label="code-block-11-8"></a>water quality trends. See <span class="in">`README.md`</span> for the target schema.</span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1" aria-label="code-block-11-9"></a></span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1" aria-label="code-block-11-10"></a><span class="fu">## Key Files</span></span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1" aria-label="code-block-11-11"></a></span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1" aria-label="code-block-11-12"></a><span class="ss">- </span>**`data/site_*.csv`**: raw per-site measurements (do not edit).</span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1" aria-label="code-block-11-13"></a><span class="ss">- </span>**`validate_data.py`**: checks for the merged dataset.</span>
-<span id="cb11-14"><a href="#cb11-14" tabindex="-1" aria-label="code-block-11-14"></a><span class="ss">- </span>**`CLAUDE.md`**: project context and rules, loaded automatically each session.</span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1" aria-label="code-block-11-15"></a></span>
-<span id="cb11-16"><a href="#cb11-16" tabindex="-1" aria-label="code-block-11-16"></a><span class="fu">## Usage</span></span>
-<span id="cb11-17"><a href="#cb11-17" tabindex="-1" aria-label="code-block-11-17"></a></span>
-<span id="cb11-18"><a href="#cb11-18" tabindex="-1" aria-label="code-block-11-18"></a>Re-run <span class="in">`/init`</span> after the project changes, and edit this file by hand to record your</span>
-<span id="cb11-19"><a href="#cb11-19" tabindex="-1" aria-label="code-block-11-19"></a>goals, constraints, and rules.</span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="fu"># CLAUDE.md</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a><span class="fu">## Project Overview</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a>This is a data-cleaning project. The <span class="in">`data/`</span> directory holds three water quality</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a>files (<span class="in">`site_A.csv`</span>, <span class="in">`site_B.csv`</span>, <span class="in">`site_C.csv`</span>) with inconsistent column names and</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a>date formats. The goal is to merge them into <span class="in">`data/master_dataset.csv`</span> and analyse</span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a>water quality trends. See <span class="in">`README.md`</span> for the target schema.</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a><span class="fu">## Key Files</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a><span class="ss">- </span>**`data/site_*.csv`**: raw per-site measurements (do not edit).</span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1" aria-label="code-block-10-13"></a><span class="ss">- </span>**`validate_data.py`**: checks for the merged dataset.</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1" aria-label="code-block-10-14"></a><span class="ss">- </span>**`CLAUDE.md`**: project context and rules, loaded automatically each session.</span></code></pre>
 </div>
-<p>A few things to notice. Claude Code scanned the directory and
-described the real project, including the messy site files. Because this
-folder has data, the generated spec is already useful. You will still
-edit it by hand to add the goals, constraints, and rules the agent must
-follow.</p>
+<p>The agent scanned the folder and described the real project. You
+still edit the file by hand to add your goals and constraints. Do not
+expect <code>/init</code> to make the agent more correct. A short file
+that a person has reviewed makes the agent’s instructions easy to
+audit.</p>
 </div>
-</section><section><h2 class="section-heading" id="the-living-spec">The Living Spec<a class="anchor" aria-label="anchor" href="#the-living-spec"></a></h2>
-<hr class="half-width"><p>To get the most out of a CLI agent, provide it with persistent
-context about your project. This acts as a “Living Spec”, a set of rules
-and goals the agent must follow across every session.</p>
-<p>Every major CLI tool has its own <strong>native</strong> spec file
-that it loads automatically when you start a session:</p>
-<table class="table"><thead><tr><th>Tool</th>
-<th>Native spec file</th>
-</tr></thead><tbody><tr><td>Claude Code</td>
-<td><code>CLAUDE.md</code></td>
-</tr><tr><td>OpenAI Codex</td>
-<td><code>AGENTS.md</code></td>
-</tr><tr><td>Cursor</td>
-<td><code>.cursorrules</code></td>
-</tr></tbody></table><p><code>AGENTS.md</code> is also emerging as a
-<strong>portable</strong> convention across tools: OpenAI released it in
-August 2025, and it was contributed to the Linux Foundation’s Agentic AI
-Foundation in December 2025 alongside Anthropic’s MCP and Block’s goose.
-But whether a tool <em>auto-loads</em> it varies, so check before
-assuming:</p>
-<table class="table"><colgroup><col width="50%"><col width="50%"></colgroup><thead><tr><th>Tool</th>
-<th>Auto-loads <code>AGENTS.md</code>?</th>
-</tr></thead><tbody><tr><td>OpenAI Codex CLI</td>
-<td>Yes, it’s the native file above</td>
-</tr><tr><td>Claude Code</td>
-<td>No. It reads <code>CLAUDE.md</code> only. Add
-<code>@AGENTS.md</code> as an import inside your <code>CLAUDE.md</code>,
-or symlink <code>CLAUDE.md</code> to <code>AGENTS.md</code>, to bring it
-in</td>
-</tr><tr><td>Gemini CLI</td>
-<td>No by default; needs explicit configuration</td>
-</tr></tbody></table><p>For a tool that doesn’t auto-load it, you can still reference it
-explicitly in a prompt: <code>"Read AGENTS.md and then..."</code>.
-That’s what makes it portable: it travels with your project even when
-the tool you’re using doesn’t pick it up on its own.</p>
+</section><section><h2 class="section-heading" id="the-instruction-file">The instruction file<a class="anchor" aria-label="anchor" href="#the-instruction-file"></a></h2>
+<hr class="half-width"><p>A CLI agent can load a project instruction file at the start of a
+session. For Claude Code that file is <code>CLAUDE.md</code>, and this
+lesson uses it.</p>
+<p>Other tools use other conventions. Check what your tool actually
+loaded:</p>
+<ul><li>Recent Claude Code versions can also load <code>AGENTS.md</code>,
+depending on version and settings. <code>CLAUDE.md</code> is the file
+this lesson supports. An explicit <code>@AGENTS.md</code> import in
+<code>CLAUDE.md</code> still helps portability.</li>
+<li>Codex CLI uses <code>AGENTS.md</code>. Check the official
+documentation for the current behaviour.</li>
+<li>Cursor supports scoped rules in <code>.cursor/rules</code> and
+<code>AGENTS.md</code>. <code>.cursorrules</code> is the older
+form.</li>
+<li>Gemini CLI uses <code>GEMINI.md</code> by default, and the file
+names are configurable.</li>
+</ul><p>A tool that does not load a file will not read it unless you say so:
+“Read AGENTS.md and then…”</p>
 <div class="section level3">
-<h3 id="what-to-include-in-your-spec-file">What to include in your spec file<a class="anchor" aria-label="anchor" href="#what-to-include-in-your-spec-file"></a></h3>
-<p>Use this file to define:</p>
-<ul><li>
-<strong>Current Goal</strong>: What you are working on right
-now.</li>
-<li>
-<strong>Rules of the Road</strong>: Technical constraints (e.g.,
-“Always use <code>pandas</code> for dataframes”).</li>
-<li>
-<strong>Verification Gates</strong>: How you will confirm the code
-is correct.</li>
-</ul><div id="your-projects-external-brain" class="callout">
+<h3 id="what-to-put-in-the-file">What to put in the file<a class="anchor" aria-label="anchor" href="#what-to-put-in-the-file"></a></h3>
+<ul><li>The current goal.</li>
+<li>Technical constraints, such as “use <code>pandas</code> for
+dataframes.”</li>
+<li>Source facts the data documentation states, such as a site’s date
+format.</li>
+<li>How you will check that the work is correct.</li>
+</ul><p>A requirement in this file is a request to the model. It is not an
+enforced boundary. Tool permissions and isolation enforce access limits.
+Your checks test the result.</p>
+<div id="keep-a-short-record-of-constraints-and-decisions" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <span class="callout-header">Callout</span>
-<div id="your-projects-external-brain" class="callout-inner">
-<h3 class="callout-title">Your project’s external brain</h3>
+<div id="keep-a-short-record-of-constraints-and-decisions" class="callout-inner">
+<h3 class="callout-title">Keep a short record of constraints and
+decisions</h3>
 <div class="callout-content">
-<p>A model forgets everything between sessions, and even within a
-session its context window is limited. The fix researchers have settled
-on is to keep the project’s memory in plain markdown files that the
-agent reads and updates. Andrej Karpathy popularized calling this an
-“external brain.” Three files do most of the work:</p>
+<p>A model does not carry your project’s rules from one session to the
+next. Keep your constraints and decisions in plain files that live with
+the project, so people can inspect them:</p>
 <ul><li>
-<code>CLAUDE.md</code>: durable rules, goals, and constraints,
-auto-loaded every session (the file you just created).</li>
+<code>CLAUDE.md</code> holds durable rules, goals and constraints,
+and loads each session.</li>
 <li>
-<code>PLAN.md</code>: the step-by-step plan for the task at hand. It
-is temporary, and you will meet it in the next episode.</li>
-<li>A running notes file (for example <code>NOTES.md</code>): a dated
-log of what was tried, what worked, and why you made key choices.</li>
-</ul><p>For research, that notes file is not bureaucracy. It is provenance:
-it is how you, a reviewer, or future-you reconstruct what the agent knew
-and why a result came out the way it did. Because the external brain
-lives in your repo and under version control, it stays reviewable and
-reproducible, unlike the model’s hidden and disposable memory.</p>
+<code>PLAN.md</code> holds the plan for one task. You meet it in the
+next episode.</li>
+<li>A dated notes file holds what you tried, what worked and why you
+chose it.</li>
+</ul><p>For research, the notes file is provenance. It lets you, a reviewer
+or your future self rebuild what happened. Version control makes the
+record reviewable. This does not guarantee that the model follows every
+instruction. Your checks do that job.</p>
 </div>
 </div>
 </div>
-<div id="challenge-initialize-and-customize-your-spec-file" class="callout challenge">
+<div id="challenge-add-a-constraint-and-a-check" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-initialize-and-customize-your-spec-file" class="callout-inner">
-<h3 class="callout-title">Challenge: Initialize and customize your spec
-file</h3>
+<div id="challenge-add-a-constraint-and-a-check" class="callout-inner">
+<h3 class="callout-title">Challenge: add a constraint and a check</h3>
 <div class="callout-content">
-<p>Inside your Claude Code session, run <code>/init</code> to create a
-<code>CLAUDE.md</code> file. Then open it in a text editor and add one
-“Hard Constraint” (something the AI <em>must</em> do) and one “Success
-Metric” (how you know it’s done).</p>
+<p>Open the <code>CLAUDE.md</code> that <code>/init</code> created. Add
+two things:</p>
+<ol style="list-style-type: decimal"><li>One constraint taken from the data documentation. For example: “Site
+C dates are day-month-year. Parse them explicitly.”</li>
+<li>One check you could run to see whether the constraint was met. For
+example: “After cleaning, SC001 must have the date 2023-01-05.”</li>
+</ol><p>Then show one change as a diff. Ask the agent to add a line to
+<code>CLAUDE.md</code>, and compare the file before and after (for
+example with <code>git diff</code> or <code>diff</code>). Which line
+changed?</p>
 </div>
 </div>
 </div>
@@ -860,27 +778,33 @@ Metric” (how you know it’s done).</p>
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1">
-  Example spec file
+  Example
   </h4>
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb12">
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="fu"># Project: Arctic Sea Ice Analysis</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a><span class="fu">## Goal</span></span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a>To analyse trends in sea ice extent from 1980-2020.</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1" aria-label="code-block-12-5"></a></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1" aria-label="code-block-12-6"></a><span class="fu">## Rules of the Road</span></span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1" aria-label="code-block-12-7"></a><span class="ss">- </span>**Hard Constraint**: Only use the <span class="in">`xarray`</span> library for spatial data processing.</span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1" aria-label="code-block-12-8"></a><span class="ss">- </span>**Success Metric**: All final plots must include a valid DOI reference for the data source.</span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1" aria-label="code-block-12-9"></a></span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1" aria-label="code-block-12-10"></a><span class="fu">## Conventions</span></span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1" aria-label="code-block-12-11"></a><span class="ss">- </span>Use snake_case for variable names.</span>
-<span id="cb12-12"><a href="#cb12-12" tabindex="-1" aria-label="code-block-12-12"></a><span class="ss">- </span>Save all plots to the <span class="in">`figures/`</span> directory.</span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="fu"># Project: Coastal Water Quality Trends</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a><span class="fu">## Goal</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a>Clean and merge three site files into data/master_dataset.csv, then plot score</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a>over time by site.</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1" aria-label="code-block-11-6"></a></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1" aria-label="code-block-11-7"></a><span class="fu">## Rules</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1" aria-label="code-block-11-8"></a><span class="ss">- </span>Use pandas for data and matplotlib for plots.</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1" aria-label="code-block-11-9"></a><span class="ss">- </span>Site C dates are day-month-year (05-01-2023 is 5 January). Parse them explicitly.</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1" aria-label="code-block-11-10"></a><span class="ss">- </span>Fill a missing score with the median of that site's observed scores.</span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1" aria-label="code-block-11-11"></a><span class="ss">- </span>Do not edit data/site_*.csv. Do not drop rows. The merge has 60 rows.</span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1" aria-label="code-block-11-12"></a></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1" aria-label="code-block-11-13"></a><span class="fu">## Checks</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1" aria-label="code-block-11-14"></a><span class="ss">- </span>SC001 must have the date 2023-01-05 after cleaning.</span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1" aria-label="code-block-11-15"></a><span class="ss">- </span>python validate_data.py passes.</span></code></pre>
 </div>
+<p>The constraint comes from the source documentation. The check is
+something you can run. The median rule is this exercise’s fixed choice,
+and a real study would have to justify it.</p>
 </div>
 </div>
 </div>
@@ -894,13 +818,12 @@ Metric” (how you know it’s done).</p>
 <h3 class="callout-title">Feedback checkpoint: describe the agent’s
 context</h3>
 <div class="callout-content">
-<p>Before we move on, turn to the person next to you and answer out
-loud: when you ran <code>/init</code>, what did the agent look at, and
-what file did it create? If you are not sure, say so. In the shared
-Etherpad, paste one thing the agent did that surprised you. Working
-alone? Answer out loud to yourself, or write it as a comment at the top
-of your <code>CLAUDE.md</code>, saying it out loud (or writing it down)
-is what surfaces the gaps, not who is listening.</p>
+<p>Turn to the person next to you and answer aloud: when you ran
+<code>/init</code>, what did the agent look at, and which file did it
+create? If you are not sure, say so. Paste one surprise into the shared
+Etherpad. Working alone? Answer aloud to yourself, or write it as a
+comment at the top of your <code>CLAUDE.md</code>. Saying or writing it
+surfaces the gaps.</p>
 </div>
 </div>
 </div>
@@ -911,17 +834,16 @@ is what surfaces the gaps, not who is listening.</p>
 <span class="callout-header">Key Points</span>
 <div class="callout-inner">
 <div class="callout-content">
-<ul><li>Different AI tools see and change different things; always ask what
-a tool can see and do before trusting it.</li>
-<li>A CLI agent can read, run, and edit your real files, which makes
-verifying what it changed part of the workflow.</li>
-<li>Run <code>/init</code> inside Claude Code to create a
-<code>CLAUDE.md</code> Living Spec that reduces context drift.</li>
-<li>A portable <code>AGENTS.md</code> lets the same spec travel across
-different AI tools, but auto-loading it isn’t universal; check per tool
-(Claude Code needs an explicit <code>@AGENTS.md</code> import).</li>
-<li>The shift is from writing syntax to actively reviewing intent,
-assumptions, and evidence; it does not remove your responsibility.</li>
+<ul><li>Ask what an AI tool can see and do, in its actual configuration,
+before you trust it.</li>
+<li>A CLI agent can read, run and edit your real files, so checking what
+it changed is part of the work.</li>
+<li>Run <code>/init</code> once to create <code>CLAUDE.md</code>, then
+edit it by hand.</li>
+<li>An instruction file records constraints for people and tools to
+read. It is not an enforced boundary. Tests check the result.</li>
+<li>Check which instruction file your tool loaded before you rely on
+it.</li>
 </ul></div>
 </div>
 </div>
@@ -991,8 +913,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/01-cli-intro.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/01-cli-intro.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-08-31",
-  "datePublished": "2026-11-03"
+  "dateModified": "2026-11-07",
+  "datePublished": "2026-11-07"
 }
 
   </script><script>

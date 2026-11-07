@@ -206,8 +206,10 @@
 
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
-        <ul><li><a href="#from-vibes-to-research-judgement">From ‘Vibes’ to Research Judgement</a></li>
-<li><a href="#learning-objectives">Learning Objectives</a></li>
+        <ul><li><a href="#from-vibes-to-research-judgement">From vibes to research judgement</a></li>
+<li><a href="#three-ways-of-working-with-ai">Three ways of working with AI</a></li>
+<li><a href="#two-ways-to-use-this-lesson">Two ways to use this lesson</a></li>
+<li><a href="#learning-objectives">Learning objectives</a></li>
 <li><a href="#acknowledgements">Acknowledgements</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
@@ -353,54 +355,62 @@
       
 
 <div class="section level3">
-<h3 id="natural-language-specifications-cli-agents-and-a-four-layer-validation-stack">Natural-language specifications, CLI agents, and a four-layer
-validation stack<a class="anchor" aria-label="anchor" href="#natural-language-specifications-cli-agents-and-a-four-layer-validation-stack"></a></h3>
+<h3 id="plans-cli-agents-and-a-four-layer-validation-stack">Plans, CLI agents, and a four-layer validation stack<a class="anchor" aria-label="anchor" href="#plans-cli-agents-and-a-four-layer-validation-stack"></a></h3>
 <p>This lesson introduces researchers to working with AI (artificial
 intelligence) coding agents without giving up the learning, feedback,
-validation, and research judgement that make code trustworthy. AI
-changes <em>what you need to practise</em>: less time recalling every
-line of syntax, more time understanding intent, dependencies,
-assumptions, tests, and failure modes.</p>
-<p>The focus is not on replacing research thinking, and not on coding
-faster. It is on judging whether AI-generated code is correct for your
-data and your research question, and on documenting that judgement so
-the work is reproducible.</p>
+checking and research judgement that make code trustworthy. AI changes
+what you need to practise. You spend less time recalling syntax and more
+time understanding intent, dependencies, assumptions, tests and failure
+modes.</p>
+<p>The lesson does not replace research thinking, and it does not aim to
+code faster. It teaches you to judge whether AI-generated code is
+correct for your data and your research question, and to document that
+judgement so the work can be reproduced.</p>
 </div>
-<section><h2 class="section-heading" id="from-vibes-to-research-judgement">From ‘Vibes’ to Research Judgement<a class="anchor" aria-label="anchor" href="#from-vibes-to-research-judgement"></a></h2>
-<hr class="half-width"><p>The term “vibe coding” (coined by Andrej Karpathy) describes the
-early 2023-2024 shift towards guiding AI with natural-language prompts.
-Intuition is where people start, but research demands evidence, not only
-output. This lesson teaches a disciplined workflow built around a
-<strong>Living Spec</strong>, a validation stack, and an explicit
-approval gate.</p>
-<p>Throughout, the word “orchestration” means <em>active review</em>,
-not passive delegation. You remain the reviewer, tester, and domain
-judge.</p>
+<section><h2 class="section-heading" id="from-vibes-to-research-judgement">From vibes to research judgement<a class="anchor" aria-label="anchor" href="#from-vibes-to-research-judgement"></a></h2>
+<hr class="half-width"><p>“Vibe coding” is an informal term for guiding AI with
+natural-language prompts and intuition. Intuition is where people start,
+but research demands evidence as well as output. This lesson teaches a
+workflow built around recorded requirements, a validation stack and an
+explicit approval gate.</p>
+<p>Throughout, “orchestration” means active review and not passive
+delegation. You stay the reviewer, tester and domain judge.</p>
 <div class="section level3">
 <h3 id="what-the-workflow-asks-of-you">What the workflow asks of you<a class="anchor" aria-label="anchor" href="#what-the-workflow-asks-of-you"></a></h3>
-<ul><li>
-<strong>Active reviewer, not only author</strong>: You still need to
-understand the code. Your job is to read it, question its assumptions,
-and decide whether it is correct, using a <strong>Living Spec
-(CLAUDE.md)</strong> to record the constraints it must follow.</li>
-<li>
-<strong>Specification before generation</strong>: You spend time
-defining what the data should look like and why, so you can tell when
-generated code drifts from your intent.</li>
-<li>
-<strong>Evidence before approval</strong>: A result is not done
-because it runs. It is done when you can explain it and show it is
-correct.</li>
+<ul><li>You read the code, question its assumptions and decide whether it is
+correct. A short instruction file (<code>CLAUDE.md</code>) records the
+constraints it must follow.</li>
+<li>You define what the data should look like, and why, before
+generation. Then you can tell when the generated code drifts from your
+intent.</li>
+<li>A result is not done because it runs. It is done when you can
+explain it and show evidence that it is correct.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="what-it-does-not-do">What it does not do<a class="anchor" aria-label="anchor" href="#what-it-does-not-do"></a></h3>
-<ul><li>Validate your research question or choose your methods.</li>
-<li>Detect subtle statistical or causal errors by default.</li>
-<li>Reduce your responsibility for the final output.</li>
-</ul><p>Using AI to generate code is research-adjacent labour. It becomes
-research only when embedded in a disciplined process of validation,
-documentation, and justification.</p>
-<div id="prerequisites" class="callout prereq">
+<ul><li>It does not validate your research question or choose your
+methods.</li>
+<li>It does not detect subtle statistical or causal errors by
+default.</li>
+<li>It does not reduce your responsibility for the final output.</li>
+</ul><p>Using AI to generate code is research-adjacent work. It becomes
+research when it sits inside a process of validation, documentation and
+justification.</p>
+</div>
+</section><section><h2 class="section-heading" id="three-ways-of-working-with-ai">Three ways of working with AI<a class="anchor" aria-label="anchor" href="#three-ways-of-working-with-ai"></a></h2>
+<hr class="half-width"><p>You practise three methods on one synthetic dataset:</p>
+<ol style="list-style-type: decimal"><li>Ask AI to help you understand. Predict what a script does, ask for
+an explanation, and compare it with the data.</li>
+<li>Delegate one small change. Read the plan, the action and the diff,
+and compare the result with an expectation you chose yourself.</li>
+<li>Test and hand off a result. Write a check, show that it fails on bad
+data, and have another person rerun your work without AI.</li>
+</ol></section><section><h2 class="section-heading" id="two-ways-to-use-this-lesson">Two ways to use this lesson<a class="anchor" aria-label="anchor" href="#two-ways-to-use-this-lesson"></a></h2>
+<hr class="half-width"><ul><li>A four-hour pilot route for researchers who use basic Python and
+tabular data. The instructor notes give the timed agenda.</li>
+<li>The full eight-episode course, about nine and a half hours of
+material before breaks and installation.</li>
+</ul><div id="prerequisites" class="callout prereq">
 <div class="callout-square">
 <i class="callout-icon" data-feather="check"></i>
 </div>
@@ -409,32 +419,34 @@ documentation, and justification.</p>
 <h3 class="callout-title">Prerequisites</h3>
 <div class="callout-content">
 <ul><li>Basic familiarity with the command line.</li>
-<li>Fundamental understanding of Python (variables, functions,
-scripts).</li>
-<li>No prior experience with AI coding agents is required.</li>
+<li>Python with pandas. You have cleaned a CSV and can read a short
+script that selects columns, filters rows, handles missing values and
+parses dates.</li>
+<li>No prior experience with AI coding agents is needed.</li>
+<li>No account? A saved-output route lets you follow the same tasks and
+checks.</li>
 </ul></div>
 </div>
 </div>
-</div>
-</section><section><h2 class="section-heading" id="learning-objectives">Learning Objectives<a class="anchor" aria-label="anchor" href="#learning-objectives"></a></h2>
-<hr class="half-width"><p>At the end of this lesson, learners will be able to:</p>
-<ul><li>Distinguish code generation, code understanding, and code
-validation, and explain why AI-generated code can raise a novice’s
-cognitive load.</li>
-<li>Use a CLI agent guided by a Living Spec (<code>CLAUDE.md</code>) to
-plan and generate research code, reviewing and approving each step
-rather than accepting it wholesale.</li>
-<li>Validate an AI-generated result with concrete, runnable checks
-(invariants and domain plausibility) and decide whether to approve,
-revise, or reject it.</li>
-<li>Document an AI-assisted workflow (prompt, spec, validation, and
-provenance) so another researcher could reproduce and judge the
+</section><section><h2 class="section-heading" id="learning-objectives">Learning objectives<a class="anchor" aria-label="anchor" href="#learning-objectives"></a></h2>
+<hr class="half-width"><p>At the end of this lesson, you will be able to:</p>
+<ul><li>Tell code generation, code understanding and code validation apart,
+and explain why AI-generated code can raise a novice’s cognitive
+load.</li>
+<li>Use a CLI agent with a short instruction file
+(<code>CLAUDE.md</code>) to plan and generate research code, reviewing
+each step instead of accepting it wholesale.</li>
+<li>Validate an AI-generated result with runnable checks (invariants and
+domain plausibility), show that a check fails on bad data, and decide
+whether to approve, revise or reject.</li>
+<li>Document an AI-assisted workflow (requirements, checks, environment,
+commands and provenance) so another researcher can rerun and judge the
 result.</li>
 </ul></section><section><h2 class="section-heading" id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a></h2>
 <hr class="half-width"><p>This lesson is adapted from the workshop “Vibe Coding for Research”
 developed by Bruno Smaniotto and Tom van Nuenen at the UC Berkeley
 D-Lab.</p>
-<p>The original materials can be found at <a href="https://github.com/dlab-berkeley/Vibe-Coding-for-Research" class="external-link">dlab-berkeley/Vibe-Coding-for-Research</a>.</p>
+<p>The original materials are at <a href="https://github.com/dlab-berkeley/Vibe-Coding-for-Research" class="external-link">dlab-berkeley/Vibe-Coding-for-Research</a>.</p>
 <!--
 Links referenced two or more times across the lesson source. Use as
 [link text][label] in episode/learner/instructor markdown; Sandpaper resolves
@@ -449,45 +461,45 @@ these at build time.
 Practising?</a>
 </td>
 <td>
-What are we actually practising in this lesson?<br>When does an AI
-coding tool help me learn, and when does it get in the way?<br>How do I
-decide whether to trust a result the AI gave me?
+What are we practising in this lesson?<br>When does an AI coding tool
+help me learn, and when does it get in the way?<br>How do I decide
+whether to trust a result the AI gave me?
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>00h 28m
+<span class="visually-hidden">Duration: </span>00h 45m
 </td>
 <td>
  2. <a href="01-cli-intro.html">CLI-Based AI</a>
 </td>
 <td>
 What can each kind of AI tool see, and what can it change?<br>Why use a
-CLI for AI instead of a browser?<br>What is the Living Spec and why
-does it matter?
+command-line tool for this lesson?<br>What goes in a project
+instruction file, and what does it not do?
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>01h 18m
+<span class="visually-hidden">Duration: </span>01h 35m
 </td>
 <td>
  3. <a href="02-prompts.html">Best Practices for Prompting</a>
 </td>
 <td>
-How do I write effective prompts?<br>How do I review a plan before the
-agent acts on it, not just after?<br>What are common AI
-failures?<br>How can I make the AI fix its own mistakes, and when
-should I not trust that it has?
+How do I write a prompt that gets a result I can check?<br>How do I
+review a plan before the agent acts on it?<br>How do common AI failures
+show up, and how do I catch them?
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>02h 33m
+<span class="visually-hidden">Duration: </span>02h 30m
 </td>
 <td>
  4. <a href="03-data-cleaning.html">Data Cleaning with AI</a>
 </td>
 <td>
 Can I trust AI to standardise inconsistent files?<br>How do I check
-that a cleaning script did what I needed, not only what the AI assumed?
+that a cleaning script did what I needed, and not only what the AI
+assumed?
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>04h 11m
+<span class="visually-hidden">Duration: </span>04h 08m
 </td>
 <td>
  5. <a href="04-validation.html">Validation Strategies: The Approval
@@ -495,33 +507,32 @@ Gate</a>
 </td>
 <td>
 What evidence makes AI-generated code safe to approve?<br>What can
-rewrite time tell me about my workflow, and what can it not?<br>How can
-I use one AI to catch the errors of another without treating it as an
-authority?
+rewrite time tell me about my workflow, and what can it not?<br>How do
+I know my own check would catch a wrong result?
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>05h 51m
+<span class="visually-hidden">Duration: </span>05h 43m
 </td>
 <td>
  6. <a href="05-limitations.html">Limitations and Cautions</a>
 </td>
 <td>
-When should I not use AI?<br>What are common failure modes?
+When should I not use AI?<br>Which failure modes can pass a quick look?
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>06h 45m
+<span class="visually-hidden">Duration: </span>06h 28m
 </td>
 <td>
  7. <a href="06-capstone.html">From AI Output to a Review-Ready
 Bundle</a>
 </td>
 <td>
-Can I take one task from prompt to trustworthy, documented
-result?<br>What does “review-ready” actually include, beyond a script
-that runs?
+Can I take one task from prompt to a documented result that someone else
+can rerun?<br>What does “review-ready” include, beyond a script that
+runs?
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>08h 35m
+<span class="visually-hidden">Duration: </span>08h 18m
 </td>
 <td>
  8. <a href="07-resources.html">Resources and Next Steps</a>
@@ -531,7 +542,7 @@ Which tool should I reach for, and when?<br>How do I take this back to
 my own data?
 </td>
 </tr><tr><td>
-<span class="visually-hidden">Duration: </span>09h 27m
+<span class="visually-hidden">Duration: </span>08h 58m
 </td>
 <td>
 Finish
@@ -547,91 +558,99 @@ these at build time.
       </p>
       </section><section id="setup"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style>
 pre code { white-space: pre-wrap !important; word-break: break-word !important; overflow-wrap: anywhere !important; }
-</style><p>To follow this lesson, you will need <a href="https://docs.anthropic.com/en/docs/claude-code" class="external-link">Claude Code</a>
-and Python installed on your machine. Claude Code is Anthropic’s
-terminal-based AI coding agent. The steps below get you set up with a
-direct local install, which is the approach used throughout the
-lesson.</p>
+</style><p>To follow this lesson you need <a href="https://docs.anthropic.com/en/docs/claude-code" class="external-link">Claude Code</a>
+and Python on your machine. Claude Code is Anthropic’s terminal-based AI
+coding agent. The steps below set up a direct local install.</p>
+<p>If you cannot use Claude Code, for example because you have no
+supported account, you can still follow the lesson. Ask your instructor
+for the saved-output route. It uses the same terminal and Python files,
+with saved plans, diffs and command transcripts. You make the same
+approval decisions and run the same checks.</p>
+<p>Allow 20 to 30 minutes before the workshop for this setup. Your
+instructor may run a separate setup clinic.</p>
 <section><h2 class="section-heading" id="install-python-and-two-python-packages">1. Install Python and two Python packages<a class="anchor" aria-label="anchor" href="#install-python-and-two-python-packages"></a></h2>
-<hr class="half-width"><ul><li>
-<strong>Python</strong>: Ensure you have Python 3.11+ installed
-(current Matplotlib requires it). Check with
-<code>python --version</code>.</li>
-<li>
-<strong>Python packages</strong>: the lesson scripts use
-<code>pandas</code> (data handling) and <code>matplotlib</code> (the
-trend plot). Install both, ideally in a project-scoped environment
-rather than globally (a <code>venv</code>, <code>pixi</code>, or
-<code>uv</code> environment all work):</li>
+<hr class="half-width"><ul><li>Python: use the workshop’s tested environment and the exact versions
+your instructor gives you. Current Matplotlib needs Python 3.11 or
+newer. Check with <code>python --version</code>.</li>
+<li>Python packages: the lesson scripts use <code>pandas</code> for data
+and <code>matplotlib</code> for the plot. Install both in a project
+environment and not globally. A <code>venv</code>, <code>pixi</code> or
+<code>uv</code> environment all work:</li>
 </ul><div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install pandas matplotlib</span></code></pre>
 </div>
+<p>A bare, unpinned install is not an environment record. Your
+instructor will give you the tested versions to record.</p>
 </section><section><h2 class="section-heading" id="install-claude-code">2. Install Claude Code<a class="anchor" aria-label="anchor" href="#install-claude-code"></a></h2>
-<hr class="half-width"><p>Use the native installer as your primary path:</p>
+<hr class="half-width"><p>Use the native installer first:</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="ex">curl</span> <span class="at">-fsSL</span> https://claude.ai/install.sh <span class="kw">|</span> <span class="fu">bash</span></span></code></pre>
 </div>
-<p>(Windows: <code>irm https://claude.ai/install.ps1 | iex</code> in
-PowerShell.) If your institution requires installing via npm instead,
-that also works, but needs Node.js 22 or newer:</p>
+<p>On Windows, use <code>irm https://claude.ai/install.ps1 | iex</code>
+in PowerShell. The shell examples in the lesson use Unix commands, so
+ask your instructor which route they have tested on Windows. If your
+institution requires npm, that works too and needs Node.js 22 or
+newer:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">npm</span> install <span class="at">-g</span> @anthropic-ai/claude-code</span></code></pre>
 </div>
 </section><section><h2 class="section-heading" id="authenticate">3. Authenticate<a class="anchor" aria-label="anchor" href="#authenticate"></a></h2>
-<hr class="half-width"><p>How you authenticate depends on which path you are using (see
-“Institutional context and access” below). For the workshop, most
-learners will sign in with a personal Claude account:</p>
+<hr class="half-width"><p>Confirm a supported account before the workshop. Claude Code can sign
+in with a Claude subscription or an Anthropic API key, and your
+organisation may offer other routes. These are not the only options.
+Subscription usage and API billing differ. A plan name does not promise
+that you can complete the workshop. Your instructor provides a fallback
+if access or quota fails.</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="ex">claude</span></span></code></pre>
 </div>
-<p>On first launch, Claude Code walks you through signing in. A Claude
-Pro or Max subscription, or an Anthropic API key, will work. The
-credentials are stored locally; you will not need to repeat this
-step.</p>
-</section><section><h2 class="section-heading" id="verify-the-install">4. Verify the install<a class="anchor" aria-label="anchor" href="#verify-the-install"></a></h2>
-<hr class="half-width"><div class="codewrapper sourceCode" id="cb5">
+<p>On first launch, Claude Code walks you through signing in. It stores
+your credentials locally.</p>
+</section><section><h2 class="section-heading" id="get-the-project-folder">4. Get the project folder<a class="anchor" aria-label="anchor" href="#get-the-project-folder"></a></h2>
+<hr class="half-width"><p>The lesson works in one project: a small, messy, synthetic water
+quality dataset. The data describe no real study. Download the
+<code>coastal-water-quality</code> folder from the <a href="https://github.com/jt14den/agentic-research-workflows" class="external-link">lesson
+repository</a> under <code>learners/files/coastal-water-quality</code>,
+or use the copy your instructor provides. Then move into it:</p>
+<div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="ex">claude</span> <span class="at">--version</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="bu">cd</span> coastal-water-quality</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a><span class="fu">ls</span> data/</span></code></pre>
 </div>
-<p>If you see a version number, you are ready. If the command is not
-found, restart your terminal and try again.</p>
-</section><section><h2 class="section-heading" id="get-the-project-folder">5. Get the project folder<a class="anchor" aria-label="anchor" href="#get-the-project-folder"></a></h2>
-<hr class="half-width"><p>The whole lesson works in one project: a small, messy water quality
-dataset. Download the <code>coastal-water-quality</code> folder that
-ships with this lesson (from the <a href="https://github.com/jt14den/agentic-research-workflows" class="external-link">lesson
-repository</a> under <code>learners/files/coastal-water-quality</code>,
-or from a copy your instructor provides), then move into it:</p>
+<p>You should see <code>site_A.csv</code>, <code>site_B.csv</code> and
+<code>site_C.csv</code>. Start Claude Code from inside this folder
+throughout the lesson.</p>
+</section><section><h2 class="section-heading" id="setup-check">5. Setup check<a class="anchor" aria-label="anchor" href="#setup-check"></a></h2>
+<hr class="half-width"><p>A version number confirms that the program is installed. It does not
+confirm that you can use it. Run these from inside the
+<code>coastal-water-quality</code> folder:</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="bu">cd</span> coastal-water-quality</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="fu">ls</span> data/</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="bu">pwd</span>                       <span class="co"># the folder you are working in</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="ex">claude</span> <span class="at">--version</span>          <span class="co"># prints a version number</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="ex">python</span> <span class="at">--version</span>          <span class="co"># prints Python 3.11 or newer</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import pandas, matplotlib; print('packages ok')"</span>   <span class="co"># prints: packages ok</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a><span class="fu">ls</span> data/                  <span class="co"># site_A.csv  site_B.csv  site_C.csv</span></span></code></pre>
 </div>
-<p>You should see <code>site_A.csv</code>, <code>site_B.csv</code>, and
-<code>site_C.csv</code>. Throughout the lesson, start Claude Code from
-inside this folder.</p>
-</section><section><h2 class="section-heading" id="setup-check">6. Setup check<a class="anchor" aria-label="anchor" href="#setup-check"></a></h2>
-<hr class="half-width"><p>Run these from inside the <code>coastal-water-quality</code> folder.
-Each should produce the output shown:</p>
+<p>Then confirm account access with one read-only agent action:</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="ex">claude</span> <span class="at">--version</span>          <span class="co"># prints a version number</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a><span class="ex">python</span> <span class="at">--version</span>          <span class="co"># prints Python 3.11 or newer</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">"import pandas, matplotlib; print('packages ok')"</span>   <span class="co"># prints: packages ok</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a><span class="fu">ls</span> data/                  <span class="co"># site_A.csv  site_B.csv  site_C.csv</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="ex">claude</span> <span class="at">-p</span> <span class="st">"List the files in data/. Do not change anything."</span></span></code></pre>
 </div>
-<p>If all four work, you are ready. If any fails, see the
-troubleshooting notes below.</p>
+<p>If the files come back, you are ready. If any step fails, see the
+troubleshooting notes below, or tell your instructor so you can use the
+saved-output route.</p>
 <div id="troubleshooting" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -641,40 +660,37 @@ troubleshooting notes below.</p>
 <h3 class="callout-title">Troubleshooting</h3>
 <div class="callout-content">
 <ul><li>
-<strong><code>claude: command not found</code></strong>: the install
-did not finish or your <code>PATH</code> is not updated. Re-run the
-install command and restart your terminal, or run
-<code>claude doctor</code> for a diagnostic.</li>
+<code>claude: command not found</code>: the install did not finish,
+or your <code>PATH</code> is not updated. Re-run the install command and
+restart your terminal, or run <code>claude doctor</code> for a
+diagnostic.</li>
 <li>
-<strong><code>ModuleNotFoundError: No module named 'pandas'</code></strong>:
-the packages went to a different Python than the one you are running.
-Use the same interpreter:
-<code>python -m pip install pandas matplotlib</code>.</li>
-<li>
-<strong>Claude Code asks to sign in again</strong>: that is normal
-on a new machine; complete the sign-in once.</li>
-<li>
-<strong>The agent produces different code or output than the lesson
-shows</strong>: that is expected, AI output varies. The lesson teaches
-you to check it, not to match it. If you fall behind, your instructor
-can share a known-good script from <code>instructors/files/</code>.</li>
+<code>ModuleNotFoundError: No module named 'pandas'</code>: the
+packages went to a different Python than the one you run. Use the same
+interpreter: <code>python -m pip install pandas matplotlib</code>.</li>
+<li>Claude Code asks you to sign in again: that is normal on a new
+machine. Sign in once.</li>
+<li>The agent writes different code than the lesson shows: that is
+expected. AI output varies. The lesson teaches you to check it and not
+to match it. If you fall behind, your instructor can share a known-good
+script from <code>instructors/files/</code>.</li>
 </ul></div>
 </div>
 </div>
-<div id="keep-everyone-on-the-same-model" class="callout">
+<div id="use-the-same-model-and-record-it" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <span class="callout-header">Callout</span>
-<div id="keep-everyone-on-the-same-model" class="callout-inner">
-<h3 class="callout-title">Keep everyone on the same model</h3>
+<div id="use-the-same-model-and-record-it" class="callout-inner">
+<h3 class="callout-title">Use the same model, and record it</h3>
 <div class="callout-content">
-<p>Inside a Claude Code session you can set the model with the
-<code>/model</code> command. Pinning the whole class to one model keeps
-outputs comparable and makes provenance records meaningful. Your
-instructor will tell you which model to select (check
-<code>/status</code> to confirm the exact model and version once you’ve
-set it).</p>
+<p>Inside a Claude Code session, the <code>/model</code> command sets
+the model. Select the same available model as the rest of the class so
+outputs are comparable. Then record the resolved model name, the Claude
+Code version and the relevant settings, which <code>/status</code>
+shows. An alias or an identical selection does not guarantee identical
+output.</p>
 </div>
 </div>
 </div>
@@ -686,115 +702,115 @@ set it).</p>
 <div id="security-and-working-directory" class="callout-inner">
 <h3 class="callout-title">Security and working directory</h3>
 <div class="callout-content">
-<p>Claude Code runs in your terminal and has direct access to the files
-in your current folder. A few habits to keep in mind:</p>
-<ol style="list-style-type: decimal"><li>Always start it from a dedicated project folder, not your home
-directory.</li>
-<li>Keep files under version control (Git) so you can revert unwanted
-changes.</li>
-<li>Never start it in folders with sensitive system files, credentials,
-or private data.</li>
+<p>Claude Code runs in your terminal and works with the files in your
+current folder. Starting in a project folder sets its working context.
+It does not by itself create a security boundary. Check what the agent
+can read, write and reach on the network, and which integrations are on.
+Some habits:</p>
+<ol style="list-style-type: decimal"><li>Start from a dedicated project folder, not your home folder.</li>
+<li>Keep files under version control (Git) so you can revert a
+change.</li>
+<li>Do not start it in a folder with credentials, private data or
+sensitive system files.</li>
 </ol></div>
 </div>
 </div>
-<div id="running-in-a-sandbox-optional-and-currently-untested" class="callout">
+<div id="running-in-a-sandbox-optional-and-untested" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <span class="callout-header">Callout</span>
-<div id="running-in-a-sandbox-optional-and-currently-untested" class="callout-inner">
-<h3 class="callout-title">Running in a sandbox (optional, and currently
+<div id="running-in-a-sandbox-optional-and-untested" class="callout-inner">
+<h3 class="callout-title">Running in a sandbox (optional, and
 untested)</h3>
 <div class="callout-content">
-<p>Some researchers prefer to isolate the agent from their personal
-files entirely. The repository’s <code>Dockerfile</code> and
-<code>.devcontainer/</code> are a starting point for that, but as of
-this writing they have not been rebuilt and smoke-tested against the
-current Claude Code toolchain — don’t rely on them working out of the
-box for a workshop. Options worth knowing about generally:</p>
-<ul><li>
-<strong>Docker</strong>: see the <a href="https://docs.docker.com/" class="external-link">Docker documentation</a>, or <a href="https://docs.docker.com/ai/sandboxes/" class="external-link">Docker AI Sandboxes</a> for
-a purpose-built option, and expect to update this repo’s
-<code>Dockerfile</code> yourself before using it.</li>
-<li>
-<strong>Claude Code’s own sandboxing</strong>: see the <a href="https://code.claude.com/docs/en/sandboxing" class="external-link">sandboxing
-documentation</a> for filesystem/network isolation options built into
-the tool itself, which need less setup than a full container.</li>
-<li>
-<strong>Agent Safehouse</strong>: <a href="https://agent-safehouse.dev/" class="external-link">agent-safehouse.dev</a> is a
-dedicated environment for running AI agents with built-in isolation
-controls.</li>
-</ul><p>None of these are needed for this workshop. If you want a tested
-container path, budget time to rebuild and verify the
-<code>Dockerfile</code> first.</p>
+<p>Some researchers isolate the agent from their personal files. The
+repository’s <code>Dockerfile</code> and <code>.devcontainer/</code> are
+a starting point, but they have not been rebuilt and smoke-tested with
+the current Claude Code. Do not rely on them for a workshop. The
+devcontainer uses its own image and does not use the Dockerfile.</p>
+<p>Claude Code’s Bash sandbox does not cover every file tool, MCP server
+or hook, and native Windows and WSL2 differ. Test the exact route you
+plan to offer. Options to know about:</p>
+<ul><li>Docker: see the <a href="https://docs.docker.com/" class="external-link">Docker
+documentation</a>, or <a href="https://docs.docker.com/ai/sandboxes/" class="external-link">Docker AI
+Sandboxes</a>.</li>
+<li>Claude Code’s own sandboxing: see the <a href="https://code.claude.com/docs/en/sandboxing" class="external-link">sandboxing
+documentation</a>. It supports macOS, Linux and WSL2, and it needs less
+setup than a container. On native Windows, commands run
+unsandboxed.</li>
+<li>A dedicated agent-isolation tool such as <a href="https://agent-safehouse.dev/" class="external-link">Agent Safehouse</a>.</li>
+</ul><p>UCLA published no guidance on agent sandboxes when we checked in
+October 2026. If your research needs one, ask <code>grc@ucla.edu</code>,
+and do not assume that a sandbox you build yourself is approved for
+sensitive data.</p>
+<p>You do not need any of these for this workshop.</p>
 </div>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="institutional-context-and-access">Institutional context and access<a class="anchor" aria-label="anchor" href="#institutional-context-and-access"></a></h2>
-<hr class="half-width"><p>This is the most important section to read before using these tools
-with real research data. Your institution decides which AI tools are
-approved for which kinds of data.</p>
-<p><strong>At UCLA</strong>, the centrally provided free AI tools
-(Gemini Basic, Microsoft Copilot, ChatGPT web) are
-<strong>web-only</strong> and approved for data classified
-<strong>P1-P3</strong> (P4 requires CISO/Unit Head approval). They are
-not terminal agents and cannot run this lesson. See <a href="https://dts.ucla.edu/initiatives/ai/available-tools" class="external-link">UCLA’s
-available AI tools list</a> for the current details and data-tier
-rules.</p>
-<p>For the terminal workflow this lesson teaches, there are two
-paths:</p>
-<ul><li>
-<strong>Personal plan or API key (P1-P3, non-sensitive
-data).</strong> A personal Claude Pro/Max subscription or Anthropic API
-key. This is the simplest setup and what most workshop exercises assume.
-Do not use it with sensitive or restricted research data.</li>
-<li>
-<strong>UCLA Amazon Bedrock (sensitive data).</strong> Claude Code
-can run against Anthropic models hosted in <strong>Amazon
-Bedrock</strong>, which UCLA provides as an enterprise, privacy-bounded
-service. The same lesson commands work; only the backend changes. Use
-this path for P3/P4 research data, and confirm your unit’s Bedrock
-access and data-tier approval first. See your instructor or UCLA DTS for
-setup.</li>
-</ul><p><strong>Always follow your institution’s data privacy
-policies.</strong> PHI and attorney-client privileged information are
-not approved for these tools; UCLA Health users should use the
-HIPAA-compliant alternative (nebulaOne).</p>
-<div id="what-does-a-personal-promax-subscription-actually-give-you" class="callout">
+<hr class="half-width"><p>Read this section before you use these tools with real research data.
+Your institution decides which AI tools are approved for which kinds of
+data.</p>
+<p>In this workshop, use only the supplied synthetic data. Do not read
+permission for institutional research data into a personal subscription
+or into the name of a campus-approved product.</p>
+<p>At UCLA, consult <a href="https://dts.ucla.edu/products-services/ai-tools/campus-ai-tools-comparison" class="external-link">the
+current campus tool comparison</a> for eligibility, price and data
+classifications. Approved access is tied to a UCLA account and a
+specific service. The campus tools listed there are not terminal agents,
+so they cannot run this lesson. When we checked in October 2026, UCLA
+listed its Anthropic products as “coming soon” and published no guidance
+on terminal coding agents or on sandboxes for agents. Check the page
+again before you rely on this.</p>
+<p>UCLA’s footnote on that page says P1 to P3 data are allowed in a UCLA
+account, and P4 data need approval from the Unit Head and the Chief
+Information Security Officer (CISO). The protection levels come from the
+<a href="https://security.ucop.edu/files/documents/uc-protection-level-classification-guide.pdf" class="external-link">UC
+Protection Level Classification Guide</a>. For example, it lists student
+education records (FERPA) at P3 and protected health information at
+P4.</p>
+<p>UCLA’s <a href="https://dts.ucla.edu/initiatives/ai/ai-use-recommendation-guide" class="external-link">AI
+use and recommendation guide</a> says some data must not go into AI
+tools “unless explicitly approved in a secure environment”:
+FERPA-protected student information, HIPAA-protected health data,
+employee personnel data, unpublished research, intellectual property and
+grant proposals, and export-controlled data. Send questions about these
+to <code>grc@ucla.edu</code>, the intake address that guide names.</p>
+<p>To use a backend with sensitive data, first get confirmation from the
+responsible campus or unit authority for the specific account,
+configuration and data category. UCLA’s guide lists Amazon Bedrock
+models, including Claude, among its tools but gives no data tier for
+them. A tool that can run on a given cloud service, such as Amazon
+Bedrock, is not thereby approved for sensitive data.</p>
+<p>The campus comparison excludes protected health information from the
+listed campus AI tools and points eligible UCLA Health users to
+nebulaOne. Check current policy for other restricted categories.</p>
+<div id="consumer-accounts-retention-and-local-transcripts" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <span class="callout-header">Callout</span>
-<div id="what-does-a-personal-promax-subscription-actually-give-you" class="callout-inner">
-<h3 class="callout-title">What does a personal Pro/Max subscription
-actually give you?</h3>
+<div id="consumer-accounts-retention-and-local-transcripts" class="callout-inner">
+<h3 class="callout-title">Consumer accounts, retention and local
+transcripts</h3>
 <div class="callout-content">
-<p>The two paths above differ in a way that is easy to miss: they are
-governed by different terms with different defaults, not just different
-backends.</p>
-<ul><li>
-<strong>Personal Pro/Max/Free (Consumer Terms):</strong> you get an
-explicit, changeable choice whether your conversations, including Claude
-Code sessions, are used to train future models — set it at <a href="https://claude.ai/settings/data-privacy-controls" class="external-link">claude.ai/settings/data-privacy-controls</a>.
-That choice changes how long Anthropic retains your data: <strong>5
-years if training is on, 30 days if it is off.</strong> Even with
-training off, Claude Code also keeps a local plaintext copy of session
-transcripts on your own machine for 30 days by default. The
-<code>/feedback</code>, <code>/bug</code>, and <code>/share</code>
-commands are a separate path: they send your actual conversation
-history, including code, to Anthropic regardless of your training
-setting, unless you disable it.</li>
-<li>
-<strong>UCLA Amazon Bedrock and other commercial/API paths
-(Commercial Terms):</strong> training on your data is contractually
-prohibited by default, not a toggle you set. Standard retention is 30
-days; Zero Data Retention is available to qualifying Enterprise
-accounts.</li>
-</ul><p>If you are using a personal subscription for this workshop, check
-your own setting rather than assuming: see <a href="https://code.claude.com/docs/en/data-usage" class="external-link">Claude Code’s current
-data usage policy</a> for the full, current breakdown by account
-type.</p>
-</div>
+<p>Retention and data use depend on the account type, the provider and
+your settings. Check the current policy and do not assume.</p>
+<ul><li>On consumer accounts, a training preference affects how long
+Anthropic keeps data. Consult <a href="https://code.claude.com/docs/en/data-usage" class="external-link">Claude Code’s current
+data usage policy</a> for the present figures, because they change.</li>
+<li>Claude Code also keeps local transcripts of your sessions on your
+machine.</li>
+<li>Commands that share feedback or transcripts are a separate control
+from your training preference.</li>
+<li>First-party API terms, third-party hosting terms such as those of a
+cloud provider, and your organisation’s settings all differ. Check the
+arrangement that applies to your backend. Do not apply one retention
+period to all backends. Cloud providers also describe the customer’s own
+configuration duties, for example in <a href="https://docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html" class="external-link">AWS
+data protection</a>.</li>
+</ul></div>
 </div>
 </div>
 <!--
@@ -853,8 +869,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/index.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/index.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-11-03",
-  "datePublished": "2026-11-03"
+  "dateModified": "2026-11-07",
+  "datePublished": "2026-11-07"
 }
 
   </script><script>

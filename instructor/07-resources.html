@@ -123,7 +123,7 @@
     <a id="search-button-nav" class="btn btn-primary" href="../instructor/aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
 </nav><aside class="col-md-12 lesson-progress"><div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 91%" aria-valuenow="91" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">91%</div>
+    <div class="progress-bar incubator" role="progressbar" style="width: 93%" aria-valuenow="93" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">93%</div>
   </div>
 </aside><div class="container">
       <div class="row">
@@ -281,7 +281,7 @@
 
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
-        <ul><li><a href="#a-tool-choice-table">A tool-choice table</a></li>
+        <ul><li><a href="#a-short-tool-table">A short tool table</a></li>
 <li><a href="#citing-and-crediting-ai">Citing and crediting AI</a></li>
 <li><a href="#spotting-hype">Spotting hype</a></li>
         </ul></div><!--/div.accordion-body-->
@@ -362,13 +362,13 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Resources and Next Steps</h1>
-        <p>Last updated on 2026-08-31 |
+        <p>Last updated on 2026-11-07 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/07-resources.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
 
 
-        <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 52 minutes</p>
+        <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 40 minutes</p>
 
         <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
@@ -392,12 +392,12 @@
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Choose an appropriate AI coding tool for a given task and data
-sensitivity.</li>
-<li>Draft a workflow plan for one of your own datasets specifying tool,
-backend, no-go zones, opening prompt, validation check, and provenance
-record.</li>
-<li>Recognize signs of AI hype using a stated set of criteria (scope,
+<ul><li>Pick an AI tool for a task and a data category, and say what
+evidence supports the choice.</li>
+<li>Draft a workflow plan for one of your own datasets: tool, backend,
+no-go zones, opening prompt, check, provenance record and one unchecked
+claim.</li>
+<li>Spot signs of AI hype using a stated set of criteria (scope,
 transparency, citations, privacy).</li>
 </ul></div>
 </div>
@@ -405,53 +405,46 @@ transparency, citations, privacy).</li>
 </div>
 </div>
 <p>This episode is a short reference and a plan for what you do next.
-The detail is deliberately light: the skills you practised (spec, plan,
-validate, judge, document) transfer across every tool below.</p>
-<section><h2 class="section-heading" id="a-tool-choice-table">A tool-choice table<a class="anchor" aria-label="anchor" href="#a-tool-choice-table"></a></h2>
-<hr class="half-width"><table class="table"><colgroup><col width="33%"><col width="33%"><col width="33%"></colgroup><thead><tr><th>Tool</th>
+The skills you practised transfer across tools: state requirements,
+plan, check, judge and document.</p>
+<section><h2 class="section-heading" id="a-short-tool-table">A short tool table<a class="anchor" aria-label="anchor" href="#a-short-tool-table"></a></h2>
+<hr class="half-width"><p>Tools change fast. Treat this table as examples, and check each
+tool’s current documentation before you rely on it.</p>
+<table class="table"><colgroup><col width="33%"><col width="33%"><col width="33%"></colgroup><thead><tr><th>Tool</th>
 <th>What it is</th>
 <th>Reach for it when</th>
-</tr></thead><tbody><tr><td>
-<strong>Claude Code</strong> (used in this lesson)</td>
-<td>Anthropic’s CLI agent</td>
+</tr></thead><tbody><tr><td>Claude Code (used in this lesson)</td>
+<td>A command-line agent</td>
 <td>terminal-native work on your real files</td>
-</tr><tr><td>
-<strong>Codex CLI</strong> / <strong>Cursor</strong>
-</td>
-<td>OpenAI CLI / AI code editor</td>
-<td>you prefer a different vendor or an editor-integrated agent</td>
-</tr><tr><td>
-<strong>Aider</strong> + <strong>Ollama</strong>
-</td>
-<td>open CLI agent + local model runner</td>
-<td>sensitive data that must stay on your machine, or
-reproducibility</td>
-</tr><tr><td>
-<strong>NotebookLM</strong>, <strong>Elicit</strong>,
-<strong>Consensus</strong>
-</td>
-<td>document/literature tools</td>
-<td>grounding answers in your own PDFs or the literature, not
-coding</td>
-</tr></tbody></table><p>Local models (run via Ollama) keep data on your hardware and let you
-pin a frozen version for reproducibility, at the cost of needing a
-capable GPU. Many researchers use a hybrid approach: a cloud model for
-general scripting, a local model for sensitive data.</p>
-<div id="quick-check-which-pairing-is-a-problem" class="callout challenge">
+</tr><tr><td>Codex CLI, Cursor</td>
+<td>A command-line agent, an AI code editor</td>
+<td>you prefer another vendor or an editor-integrated agent</td>
+</tr><tr><td>Aider with a local model runner</td>
+<td>An open command-line agent with a model on your machine</td>
+<td>you need data to stay on your machine</td>
+</tr><tr><td>NotebookLM, Elicit, Consensus</td>
+<td>Document and literature tools</td>
+<td>you want answers grounded in your own PDFs or the literature, and
+not coding</td>
+</tr></tbody></table><p>Hardware needs for a local model depend on the model and the speed
+you want. Test your chosen setup. Many researchers use a cloud model for
+general scripting and a local model for sensitive data. Whether any
+given tool is approved for your data is your institution’s call.</p>
+<div id="quick-check-which-pairing-gives-you-pause" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="quick-check-which-pairing-is-a-problem" class="callout-inner">
-<h3 class="callout-title">Quick check: which pairing is a problem?</h3>
+<div id="quick-check-which-pairing-gives-you-pause" class="callout-inner">
+<h3 class="callout-title">Quick check: which pairing gives you
+pause?</h3>
 <div class="callout-content">
-<p>Which of these tool-and-data pairings should give you pause?</p>
 <ol style="list-style-type: decimal"><li>Claude Code, for cleaning a public, already-published dataset.</li>
-<li>Aider + Ollama, for a pipeline that must reproduce identically in
-five years.</li>
-<li>Claude Code (default cloud backend, no institutional agreement), for
-a first pass on sensitive, unpublished human-subjects data.</li>
-<li>NotebookLM, for asking questions grounded in a folder of your own
+<li>A local model, for a pipeline you must rerun in five years.</li>
+<li>Claude Code on its default cloud backend, with no institutional
+approval, for a first pass on sensitive, unpublished human-subjects
+data.</li>
+<li>NotebookLM, for questions grounded in a folder of your own
 PDFs.</li>
 </ol></div>
 </div>
@@ -461,57 +454,53 @@ PDFs.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p><strong>3.</strong> Sending sensitive, unpublished human-subjects
-data to a general cloud endpoint with no institutional agreement or
-approved backend behind it is exactly the pairing to avoid, that is what
-“which approved backend” in the workflow card is asking you to check
-before you start, not after. The other three are reasonable defaults:
-public data carries no sensitivity constraint (1), a local pinned model
-fits a reproducibility requirement well (2), and a document-grounding
-tool used on your own files is what it is built for (4).</p>
+data to a general cloud endpoint with no approval behind it is the
+pairing to avoid. “Which approved backend” on the workflow card asks you
+to settle that before you start.</p>
+<p>The others are reasonable. Public data carries no sensitivity limit
+(1). For (2), the key step is to archive the code, inputs, environment
+and commands so the pipeline reruns without a model. A pinned local
+model helps only if model inference is part of the analysis. A document
+tool used on your own files is what it was built for (4).</p>
 </div>
 </div>
 </div>
 </div>
-<div id="mcp-and-the-shadow-it-risk" class="callout caution">
+<div id="external-tools-and-connectors" class="callout caution">
 <div class="callout-square">
 <i class="callout-icon" data-feather="alert-triangle"></i>
 </div>
 <span class="callout-header">Caution</span>
-<div id="mcp-and-the-shadow-it-risk" class="callout-inner">
-<h3 class="callout-title">MCP and the shadow-IT risk</h3>
+<div id="external-tools-and-connectors" class="callout-inner">
+<h3 class="callout-title">External tools and connectors</h3>
 <div class="callout-content">
 <p>The Model Context Protocol (MCP) lets agents connect to external
-tools and data sources (databases, file systems, services). Anthropic
-donated MCP governance to the Linux Foundation’s Agentic AI Foundation
-in December 2025, and an official server registry now exists — but
-registry listing is not a safety certification. MCP servers are still
-often installed without institutional oversight, and prompt injection
-and silent data exfiltration remain real risks: a server’s tool
-descriptions and returned data should be treated as untrusted input, not
-just the servers themselves. Before connecting one, check it is actively
-maintained and from a trusted source, sandbox it with minimal
-filesystem/network access where you can, and confirm your institution’s
-policy covers it.</p>
+tools and data sources. Many servers are installed without institutional
+review. Prompt injection and data leaks remain real risks. Treat a
+server’s tool descriptions and returned data as untrusted input. Before
+you connect one, check that it is maintained and comes from a source you
+trust, limit its file and network access, and confirm that your
+institution’s policy covers it. Being listed in a registry does not show
+that a server is safe.</p>
 </div>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="citing-and-crediting-ai">Citing and crediting AI<a class="anchor" aria-label="anchor" href="#citing-and-crediting-ai"></a></h2>
-<hr class="half-width"><p>Transparent attribution is part of open science. Major standards
-(COPE, Nature, Elsevier) agree AI tools cannot be authors, because they
-cannot take accountability. Cite them as methodological tools
-instead.</p>
-<ul><li>In a repo <code>README.md</code>: note the model, its role, and who
-verified the output (for example, “Claude [current model name] drafted
-the cleaning script; verified by [you] via
-<code>validate_data.py</code>”).</li>
-<li>In a manuscript: name the model in methods or acknowledgements, and
-keep prompts and outputs available.</li>
-<li>References: <a href="https://publicationethics.org/cope-position-statements/ai-author" class="external-link">COPE
-on AI authorship</a>, <a href="https://www.elsevier.com/about/policies/publishing-ethics/usage-of-ai-tools-in-writing-for-research" class="external-link">Elsevier
-AI policy</a>, <a href="https://credit.niso.org/" class="external-link">CRediT
+<hr class="half-width"><p>Transparent credit is part of open science. Follow the target
+publisher’s current disclosure policy, and keep enough provenance to
+explain AI’s role. Major publishers and COPE say that AI tools cannot be
+authors, because they cannot be held accountable.</p>
+<ul><li>In a repository <code>README.md</code>: note the tool, its role and
+who verified the output. For example: “Claude drafted the cleaning
+script. [Your name] verified it with
+<code>validate_data.py</code>.”</li>
+<li>In a manuscript: name the tool in the methods or acknowledgements,
+and keep prompts and outputs available.</li>
+<li>Check the current policy: <a href="https://publicationethics.org/cope-position-statements/ai-author" class="external-link">COPE
+on AI authorship</a>, <a href="https://credit.niso.org/" class="external-link">CRediT
 taxonomy</a>.</li>
 </ul><div id="challenge-your-monday-workflow-card" class="callout challenge">
 <div class="callout-square">
@@ -521,28 +510,24 @@ taxonomy</a>.</li>
 <div id="challenge-your-monday-workflow-card" class="callout-inner">
 <h3 class="callout-title">Challenge: your Monday workflow card</h3>
 <div class="callout-content">
-<p>Pick one real scenario from your own work, then fill out a short plan
-you could actually use next week. A ready-made template,
-<code>monday-worksheet.md</code>, ships with the lesson (in
-<code>learners/files/</code>); open it and fill it in.</p>
+<p>Pick one real scenario from your own work and fill in a short plan
+you could use next week. The lesson ships a template,
+<code>monday-worksheet.md</code>, in <code>learners/files/</code>. Open
+it and fill it in.</p>
 <p>Choose a scenario: a small public CSV, sensitive human-subjects data,
 large geospatial files, or an existing messy repository.</p>
-<p>For it, write down:</p>
-<ol style="list-style-type: decimal"><li>
-<strong>Tool and backend:</strong> which tool, and (if your data is
-sensitive) which approved backend?</li>
-<li>
-<strong>What the AI can see / must not touch:</strong> the no-go
-zones for your <code>CLAUDE.md</code>.</li>
-<li>
-<strong>First prompt:</strong> your “plan only, no code yet”
-opener.</li>
-<li>
-<strong>Validation:</strong> the one check that would most likely
-catch a silent error in this task.</li>
-<li>
-<strong>Provenance:</strong> where you will record model, date, and
-prompt.</li>
+<p>Write down:</p>
+<ol style="list-style-type: decimal"><li>Tool and backend. Which tool, and for sensitive data, which approved
+backend? Name your evidence source, such as the campus policy page.</li>
+<li>What the AI can see and must not touch. These are the no-go zones
+for your <code>CLAUDE.md</code>. Note how access is enforced, not only
+requested.</li>
+<li>First prompt. Your “plan only, no code yet” opener.</li>
+<li>One likely error and the check that would catch it.</li>
+<li>Provenance. Where you will record the tool version, model, date and
+prompt, and where you will archive the code, data, environment and
+commands.</li>
+<li>One unchecked claim. What are you still taking on trust?</li>
 </ol></div>
 </div>
 </div>
@@ -551,32 +536,25 @@ prompt.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
-<p>A good card is specific to your data. The validation line is the
-tell: if you cannot name a check that would fail when the result is
-wrong, you do not yet understand the task well enough to delegate it.
-That is fine, it just means you start by understanding, not
-generating.</p>
+<p>A good card is specific to your data. The check line is the test. If
+you cannot name a check that would fail when the result is wrong, you do
+not yet understand the task well enough to hand it off. That is fine. It
+means you start by understanding, not by generating.</p>
 </div>
 </div>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="spotting-hype">Spotting hype<a class="anchor" aria-label="anchor" href="#spotting-hype"></a></h2>
 <hr class="half-width"><p>New tools appear daily, and many are more marketing than substance.
-Before adopting one:</p>
-<ul><li>
-<strong>Scope:</strong> beware tools that claim to do everything;
-specialised tools usually work better.</li>
-<li>
-<strong>Transparency:</strong> can you see the intermediate steps,
-or just the answer?</li>
-<li>
-<strong>Citations:</strong> does it give real, checkable DOIs and
-URLs?</li>
-<li>
-<strong>Privacy:</strong> if it is free, is your data used for
-training?</li>
+Before you adopt one, ask:</p>
+<ul><li>Scope. Be wary of tools that claim to do everything. Specialised
+tools often work better.</li>
+<li>Transparency. Can you see the intermediate steps, or only the
+answer?</li>
+<li>Citations. Does it give real DOIs and URLs you can check?</li>
+<li>Privacy. If it is free, is your data used for training?</li>
 </ul><div id="quick-check-spot-the-hype" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
@@ -585,14 +563,12 @@ training?</li>
 <div id="quick-check-spot-the-hype" class="callout-inner">
 <h3 class="callout-title">Quick check: spot the hype</h3>
 <div class="callout-content">
-<p>For each tool description, name the one criterion above it fails most
-clearly.</p>
-<ol style="list-style-type: decimal"><li>“Answers any research question instantly, across any field, no setup
-required.”</li>
-<li>“Summarises your uploaded PDFs and gives you a final answer, no need
-to see the underlying search or reasoning.”</li>
-<li>“Free forever. Just sign up and start uploading your data
-today.”</li>
+<p>For each description, name the criterion it fails most clearly.</p>
+<ol style="list-style-type: decimal"><li>“Answers any research question instantly, in any field, with no
+setup.”</li>
+<li>“Summarises your uploaded PDFs and gives you a final answer. You do
+not need to see the search or the reasoning.”</li>
+<li>“Free forever. Sign up and start uploading your data today.”</li>
 </ol></div>
 </div>
 </div>
@@ -601,32 +577,26 @@ today.”</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
-<ol style="list-style-type: decimal"><li>
-<strong>Scope.</strong> “Any field, any question” is the
-specialised-vs-does-everything red flag, a tool that claims no domain
-limits usually has no domain depth either.</li>
-<li>
-<strong>Transparency.</strong> Hiding the intermediate steps means
-you cannot check its work, only trust its answer.</li>
-<li>
-<strong>Privacy.</strong> A free tool that just wants your data
-uploaded, with no mention of what happens to it, is the exact case the
-privacy criterion is asking you to check before you use it, not
-after.</li>
+<ol style="list-style-type: decimal"><li>Scope. A tool with no stated domain limits often has little depth in
+any one domain.</li>
+<li>Transparency. If you cannot see the intermediate steps, you cannot
+check the work. You can only trust the answer.</li>
+<li>Privacy. A free tool that asks for your data and says nothing about
+what happens to it is the case this criterion exists for. Check before
+you upload.</li>
 </ol></div>
 </div>
 </div>
 </div>
-<p>A few sources that stay practical and skeptical: <a href="https://simonwillison.net/" class="external-link">Simon Willison</a> (AI engineering and
+<p>Some sources that stay practical and skeptical: <a href="https://simonwillison.net/" class="external-link">Simon Willison</a> (AI engineering and
 security), <a href="https://www.oneusefulthing.org/" class="external-link">Ethan Mollick</a>
 (AI and cognitive work), <a href="https://hamel.dev/" class="external-link">Hamel Husain</a>
-(systematic evaluation), and <a href="https://www.deeplearning.ai/the-batch/" class="external-link">The Batch</a> (balanced
-industry coverage).</p>
+(systematic evaluation) and <a href="https://www.deeplearning.ai/the-batch/" class="external-link">The Batch</a> (industry
+news).</p>
 <p>For the tool used here, see the <a href="https://docs.anthropic.com/en/docs/claude-code" class="external-link">Claude Code
-documentation</a>. For definitions of terms used throughout this lesson
-(Living Spec, external brain, approval gates, and more), see the <a href="reference.html">learner reference page</a>.</p>
+documentation</a>. For the terms used in this lesson, see the <a href="reference.html">learner reference page</a>.</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -634,14 +604,13 @@ documentation</a>. For definitions of terms used throughout this lesson
 <span class="callout-header">Key Points</span>
 <div class="callout-inner">
 <div class="callout-content">
-<ul><li>The workflow transfers across tools; match the tool and backend to
-the task and data sensitivity.</li>
-<li>Attribute AI use transparently; it cannot be an author.</li>
-<li>Leave with a concrete plan for your own data, including the one
-check that would catch a silent error.</li>
-<li>Before adopting a new tool, check its scope claims, transparency,
-citations, and data-privacy terms; new tools appear daily, and many are
-more marketing than substance.</li>
+<ul><li>The workflow transfers across tools. Match the tool and backend to
+the task and the data category.</li>
+<li>Credit AI use openly. It cannot be an author.</li>
+<li>Leave with a plan for your own data, including one check that would
+catch a likely error.</li>
+<li>Before adopting a tool, check its scope claims, transparency,
+citations and privacy terms.</li>
 </ul></div>
 </div>
 </div>
@@ -710,8 +679,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/07-resources.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/07-resources.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-08-31",
-  "datePublished": "2026-11-03"
+  "dateModified": "2026-11-07",
+  "datePublished": "2026-11-07"
 }
 
   </script><script>
