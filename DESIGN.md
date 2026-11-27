@@ -49,7 +49,7 @@ At the end of this lesson, learners will be able to:
 4. Document an AI-assisted workflow (prompt, spec, validation, provenance) so another
    researcher could reproduce and judge the result.
 
-Scope check: the episode front matter adds up to 567 minutes (9 hours 27 minutes) before
+Scope check: the episode front matter adds up to 548 minutes (9 hours 8 minutes) before
 breaks and installation. That is the extended course. A four-hour pilot route (timed
 agenda in `instructors/instructor-notes.md`) covers the same four objectives with less
 breadth. Planning estimates, not observed delivery times: measure them in the pilot.

@@ -19,6 +19,17 @@ exercises: 90
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+::::::::::::::::::::::::::::::::::::::::: callout
+
+## Four-hour pilot route
+
+25 minutes in the pilot. Reuse your cleaner and validator. Your instructor may supply scripts if you need them, and you label what was supplied.
+
+- Core: the workflow steps and "Can another researcher rerun and assess your result?"
+- Extension: the closing feedback checkpoint.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 You have practised each move on its own: requirements, a plan, a cleaning script, a validator. The capstone puts them together on the coastal water quality data. It ends with a descriptive statement: what pattern is visible in the water quality score at each site over the monitoring period?
 
 A line plot can show a visible pattern. It does not establish a significant trend or a difference between sites. That needs a stated method and a measure of uncertainty, which this lesson does not cover. The data are synthetic, so the statement describes the exercise and not real coastal conditions.

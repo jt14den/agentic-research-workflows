@@ -39,8 +39,17 @@ You practise three methods on one synthetic dataset:
 
 ## Two ways to use this lesson
 
-- A four-hour pilot route for researchers who use basic Python and tabular data. The instructor notes give the timed agenda.
-- The full eight-episode course, about nine and a half hours of material before breaks and installation.
+- A four-hour pilot route for researchers who use basic Python and tabular data. Each episode marks its core, extension and reference activities. The instructor notes give the timed agenda.
+- The full eight-episode course, about nine hours of material before breaks and installation.
+
+The four-hour route has a shorter set of outcomes. By the end of it, you will be able to:
+
+- Inspect a plan and identify one unsupported assumption.
+- Run a check that passes on a correct input and fails on a seeded error.
+- Explain one transformation and its effect on the data.
+- Hand another researcher a bundle they can rerun, with a decision supported by evidence.
+
+The learning objectives below describe the full course.
 
 :::::::::::::::::::::::::::::::::::::::: prereq
 

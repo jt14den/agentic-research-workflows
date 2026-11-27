@@ -22,13 +22,25 @@ exercises: 30
 
 ::::::::::::::::::::::::::::::::::::::::: callout
 
+## Four-hour pilot route
+
+25 minutes in the pilot.
+
+- Core: the prompt checklist; "Challenge: repair a prompt"; "Challenge: review a plan against the evidence".
+- Extension: "Challenge: ask for a check, then read it".
+- Reference: the CLEAR checklist and the reasoning effort section.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::: callout
+
 ## Working inside Claude Code
 
 Type the prompts in this episode inside an active Claude Code session. Start one in your project folder:
 
 ```bash
 cd coastal-water-quality
-claude
+claude --permission-mode manual
 ```
 
 Run shell commands such as `python script.py` in a separate terminal, or inside the session by starting the line with `!`.
@@ -245,7 +257,7 @@ Some models let you raise a reasoning-effort setting. Availability and defaults 
 Ask the agent to draft a check for the coastal data:
 
 ```
-Write a short Python script, check_site_C_dates.py, that reads data/site_C.csv and prints the ISO date for SC001 and SC002, using the day-month-year format. Do not change any files.
+Write a short Python script, check_site_C_dates.py, that reads data/site_C.csv and prints the ISO date for SC001 and SC002, using the day-month-year format. You may create check_site_C_dates.py. Do not change the input data or any other file.
 ```
 
 1. Before you run it, predict both dates.

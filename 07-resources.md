@@ -19,6 +19,18 @@ exercises: 25
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+::::::::::::::::::::::::::::::::::::::::: callout
+
+## Four-hour pilot route
+
+10 minutes in the pilot, shared between an unaided transfer decision and the Monday card.
+
+- Core: "Challenge: this check passes. Is the file right?" from "Validation Strategies", done without AI; "Challenge: your Monday workflow card".
+- Extension: "Quick check: which pairing gives you pause?"; "Quick check: spot the hype".
+- Reference: the tool table, connectors, and citing and crediting AI.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 This episode is a short reference and a plan for what you do next. The skills you practised transfer across tools: state requirements, plan, check, judge and document.
 
 ## A short tool table
@@ -38,6 +50,8 @@ Hardware needs for a local model depend on the model and the speed you want. Tes
 
 ## Quick check: which pairing gives you pause?
 
+For each pairing, decide whether to stop, or name what you need to know before you go ahead.
+
 1. Claude Code, for cleaning a public, already-published dataset.
 2. A local model, for a pipeline you must rerun in five years.
 3. Claude Code on its default cloud backend, with no institutional approval, for a first pass on sensitive, unpublished human-subjects data.
@@ -47,7 +61,13 @@ Hardware needs for a local model depend on the model and the speed you want. Tes
 
 **3.** Sending sensitive, unpublished human-subjects data to a general cloud endpoint with no approval behind it is the pairing to avoid. "Which approved backend" on the workflow card asks you to settle that before you start.
 
-The others are reasonable. Public data carries no sensitivity limit (1). For (2), the key step is to archive the code, inputs, environment and commands so the pipeline reruns without a model. A pinned local model helps only if model inference is part of the analysis. A document tool used on your own files is what it was built for (4).
+The others may be reasonable, but the pairing alone does not settle them.
+
+**1.** A public dataset can still have a licence or terms of use that limit what you may do with it. Check them, and check what other files the agent can reach from where you run it.
+
+**2.** A local model does not make a pipeline rerunnable. Archive the code, inputs, environment and commands so it reruns without a model. A pinned local model helps only if model inference is part of the analysis.
+
+**4.** Your own folder of PDFs can hold restricted material, such as unpublished manuscripts, peer reviews, licensed articles or personal data. Check what is in the folder and what the tool's terms and your institution allow before you upload.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -80,7 +100,7 @@ Choose a scenario: a small public CSV, sensitive human-subjects data, large geos
 Write down:
 
 1. Tool and backend. Which tool, and for sensitive data, which approved backend? Name your evidence source, such as the campus policy page.
-2. What the AI can see and must not touch. These are the no-go zones for your `CLAUDE.md`. Note how access is enforced, not only requested.
+2. Access and limits. Where execution happens, the active permission mode, enabled connectors, what the AI must not touch and what enforces that. A line in `CLAUDE.md` is a request. Record how you showed that each enforced limit works, what it does not cover and how you would recover.
 3. First prompt. Your "plan only, no code yet" opener.
 4. One likely error and the check that would catch it.
 5. Provenance. Where you will record the tool version, model, date and prompt, and where you will archive the code, data, environment and commands.
@@ -98,10 +118,10 @@ A good card is specific to your data. The check line is the test. If you cannot 
 
 New tools appear daily, and many are more marketing than substance. Before you adopt one, ask:
 
-- Scope. Be wary of tools that claim to do everything. Specialised tools often work better.
+- Scope. Does it say what it does and where it fails? A broad tool can be useful, and a narrow one can still fail. Test it on a real task of yours and check the result independently.
 - Transparency. Can you see the intermediate steps, or only the answer?
 - Citations. Does it give real DOIs and URLs you can check?
-- Privacy. If it is free, is your data used for training?
+- Privacy. What do the terms say about storing your data and training on it? Check for free and paid plans. Price alone does not tell you.
 
 ::::::::::::::::::::::::::::::::::::::::: challenge
 
@@ -115,7 +135,7 @@ For each description, name the criterion it fails most clearly.
 
 :::::::::::::::::::::::::::::::::::::::: solution
 
-1. Scope. A tool with no stated domain limits often has little depth in any one domain.
+1. Scope. It states no limits, so you have no basis for knowing when to doubt it.
 2. Transparency. If you cannot see the intermediate steps, you cannot check the work. You can only trust the answer.
 3. Privacy. A free tool that asks for your data and says nothing about what happens to it is the case this criterion exists for. Check before you upload.
 

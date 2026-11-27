@@ -20,6 +20,17 @@ exercises: 48
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+::::::::::::::::::::::::::::::::::::::::: callout
+
+## Four-hour pilot route
+
+40 minutes in the pilot.
+
+- Core: steps A to F of the cleaning checkpoints. In manual mode, read each proposed file change before you allow it.
+- Extension: "Challenge: read a diff, then run it" (the February filter); "Automating documentation"; "Challenge: provenance tracking"; generating your own messy data. You still write a provenance note in the final bundle.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 :::::::::::::::::::::::::::::::::::::::::: prereq
 
 ## Prerequisites
@@ -44,7 +55,7 @@ Type the prompts in this episode inside an active Claude Code session. Start one
 
 ```bash
 cd coastal-water-quality
-claude
+claude --permission-mode manual
 ```
 
 Run Python scripts in a separate terminal window when the text tells you to.
@@ -92,7 +103,7 @@ Open the three files in `data/` and look at them yourself. Do not use the AI yet
 Keep your list. You will judge the AI's proposal against it. For a faster overview, ask the AI to write an inspection script, and read its output against your list:
 
 ```
-Write a Python script called 'inspect_data.py' that reads every CSV in data/. For each file, print the filename, the column names, and the number of missing values per column. Do not change any files.
+Write a Python script called 'inspect_data.py' that reads every CSV in data/. For each file, print the filename, the column names, and the number of missing values per column. You may create inspect_data.py. Do not change the input data or any other file.
 ```
 
 ::::::::::::::::::::::::::::::::::::::::: challenge

@@ -19,11 +19,13 @@ exercises: 20
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::::::: instructor
+::::::::::::::::::::::::::::::::::::::::: callout
 
-## Pilot route
+## Four-hour pilot route
 
-The four-hour pilot does not teach this episode as its own block. It folds the scope and privacy points into Episode 1 and the failure modes into Episodes 2 and 4. Use this episode in the extended course, or as a follow-on.
+The pilot does not teach this episode as its own block. Its scope and privacy points are taught in "CLI-Based AI", and its failure modes in "Best Practices for Prompting" and "Validation Strategies".
+
+- Reference: the whole episode. Its challenges belong to the full course or later practice.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -49,10 +51,12 @@ The goal is not "never use AI." Use it where it supports learning and rigour, an
 
 - The exercise builds basic syntax fluency. A generated answer skips the practice.
 - You cannot yet explain the output. If you cannot judge it, you cannot use it responsibly.
-- The data are sensitive and the tool's privacy terms are unclear.
-- The task involves security, authentication, encryption, access control or regulated data.
+- The task involves sensitive or regulated data. This workshop uses only the supplied synthetic data.
+- The task involves security, authentication, encryption or access control. These are outside the scope of this workshop.
 - The model keeps bringing in ideas beyond the lesson.
 - Reaching for AI stops the instructor from seeing where the group is stuck.
+
+In your own work after the workshop, whether AI is acceptable for sensitive or security-critical tasks depends on authorisation, the approved environment, expert knowledge and review. If you cannot confirm these, do not use it.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -114,6 +118,10 @@ Sustainable habits:
 
 ::::::::::::::::::::::::::::::::::::::::: instructor
 
+## Package study figures
+
+Churilov, [arXiv:2605.17062v4](https://arxiv.org/abs/2605.17062v4), revised 9 November 2026, checked 27 November 2026. It is a preprint. Hallucination rates were 3.6 to 5.0 percent of package mentions (2.2 to 3.4 percent of generations), and 104 invented names were shared by all five models. Earlier versions reported different figures, so check the latest version and its denominators before you quote a number.
+
 ## Managing expectations
 
 Current models flag uncertainty more often than older ones, but they still hallucinate. Do not promise learners that it will not happen.
@@ -143,7 +151,7 @@ A package that exists on the registry is not therefore the package you wanted. E
 
 You may get a clean "this does not exist." That is the right answer when it happens, but do not count on it.
 
-A 2026 study of five frontier models, using its own prompts, found that they invented nonexistent package names about 4.6 to 6.1 percent of the time. 127 of the invented names were produced identically by all five models ([Churilov, 2026](https://arxiv.org/abs/2605.17062)). Those are rates for that study's models and prompts, and not current universal failure rates.
+A 2026 preprint that tested five frontier models with its own prompts found that all of them sometimes named packages that do not exist, and that some invented names were shared by all five ([Churilov, 2026](https://arxiv.org/abs/2605.17062v4)). The result applies to that study's models and prompts. It is not a current failure rate for every model or task.
 
 The second finding bears on your habits. Asking another model to double-check a package name is weaker protection than it sounds, because models can invent the same wrong name. Check the official registry or the documentation directly.
 
@@ -198,7 +206,7 @@ In the shared Etherpad, post one thing an AI tool told you this session with cer
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- Avoid AI for security-critical tasks, sensitive data and basic syntax practice.
+- In this workshop, keep AI away from security-critical tasks and sensitive data. Skip it when you are practising basic syntax.
 - Know when AI supports learning and when it gets in the way.
 - Compare code with your approved requirements. Do not sync the requirements to the code without evidence.
 - Check a package against the official registry. Existence on the registry is not proof of fit.
