@@ -46,7 +46,7 @@ Assume learners finish installation or receive a supplied environment before the
 |---|---:|---|---|
 | 00:00 | 15 | Setup diagnostic and entry check. Assign the live-agent route or the saved-output route. | `learners/setup.md` |
 | 00:15 | 30 | `dropna` reading, then the date exercise: predict, pair trace, run, add checks, decide. | Episode 0 |
-| 00:45 | 25 | CLI scope, shell versus agent, `/init` once, one diff, one constraint plus check. | Episode 1 |
+| 00:45 | 25 | CLI scope, shell versus agent, set and check the permission mode, `/init` once, one diff, one constraint plus check. | Episode 1 |
 | 01:10 | 10 | Catch-up checkpoint. Share a question the agent did not resolve. | |
 | 01:20 | 25 | Repair a prompt. Review a plan, mark one unsupported assumption, approve one bounded action. | Episode 2 |
 | 01:45 | 15 | Break. | |
@@ -54,9 +54,24 @@ Assume learners finish installation or receive a supplied environment before the
 | 02:40 | 35 | Complete the date check, run it on good and bad files, discuss what remains unchecked. | Episode 4 |
 | 03:15 | 10 | Catch-up using the checkpoint packs. Restore the canonical 60-row output. | |
 | 03:25 | 25 | Assemble and swap the bundle. The partner reruns without AI. | Episode 6 |
-| 03:50 | 10 | Unaided transfer decision and the Monday card. | Episode 7 |
+| 03:50 | 10 | Unaided transfer decision (the all-sites-A challenge in the validation episode) and the Monday card. | Episode 7 |
 
-Episode 5 is not taught as its own block in the pilot. Its scope and privacy points sit in Episode 1, and its failure modes sit in Episodes 2 and 4. The full eight-episode course is longer. The episode front matter adds up to about 9.5 hours, before breaks and installation.
+The episode numbers in this table and in the episode notes start at 0, like the source file names. The learner route boxes refer to other episodes by title. Each episode page has a "Four-hour pilot route" box that lists core, extension and reference activities. Keep those boxes and this table in step.
+
+Episode 5 is not taught as its own block in the pilot. Its scope and privacy points sit in Episode 1, and its failure modes sit in Episodes 2 and 4. The full eight-episode course is longer. The episode front matter adds up to about 9 hours, before breaks and installation. The control exercise in Episode 1 is an extension in the pilot, so do not claim in the pilot that learners tested an enforced restriction.
+
+### Outcomes and evidence
+
+For each pilot outcome, look for the learner's own work. Finishing an activity or saying it went well is not evidence.
+
+| Pilot outcome | Learner work that shows it | Episode (source number) |
+|---|---|---|
+| Identify an unsupported assumption in a plan | The marked step, with the file or document evidence that corrects it | 2, 3 |
+| Run a check that passes good input and fails a seeded error | Their date check, with output from the good file and the bad copy | 4 |
+| Explain a transformation and its data consequence | A spoken or written explanation of one block of the cleaner, naming what changes in the data | 3 |
+| Hand over a rerunnable bundle with a supported decision | The partner's record of commands, results and missing items, and the written decision with its evidence and one uncertainty | 6 |
+
+Record whether each piece used live agent output or supplied output.
 
 ### Reference and follow-on
 
@@ -110,6 +125,8 @@ Helpers route a learner to a known state. They do not do the learner's judgment 
 - The date exercise is deliberately faulty teaching code. Do not claim every agent makes this mistake.
 
 ### Episode 1: CLI-Based AI
+- Check that every learner started in manual mode and can say where to read the active mode. Starting modes differ by version and settings.
+- Before each offering, rerun the control exercise on each supported platform, and update `instructors/files/permission-check-output.txt` if the behaviour or the message changed.
 - Run the setup check, including the read-only agent action. A version number confirms only the program.
 - Set the same available model with `/model`. Record the resolved model name, tool version and settings.
 - Everyone works in the provided `coastal-water-quality` folder. Confirm that `ls data/` shows three files.

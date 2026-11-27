@@ -19,11 +19,13 @@ exercises: 20
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::::::: instructor
+::::::::::::::::::::::::::::::::::::::::: callout
 
-## Pilot route
+## Four-hour pilot route
 
-The four-hour pilot does not teach this episode as its own block. It folds the scope and privacy points into Episode 1 and the failure modes into Episodes 2 and 4. Use this episode in the extended course, or as a follow-on.
+The pilot does not teach this episode as its own block. Its scope and privacy points are taught in "CLI-Based AI", and its failure modes in "Best Practices for Prompting" and "Validation Strategies".
+
+- Reference: the whole episode. Its challenges belong to the full course or later practice.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 

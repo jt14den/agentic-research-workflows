@@ -21,6 +21,18 @@ exercises: 60
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+::::::::::::::::::::::::::::::::::::::::: callout
+
+## Four-hour pilot route
+
+35 minutes in the pilot.
+
+- Core: the approval gate; "Challenge: write one independent check", including the run on bad data; naming what stays unchecked.
+- Extension: "Think aloud while you work"; "Challenge: explain the approval gate"; the critique from a second model. Leave "Challenge: this check passes. Is the file right?" unopened. The pilot uses it at the end as an unaided transfer task.
+- Reference: rewrite time.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ## The approval gate
 
 When an agent writes your code, you spend more of your time reading, questioning and approving. The approval gate is the point where you decide a result is good enough to use.

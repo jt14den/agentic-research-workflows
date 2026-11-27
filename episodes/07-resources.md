@@ -19,6 +19,18 @@ exercises: 25
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+::::::::::::::::::::::::::::::::::::::::: callout
+
+## Four-hour pilot route
+
+10 minutes in the pilot, shared between an unaided transfer decision and the Monday card.
+
+- Core: "Challenge: this check passes. Is the file right?" from "Validation Strategies", done without AI; "Challenge: your Monday workflow card".
+- Extension: "Quick check: which pairing gives you pause?"; "Quick check: spot the hype".
+- Reference: the tool table, connectors, and citing and crediting AI.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 This episode is a short reference and a plan for what you do next. The skills you practised transfer across tools: state requirements, plan, check, judge and document.
 
 ## A short tool table
@@ -88,7 +100,7 @@ Choose a scenario: a small public CSV, sensitive human-subjects data, large geos
 Write down:
 
 1. Tool and backend. Which tool, and for sensitive data, which approved backend? Name your evidence source, such as the campus policy page.
-2. What the AI can see and must not touch. These are the no-go zones for your `CLAUDE.md`. Note how access is enforced, not only requested.
+2. Access and limits. Where execution happens, the active permission mode, enabled connectors, what the AI must not touch and what enforces that. A line in `CLAUDE.md` is a request. Record how you showed that each enforced limit works, what it does not cover and how you would recover.
 3. First prompt. Your "plan only, no code yet" opener.
 4. One likely error and the check that would catch it.
 5. Provenance. Where you will record the tool version, model, date and prompt, and where you will archive the code, data, environment and commands.

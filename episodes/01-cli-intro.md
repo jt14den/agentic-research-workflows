@@ -1,12 +1,12 @@
 ---
 title: "CLI-Based AI"
 teaching: 25
-exercises: 25
+exercises: 35
 ---
 
 :::::::::::::::::::::::::::::::::::::::: questions
 
-- What can each kind of AI tool see, and what can it change?
+- What can my configured AI tool see and change, and what enforces that?
 - Why use a command-line tool for this lesson?
 - What goes in a project instruction file, and what does it not do?
 
@@ -14,9 +14,21 @@ exercises: 25
 
 ::::::::::::::::::::::::::::::::::::::: objectives
 
-- Describe what an AI tool can read and change in your configuration.
-- Show the working directory, the files an agent can see and one change as a diff.
+- For your configured tool, state where it runs, the active permission mode, one enforced restriction and one limit of that restriction.
+- Show the working directory, check which instructions your session loaded and explain one change as a diff.
 - Create a short instruction file (`CLAUDE.md`) with a source-backed constraint and a check you can run.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::: callout
+
+## Four-hour pilot route
+
+25 minutes in the pilot.
+
+- Core: what the tool can see and change; setting and checking the permission mode; the read-only check; running `/init` once; "Challenge: add a constraint and a check", including the diff.
+- Extension: "A first look at the data"; "Challenge: test one enforced control".
+- Reference: the desktop app note and the instruction file names used by other tools.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -57,16 +69,33 @@ A command-line interface (CLI) agent runs in your terminal, where you run Python
 
 ## What the tool can see, and what it can change
 
-Before you trust an AI tool, ask what it can see and what it can do. More access helps more, and gives it more chances to go quietly wrong. These kinds of tools sit along that range.
+Before you trust an AI tool, ask what it can see and what it can do. Three things shape the answer:
 
-| Tool type | What context it has | What it can do | What can go wrong | What to verify |
-|---|---|---|---|---|
-| Chatbot | What you paste in, plus any files or connectors you enable | Suggests code and text | May guess your file structure; you copy code by hand | That the code matches your actual columns and files |
-| IDE assistant | The open file, sometimes nearby files | Suggests and inserts code inline | Sees part of the project; may fit the line and miss the goal | That the suggestion does what you intended |
-| CLI agent | Your project folder, as configured | Reads files, runs code, writes scripts | Can edit or delete real files; can act on a misread of your data | What it read, changed and ran, before you approve |
-| Multi-step agent workflow | Whatever you grant, across many steps | Plans and runs a chain of actions | Errors compound; hard to see where it went wrong | That you can explain each step and reproduce the result |
+- The model produces text, including requests to use tools.
+- The application or agent decides what goes to the model and carries out those requests.
+- The enabled tools and their permissions set what can be read, run or changed.
 
-Further down the table, the tool can do more for you and more to you. Nothing in the table removes your responsibility to understand the result.
+The same model can have different access in different applications. The interface does not tell you which. A multi-step workflow can run in a browser, a desktop app, an editor or a terminal. Ask these questions about the tool in front of you, in the configuration you are using:
+
+| Question | What to record |
+|---|---|
+| Where does execution happen? | Your machine, a remote workspace or the provider's environment |
+| What can it access? | Files, commands, network destinations, connectors and desktop apps |
+| What is enforced? | Permission rules, sandbox scope, and what falls outside the sandbox |
+| What can you inspect? | Proposed actions, commands that ran, file changes, outputs and errors |
+| How do you recover? | A clean copy, version history or another restore method you have tested |
+
+More access lets the tool do more for you and more to you. No answer in this table removes your responsibility to understand the result.
+
+::::::::::::::::::::::::::::::::::::::::: callout
+
+## What about desktop apps?
+
+Some agents also come as desktop apps. The Code tab in the Claude desktop app has a permission mode menu and a view of file changes, and its sessions can run on your machine, in the cloud or on a remote machine ([desktop documentation](https://code.claude.com/docs/en/desktop)). OpenAI's desktop app separates chat, general agent work (Work) and coding (Codex) ([help article](https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex)). Both were checked on 27 November 2026.
+
+Ask the same five questions. An app on your machine can still send your content to a cloud service. This lesson is tested with the command-line route only.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::: instructor
 
@@ -94,9 +123,7 @@ If your research needs fully local processing, these skills transfer to open-wei
 
 ## From writer to active reviewer
 
-People sometimes describe this shift as moving from "writer" to "orchestrator", as if the AI does the work and you conduct. That picture misleads a learner.
-
-AI can reduce the need to remember every detail of syntax. It increases the need to understand intent, dependencies, assumptions, tests and failure modes. You do not hand off the thinking. You move your effort from typing toward reading, questioning and judging. That is harder to do well.
+AI can reduce the need to remember every detail of syntax. It increases the need to understand intent, dependencies, assumptions, tests and failure modes. You do not hand off the thinking. You move your effort from typing toward reading, questioning and judging.
 
 You guide the agent with a short instruction file, and you review what it produces against your requirements. The diagram shows the loop. You state the goal, the agent proposes a plan, you approve it before any code is written, and you verify the result before it counts as done.
 
@@ -127,16 +154,6 @@ Ask learners whether they have used a chatbot to write code that looked right an
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-Reviewing generated code adds verification load. You check the agent's actions against your requirements.
-
-::::::::::::::::::::::::::::::::::::::::: callout
-
-## Managing cognitive load
-
-You may feel out of the loop when an AI writes many lines quickly. Anchor your understanding. Read the comments it generates, and test small pieces often. If a block is confusing, ask the AI to explain it before you move on.
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
 ::::::::::::::::::::::::::::::::::::::::: caution
 
 ## Security responsibility
@@ -149,19 +166,32 @@ A buggy or misconfigured agent could delete files or reach sensitive data such a
 
 ### Long context
 
-A model has limited working memory. In LLM tools this is the context window. Current models have long windows, but a large window does not mean the agent should load your whole project. A better pattern has the agent open the files it needs, within the access you configured.
-
-::::::::::::::::::::::::::::::::::::::::: callout
-
-## A large context window is not a free pass
-
-The more you load into a session, the more the model has to track. Past some point quality can fall. The model may lose earlier instructions, produce inconsistent output or fixate on the wrong files. Choosing what goes into the context is part of the workflow.
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
+A model has limited working memory, called the context window. A large window does not mean the agent should load your whole project. The more you load, the more the model has to track, and it may lose earlier instructions or fixate on the wrong files. Choosing what goes into the context is part of the workflow.
 
 ## Let's make sure this works
 
 Open a terminal and type `claude --help`. This lists the command-line flags. Use the in-session help for interactive commands. Claude Code starts an interactive session by default. The `-p` (or `--print`) flag runs one prompt non-interactively and prints the answer. We use it for quick checks.
+
+### Set the permission mode
+
+The permission mode controls when Claude Code asks before it acts. Do not assume the mode. Since version 2.1.283, the built-in starting mode for interactive terminal sessions is auto mode, which runs without routine permission prompts. Your settings can change the starting mode. In this lesson, start every interactive session in manual mode:
+
+```bash
+claude --permission-mode manual
+```
+
+| Mode | What it does |
+|---|---|
+| Manual (called `default` in settings) | Asks before most file edits, shell commands and network requests |
+| Accept edits | Accepts file edits and common file commands in the working folders without asking |
+| Plan | Explores and proposes a plan. It does not edit your source files |
+| Auto | Runs without routine prompts. A separate model checks actions |
+
+This table is a summary of the common modes, and not the full list. Press `Shift+Tab` to change mode during a session, and read the mode shown on screen before you approve work. Names and defaults change between versions, so check the [permission modes documentation](https://code.claude.com/docs/en/permission-modes) (checked 27 November 2026).
+
+A mode decides when you are asked. A deny rule blocks an action whether or not you would have been asked. `/permissions` lists the rules and the settings file each one comes from. A sandbox is a third control. Claude Code's sandbox is off by default. When it is on, it restricts shell commands and the processes they start. It does not cover the built-in file and web tools, hooks or local MCP servers. By default, sandboxed commands can still read most of your machine, including some credential files. It does not run on native Windows ([sandboxing documentation](https://code.claude.com/docs/en/sandboxing)).
+
+### Run a read-only check
 
 Go to your project folder and run a read-only check:
 
@@ -210,7 +240,7 @@ Start Claude Code from inside your project folder. The agent uses the current di
 Claude Code has an `/init` command. It creates a `CLAUDE.md` file that describes your project. Run it once, here.
 
 ```bash
-claude
+claude --permission-mode manual
 ```
 
 You are now in a Claude Code session. Type `/` to see the slash commands. Run:
@@ -242,7 +272,7 @@ water quality trends. See `README.md` for the target schema.
 
 - **`data/site_*.csv`**: raw per-site measurements (do not edit).
 - **`validate_data.py`**: checks for the merged dataset.
-- **`CLAUDE.md`**: project context and rules, loaded automatically each session.
+- **`CLAUDE.md`**: project context and rules.
 ```
 
 The agent scanned the folder and described the real project. You still edit the file by hand to add your goals and constraints. Do not expect `/init` to make the agent more correct. A short file that a person has reviewed makes the agent's instructions easy to audit.
@@ -253,7 +283,7 @@ A CLI agent can load a project instruction file at the start of a session. For C
 
 Other tools use other conventions. Check what your tool actually loaded:
 
-- Recent Claude Code versions can also load `AGENTS.md`, depending on version and settings. `CLAUDE.md` is the file this lesson supports. An explicit `@AGENTS.md` import in `CLAUDE.md` still helps portability.
+- Claude Code can read `AGENTS.md` when no `CLAUDE.md` or `CLAUDE.local.md` exists in the working folder or above it. An explicit `@AGENTS.md` import in `CLAUDE.md` helps portability.
 - Codex CLI uses `AGENTS.md`. Check the official documentation for the current behaviour.
 - Cursor supports scoped rules in `.cursor/rules` and `AGENTS.md`. `.cursorrules` is the older form.
 - Gemini CLI uses `GEMINI.md` by default, and the file names are configurable.
@@ -269,17 +299,29 @@ A tool that does not load a file will not read it unless you say so: "Read AGENT
 
 A requirement in this file is a request to the model. It is not an enforced boundary. Tool permissions and isolation enforce access limits. Your checks test the result.
 
+## What the tool remembers
+
+A new session starts a new conversation, but it does not start from nothing. Claude Code can load instruction files from your user folder, your project and the folders above it. It also has auto memory: notes that it writes for itself and loads in later sessions. Auto memory is on by default in local sessions ([memory documentation](https://code.claude.com/docs/en/memory), checked 27 November 2026).
+
+Inspect what your session has:
+
+- `/context all` shows what is in the context, including which memory files loaded.
+- `/memory` lets you open instruction files, view auto memory entries and turn auto memory off.
+- `/clear` starts a new conversation with empty context. It keeps project memory, so do not treat it as a clean slate.
+
+Read a stored note as an assumption to check. It may be wrong or out of date.
+
 ::::::::::::::::::::::::::::::::::::::::: callout
 
-## Keep a short record of constraints and decisions
+## Keep your own record of constraints and decisions
 
-A model does not carry your project's rules from one session to the next. Keep your constraints and decisions in plain files that live with the project, so people can inspect them:
+Keep your approved requirements in plain files that live with the project, where you and others can inspect them. Your record, and not the tool's memory, says what the project requires.
 
-- `CLAUDE.md` holds durable rules, goals and constraints, and loads each session.
+- `CLAUDE.md` holds durable rules, goals and constraints.
 - `PLAN.md` holds the plan for one task. You meet it in the next episode.
 - A dated notes file holds what you tried, what worked and why you chose it.
 
-For research, the notes file is provenance. It lets you, a reviewer or your future self rebuild what happened. Version control makes the record reviewable. This does not guarantee that the model follows every instruction. Your checks do that job.
+For research, the notes file is provenance. It lets you, a reviewer or your future self rebuild what happened. Version control makes the record reviewable. None of this guarantees that the model follows every instruction. Your checks test whether the result meets it.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -292,7 +334,26 @@ Open the `CLAUDE.md` that `/init` created. Add two things:
 1. One constraint taken from the data documentation. For example: "Site C dates are day-month-year. Parse them explicitly."
 2. One check you could run to see whether the constraint was met. For example: "After cleaning, SC001 must have the date 2023-01-05."
 
-Then show one change as a diff. Ask the agent to add a line to `CLAUDE.md`, and compare the file before and after (for example with `git diff` or `diff`). Which line changed?
+Then show one change as a diff. In a separate terminal, in the project folder, save a copy of the file:
+
+```bash
+cp CLAUDE.md CLAUDE.before.md
+```
+
+Ask the agent to add one line to `CLAUDE.md`. Read the change it proposes before you allow it. Then compare the two files:
+
+```bash
+diff -u CLAUDE.before.md CLAUDE.md
+```
+
+Part of the output looks like this:
+
+```diff
+ ## Rules
++- Site C dates are day-month-year. Parse them explicitly.
+```
+
+A line that starts with `+` was added, and a line that starts with `-` was removed. A line that starts with a space did not change and is there for context. Which lines changed in your file? Did anything change that you did not ask for?
 
 :::::::::::::::::::::::::::::::::::::::: solution
 
@@ -322,6 +383,67 @@ The constraint comes from the source documentation. The check is something you c
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+::::::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge: test one enforced control
+
+An instruction asks. A permission rule enforces. Test one rule on a disposable copy of the synthetic project. Never run this test on real data.
+
+1. Leave any running session. From inside `coastal-water-quality`, make a copy and a settings folder:
+
+   ```bash
+   cp -R . ../control-test
+   cd ../control-test
+   mkdir -p .claude
+   ```
+
+2. In a text editor, create `.claude/settings.json` in `control-test` with this rule. If the file already exists, ask a helper to add the rule to it.
+
+   ```json
+   {
+     "permissions": {
+       "deny": ["Edit(./data/**)"]
+     }
+   }
+   ```
+
+3. Start a session with `claude --permission-mode acceptEdits`. This mode accepts file edits without asking, so a blocked edit is not just a prompt that you refused. Run `/permissions` and find your rule.
+4. Predict what will happen. Then type:
+
+   ```
+   This is a disposable test copy. Use your file editing tool to add the line TEST to the end of data/site_A.csv. If it is not permitted, stop and report the exact message. Do not try another way.
+   ```
+
+5. Do not rely on the agent's report. In a separate terminal, from inside `control-test`, compare the file with the original. No output means the two files are the same.
+
+   ```bash
+   diff data/site_A.csv ../coastal-water-quality/data/site_A.csv
+   ```
+
+6. Write down the active mode, the rule, what happened and one thing this test does not show.
+
+When you finish, leave the session, return to `coastal-water-quality` and delete the `control-test` folder.
+
+::::::::::::::::::::::::::::::::::::::::::::::::: solution
+
+## What to expect
+
+The file editing tool refuses the change, and `diff` prints nothing. In the lesson's test run, the message was "File is in a directory that is denied by your permission settings." Your wording may differ. If the file changed, stop and check the rule, the folder you started in and your version.
+
+The result covers one tool and one path. It does not show that `data/` is protected from everything. The [permissions documentation](https://code.claude.com/docs/en/permissions) says that Read and Edit deny rules apply to the built-in file tools and to some file commands that Claude Code recognises in the shell. They do not apply to a program that opens files itself, such as a Python script. This exercise does not test that limit, and you should not ask the agent to get around the rule. To restrict what a script can write, you need a control on the process, such as a sandbox or file system permissions. Test that control too.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::: instructor
+
+## Fallback for the control exercise
+
+Run the exercise on each platform you support before the session. For learners without an account, use `instructors/files/permission-check-output.txt`. It records a run with the rule and a run without it. Label it as supplied output. Learners still name the restriction and one limit.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 :::::::::::::::::::::::::::::::::::::::::: discussion
 
 ## Feedback checkpoint: describe the agent's context
@@ -332,7 +454,9 @@ Turn to the person next to you and answer aloud: when you ran `/init`, what did 
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- Ask what an AI tool can see and do, in its actual configuration, before you trust it.
+- Ask where a tool runs, what it can access, what is enforced, what you can inspect and how you recover. The interface alone does not answer these.
+- Set and check the permission mode. A deny rule or a sandbox covers only certain tools, so know its limits.
+- Instruction files and auto memory carry into new sessions. Inspect what loaded.
 - A CLI agent can read, run and edit your real files, so checking what it changed is part of the work.
 - Run `/init` once to create `CLAUDE.md`, then edit it by hand.
 - An instruction file records constraints for people and tools to read. It is not an enforced boundary. Tests check the result.

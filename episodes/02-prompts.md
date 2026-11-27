@@ -22,13 +22,25 @@ exercises: 30
 
 ::::::::::::::::::::::::::::::::::::::::: callout
 
+## Four-hour pilot route
+
+25 minutes in the pilot.
+
+- Core: the prompt checklist; "Challenge: repair a prompt"; "Challenge: review a plan against the evidence".
+- Extension: "Challenge: ask for a check, then read it".
+- Reference: the CLEAR checklist and the reasoning effort section.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::: callout
+
 ## Working inside Claude Code
 
 Type the prompts in this episode inside an active Claude Code session. Start one in your project folder:
 
 ```bash
 cd coastal-water-quality
-claude
+claude --permission-mode manual
 ```
 
 Run shell commands such as `python script.py` in a separate terminal, or inside the session by starting the line with `!`.

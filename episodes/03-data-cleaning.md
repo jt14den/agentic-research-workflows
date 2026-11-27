@@ -20,6 +20,17 @@ exercises: 48
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+::::::::::::::::::::::::::::::::::::::::: callout
+
+## Four-hour pilot route
+
+40 minutes in the pilot.
+
+- Core: steps A to F of the cleaning checkpoints. In manual mode, read each proposed file change before you allow it.
+- Extension: "Challenge: read a diff, then run it" (the February filter); "Automating documentation"; "Challenge: provenance tracking"; generating your own messy data. You still write a provenance note in the final bundle.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 :::::::::::::::::::::::::::::::::::::::::: prereq
 
 ## Prerequisites
@@ -44,7 +55,7 @@ Type the prompts in this episode inside an active Claude Code session. Start one
 
 ```bash
 cd coastal-water-quality
-claude
+claude --permission-mode manual
 ```
 
 Run Python scripts in a separate terminal window when the text tells you to.
