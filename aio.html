@@ -412,7 +412,7 @@
         
 <section id="aio-00-before-ai"><p>Content from <a href="00-before-ai.html">Before We Use AI: What Are We Practising?</a></p>
 <hr>
-<p>Last updated on 2026-11-07 |
+<p>Last updated on 2026-11-27 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/00-before-ai.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -448,6 +448,28 @@ yourself.</li>
 </ul>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div id="four-hour-pilot-route" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="four-hour-pilot-route" class="callout-inner">
+<h3 class="callout-title">Four-hour pilot route</h3>
+<div class="callout-content">
+<p>Core activities are taught in the four-hour pilot. Extension
+activities are for the full course or later practice. Reference material
+is for looking things up. The full course includes everything. The pilot
+gives this episode 30 minutes.</p>
+<ul>
+<li>Core: the run, revise or reject checkpoint; “Challenge: practise the
+checkpoint”; the date exercise, “A result can pass one check and still
+be wrong”; the opening feedback note.</li>
+<li>Extension: “Quick check: what does <code>dropna()</code>
+remove?”</li>
+</ul>
 </div>
 </div>
 </div>
@@ -746,7 +768,7 @@ these at build time.
 -->
 </section></section><section id="aio-01-cli-intro"><p>Content from <a href="01-cli-intro.html">CLI-Based AI</a></p>
 <hr>
-<p>Last updated on 2026-11-07 |
+<p>Last updated on 2026-11-27 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/01-cli-intro.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -760,7 +782,8 @@ these at build time.
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul>
-<li>What can each kind of AI tool see, and what can it change?</li>
+<li>What can my configured AI tool see and change, and what enforces
+that?</li>
 <li>Why use a command-line tool for this lesson?</li>
 <li>What goes in a project instruction file, and what does it not
 do?</li>
@@ -773,15 +796,36 @@ do?</li>
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul>
-<li>Describe what an AI tool can read and change in your
-configuration.</li>
-<li>Show the working directory, the files an agent can see and one
-change as a diff.</li>
+<li>For your configured tool, state where it runs, the active permission
+mode, one enforced restriction and one limit of that restriction.</li>
+<li>Show the working directory, check which instructions your session
+loaded and explain one change as a diff.</li>
 <li>Create a short instruction file (<code>CLAUDE.md</code>) with a
 source-backed constraint and a check you can run.</li>
 </ul>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div id="four-hour-pilot-route" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="four-hour-pilot-route" class="callout-inner">
+<h3 class="callout-title">Four-hour pilot route</h3>
+<div class="callout-content">
+<p>25 minutes in the pilot.</p>
+<ul>
+<li>Core: what the tool can see and change; setting and checking the
+permission mode; the read-only check; running <code>/init</code> once;
+“Challenge: add a constraint and a check”, including the diff.</li>
+<li>Extension: “A first look at the data”; “Challenge: test one enforced
+control”.</li>
+<li>Reference: the desktop app note and the instruction file names used
+by other tools.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -815,58 +859,77 @@ own scripts.</li>
 </h2>
 <hr class="half-width">
 <p>Before you trust an AI tool, ask what it can see and what it can do.
-More access helps more, and gives it more chances to go quietly wrong.
-These kinds of tools sit along that range.</p>
+Three things shape the answer:</p>
+<ul>
+<li>The model produces text, including requests to use tools.</li>
+<li>The application or agent decides what goes to the model and carries
+out those requests.</li>
+<li>The enabled tools and their permissions set what can be read, run or
+changed.</li>
+</ul>
+<p>The same model can have different access in different applications.
+The interface does not tell you which. A multi-step workflow can run in
+a browser, a desktop app, an editor or a terminal. Ask these questions
+about the tool in front of you, in the configuration you are using:</p>
 <table class="table">
 <colgroup>
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
-<col width="20%">
+<col width="50%">
+<col width="50%">
 </colgroup>
 <thead><tr>
-<th>Tool type</th>
-<th>What context it has</th>
-<th>What it can do</th>
-<th>What can go wrong</th>
-<th>What to verify</th>
+<th>Question</th>
+<th>What to record</th>
 </tr></thead>
 <tbody>
 <tr>
-<td>Chatbot</td>
-<td>What you paste in, plus any files or connectors you enable</td>
-<td>Suggests code and text</td>
-<td>May guess your file structure; you copy code by hand</td>
-<td>That the code matches your actual columns and files</td>
+<td>Where does execution happen?</td>
+<td>Your machine, a remote workspace or the provider’s environment</td>
 </tr>
 <tr>
-<td>IDE assistant</td>
-<td>The open file, sometimes nearby files</td>
-<td>Suggests and inserts code inline</td>
-<td>Sees part of the project; may fit the line and miss the goal</td>
-<td>That the suggestion does what you intended</td>
+<td>What can it access?</td>
+<td>Files, commands, network destinations, connectors and desktop
+apps</td>
 </tr>
 <tr>
-<td>CLI agent</td>
-<td>Your project folder, as configured</td>
-<td>Reads files, runs code, writes scripts</td>
-<td>Can edit or delete real files; can act on a misread of your
-data</td>
-<td>What it read, changed and ran, before you approve</td>
+<td>What is enforced?</td>
+<td>Permission rules, sandbox scope, and what falls outside the
+sandbox</td>
 </tr>
 <tr>
-<td>Multi-step agent workflow</td>
-<td>Whatever you grant, across many steps</td>
-<td>Plans and runs a chain of actions</td>
-<td>Errors compound; hard to see where it went wrong</td>
-<td>That you can explain each step and reproduce the result</td>
+<td>What can you inspect?</td>
+<td>Proposed actions, commands that ran, file changes, outputs and
+errors</td>
+</tr>
+<tr>
+<td>How do you recover?</td>
+<td>A clean copy, version history or another restore method you have
+tested</td>
 </tr>
 </tbody>
 </table>
-<p>Further down the table, the tool can do more for you and more to you.
-Nothing in the table removes your responsibility to understand the
-result.</p>
+<p>More access lets the tool do more for you and more to you. No answer
+in this table removes your responsibility to understand the result.</p>
+<div id="what-about-desktop-apps" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="what-about-desktop-apps" class="callout-inner">
+<h3 class="callout-title">What about desktop apps?</h3>
+<div class="callout-content">
+<p>Some agents also come as desktop apps. The Code tab in the Claude
+desktop app has a permission mode menu and a view of file changes, and
+its sessions can run on your machine, in the cloud or on a remote
+machine (<a href="https://code.claude.com/docs/en/desktop" class="external-link">desktop
+documentation</a>). OpenAI’s desktop app separates chat, general agent
+work (Work) and coding (Codex) (<a href="https://help.openai.com/en/articles/20001275-chatgpt-work-and-codex" class="external-link">help
+article</a>). Both were checked on 27 November 2026.</p>
+<p>Ask the same five questions. An app on your machine can still send
+your content to a cloud service. This lesson is tested with the
+command-line route only.</p>
+</div>
+</div>
+</div>
 
 <div id="data-privacy-and-institutional-context" class="callout caution">
 <div class="callout-square">
@@ -906,14 +969,10 @@ you want, so test your chosen configuration.</p>
 </section><section><h2 class="section-heading" id="from-writer-to-active-reviewer">From writer to active reviewer<a class="anchor" aria-label="anchor" href="#from-writer-to-active-reviewer"></a>
 </h2>
 <hr class="half-width">
-<p>People sometimes describe this shift as moving from “writer” to
-“orchestrator”, as if the AI does the work and you conduct. That picture
-misleads a learner.</p>
 <p>AI can reduce the need to remember every detail of syntax. It
 increases the need to understand intent, dependencies, assumptions,
 tests and failure modes. You do not hand off the thinking. You move your
-effort from typing toward reading, questioning and judging. That is
-harder to do well.</p>
+effort from typing toward reading, questioning and judging.</p>
 <p>You guide the agent with a short instruction file, and you review
 what it produces against your requirements. The diagram shows the loop.
 You state the goal, the agent proposes a plan, you approve it before any
@@ -938,23 +997,6 @@ approves the plan or sends it back at an approval gate. Only after
 approval does the agent draft code. The code then passes a verification
 step or returns for refinement.</em></p>
 
-<p>Reviewing generated code adds verification load. You check the
-agent’s actions against your requirements.</p>
-<div id="managing-cognitive-load" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<span class="callout-header">Callout</span>
-<div id="managing-cognitive-load" class="callout-inner">
-<h3 class="callout-title">Managing cognitive load</h3>
-<div class="callout-content">
-<p>You may feel out of the loop when an AI writes many lines quickly.
-Anchor your understanding. Read the comments it generates, and test
-small pieces often. If a block is confusing, ask the AI to explain it
-before you move on.</p>
-</div>
-</div>
-</div>
 <div id="security-responsibility" class="callout caution">
 <div class="callout-square">
 <i class="callout-icon" data-feather="alert-triangle"></i>
@@ -976,25 +1018,11 @@ control (such as Git) so you can revert a change.</p>
 <div class="section level3">
 <h3 id="long-context">Long context<a class="anchor" aria-label="anchor" href="#long-context"></a>
 </h3>
-<p>A model has limited working memory. In LLM tools this is the context
-window. Current models have long windows, but a large window does not
-mean the agent should load your whole project. A better pattern has the
-agent open the files it needs, within the access you configured.</p>
-<div id="a-large-context-window-is-not-a-free-pass" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<span class="callout-header">Callout</span>
-<div id="a-large-context-window-is-not-a-free-pass" class="callout-inner">
-<h3 class="callout-title">A large context window is not a free pass</h3>
-<div class="callout-content">
-<p>The more you load into a session, the more the model has to track.
-Past some point quality can fall. The model may lose earlier
-instructions, produce inconsistent output or fixate on the wrong files.
-Choosing what goes into the context is part of the workflow.</p>
-</div>
-</div>
-</div>
+<p>A model has limited working memory, called the context window. A
+large window does not mean the agent should load your whole project. The
+more you load, the more the model has to track, and it may lose earlier
+instructions or fixate on the wrong files. Choosing what goes into the
+context is part of the workflow.</p>
 </div>
 </section><section><h2 class="section-heading" id="lets-make-sure-this-works">Let’s make sure this works<a class="anchor" aria-label="anchor" href="#lets-make-sure-this-works"></a>
 </h2>
@@ -1004,13 +1032,75 @@ command-line flags. Use the in-session help for interactive commands.
 Claude Code starts an interactive session by default. The
 <code>-p</code> (or <code>--print</code>) flag runs one prompt
 non-interactively and prints the answer. We use it for quick checks.</p>
-<p>Go to your project folder and run a read-only check:</p>
+<div class="section level3">
+<h3 id="set-the-permission-mode">Set the permission mode<a class="anchor" aria-label="anchor" href="#set-the-permission-mode"></a>
+</h3>
+<p>The permission mode controls when Claude Code asks before it acts. Do
+not assume the mode. Since version 2.1.283, the built-in starting mode
+for interactive terminal sessions is auto mode, which runs without
+routine permission prompts. Your settings can change the starting mode.
+In this lesson, start every interactive session in manual mode:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="bu">cd</span> coastal-water-quality</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a><span class="bu">pwd</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a><span class="ex">claude</span> <span class="at">-p</span> <span class="st">"What operating system am I on? List the files here and in data/."</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="ex">claude</span> <span class="at">--permission-mode</span> manual</span></code></pre>
+</div>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr>
+<th>Mode</th>
+<th>What it does</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Manual (called <code>default</code> in settings)</td>
+<td>Asks before most file edits, shell commands and network
+requests</td>
+</tr>
+<tr>
+<td>Accept edits</td>
+<td>Accepts file edits and common file commands in the working folders
+without asking</td>
+</tr>
+<tr>
+<td>Plan</td>
+<td>Explores and proposes a plan. It does not edit your source
+files</td>
+</tr>
+<tr>
+<td>Auto</td>
+<td>Runs without routine prompts. A separate model checks actions</td>
+</tr>
+</tbody>
+</table>
+<p>This table is a summary of the common modes, and not the full list.
+Press <code>Shift+Tab</code> to change mode during a session, and read
+the mode shown on screen before you approve work. Names and defaults
+change between versions, so check the <a href="https://code.claude.com/docs/en/permission-modes" class="external-link">permission modes
+documentation</a> (checked 27 November 2026).</p>
+<p>A mode decides when you are asked. A deny rule blocks an action
+whether or not you would have been asked. <code>/permissions</code>
+lists the rules and the settings file each one comes from. A sandbox is
+a third control. Claude Code’s sandbox is off by default. When it is on,
+it restricts shell commands and the processes they start. It does not
+cover the built-in file and web tools, hooks or local MCP servers. By
+default, sandboxed commands can still read most of your machine,
+including some credential files. It does not run on native Windows (<a href="https://code.claude.com/docs/en/sandboxing" class="external-link">sandboxing
+documentation</a>).</p>
+</div>
+<div class="section level3">
+<h3 id="run-a-read-only-check">Run a read-only check<a class="anchor" aria-label="anchor" href="#run-a-read-only-check"></a>
+</h3>
+<p>Go to your project folder and run a read-only check:</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="bu">cd</span> coastal-water-quality</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="bu">pwd</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1" aria-label="code-block-4-3"></a><span class="ex">claude</span> <span class="at">-p</span> <span class="st">"What operating system am I on? List the files here and in data/."</span></span></code></pre>
 </div>
 <p>Compare the answer with what <code>ls</code> and
 <code>ls data/</code> show. Did the AI describe your project accurately?
@@ -1021,20 +1111,21 @@ data/: site_A.csv, site_B.csv, site_C.csv</code></pre>
 <p>Note three things: the folder where you started (<code>pwd</code>),
 the files the agent could see, and whether it changed anything. It
 should not have changed anything.</p>
+</div>
 <div class="section level3">
 <h3 id="a-first-look-at-the-data">A first look at the data<a class="anchor" aria-label="anchor" href="#a-first-look-at-the-data"></a>
 </h3>
 <p>Look at the data yourself before the agent touches anything:</p>
-<div class="codewrapper sourceCode" id="cb5">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="fu">head</span> data/site_A.csv</span></code></pre>
-</div>
-<p>Then ask the agent to describe the same file and compare:</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="ex">claude</span> <span class="at">-p</span> <span class="st">"Describe the columns in data/site_A.csv and note anything inconsistent or risky for analysis."</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="fu">head</span> data/site_A.csv</span></code></pre>
+</div>
+<p>Then ask the agent to describe the same file and compare:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="ex">claude</span> <span class="at">-p</span> <span class="st">"Describe the columns in data/site_A.csv and note anything inconsistent or risky for analysis."</span></span></code></pre>
 </div>
 <p>Did its description match what <code>head</code> showed? Where it
 added an interpretation, such as a guess at what a column means, treat
@@ -1062,45 +1153,45 @@ confusion.</p>
 <p>Claude Code has an <code>/init</code> command. It creates a
 <code>CLAUDE.md</code> file that describes your project. Run it once,
 here.</p>
-<div class="codewrapper sourceCode" id="cb7">
-<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="ex">claude</span></span></code></pre>
-</div>
-<p>You are now in a Claude Code session. Type <code>/</code> to see the
-slash commands. Run:</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="ex">/init</span></span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="ex">claude</span> <span class="at">--permission-mode</span> manual</span></code></pre>
+</div>
+<p>You are now in a Claude Code session. Type <code>/</code> to see the
+slash commands. Run:</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="ex">/init</span></span></code></pre>
 </div>
 <p>Watch what it inspects. When it finishes, look at what it made. Start
 a line with <code>!</code> to run a shell command inside the
 session:</p>
-<div class="codewrapper sourceCode" id="cb9">
+<div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="ex">!ls</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a><span class="ex">!cat</span> CLAUDE.md</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="ex">!ls</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a><span class="ex">!cat</span> CLAUDE.md</span></code></pre>
 </div>
 <p>The generated file looks something like this:</p>
-<div class="codewrapper sourceCode" id="cb10">
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="fu"># CLAUDE.md</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a><span class="fu">## Project Overview</span></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a>This is a data-cleaning project. The <span class="in">`data/`</span> directory holds three water quality</span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a>files (<span class="in">`site_A.csv`</span>, <span class="in">`site_B.csv`</span>, <span class="in">`site_C.csv`</span>) with inconsistent column names and</span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a>date formats. The goal is to merge them into <span class="in">`data/master_dataset.csv`</span> and analyse</span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a>water quality trends. See <span class="in">`README.md`</span> for the target schema.</span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a><span class="fu">## Key Files</span></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a><span class="ss">- </span>**`data/site_*.csv`**: raw per-site measurements (do not edit).</span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1" aria-label="code-block-10-13"></a><span class="ss">- </span>**`validate_data.py`**: checks for the merged dataset.</span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1" aria-label="code-block-10-14"></a><span class="ss">- </span>**`CLAUDE.md`**: project context and rules, loaded automatically each session.</span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="fu"># CLAUDE.md</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a><span class="fu">## Project Overview</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a>This is a data-cleaning project. The <span class="in">`data/`</span> directory holds three water quality</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1" aria-label="code-block-11-6"></a>files (<span class="in">`site_A.csv`</span>, <span class="in">`site_B.csv`</span>, <span class="in">`site_C.csv`</span>) with inconsistent column names and</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1" aria-label="code-block-11-7"></a>date formats. The goal is to merge them into <span class="in">`data/master_dataset.csv`</span> and analyse</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1" aria-label="code-block-11-8"></a>water quality trends. See <span class="in">`README.md`</span> for the target schema.</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1" aria-label="code-block-11-9"></a></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1" aria-label="code-block-11-10"></a><span class="fu">## Key Files</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1" aria-label="code-block-11-11"></a></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1" aria-label="code-block-11-12"></a><span class="ss">- </span>**`data/site_*.csv`**: raw per-site measurements (do not edit).</span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1" aria-label="code-block-11-13"></a><span class="ss">- </span>**`validate_data.py`**: checks for the merged dataset.</span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1" aria-label="code-block-11-14"></a><span class="ss">- </span>**`CLAUDE.md`**: project context and rules.</span></code></pre>
 </div>
 <p>The agent scanned the folder and described the real project. You
 still edit the file by hand to add your goals and constraints. Do not
@@ -1117,10 +1208,10 @@ lesson uses it.</p>
 <p>Other tools use other conventions. Check what your tool actually
 loaded:</p>
 <ul>
-<li>Recent Claude Code versions can also load <code>AGENTS.md</code>,
-depending on version and settings. <code>CLAUDE.md</code> is the file
-this lesson supports. An explicit <code>@AGENTS.md</code> import in
-<code>CLAUDE.md</code> still helps portability.</li>
+<li>Claude Code can read <code>AGENTS.md</code> when no
+<code>CLAUDE.md</code> or <code>CLAUDE.local.md</code> exists in the
+working folder or above it. An explicit <code>@AGENTS.md</code> import
+in <code>CLAUDE.md</code> helps portability.</li>
 <li>Codex CLI uses <code>AGENTS.md</code>. Check the official
 documentation for the current behaviour.</li>
 <li>Cursor supports scoped rules in <code>.cursor/rules</code> and
@@ -1145,22 +1236,46 @@ format.</li>
 <p>A requirement in this file is a request to the model. It is not an
 enforced boundary. Tool permissions and isolation enforce access limits.
 Your checks test the result.</p>
-<div id="keep-a-short-record-of-constraints-and-decisions" class="callout">
+</div>
+</section><section><h2 class="section-heading" id="what-the-tool-remembers">What the tool remembers<a class="anchor" aria-label="anchor" href="#what-the-tool-remembers"></a>
+</h2>
+<hr class="half-width">
+<p>A new session starts a new conversation, but it does not start from
+nothing. Claude Code can load instruction files from your user folder,
+your project and the folders above it. It also has auto memory: notes
+that it writes for itself and loads in later sessions. Auto memory is on
+by default in local sessions (<a href="https://code.claude.com/docs/en/memory" class="external-link">memory documentation</a>,
+checked 27 November 2026).</p>
+<p>Inspect what your session has:</p>
+<ul>
+<li>
+<code>/context all</code> shows what is in the context, including
+which memory files loaded.</li>
+<li>
+<code>/memory</code> lets you open instruction files, view auto
+memory entries and turn auto memory off.</li>
+<li>
+<code>/clear</code> starts a new conversation with empty context. It
+keeps project memory, so do not treat it as a clean slate.</li>
+</ul>
+<p>Read a stored note as an assumption to check. It may be wrong or out
+of date.</p>
+<div id="keep-your-own-record-of-constraints-and-decisions" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <span class="callout-header">Callout</span>
-<div id="keep-a-short-record-of-constraints-and-decisions" class="callout-inner">
-<h3 class="callout-title">Keep a short record of constraints and
+<div id="keep-your-own-record-of-constraints-and-decisions" class="callout-inner">
+<h3 class="callout-title">Keep your own record of constraints and
 decisions</h3>
 <div class="callout-content">
-<p>A model does not carry your project’s rules from one session to the
-next. Keep your constraints and decisions in plain files that live with
-the project, so people can inspect them:</p>
+<p>Keep your approved requirements in plain files that live with the
+project, where you and others can inspect them. Your record, and not the
+tool’s memory, says what the project requires.</p>
 <ul>
 <li>
-<code>CLAUDE.md</code> holds durable rules, goals and constraints,
-and loads each session.</li>
+<code>CLAUDE.md</code> holds durable rules, goals and
+constraints.</li>
 <li>
 <code>PLAN.md</code> holds the plan for one task. You meet it in the
 next episode.</li>
@@ -1169,8 +1284,8 @@ chose it.</li>
 </ul>
 <p>For research, the notes file is provenance. It lets you, a reviewer
 or your future self rebuild what happened. Version control makes the
-record reviewable. This does not guarantee that the model follows every
-instruction. Your checks do that job.</p>
+record reviewable. None of this guarantees that the model follows every
+instruction. Your checks test whether the result meets it.</p>
 </div>
 </div>
 </div>
@@ -1190,10 +1305,31 @@ C dates are day-month-year. Parse them explicitly.”</li>
 <li>One check you could run to see whether the constraint was met. For
 example: “After cleaning, SC001 must have the date 2023-01-05.”</li>
 </ol>
-<p>Then show one change as a diff. Ask the agent to add a line to
-<code>CLAUDE.md</code>, and compare the file before and after (for
-example with <code>git diff</code> or <code>diff</code>). Which line
-changed?</p>
+<p>Then show one change as a diff. In a separate terminal, in the
+project folder, save a copy of the file:</p>
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="fu">cp</span> CLAUDE.md CLAUDE.before.md</span></code></pre>
+</div>
+<p>Ask the agent to add one line to <code>CLAUDE.md</code>. Read the
+change it proposes before you allow it. Then compare the two files:</p>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="fu">diff</span> <span class="at">-u</span> CLAUDE.before.md CLAUDE.md</span></code></pre>
+</div>
+<p>Part of the output looks like this:</p>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">DIFF<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode diff" tabindex="0"><code class="sourceCode diff"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a> ## Rules</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a><span class="va">+- Site C dates are day-month-year. Parse them explicitly.</span></span></code></pre>
+</div>
+<p>A line that starts with <code>+</code> was added, and a line that
+starts with <code>-</code> was removed. A line that starts with a space
+did not change and is there for context. Which lines changed in your
+file? Did anything change that you did not ask for?</p>
 </div>
 </div>
 </div>
@@ -1204,26 +1340,26 @@ changed?</p>
   Example
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb11">
+<div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">MARKDOWN<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="fu"># Project: Coastal Water Quality Trends</span></span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a><span class="fu">## Goal</span></span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a>Clean and merge three site files into data/master_dataset.csv, then plot score</span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a>over time by site.</span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1" aria-label="code-block-11-6"></a></span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1" aria-label="code-block-11-7"></a><span class="fu">## Rules</span></span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1" aria-label="code-block-11-8"></a><span class="ss">- </span>Use pandas for data and matplotlib for plots.</span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1" aria-label="code-block-11-9"></a><span class="ss">- </span>Site C dates are day-month-year (05-01-2023 is 5 January). Parse them explicitly.</span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1" aria-label="code-block-11-10"></a><span class="ss">- </span>Fill a missing score with the median of that site's observed scores.</span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1" aria-label="code-block-11-11"></a><span class="ss">- </span>Do not edit data/site_*.csv. Do not drop rows. The merge has 60 rows.</span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1" aria-label="code-block-11-12"></a></span>
-<span id="cb11-13"><a href="#cb11-13" tabindex="-1" aria-label="code-block-11-13"></a><span class="fu">## Checks</span></span>
-<span id="cb11-14"><a href="#cb11-14" tabindex="-1" aria-label="code-block-11-14"></a><span class="ss">- </span>SC001 must have the date 2023-01-05 after cleaning.</span>
-<span id="cb11-15"><a href="#cb11-15" tabindex="-1" aria-label="code-block-11-15"></a><span class="ss">- </span>python validate_data.py passes.</span></code></pre>
+<pre class="sourceCode markdown" tabindex="0"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a><span class="fu"># Project: Coastal Water Quality Trends</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1" aria-label="code-block-15-2"></a></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a><span class="fu">## Goal</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a>Clean and merge three site files into data/master_dataset.csv, then plot score</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1" aria-label="code-block-15-5"></a>over time by site.</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1" aria-label="code-block-15-6"></a></span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1" aria-label="code-block-15-7"></a><span class="fu">## Rules</span></span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1" aria-label="code-block-15-8"></a><span class="ss">- </span>Use pandas for data and matplotlib for plots.</span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1" aria-label="code-block-15-9"></a><span class="ss">- </span>Site C dates are day-month-year (05-01-2023 is 5 January). Parse them explicitly.</span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1" aria-label="code-block-15-10"></a><span class="ss">- </span>Fill a missing score with the median of that site's observed scores.</span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1" aria-label="code-block-15-11"></a><span class="ss">- </span>Do not edit data/site_*.csv. Do not drop rows. The merge has 60 rows.</span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1" aria-label="code-block-15-12"></a></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1" aria-label="code-block-15-13"></a><span class="fu">## Checks</span></span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1" aria-label="code-block-15-14"></a><span class="ss">- </span>SC001 must have the date 2023-01-05 after cleaning.</span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1" aria-label="code-block-15-15"></a><span class="ss">- </span>python validate_data.py passes.</span></code></pre>
 </div>
 <p>The constraint comes from the source documentation. The check is
 something you can run. The median rule is this exercise’s fixed choice,
@@ -1232,6 +1368,99 @@ and a real study would have to justify it.</p>
 </div>
 </div>
 </div>
+<div id="challenge-test-one-enforced-control" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-test-one-enforced-control" class="callout-inner">
+<h3 class="callout-title">Challenge: test one enforced control</h3>
+<div class="callout-content">
+<p>An instruction asks. A permission rule enforces. Test one rule on a
+disposable copy of the synthetic project. Never run this test on real
+data.</p>
+<ol style="list-style-type: decimal">
+<li>
+<p>Leave any running session. From inside
+<code>coastal-water-quality</code>, make a copy and a settings
+folder:</p>
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a><span class="fu">cp</span> <span class="at">-R</span> . ../control-test</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a><span class="bu">cd</span> ../control-test</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a><span class="fu">mkdir</span> <span class="at">-p</span> .claude</span></code></pre>
+</div>
+</li>
+<li>
+<p>In a text editor, create <code>.claude/settings.json</code> in
+<code>control-test</code> with this rule. If the file already exists,
+ask a helper to add the rule to it.</p>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">JSON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode json" tabindex="0"><code class="sourceCode json"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a><span class="fu">{</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1" aria-label="code-block-17-2"></a>  <span class="dt">"permissions"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1" aria-label="code-block-17-3"></a>    <span class="dt">"deny"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"Edit(./data/**)"</span><span class="ot">]</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1" aria-label="code-block-17-4"></a>  <span class="fu">}</span></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1" aria-label="code-block-17-5"></a><span class="fu">}</span></span></code></pre>
+</div>
+</li>
+<li><p>Start a session with
+<code>claude --permission-mode acceptEdits</code>. This mode accepts
+file edits without asking, so a blocked edit is not just a prompt that
+you refused. Run <code>/permissions</code> and find your rule.</p></li>
+<li>
+<p>Predict what will happen. Then type:</p>
+<pre><code>This is a disposable test copy. Use your file editing tool to add the line TEST to the end of data/site_A.csv. If it is not permitted, stop and report the exact message. Do not try another way.</code></pre>
+</li>
+<li>
+<p>Do not rely on the agent’s report. In a separate terminal, from
+inside <code>control-test</code>, compare the file with the original. No
+output means the two files are the same.</p>
+<div class="codewrapper sourceCode" id="cb19">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" tabindex="-1" aria-label="code-block-19-1"></a><span class="fu">diff</span> data/site_A.csv ../coastal-water-quality/data/site_A.csv</span></code></pre>
+</div>
+</li>
+<li><p>Write down the active mode, the rule, what happened and one thing
+this test does not show.</p></li>
+</ol>
+<p>When you finish, leave the session, return to
+<code>coastal-water-quality</code> and delete the
+<code>control-test</code> folder.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2">
+  What to expect
+  </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div class="accordion-body">
+<p>The file editing tool refuses the change, and <code>diff</code>
+prints nothing. In the lesson’s test run, the message was “File is in a
+directory that is denied by your permission settings.” Your wording may
+differ. If the file changed, stop and check the rule, the folder you
+started in and your version.</p>
+<p>The result covers one tool and one path. It does not show that
+<code>data/</code> is protected from everything. The <a href="https://code.claude.com/docs/en/permissions" class="external-link">permissions
+documentation</a> says that Read and Edit deny rules apply to the
+built-in file tools and to some file commands that Claude Code
+recognises in the shell. They do not apply to a program that opens files
+itself, such as a Python script. This exercise does not test that limit,
+and you should not ask the agent to get around the rule. To restrict
+what a script can write, you need a control on the process, such as a
+sandbox or file system permissions. Test that control too.</p>
+</div>
+</div>
+</div>
+</div>
+
 <div id="feedback-checkpoint-describe-the-agents-context" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
@@ -1258,8 +1487,13 @@ surfaces the gaps.</p>
 <div class="callout-inner">
 <div class="callout-content">
 <ul>
-<li>Ask what an AI tool can see and do, in its actual configuration,
-before you trust it.</li>
+<li>Ask where a tool runs, what it can access, what is enforced, what
+you can inspect and how you recover. The interface alone does not answer
+these.</li>
+<li>Set and check the permission mode. A deny rule or a sandbox covers
+only certain tools, so know its limits.</li>
+<li>Instruction files and auto memory carry into new sessions. Inspect
+what loaded.</li>
 <li>A CLI agent can read, run and edit your real files, so checking what
 it changed is part of the work.</li>
 <li>Run <code>/init</code> once to create <code>CLAUDE.md</code>, then
@@ -1277,10 +1511,9 @@ Links referenced two or more times across the lesson source. Use as
 [link text][label] in episode/learner/instructor markdown; Sandpaper resolves
 these at build time.
 -->
-</div>
 </section></section><section id="aio-02-prompts"><p>Content from <a href="02-prompts.html">Best Practices for Prompting</a></p>
 <hr>
-<p>Last updated on 2026-11-07 |
+<p>Last updated on 2026-11-27 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/02-prompts.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1317,6 +1550,25 @@ only a bounded action.</li>
 </div>
 </div>
 </div>
+<div id="four-hour-pilot-route" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="four-hour-pilot-route" class="callout-inner">
+<h3 class="callout-title">Four-hour pilot route</h3>
+<div class="callout-content">
+<p>25 minutes in the pilot.</p>
+<ul>
+<li>Core: the prompt checklist; “Challenge: repair a prompt”;
+“Challenge: review a plan against the evidence”.</li>
+<li>Extension: “Challenge: ask for a check, then read it”.</li>
+<li>Reference: the CLEAR checklist and the reasoning effort
+section.</li>
+</ul>
+</div>
+</div>
+</div>
 <div id="working-inside-claude-code" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -1331,7 +1583,7 @@ session. Start one in your project folder:</p>
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="bu">cd</span> coastal-water-quality</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="ex">claude</span></span></code></pre>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="ex">claude</span> <span class="at">--permission-mode</span> manual</span></code></pre>
 </div>
 <p>Run shell commands such as <code>python script.py</code> in a
 separate terminal, or inside the session by starting the line with
@@ -1482,7 +1734,7 @@ and the number of points plotted).</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Example repaired prompt </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <pre><code>Using data/site_A.csv, write a Python script that plots WaterQualityScore over
 Collection_Date as a scatterplot. Label the axes. Do not modify the data file.
@@ -1572,7 +1824,7 @@ support.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> What a good plan includes </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <ul>
 <li>An audit step that inspects the files before changing them.</li>
@@ -1667,7 +1919,7 @@ and it does not always give a better answer.</p>
 <h3 class="callout-title">Challenge: ask for a check, then read it</h3>
 <div class="callout-content">
 <p>Ask the agent to draft a check for the coastal data:</p>
-<pre><code>Write a short Python script, check_site_C_dates.py, that reads data/site_C.csv and prints the ISO date for SC001 and SC002, using the day-month-year format. Do not change any files.</code></pre>
+<pre><code>Write a short Python script, check_site_C_dates.py, that reads data/site_C.csv and prints the ISO date for SC001 and SC002, using the day-month-year format. You may create check_site_C_dates.py. Do not change the input data or any other file.</code></pre>
 <ol style="list-style-type: decimal">
 <li>Before you run it, predict both dates.</li>
 <li>Read the script. Which line sets the date format? Did the agent use
@@ -1683,7 +1935,7 @@ pandas guess, how would you tell?</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>SC001 should print <code>2023-01-05</code> and SC002
 <code>2023-01-12</code>. The script should name <code>%d-%m-%Y</code>
@@ -1743,7 +1995,7 @@ these at build time.
 </div>
 </section></section><section id="aio-03-data-cleaning"><p>Content from <a href="03-data-cleaning.html">Data Cleaning with AI</a></p>
 <hr>
-<p>Last updated on 2026-11-07 |
+<p>Last updated on 2026-11-27 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/03-data-cleaning.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1783,6 +2035,26 @@ from.</li>
 </div>
 </div>
 </div>
+<div id="four-hour-pilot-route" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="four-hour-pilot-route" class="callout-inner">
+<h3 class="callout-title">Four-hour pilot route</h3>
+<div class="callout-content">
+<p>40 minutes in the pilot.</p>
+<ul>
+<li>Core: steps A to F of the cleaning checkpoints. In manual mode, read
+each proposed file change before you allow it.</li>
+<li>Extension: “Challenge: read a diff, then run it” (the February
+filter); “Automating documentation”; “Challenge: provenance tracking”;
+generating your own messy data. You still write a provenance note in the
+final bundle.</li>
+</ul>
+</div>
+</div>
+</div>
 <div id="prerequisites" class="callout prereq">
 <div class="callout-square">
 <i class="callout-icon" data-feather="check"></i>
@@ -1810,7 +2082,7 @@ session. Start one in your project folder:</p>
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="bu">cd</span> coastal-water-quality</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="ex">claude</span></span></code></pre>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="ex">claude</span> <span class="at">--permission-mode</span> manual</span></code></pre>
 </div>
 <p>Run Python scripts in a separate terminal window when the text tells
 you to.</p>
@@ -1881,7 +2153,7 @@ May.</li>
 <p>Keep your list. You will judge the AI’s proposal against it. For a
 faster overview, ask the AI to write an inspection script, and read its
 output against your list:</p>
-<pre><code>Write a Python script called 'inspect_data.py' that reads every CSV in data/. For each file, print the filename, the column names, and the number of missing values per column. Do not change any files.</code></pre>
+<pre><code>Write a Python script called 'inspect_data.py' that reads every CSV in data/. For each file, print the filename, the column names, and the number of missing values per column. You may create inspect_data.py. Do not change the input data or any other file.</code></pre>
 <div id="quick-check-site-cs-date-format" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
@@ -1907,7 +2179,7 @@ month-day-year produce without warning?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p><strong>2.</strong> In day-month-year order, <code>05-01-2023</code>
 is day 05 of month 01, which is 5 January 2023. A parser that assumes
@@ -2082,7 +2354,7 @@ vanish, while others land inside it and wrongly stay.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> What to expect </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>January has four weekly sampling dates per site (the 5th, 12th, 19th
 and 26th). A correct filter removes 12 rows and leaves 48.</p>
@@ -2140,7 +2412,7 @@ code and when.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Example prompt </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <pre><code>Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the tool version and the exact model name from this session (check /status if unsure), today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'</code></pre>
 <div class="section level3">
@@ -2185,7 +2457,7 @@ these at build time.
 </div>
 </section></section><section id="aio-04-validation"><p>Content from <a href="04-validation.html">Validation Strategies: The Approval Gate</a></p>
 <hr>
-<p>Last updated on 2026-11-07 |
+<p>Last updated on 2026-11-27 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/04-validation.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2222,6 +2494,27 @@ the source documentation.</li>
 </ul>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div id="four-hour-pilot-route" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="four-hour-pilot-route" class="callout-inner">
+<h3 class="callout-title">Four-hour pilot route</h3>
+<div class="callout-content">
+<p>35 minutes in the pilot.</p>
+<ul>
+<li>Core: the approval gate; “Challenge: write one independent check”,
+including the run on bad data; naming what stays unchecked.</li>
+<li>Extension: “Think aloud while you work”; “Challenge: explain the
+approval gate”; the critique from a second model. Leave “Challenge: this
+check passes. Is the file right?” unopened. The pilot uses it at the end
+as an unaided transfer task.</li>
+<li>Reference: rewrite time.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -2269,9 +2562,10 @@ correctness or a causal speed-up.</p>
 <p>Treat rewrite time as a signal about this workflow on this task:</p>
 <ul>
 <li>It is local.</li>
-<li>High rewrite time usually means the task was underspecified, the
-model overreached, or you did not yet have the mental model to judge the
-output.</li>
+<li>High rewrite time has many possible causes. The task may be
+underspecified, the model may have overreached, the code or data may be
+hard, or the topic may be new to you. The number alone does not tell you
+which.</li>
 <li>It tells you what to improve next: the prompt, the requirements, or
 the checks.</li>
 </ul>
@@ -2371,8 +2665,9 @@ it does, you are hoping.</li>
 check what you thought to check.</li>
 <li>A second model is a reviewer, not an authority. It has its own blind
 spots.</li>
-<li>Domain plausibility is your job. No model knows what a sensible
-result looks like in your field better than you do.</li>
+<li>Domain plausibility is your responsibility. Do not take the model’s
+word for what is sensible in your field. When your own knowledge runs
+out, consult domain sources or a colleague.</li>
 </ul>
 </div>
 </div>
@@ -2617,7 +2912,7 @@ these at build time.
 -->
 </section></section><section id="aio-05-limitations"><p>Content from <a href="05-limitations.html">Limitations and Cautions</a></p>
 <hr>
-<p>Last updated on 2026-11-07 |
+<p>Last updated on 2026-11-27 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/05-limitations.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2651,6 +2946,24 @@ a model’s answer.</li>
 </ul>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div id="four-hour-pilot-route" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="four-hour-pilot-route" class="callout-inner">
+<h3 class="callout-title">Four-hour pilot route</h3>
+<div class="callout-content">
+<p>The pilot does not teach this episode as its own block. Its scope and
+privacy points are taught in “CLI-Based AI”, and its failure modes in
+“Best Practices for Prompting” and “Validation Strategies”.</p>
+<ul>
+<li>Reference: the whole episode. Its challenges belong to the full
+course or later practice.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -2693,14 +3006,18 @@ rigour, and step back where it does not. Avoid AI when:</p>
 the practice.</li>
 <li>You cannot yet explain the output. If you cannot judge it, you
 cannot use it responsibly.</li>
-<li>The data are sensitive and the tool’s privacy terms are
-unclear.</li>
-<li>The task involves security, authentication, encryption, access
-control or regulated data.</li>
+<li>The task involves sensitive or regulated data. This workshop uses
+only the supplied synthetic data.</li>
+<li>The task involves security, authentication, encryption or access
+control. These are outside the scope of this workshop.</li>
 <li>The model keeps bringing in ideas beyond the lesson.</li>
 <li>Reaching for AI stops the instructor from seeing where the group is
 stuck.</li>
 </ul>
+<p>In your own work after the workshop, whether AI is acceptable for
+sensitive or security-critical tasks depends on authorisation, the
+approved environment, expert knowledge and review. If you cannot confirm
+these, do not use it.</p>
 </div>
 </div>
 </div>
@@ -2831,16 +3148,15 @@ you wanted. Existence does not prove identity, safety or fit.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Discussion </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>You may get a clean “this does not exist.” That is the right answer
 when it happens, but do not count on it.</p>
-<p>A 2026 study of five frontier models, using its own prompts, found
-that they invented nonexistent package names about 4.6 to 6.1 percent of
-the time. 127 of the invented names were produced identically by all
-five models (<a href="https://arxiv.org/abs/2605.17062" class="external-link">Churilov,
-2026</a>). Those are rates for that study’s models and prompts, and not
-current universal failure rates.</p>
+<p>A 2026 preprint that tested five frontier models with its own prompts
+found that all of them sometimes named packages that do not exist, and
+that some invented names were shared by all five (<a href="https://arxiv.org/abs/2605.17062v4" class="external-link">Churilov, 2026</a>). The
+result applies to that study’s models and prompts. It is not a current
+failure rate for every model or task.</p>
 <p>The second finding bears on your habits. Asking another model to
 double-check a package name is weaker protection than it sounds, because
 models can invent the same wrong name. Check the official registry or
@@ -2899,7 +3215,7 @@ with an approved, contracted AI tool.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <ol style="list-style-type: decimal">
 <li>Either. Cost and convenience decide. Nothing about the task needs
@@ -2956,8 +3272,8 @@ verify it before you move on.</p>
 <div class="callout-inner">
 <div class="callout-content">
 <ul>
-<li>Avoid AI for security-critical tasks, sensitive data and basic
-syntax practice.</li>
+<li>In this workshop, keep AI away from security-critical tasks and
+sensitive data. Skip it when you are practising basic syntax.</li>
 <li>Know when AI supports learning and when it gets in the way.</li>
 <li>Compare code with your approved requirements. Do not sync the
 requirements to the code without evidence.</li>
@@ -2977,7 +3293,7 @@ these at build time.
 -->
 </section></section><section id="aio-06-capstone"><p>Content from <a href="06-capstone.html">From AI Output to a Review-Ready Bundle</a></p>
 <hr>
-<p>Last updated on 2026-11-07 |
+<p>Last updated on 2026-11-27 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/06-capstone.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -3011,6 +3327,25 @@ output.</li>
 </ul>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div id="four-hour-pilot-route" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="four-hour-pilot-route" class="callout-inner">
+<h3 class="callout-title">Four-hour pilot route</h3>
+<div class="callout-content">
+<p>25 minutes in the pilot. Reuse your cleaner and validator. Your
+instructor may supply scripts if you need them, and you label what was
+supplied.</p>
+<ul>
+<li>Core: the workflow steps and “Can another researcher rerun and
+assess your result?”</li>
+<li>Extension: the closing feedback checkpoint.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -3170,7 +3505,7 @@ use.</li>
   Review rubric
   </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>A complete bundle reruns without hidden files, agent access or manual
 edits to the data. The reviewer records each command, its result and any
@@ -3236,7 +3571,7 @@ these at build time.
 -->
 </section></section><section id="aio-07-resources"><p>Content from <a href="07-resources.html">Resources and Next Steps</a></p>
 <hr>
-<p>Last updated on 2026-11-07 |
+<p>Last updated on 2026-11-27 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/07-resources.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -3271,6 +3606,28 @@ transparency, citations, privacy).</li>
 </ul>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div id="four-hour-pilot-route" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="four-hour-pilot-route" class="callout-inner">
+<h3 class="callout-title">Four-hour pilot route</h3>
+<div class="callout-content">
+<p>10 minutes in the pilot, shared between an unaided transfer decision
+and the Monday card.</p>
+<ul>
+<li>Core: “Challenge: this check passes. Is the file right?” from
+“Validation Strategies”, done without AI; “Challenge: your Monday
+workflow card”.</li>
+<li>Extension: “Quick check: which pairing gives you pause?”; “Quick
+check: spot the hype”.</li>
+<li>Reference: the tool table, connectors, and citing and crediting
+AI.</li>
+</ul>
 </div>
 </div>
 </div>
@@ -3330,6 +3687,8 @@ given tool is approved for your data is your institution’s call.</p>
 <h3 class="callout-title">Quick check: which pairing gives you
 pause?</h3>
 <div class="callout-content">
+<p>For each pairing, decide whether to stop, or name what you need to
+know before you go ahead.</p>
 <ol style="list-style-type: decimal">
 <li>Claude Code, for cleaning a public, already-published dataset.</li>
 <li>A local model, for a pipeline you must rerun in five years.</li>
@@ -3347,17 +3706,25 @@ PDFs.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p><strong>3.</strong> Sending sensitive, unpublished human-subjects
 data to a general cloud endpoint with no approval behind it is the
 pairing to avoid. “Which approved backend” on the workflow card asks you
 to settle that before you start.</p>
-<p>The others are reasonable. Public data carries no sensitivity limit
-(1). For (2), the key step is to archive the code, inputs, environment
-and commands so the pipeline reruns without a model. A pinned local
-model helps only if model inference is part of the analysis. A document
-tool used on your own files is what it was built for (4).</p>
+<p>The others may be reasonable, but the pairing alone does not settle
+them.</p>
+<p><strong>1.</strong> A public dataset can still have a licence or
+terms of use that limit what you may do with it. Check them, and check
+what other files the agent can reach from where you run it.</p>
+<p><strong>2.</strong> A local model does not make a pipeline
+rerunnable. Archive the code, inputs, environment and commands so it
+reruns without a model. A pinned local model helps only if model
+inference is part of the analysis.</p>
+<p><strong>4.</strong> Your own folder of PDFs can hold restricted
+material, such as unpublished manuscripts, peer reviews, licensed
+articles or personal data. Check what is in the folder and what the
+tool’s terms and your institution allow before you upload.</p>
 </div>
 </div>
 </div>
@@ -3417,9 +3784,11 @@ large geospatial files, or an existing messy repository.</p>
 <ol style="list-style-type: decimal">
 <li>Tool and backend. Which tool, and for sensitive data, which approved
 backend? Name your evidence source, such as the campus policy page.</li>
-<li>What the AI can see and must not touch. These are the no-go zones
-for your <code>CLAUDE.md</code>. Note how access is enforced, not only
-requested.</li>
+<li>Access and limits. Where execution happens, the active permission
+mode, enabled connectors, what the AI must not touch and what enforces
+that. A line in <code>CLAUDE.md</code> is a request. Record how you
+showed that each enforced limit works, what it does not cover and how
+you would recover.</li>
 <li>First prompt. Your “plan only, no code yet” opener.</li>
 <li>One likely error and the check that would catch it.</li>
 <li>Provenance. Where you will record the tool version, model, date and
@@ -3435,7 +3804,7 @@ commands.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>A good card is specific to your data. The check line is the test. If
 you cannot name a check that would fail when the result is wrong, you do
@@ -3451,12 +3820,15 @@ means you start by understanding, not by generating.</p>
 <p>New tools appear daily, and many are more marketing than substance.
 Before you adopt one, ask:</p>
 <ul>
-<li>Scope. Be wary of tools that claim to do everything. Specialised
-tools often work better.</li>
+<li>Scope. Does it say what it does and where it fails? A broad tool can
+be useful, and a narrow one can still fail. Test it on a real task of
+yours and check the result independently.</li>
 <li>Transparency. Can you see the intermediate steps, or only the
 answer?</li>
 <li>Citations. Does it give real DOIs and URLs you can check?</li>
-<li>Privacy. If it is free, is your data used for training?</li>
+<li>Privacy. What do the terms say about storing your data and training
+on it? Check for free and paid plans. Price alone does not tell
+you.</li>
 </ul>
 <div id="quick-check-spot-the-hype" class="callout challenge">
 <div class="callout-square">
@@ -3482,11 +3854,11 @@ not need to see the search or the reasoning.”</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <ol style="list-style-type: decimal">
-<li>Scope. A tool with no stated domain limits often has little depth in
-any one domain.</li>
+<li>Scope. It states no limits, so you have no basis for knowing when to
+doubt it.</li>
 <li>Transparency. If you cannot see the intermediate steps, you cannot
 check the work. You can only trust the answer.</li>
 <li>Privacy. A free tool that asks for your data and says nothing about
@@ -3578,8 +3950,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/aio.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/aio.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-11-24",
-  "datePublished": "2026-11-24"
+  "dateModified": "2026-11-27",
+  "datePublished": "2026-11-27"
 }
 
   </script><script>

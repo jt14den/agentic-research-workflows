@@ -362,7 +362,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Resources and Next Steps</h1>
-        <p>Last updated on 2026-11-07 |
+        <p>Last updated on 2026-11-27 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/07-resources.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -402,6 +402,26 @@ transparency, citations, privacy).</li>
 </div>
 </div>
 </div>
+<div id="four-hour-pilot-route" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="four-hour-pilot-route" class="callout-inner">
+<h3 class="callout-title">Four-hour pilot route</h3>
+<div class="callout-content">
+<p>10 minutes in the pilot, shared between an unaided transfer decision
+and the Monday card.</p>
+<ul><li>Core: “Challenge: this check passes. Is the file right?” from
+“Validation Strategies”, done without AI; “Challenge: your Monday
+workflow card”.</li>
+<li>Extension: “Quick check: which pairing gives you pause?”; “Quick
+check: spot the hype”.</li>
+<li>Reference: the tool table, connectors, and citing and crediting
+AI.</li>
+</ul></div>
+</div>
+</div>
 <p>This episode is a short reference and a plan for what you do next.
 The skills you practised transfer across tools: state requirements,
 plan, check, judge and document.</p>
@@ -437,6 +457,8 @@ given tool is approved for your data is your institution’s call.</p>
 <h3 class="callout-title">Quick check: which pairing gives you
 pause?</h3>
 <div class="callout-content">
+<p>For each pairing, decide whether to stop, or name what you need to
+know before you go ahead.</p>
 <ol style="list-style-type: decimal"><li>Claude Code, for cleaning a public, already-published dataset.</li>
 <li>A local model, for a pipeline you must rerun in five years.</li>
 <li>Claude Code on its default cloud backend, with no institutional
@@ -452,17 +474,25 @@ PDFs.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p><strong>3.</strong> Sending sensitive, unpublished human-subjects
 data to a general cloud endpoint with no approval behind it is the
 pairing to avoid. “Which approved backend” on the workflow card asks you
 to settle that before you start.</p>
-<p>The others are reasonable. Public data carries no sensitivity limit
-(1). For (2), the key step is to archive the code, inputs, environment
-and commands so the pipeline reruns without a model. A pinned local
-model helps only if model inference is part of the analysis. A document
-tool used on your own files is what it was built for (4).</p>
+<p>The others may be reasonable, but the pairing alone does not settle
+them.</p>
+<p><strong>1.</strong> A public dataset can still have a licence or
+terms of use that limit what you may do with it. Check them, and check
+what other files the agent can reach from where you run it.</p>
+<p><strong>2.</strong> A local model does not make a pipeline
+rerunnable. Archive the code, inputs, environment and commands so it
+reruns without a model. A pinned local model helps only if model
+inference is part of the analysis.</p>
+<p><strong>4.</strong> Your own folder of PDFs can hold restricted
+material, such as unpublished manuscripts, peer reviews, licensed
+articles or personal data. Check what is in the folder and what the
+tool’s terms and your institution allow before you upload.</p>
 </div>
 </div>
 </div>
@@ -517,9 +547,11 @@ large geospatial files, or an existing messy repository.</p>
 <p>Write down:</p>
 <ol style="list-style-type: decimal"><li>Tool and backend. Which tool, and for sensitive data, which approved
 backend? Name your evidence source, such as the campus policy page.</li>
-<li>What the AI can see and must not touch. These are the no-go zones
-for your <code>CLAUDE.md</code>. Note how access is enforced, not only
-requested.</li>
+<li>Access and limits. Where execution happens, the active permission
+mode, enabled connectors, what the AI must not touch and what enforces
+that. A line in <code>CLAUDE.md</code> is a request. Record how you
+showed that each enforced limit works, what it does not cover and how
+you would recover.</li>
 <li>First prompt. Your “plan only, no code yet” opener.</li>
 <li>One likely error and the check that would catch it.</li>
 <li>Provenance. Where you will record the tool version, model, date and
@@ -534,7 +566,7 @@ commands.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>A good card is specific to your data. The check line is the test. If
 you cannot name a check that would fail when the result is wrong, you do
@@ -547,12 +579,15 @@ means you start by understanding, not by generating.</p>
 </section><section><h2 class="section-heading" id="spotting-hype">Spotting hype<a class="anchor" aria-label="anchor" href="#spotting-hype"></a></h2>
 <hr class="half-width"><p>New tools appear daily, and many are more marketing than substance.
 Before you adopt one, ask:</p>
-<ul><li>Scope. Be wary of tools that claim to do everything. Specialised
-tools often work better.</li>
+<ul><li>Scope. Does it say what it does and where it fails? A broad tool can
+be useful, and a narrow one can still fail. Test it on a real task of
+yours and check the result independently.</li>
 <li>Transparency. Can you see the intermediate steps, or only the
 answer?</li>
 <li>Citations. Does it give real DOIs and URLs you can check?</li>
-<li>Privacy. If it is free, is your data used for training?</li>
+<li>Privacy. What do the terms say about storing your data and training
+on it? Check for free and paid plans. Price alone does not tell
+you.</li>
 </ul><div id="quick-check-spot-the-hype" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
@@ -575,10 +610,10 @@ not need to see the search or the reasoning.”</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
-<ol style="list-style-type: decimal"><li>Scope. A tool with no stated domain limits often has little depth in
-any one domain.</li>
+<ol style="list-style-type: decimal"><li>Scope. It states no limits, so you have no basis for knowing when to
+doubt it.</li>
 <li>Transparency. If you cannot see the intermediate steps, you cannot
 check the work. You can only trust the answer.</li>
 <li>Privacy. A free tool that asks for your data and says nothing about
@@ -677,8 +712,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/07-resources.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/07-resources.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-11-07",
-  "datePublished": "2026-11-24"
+  "dateModified": "2026-11-27",
+  "datePublished": "2026-11-27"
 }
 
   </script><script>

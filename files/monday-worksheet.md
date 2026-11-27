@@ -17,9 +17,17 @@ _e.g. merge three instrument exports into one clean table and check the totals._
 - Evidence source for that approval (policy page, written confirmation):
 - Anything that must NOT be sent to a cloud tool:
 
-**3. No-go zones (for my `CLAUDE.md`)**
-- The AI must not:
-- The AI must not:
+**3. Access, limits and recovery**
+- Where execution happens (my machine, a remote workspace, the provider's environment):
+- Active permission mode:
+- Enabled connectors, MCP servers and network access:
+- No-go zones. These go in my `CLAUDE.md`, where they are requests:
+  - The AI must not:
+  - The AI must not:
+- What enforces them (permission rule, sandbox, file permissions), or "nothing yet":
+- Evidence that each limit works (what I tested, on dummy or synthetic files, and what happened):
+- What the limit does not cover:
+- How I would recover (clean copy, version control, other), and whether I have tested it:
 
 **4. First prompt (plan only, no code yet)**
 _e.g. "Read these files and CLAUDE.md. Give me a numbered plan to ... . Do not write code yet."_

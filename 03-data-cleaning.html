@@ -123,7 +123,7 @@
     <a id="search-button-nav" class="btn btn-primary" href="aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
 </nav><aside class="col-md-12 lesson-progress"><div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 28%" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">28%</div>
+    <div class="progress-bar incubator" role="progressbar" style="width: 29%" aria-valuenow="29" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">29%</div>
   </div>
 </aside><div class="container">
       <div class="row">
@@ -362,7 +362,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Data Cleaning with AI</h1>
-        <p>Last updated on 2026-11-07 |
+        <p>Last updated on 2026-11-27 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/03-data-cleaning.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -404,6 +404,24 @@ from.</li>
 </div>
 </div>
 </div>
+<div id="four-hour-pilot-route" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="four-hour-pilot-route" class="callout-inner">
+<h3 class="callout-title">Four-hour pilot route</h3>
+<div class="callout-content">
+<p>40 minutes in the pilot.</p>
+<ul><li>Core: steps A to F of the cleaning checkpoints. In manual mode, read
+each proposed file change before you allow it.</li>
+<li>Extension: “Challenge: read a diff, then run it” (the February
+filter); “Automating documentation”; “Challenge: provenance tracking”;
+generating your own messy data. You still write a provenance note in the
+final bundle.</li>
+</ul></div>
+</div>
+</div>
 <div id="prerequisites" class="callout prereq">
 <div class="callout-square">
 <i class="callout-icon" data-feather="check"></i>
@@ -432,7 +450,7 @@ session. Start one in your project folder:</p>
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="bu">cd</span> coastal-water-quality</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="ex">claude</span></span></code></pre>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="ex">claude</span> <span class="at">--permission-mode</span> manual</span></code></pre>
 </div>
 <p>Run Python scripts in a separate terminal window when the text tells
 you to.</p>
@@ -494,7 +512,7 @@ May.</li>
 </ul><p>Keep your list. You will judge the AI’s proposal against it. For a
 faster overview, ask the AI to write an inspection script, and read its
 output against your list:</p>
-<pre><code>Write a Python script called 'inspect_data.py' that reads every CSV in data/. For each file, print the filename, the column names, and the number of missing values per column. Do not change any files.</code></pre>
+<pre><code>Write a Python script called 'inspect_data.py' that reads every CSV in data/. For each file, print the filename, the column names, and the number of missing values per column. You may create inspect_data.py. Do not change the input data or any other file.</code></pre>
 <div id="quick-check-site-cs-date-format" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
@@ -518,7 +536,7 @@ month-day-year produce without warning?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p><strong>2.</strong> In day-month-year order, <code>05-01-2023</code>
 is day 05 of month 01, which is 5 January 2023. A parser that assumes
@@ -681,7 +699,7 @@ vanish, while others land inside it and wrongly stay.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> What to expect </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>January has four weekly sampling dates per site (the 5th, 12th, 19th
 and 26th). A correct filter removes 12 rows and leaves 48.</p>
@@ -734,7 +752,7 @@ code and when.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Example prompt </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <pre><code>Read 'clean_and_merge.py'. Add a docstring at the very top of the file as a provenance header. Include the tool version and the exact model name from this session (check /status if unsure), today's date, and a summary of the prompt: 'Standardise site IDs, format dates, and impute missing scores with site medians.'</code></pre>
 <div class="section level3">
@@ -832,8 +850,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/03-data-cleaning.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/03-data-cleaning.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-11-07",
-  "datePublished": "2026-11-24"
+  "dateModified": "2026-11-27",
+  "datePublished": "2026-11-27"
 }
 
   </script><script>

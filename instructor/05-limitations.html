@@ -362,7 +362,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Limitations and Cautions</h1>
-        <p>Last updated on 2026-11-07 |
+        <p>Last updated on 2026-11-27 |
 
         <a href="https://github.com/jt14den/agentic-research-workflows/edit/main/episodes/05-limitations.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -403,19 +403,20 @@ a model’s answer.</li>
 </div>
 </div>
 </div>
-<div id="accordionInstructor1" class="accordion instructor-note accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
-  <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Pilot route </h3>
-</button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
-<div class="accordion-body">
-<p>The four-hour pilot does not teach this episode as its own block. It
-folds the scope and privacy points into Episode 1 and the failure modes
-into Episodes 2 and 4. Use this episode in the extended course, or as a
-follow-on.</p>
+<div id="four-hour-pilot-route" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
 </div>
-</div>
+<span class="callout-header">Callout</span>
+<div id="four-hour-pilot-route" class="callout-inner">
+<h3 class="callout-title">Four-hour pilot route</h3>
+<div class="callout-content">
+<p>The pilot does not teach this episode as its own block. Its scope and
+privacy points are taught in “CLI-Based AI”, and its failure modes in
+“Best Practices for Prompting” and “Validation Strategies”.</p>
+<ul><li>Reference: the whole episode. Its challenges belong to the full
+course or later practice.</li>
+</ul></div>
 </div>
 </div>
 <div id="the-jagged-frontier" class="callout">
@@ -454,14 +455,18 @@ rigour, and step back where it does not. Avoid AI when:</p>
 the practice.</li>
 <li>You cannot yet explain the output. If you cannot judge it, you
 cannot use it responsibly.</li>
-<li>The data are sensitive and the tool’s privacy terms are
-unclear.</li>
-<li>The task involves security, authentication, encryption, access
-control or regulated data.</li>
+<li>The task involves sensitive or regulated data. This workshop uses
+only the supplied synthetic data.</li>
+<li>The task involves security, authentication, encryption or access
+control. These are outside the scope of this workshop.</li>
 <li>The model keeps bringing in ideas beyond the lesson.</li>
 <li>Reaching for AI stops the instructor from seeing where the group is
 stuck.</li>
-</ul></div>
+</ul><p>In your own work after the workshop, whether AI is acceptable for
+sensitive or security-critical tasks depends on authorisation, the
+approved environment, expert knowledge and review. If you cannot confirm
+these, do not use it.</p>
+</div>
 </div>
 </div>
 <div id="when-ai-can-support-learning" class="callout">
@@ -548,13 +553,21 @@ fewer attempts.</li>
 </ol></div>
 </div>
 </div>
-<div id="accordionInstructor2" class="accordion instructor-note accordion-flush">
+<div id="accordionInstructor1" class="accordion instructor-note accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor2" aria-expanded="false" aria-controls="collapseInstructor2">
-  <h3 class="accordion-header" id="headingInstructor2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Managing expectations </h3>
+<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
+  <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Package study figures </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
+<p>Churilov, <a href="https://arxiv.org/abs/2605.17062v4" class="external-link">arXiv:2605.17062v4</a>,
+revised 9 November 2026, checked 27 November 2026. It is a preprint.
+Hallucination rates were 3.6 to 5.0 percent of package mentions (2.2 to
+3.4 percent of generations), and 104 invented names were shared by all
+five models. Earlier versions reported different figures, so check the
+latest version and its denominators before you quote a number.</p>
+<div class="section level2">
+<h2 id="managing-expectations">Managing expectations<a class="anchor" aria-label="anchor" href="#managing-expectations"></a></h2>
 <p>Current models flag uncertainty more often than older ones, but they
 still hallucinate. Do not promise learners that it will not happen.</p>
 <ul><li>If the model refuses or hedges, point out that it recognised its own
@@ -562,6 +575,7 @@ limit.</li>
 <li>Keep a screenshot of a known hallucination ready in case the AI
 performs perfectly during the session.</li>
 </ul></div>
+</div>
 </div>
 </div>
 </div>
@@ -592,16 +606,15 @@ you wanted. Existence does not prove identity, safety or fit.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Discussion </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>You may get a clean “this does not exist.” That is the right answer
 when it happens, but do not count on it.</p>
-<p>A 2026 study of five frontier models, using its own prompts, found
-that they invented nonexistent package names about 4.6 to 6.1 percent of
-the time. 127 of the invented names were produced identically by all
-five models (<a href="https://arxiv.org/abs/2605.17062" class="external-link">Churilov,
-2026</a>). Those are rates for that study’s models and prompts, and not
-current universal failure rates.</p>
+<p>A 2026 preprint that tested five frontier models with its own prompts
+found that all of them sometimes named packages that do not exist, and
+that some invented names were shared by all five (<a href="https://arxiv.org/abs/2605.17062v4" class="external-link">Churilov, 2026</a>). The
+result applies to that study’s models and prompts. It is not a current
+failure rate for every model or task.</p>
 <p>The second finding bears on your habits. Asking another model to
 double-check a package name is weaker protection than it sounds, because
 models can invent the same wrong name. Check the official registry or
@@ -654,7 +667,7 @@ with an approved, contracted AI tool.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <ol style="list-style-type: decimal"><li>Either. Cost and convenience decide. Nothing about the task needs
 reproducibility or data controls.</li>
@@ -708,8 +721,8 @@ verify it before you move on.</p>
 <h2 class="callout-header">Key Points</h2>
 <div class="callout-inner">
 <div class="callout-content">
-<ul><li>Avoid AI for security-critical tasks, sensitive data and basic
-syntax practice.</li>
+<ul><li>In this workshop, keep AI away from security-critical tasks and
+sensitive data. Skip it when you are practising basic syntax.</li>
 <li>Know when AI supports learning and when it gets in the way.</li>
 <li>Compare code with your approved requirements. Do not sync the
 requirements to the code without evidence.</li>
@@ -786,8 +799,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor/05-limitations.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor/05-limitations.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-11-07",
-  "datePublished": "2026-11-24"
+  "dateModified": "2026-11-27",
+  "datePublished": "2026-11-27"
 }
 
   </script><script>

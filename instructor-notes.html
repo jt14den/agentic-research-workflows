@@ -476,7 +476,7 @@ plot is still wrong.</li>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="ex">python</span> instructors/files/test_validators.py</span></code></pre>
 </div>
-<p>It builds a good file and eight bad ones in a temporary folder, and
+<p>It builds a good file and nine bad ones in a temporary folder, and
 confirms that the reference validator accepts the good file and rejects
 each bad one. Record the Claude Code version, the Python and package
 versions, the model name and the date. Test a learner route on each
@@ -523,8 +523,8 @@ trace, run, add checks, decide.</td>
 <tr>
 <td>00:45</td>
 <td align="right">25</td>
-<td>CLI scope, shell versus agent, <code>/init</code> once, one diff,
-one constraint plus check.</td>
+<td>CLI scope, shell versus agent, set and check the permission mode,
+<code>/init</code> once, one diff, one constraint plus check.</td>
 <td>Episode 1</td>
 </tr>
 <tr>
@@ -577,15 +577,69 @@ output.</td>
 <tr>
 <td>03:50</td>
 <td align="right">10</td>
-<td>Unaided transfer decision and the Monday card.</td>
+<td>Unaided transfer decision (the all-sites-A challenge in the
+validation episode) and the Monday card.</td>
 <td>Episode 7</td>
 </tr>
 </tbody>
 </table>
+<p>The episode numbers in this table and in the episode notes start at
+0, like the source file names. The learner route boxes refer to other
+episodes by title. Each episode page has a “Four-hour pilot route” box
+that lists core, extension and reference activities. Keep those boxes
+and this table in step.</p>
 <p>Episode 5 is not taught as its own block in the pilot. Its scope and
 privacy points sit in Episode 1, and its failure modes sit in Episodes 2
 and 4. The full eight-episode course is longer. The episode front matter
-adds up to about 9.5 hours, before breaks and installation.</p>
+adds up to about 9 hours, before breaks and installation. The control
+exercise in Episode 1 is an extension in the pilot, so do not claim in
+the pilot that learners tested an enforced restriction.</p>
+<div class="section level3">
+<h3 id="outcomes-and-evidence">Outcomes and evidence<a class="anchor" aria-label="anchor" href="#outcomes-and-evidence"></a>
+</h3>
+<p>For each pilot outcome, look for the learner’s own work. Finishing an
+activity or saying it went well is not evidence.</p>
+<table class="table">
+<colgroup>
+<col width="33%">
+<col width="33%">
+<col width="33%">
+</colgroup>
+<thead><tr>
+<th>Pilot outcome</th>
+<th>Learner work that shows it</th>
+<th>Episode (source number)</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Identify an unsupported assumption in a plan</td>
+<td>The marked step, with the file or document evidence that corrects
+it</td>
+<td>2, 3</td>
+</tr>
+<tr>
+<td>Run a check that passes good input and fails a seeded error</td>
+<td>Their date check, with output from the good file and the bad
+copy</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Explain a transformation and its data consequence</td>
+<td>A spoken or written explanation of one block of the cleaner, naming
+what changes in the data</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Hand over a rerunnable bundle with a supported decision</td>
+<td>The partner’s record of commands, results and missing items, and the
+written decision with its evidence and one uncertainty</td>
+<td>6</td>
+</tr>
+</tbody>
+</table>
+<p>Record whether each piece used live agent output or supplied
+output.</p>
+</div>
 <div class="section level3">
 <h3 id="reference-and-follow-on">Reference and follow-on<a class="anchor" aria-label="anchor" href="#reference-and-follow-on"></a>
 </h3>
@@ -681,6 +735,13 @@ every agent makes this mistake.</li>
 <h3 id="episode-1-cli-based-ai">Episode 1: CLI-Based AI<a class="anchor" aria-label="anchor" href="#episode-1-cli-based-ai"></a>
 </h3>
 <ul>
+<li>Check that every learner started in manual mode and can say where to
+read the active mode. Starting modes differ by version and
+settings.</li>
+<li>Before each offering, rerun the control exercise on each supported
+platform, and update
+<code>instructors/files/permission-check-output.txt</code> if the
+behaviour or the message changed.</li>
 <li>Run the setup check, including the read-only agent action. A version
 number confirms only the program.</li>
 <li>Set the same available model with <code>/model</code>. Record the
@@ -982,8 +1043,8 @@ these at build time.
   "url": "https://jt14den.github.io/agentic-research-workflows/instructor-notes.html",
   "identifier": "https://jt14den.github.io/agentic-research-workflows/instructor-notes.html",
   "dateCreated": "2026-01-08",
-  "dateModified": "2026-11-24",
-  "datePublished": "2026-11-24"
+  "dateModified": "2026-11-27",
+  "datePublished": "2026-11-27"
 }
 
   </script><script>
