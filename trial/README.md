@@ -12,6 +12,14 @@ whether it meets the research need.
 The word is "practise". This trial cannot show that the lesson develops
 computational thinking or that skills transfer.
 
+## A design choice to test
+
+Part 2 gives one worked check with purpose labels, then asks learners to label
+their own. Research on purpose-labelled examples mostly gives learners the labels.
+Asking learners to write them is our extension. None of that research tests a
+short lesson with an AI agent. Watch whether the labelling helps, and how long it
+takes.
+
 ## What the trial can and cannot show
 
 It can show where learners get stuck, whether the reuse step raises the decisions

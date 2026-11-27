@@ -4,6 +4,23 @@ Values below were produced on 2026-11-27 with the reference scripts.
 
 ## Part 2
 
+Worked example, why match by ID: rows can be reordered, added or lost. Matching by
+position would then compare different samples, and could report false errors or
+miss real ones.
+
+Purpose labels on the date check. Wording will differ. A good label says what the
+part achieves for the check, and a good answer names a matching failure:
+
+| Part | A failure if it is missing or wrong |
+|---|---|
+| Get expected dates from the raw files with each documented format | expected values copied from the cleaner, or a guessed format, can repeat its error |
+| Match each merged row to its expected date by sample ID | reordered or lost rows get compared with the wrong sample |
+| Report mismatches so the program fails | wrong dates are found but the exit status still says success |
+
+"Loops over the sites" restates the code. It is not a purpose. The date check
+alone may not catch lost or repeated IDs. Other checks cover those, and a
+learner who says so is right.
+
 The bad copy changes 8 site C dates. All stay valid dates. A good date check fails.
 A non-zero exit status reports that a check failed or is unfinished.
 

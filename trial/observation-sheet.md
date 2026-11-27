@@ -24,6 +24,9 @@ Items answered without help (1 to 6): ______   Unsure or wrong: ______
 | Predicted a change and something that must be preserved | | |
 | Made the required edits by hand | | |
 | Date check failed on the bad copy and passed on the good one | | |
+| Said why the worked example matches by ID | | |
+| Gave a purpose for each part of their date check, not a restatement of the code | | |
+| Named a failure that follows if a part is missing or wrong | | |
 | Explained why a count taken from the files can miss a lost row | | |
 | Noticed the median choice before being prompted by step 6 | | |
 | Justified a median decision, or a decision to stop and ask | | |

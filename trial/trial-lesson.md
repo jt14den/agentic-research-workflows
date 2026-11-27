@@ -28,10 +28,37 @@ preserve. Then run the program and test your prediction.
 ## Part 2. Check it (15 minutes)
 
 1. Run `python validate_data.py`. Read what is unfinished.
-2. Find each site's date format in `README.md`. **By hand**, finish the date
+2. Study a worked example before you write anything. This finished check from
+   `validate_data.py` tests that every sample ID has the right site. A label
+   above each part says what that part is for.
+
+   ```python
+   # Purpose: get the expected values from the raw files
+   expected_site = {}
+   for site, cfg in RAW_SITES.items():
+       for sample_id in pd.read_csv(cfg["file"])[cfg["id"]]:
+           expected_site[str(sample_id)] = site
+
+   # Purpose: match each merged row to its expected value by ID, and keep
+   # the ones that differ
+   wrong_site = sorted(
+       str(sid) for sid, site in zip(df["sample_id"], df["site"])
+       if expected_site.get(str(sid)) != site
+   )
+
+   # Purpose: report the differences, so a person or a program can act
+   check("every sample_id carries its source site", not wrong_site,
+         f"{len(wrong_site)} wrong, e.g. {wrong_site[:3]}")
+   ```
+
+   Why match by ID and not by row position? Say what could go wrong.
+3. Find each site's date format in `README.md`. **By hand**, finish the date
    check. Take expected values from the raw files, not from the cleaner.
-3. Run it until the correct output passes.
-4. Make a bad copy that your check should reject:
+4. Run it until the correct output passes.
+5. **By hand**, add a `# Purpose:` label above each part of your date check. Use
+   your own words for what the part is for, not a restatement of the code. For
+   each part, write one thing that could go wrong if it were missing or wrong.
+6. Make a bad copy that your check should reject:
 
    ```bash
    python -c "
@@ -48,9 +75,9 @@ preserve. Then run the program and test your prediction.
    echo $?
    ```
 
-5. What did the number printed by `echo $?` tell another program? What would a `0`
+7. What did the number printed by `echo $?` tell another program? What would a `0`
    not tell you?
-6. Delete `data/candidate.csv`.
+8. Delete `data/candidate.csv`.
 
 ## Part 3. Reuse it (17 minutes)
 
