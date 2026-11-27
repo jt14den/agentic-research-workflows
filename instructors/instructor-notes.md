@@ -34,7 +34,7 @@ Run these from the lesson folder and keep the output:
 python instructors/files/test_validators.py
 ```
 
-It builds a good file and eight bad ones in a temporary folder, and confirms that the reference validator accepts the good file and rejects each bad one. Record the Claude Code version, the Python and package versions, the model name and the date. Test a learner route on each platform you will support: download, environment, one read-only agent action and one small diff.
+It builds a good file and nine bad ones in a temporary folder, and confirms that the reference validator accepts the good file and rejects each bad one. Record the Claude Code version, the Python and package versions, the model name and the date. Test a learner route on each platform you will support: download, environment, one read-only agent action and one small diff.
 
 ---
 

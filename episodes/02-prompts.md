@@ -245,7 +245,7 @@ Some models let you raise a reasoning-effort setting. Availability and defaults 
 Ask the agent to draft a check for the coastal data:
 
 ```
-Write a short Python script, check_site_C_dates.py, that reads data/site_C.csv and prints the ISO date for SC001 and SC002, using the day-month-year format. Do not change any files.
+Write a short Python script, check_site_C_dates.py, that reads data/site_C.csv and prints the ISO date for SC001 and SC002, using the day-month-year format. You may create check_site_C_dates.py. Do not change the input data or any other file.
 ```
 
 1. Before you run it, predict both dates.

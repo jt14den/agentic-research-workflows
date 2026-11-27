@@ -92,7 +92,7 @@ Open the three files in `data/` and look at them yourself. Do not use the AI yet
 Keep your list. You will judge the AI's proposal against it. For a faster overview, ask the AI to write an inspection script, and read its output against your list:
 
 ```
-Write a Python script called 'inspect_data.py' that reads every CSV in data/. For each file, print the filename, the column names, and the number of missing values per column. Do not change any files.
+Write a Python script called 'inspect_data.py' that reads every CSV in data/. For each file, print the filename, the column names, and the number of missing values per column. You may create inspect_data.py. Do not change the input data or any other file.
 ```
 
 ::::::::::::::::::::::::::::::::::::::::: challenge

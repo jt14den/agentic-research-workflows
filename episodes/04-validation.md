@@ -49,7 +49,7 @@ One timing on one task says little about productivity in general. People also mi
 Treat rewrite time as a signal about this workflow on this task:
 
 - It is local.
-- High rewrite time usually means the task was underspecified, the model overreached, or you did not yet have the mental model to judge the output.
+- High rewrite time has many possible causes. The task may be underspecified, the model may have overreached, the code or data may be hard, or the topic may be new to you. The number alone does not tell you which.
 - It tells you what to improve next: the prompt, the requirements, or the checks.
 
 ::::::::::::::::::::::::::::::::::::::::: caution
@@ -110,7 +110,7 @@ The clearest case is the date trap. If you miss it, the cleaning runs, the row c
 - You cannot validate code you cannot explain. If you cannot say what it does, you are hoping.
 - Passing tests is not the same as being scientifically correct. Tests check what you thought to check.
 - A second model is a reviewer, not an authority. It has its own blind spots.
-- Domain plausibility is your job. No model knows what a sensible result looks like in your field better than you do.
+- Domain plausibility is your responsibility. Do not take the model's word for what is sensible in your field. When your own knowledge runs out, consult domain sources or a colleague.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -189,7 +189,7 @@ A passing validator tells you only what it checked. Any property you did not wri
 
 Warn learners about approval fatigue, the habit of accepting suggestions without reading them. Ask for the check output before the diff discussion. Review the requirements and the critical changes yourself, and use independent checks to test defined properties. An agent's assurance that its code is correct is not proof.
 
-Before the session, run `python instructors/files/test_validators.py`. It builds a good file and eight bad ones in a temporary folder and confirms that the validator rejects each bad one for the right reason.
+Before the session, run `python instructors/files/test_validators.py`. It builds a good file and nine bad ones in a temporary folder and confirms that the validator rejects each bad one. For the `format="mixed"` case, it also confirms that only the date check fails.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 

@@ -29,14 +29,30 @@ def run(cmd, cwd):
     return subprocess.run([sys.executable, *cmd], cwd=cwd, capture_output=True, text=True)
 
 
-def bad_cases(good):
+def mixed_site_c_dates(good, project):
+    """Site C dates as format="mixed" really reads them from the raw file."""
+    raw = pd.read_csv(project / "data" / "site_C.csv")
+    parsed = pd.to_datetime(raw["DateTime"], format="mixed")
+    by_id = dict(zip(raw["StationID"], parsed.dt.strftime("%Y-%m-%d")))
+    frame = good.copy()
+    c = frame["site"] == "C"
+    frame.loc[c, "date"] = frame.loc[c, "sample_id"].map(by_id)
+    # The point of this case: every date stays valid, but some are wrong.
+    assert pd.to_datetime(frame["date"], format="%Y-%m-%d", errors="coerce").notna().all()
+    assert (frame["date"] != good["date"]).any()
+    return frame
+
+
+def bad_cases(good, project):
     """Each case is one independent copy of the good file with one seeded error."""
+    yield "site C dates parsed with format=mixed", mixed_site_c_dates(good, project)
+
     wrong_dates = good.copy()
     c = wrong_dates["site"] == "C"
-    # Swap month and day, the way a guessing parser would read 05-01-2023.
+    # Swap month and day on every site C date. Some results are not valid dates.
     wrong_dates.loc[c, "date"] = pd.to_datetime(
         wrong_dates.loc[c, "date"]).dt.strftime("%Y-%d-%m")
-    yield "site C dates read month-first", wrong_dates
+    yield "site C month and day swapped on every row", wrong_dates
 
     blank = good.copy()
     blank.loc[blank["sample_id"] == "A001", "score"] = None
@@ -78,11 +94,16 @@ def main():
         print(f"{'ok  ' if passed else 'BAD '} good file passes the validator")
         ok &= passed
 
-        for name, frame in bad_cases(good):
+        for name, frame in bad_cases(good, work):
             path = work / "data" / "candidate.csv"
             frame.to_csv(path, index=False)
             result = run([str(VALIDATOR), str(path)], work)
             rejected = result.returncode == 1
+            if name == "site C dates parsed with format=mixed":
+                # This case must be caught by the date check and nothing else.
+                failed = [line for line in result.stdout.splitlines()
+                          if line.startswith("[FAIL]")]
+                rejected &= len(failed) == 1 and "date matches the raw source" in failed[0]
             print(f"{'ok  ' if rejected else 'BAD '} rejects: {name}")
             ok &= rejected
     print()
