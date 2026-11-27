@@ -20,6 +20,17 @@ exercises: 30
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
+::::::::::::::::::::::::::::::::::::::::: callout
+
+## Four-hour pilot route
+
+Core activities are taught in the four-hour pilot. Extension activities are for the full course or later practice. Reference material is for looking things up. The full course includes everything. The pilot gives this episode 30 minutes.
+
+- Core: the run, revise or reject checkpoint; "Challenge: practise the checkpoint"; the date exercise, "A result can pass one check and still be wrong"; the opening feedback note.
+- Extension: "Quick check: what does `dropna()` remove?"
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
 ## This is not a lesson about letting AI do the work
 
 It is tempting to treat an AI coding agent as a machine that turns a sentence into a finished script. You type "clean this data," code appears, it runs, and you move on.
