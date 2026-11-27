@@ -23,6 +23,7 @@ HERE = Path(__file__).resolve().parent
 PROJECT = HERE.parent.parent / "learners" / "files" / "coastal-water-quality"
 VALIDATOR = HERE / "backup_validate_data.py"
 CLEANER = HERE / "backup_clean_and_merge.py"
+TRANSFER = HERE / "transfer_candidate.csv"
 
 
 def run(cmd, cwd):
@@ -106,6 +107,15 @@ def main():
                 rejected &= len(failed) == 1 and "date matches the raw source" in failed[0]
             print(f"{'ok  ' if rejected else 'BAD '} rejects: {name}")
             ok &= rejected
+
+        # The saved pilot handout has one fault: a repeated ID replaces another.
+        result = run([str(VALIDATOR), str(TRANSFER)], work)
+        failed = [line for line in result.stdout.splitlines()
+                  if line.startswith("[FAIL]")]
+        isolated = (result.returncode == 1 and len(failed) == 1
+                    and "sample_id is present exactly once" in failed[0])
+        print(f"{'ok  ' if isolated else 'BAD '} transfer file fails only the unique ID check")
+        ok &= isolated
     print()
     print("All validator tests behaved as expected." if ok else "Some validator tests failed.")
     sys.exit(0 if ok else 1)

@@ -28,7 +28,7 @@ exercises: 60
 35 minutes in the pilot.
 
 - Core: the approval gate; "Challenge: write one independent check", including the run on bad data; naming what stays unchecked.
-- Extension: "Think aloud while you work"; "Challenge: explain the approval gate"; the critique from a second model. Leave "Challenge: this check passes. Is the file right?" unopened. The pilot uses it at the end as an unaided transfer task.
+- Extension: "Think aloud while you work"; "Challenge: explain the approval gate"; the critique from a second model; "Challenge: this check passes. Is the file right?".
 - Reference: rewrite time.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -62,7 +62,7 @@ Treat rewrite time as a signal about this workflow on this task:
 
 - It is local.
 - High rewrite time has many possible causes. The task may be underspecified, the model may have overreached, the code or data may be hard, or the topic may be new to you. The number alone does not tell you which.
-- It tells you what to improve next: the prompt, the requirements, or the checks.
+- Together with notes about where you struggled, it can help you choose what to investigate next: the prompt, the requirements or the checks.
 
 ::::::::::::::::::::::::::::::::::::::::: caution
 
@@ -201,7 +201,7 @@ A passing validator tells you only what it checked. Any property you did not wri
 
 Warn learners about approval fatigue, the habit of accepting suggestions without reading them. Ask for the check output before the diff discussion. Review the requirements and the critical changes yourself, and use independent checks to test defined properties. An agent's assurance that its code is correct is not proof.
 
-Before the session, run `python instructors/files/test_validators.py`. It builds a good file and nine bad ones in a temporary folder and confirms that the validator rejects each bad one. For the `format="mixed"` case, it also confirms that only the date check fails.
+Before the session, run `python instructors/files/test_validators.py`. It builds a good file and nine bad ones in a temporary folder and confirms that the validator rejects each bad one. For the `format="mixed"` case, it also confirms that only the date check fails. It also checks the saved transfer file used at the end of the pilot.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 

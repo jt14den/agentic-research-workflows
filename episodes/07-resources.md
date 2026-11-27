@@ -25,7 +25,7 @@ exercises: 25
 
 10 minutes in the pilot, shared between an unaided transfer decision and the Monday card.
 
-- Core: "Challenge: this check passes. Is the file right?" from "Validation Strategies", done without AI; "Challenge: your Monday workflow card".
+- Core: "Challenge: unaided transfer decision"; "Challenge: your Monday workflow card".
 - Extension: "Quick check: which pairing gives you pause?"; "Quick check: spot the hype".
 - Reference: the tool table, connectors, and citing and crediting AI.
 
@@ -88,6 +88,48 @@ Transparent credit is part of open science. Follow the target publisher's curren
 - In a repository `README.md`: note the tool, its role and who verified the output. For example: "Claude drafted the cleaning script. [Your name] verified it with `validate_data.py`."
 - In a manuscript: name the tool in the methods or acknowledgements, and keep prompts and outputs available.
 - Check the current policy: [COPE on AI authorship](https://publicationethics.org/cope-position-statements/ai-author), [CRediT taxonomy](https://credit.niso.org/).
+
+::::::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge: unaided transfer decision
+
+Your instructor gives you `transfer_candidate.csv`, a merged file that someone else made. It has 60 rows. Would you approve it for the per-site plot?
+
+Work without AI. Do not run a supplied validator until you have made your decision.
+
+1. Save the file as `data/candidate.csv` in your project folder. Do not overwrite `data/master_dataset.csv`.
+2. Name one property, other than the row count, that the file must have. Say where its expected values come from.
+3. Write and run a short check of that property. If it passes, decide what it leaves unchecked and whether you need another check.
+4. Approve, revise or reject the file. Give your evidence and one thing you did not check.
+5. Delete `data/candidate.csv`.
+
+:::::::::::::::::::::::::::::::::::::::: solution
+
+## What a good answer finds
+
+Reject the file. It has 60 rows, but `B-009` appears twice and `B-014` is missing. A row count cannot show this. A check that compares the `sample_id` values with the IDs in the raw files does: each raw ID must appear exactly once.
+
+For example:
+
+```python
+import pandas as pd
+
+df = pd.read_csv("data/candidate.csv")
+raw_ids = pd.concat([
+    pd.read_csv("data/site_A.csv")["SiteID"],
+    pd.read_csv("data/site_B.csv")["id"],
+    pd.read_csv("data/site_C.csv")["StationID"],
+])
+counts = df["sample_id"].value_counts()
+print("missing:", sorted(set(raw_ids) - set(counts.index)))
+print("repeated:", sorted(counts[counts > 1].index))
+```
+
+A check of dates, score range or site labels on the rows that are present can pass this file. Each shows only the property it tests.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::: challenge
 

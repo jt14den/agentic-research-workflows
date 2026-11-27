@@ -58,7 +58,7 @@ Four observable exit outcomes: (1) inspect a plan and identify one unsupported
 assumption; (2) run a check that passes on a correct input and fails on a seeded error;
 (3) explain a transformation and its data consequence; (4) hand another researcher a
 rerunnable bundle with a decision supported by evidence. The unaided transfer task uses a
-different failure (site relabelling or wrong imputation) so recall of the date trap cannot
+different failure (a repeated sample ID in place of a missing one) so recall of the date trap cannot
 stand in for learning.
 
 ## Episode breakdown

@@ -34,7 +34,7 @@ Run these from the lesson folder and keep the output:
 python instructors/files/test_validators.py
 ```
 
-It builds a good file and nine bad ones in a temporary folder, and confirms that the reference validator accepts the good file and rejects each bad one. Record the Claude Code version, the Python and package versions, the model name and the date. Test a learner route on each platform you will support: download, environment, one read-only agent action and one small diff.
+It builds a good file and nine bad ones in a temporary folder, and confirms that the reference validator accepts the good file and rejects each bad one. It also confirms that the saved transfer file fails only the unique ID check. Record the Claude Code version, the Python and package versions, the model name and the date. Test a learner route on each platform you will support: download, environment, one read-only agent action and one small diff.
 
 ---
 
@@ -46,7 +46,7 @@ Assume learners finish installation or receive a supplied environment before the
 |---|---:|---|---|
 | 00:00 | 15 | Setup diagnostic and entry check. Assign the live-agent route or the saved-output route. | `learners/setup.md` |
 | 00:15 | 30 | `dropna` reading, then the date exercise: predict, pair trace, run, add checks, decide. | Episode 0 |
-| 00:45 | 25 | CLI scope, shell versus agent, set and check the permission mode, `/init` once, one diff, one constraint plus check. | Episode 1 |
+| 00:45 | 25 | CLI scope, shell versus agent, set and check the permission mode, `/init` once, `/context all`, one diff, one constraint plus check, the permission test quick check. | Episode 1 |
 | 01:10 | 10 | Catch-up checkpoint. Share a question the agent did not resolve. | |
 | 01:20 | 25 | Repair a prompt. Review a plan, mark one unsupported assumption, approve one bounded action. | Episode 2 |
 | 01:45 | 15 | Break. | |
@@ -54,7 +54,7 @@ Assume learners finish installation or receive a supplied environment before the
 | 02:40 | 35 | Complete the date check, run it on good and bad files, discuss what remains unchecked. | Episode 4 |
 | 03:15 | 10 | Catch-up using the checkpoint packs. Restore the canonical 60-row output. | |
 | 03:25 | 25 | Assemble and swap the bundle. The partner reruns without AI. | Episode 6 |
-| 03:50 | 10 | Unaided transfer decision (the all-sites-A challenge in the validation episode) and the Monday card. | Episode 7 |
+| 03:50 | 10 | Unaided transfer decision (hand out `instructors/files/transfer_candidate.csv`) and the Monday card. | Episode 7 |
 
 The episode numbers in this table and in the episode notes start at 0, like the source file names. The learner route boxes refer to other episodes by title. Each episode page has a "Four-hour pilot route" box that lists core, extension and reference activities. Keep those boxes and this table in step.
 
@@ -154,10 +154,13 @@ Helpers route a learner to a known state. They do not do the learner's judgment 
 
 ### Episode 6: Capstone
 - Mostly doing. Reuse the existing cleaner and validator.
-- The partner reruns the bundle in a fresh copy without AI. Use the site-relabel case as the transfer error.
+- The partner reruns the bundle in a fresh copy without AI, including the copy where every site is `A`.
 - Read a few approval decisions aloud, especially honest "revise" answers.
 
 ### Episode 7: Resources
+- Unaided transfer: hand out `instructors/files/transfer_candidate.csv` only at this point, and do not name the fault. It is the reference output with the `B-014` row replaced by a second copy of `B-009`. Keep it out of learner project folders before then. The capstone checklist already says each ID must occur once, so this task tests whether learners choose and run that check without being told. It does not test an idea they have never seen.
+- The reference validator fails only the unique ID check on this file. The starter `validate_data.py` also fails its score check, because the repeated ID disrupts its score lookup. Ask learners to decide before they run either one.
+- Record whether each learner chose the check without help.
 - Tools change fast. Focus on the principles.
 - Monday card: push learners to name one likely error, the check that would catch it and one unchecked claim.
 - AI cannot be an author. Openness about its use is part of open science.

@@ -104,7 +104,7 @@ A complete bundle reruns without hidden files, agent access or manual edits to t
 
 A correct decision names the checks and limits its claim to those checks.
 
-**Transfer case.** A candidate has 60 rows, correct dates, unique IDs and scores in range, but every `site` value is `A`. A validator without a site check can pass this file. Reject the per-site plot until the ID-to-site check fails on the candidate and passes after repair. Row count and date accuracy do not show site identity.
+**Site label case.** A candidate has 60 rows, correct dates, unique IDs and scores in range, but every `site` value is `A`. A validator without a site check can pass this file. Reject the per-site plot until the ID-to-site check fails on the candidate and passes after repair. Row count and date accuracy do not show site identity.
 
 A "revise" decision that names a precise missing check is stronger than an unsupported approval. If a bundle cannot rerun, name the missing file or instruction. A prompt summary does not replace executable analysis code.
 
@@ -118,7 +118,7 @@ A "revise" decision that names a precise missing check is stronger than an unsup
 
 Spend most of the time on doing. Expect the site C date bug to surface for several learners. Treat it as the highlight, because it shows the lesson's central point in one failure.
 
-If a group falls behind, supply the reference cleaner and plot script from `instructors/files/`, and the completed validator. Label which parts you supplied. The learner must still explain one change, predict a failure and defend a decision on the transfer case.
+If a group falls behind, supply the reference cleaner and plot script from `instructors/files/`, and the completed validator. Label which parts you supplied. The learner must still explain one change, predict a failure and defend a decision on the site label case.
 
 Record whether the partner actually reran the bundle or only inspected saved output. Collect a few approval decisions and read them aloud. The honest "revise" answers teach the most.
 

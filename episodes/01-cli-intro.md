@@ -26,9 +26,9 @@ exercises: 35
 
 25 minutes in the pilot.
 
-- Core: what the tool can see and change; setting and checking the permission mode; the read-only check; running `/init` once; "Challenge: add a constraint and a check", including the diff.
+- Core: the five questions about what a tool can see and change, as a short introduction from the instructor; starting in manual mode and checking it; the read-only check; running `/init` once; running `/context all` to see which instruction and memory files loaded; "Challenge: add a constraint and a check", including the diff; "Quick check: read a permission test".
 - Extension: "A first look at the data"; "Challenge: test one enforced control".
-- Reference: the desktop app note and the instruction file names used by other tools.
+- Reference: the comparison of other permission modes and the sandbox paragraph; auto memory, `/memory` and `/clear`; the desktop app note; the instruction file names used by other tools.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -174,7 +174,7 @@ Open a terminal and type `claude --help`. This lists the command-line flags. Use
 
 ### Set the permission mode
 
-The permission mode controls when Claude Code asks before it acts. Do not assume the mode. Since version 2.1.283, the built-in starting mode for interactive terminal sessions is auto mode, which runs without routine permission prompts. Your settings can change the starting mode. In this lesson, start every interactive session in manual mode:
+The permission mode controls when Claude Code asks before it acts. Do not assume the mode. Since version 2.1.283, the built-in starting mode for interactive terminal sessions is auto mode, which runs without routine permission prompts. Your settings can change the starting mode. In this lesson, start every interactive session in manual mode. The one exception is the control exercise later in this episode:
 
 ```bash
 claude --permission-mode manual
@@ -187,7 +187,14 @@ claude --permission-mode manual
 | Plan | Explores and proposes a plan. It does not edit your source files |
 | Auto | Runs without routine prompts. A separate model checks actions |
 
-This table is a summary of the common modes, and not the full list. Press `Shift+Tab` to change mode during a session, and read the mode shown on screen before you approve work. Names and defaults change between versions, so check the [permission modes documentation](https://code.claude.com/docs/en/permission-modes) (checked 27 November 2026).
+This table is a summary of the common modes, and not the full list. At the ordinary input prompt, press `Shift+Tab` to cycle through modes, and read the mode shown on screen before you approve work.
+
+Do not use `Shift+Tab` while Claude Code is waiting for your answer:
+
+- At a plan approval prompt, `Shift+Tab` approves the plan. Press `Esc` first if you only want to change mode.
+- At a file permission prompt, it can allow the action for the rest of the session. Answer the prompt before you change mode. `Esc` there declines the action.
+
+See the [interactive mode documentation](https://code.claude.com/docs/en/interactive-mode). Names and defaults change between versions, so check the [permission modes documentation](https://code.claude.com/docs/en/permission-modes) (checked 27 November 2026).
 
 A mode decides when you are asked. A deny rule blocks an action whether or not you would have been asked. `/permissions` lists the rules and the settings file each one comes from. A sandbox is a third control. Claude Code's sandbox is off by default. When it is on, it restricts shell commands and the processes they start. It does not cover the built-in file and web tools, hooks or local MCP servers. By default, sandboxed commands can still read most of your machine, including some credential files. It does not run on native Windows ([sandboxing documentation](https://code.claude.com/docs/en/sandboxing)).
 
@@ -283,7 +290,7 @@ A CLI agent can load a project instruction file at the start of a session. For C
 
 Other tools use other conventions. Check what your tool actually loaded:
 
-- Claude Code can read `AGENTS.md` when no `CLAUDE.md` or `CLAUDE.local.md` exists in the working folder or above it. An explicit `@AGENTS.md` import in `CLAUDE.md` helps portability.
+- By default, Claude Code reads `AGENTS.md` only when no `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md` exists in the working folder or any folder above it. Your user-level `~/.claude/CLAUDE.md` does not count. This needs version 2.1.277 or later. An explicit `@AGENTS.md` import in `CLAUDE.md` helps portability.
 - Codex CLI uses `AGENTS.md`. Check the official documentation for the current behaviour.
 - Cursor supports scoped rules in `.cursor/rules` and `AGENTS.md`. `.cursorrules` is the older form.
 - Gemini CLI uses `GEMINI.md` by default, and the file names are configurable.
@@ -385,50 +392,108 @@ The constraint comes from the source documentation. The check is something you c
 
 ::::::::::::::::::::::::::::::::::::::::: challenge
 
+## Quick check: read a permission test
+
+This is shortened output from the lesson's own test. It is supplied output, not your run. In both runs the mode was `acceptEdits` and the prompt asked the agent to add a line to `data/probe.txt`.
+
+```
+Run 1, no deny rule
+  Tool call: Edit data/probe.txt
+  Result:    The file has been updated successfully.
+  File:      changed
+
+Run 2, settings deny Edit(/data/**)
+  Tool call: Edit data/probe.txt
+  Result:    File is in a directory that is denied by your permission settings.
+  File:      unchanged
+```
+
+1. Name the restriction that was enforced. What is your evidence?
+2. Name one thing these two runs do not show.
+
+:::::::::::::::::::::::::::::::::::::::: solution
+
+1. The rule stopped the file editing tool from changing a file under `data/`. The evidence has three parts: the tool was called, the call was refused for a permission reason, and the file did not change. Run 1 shows that the same request changes the file without the rule.
+2. Any of these: whether a script or another program can write to the file; whether the file can be read; what happens to files outside `data/`; what happens with other versions or settings.
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::: challenge
+
 ## Challenge: test one enforced control
 
-An instruction asks. A permission rule enforces. Test one rule on a disposable copy of the synthetic project. Never run this test on real data.
+An instruction asks. A permission rule enforces. Test one rule in a new folder that holds only a test file. You run the same request twice, first without the rule and then with it.
 
-1. Leave any running session. From inside `coastal-water-quality`, make a copy and a settings folder:
+This exercise starts in `acceptEdits` mode, which accepts file edits without asking. It is a temporary exception to this lesson's manual mode rule, so that a blocked edit cannot be a prompt that you refused. Use it only in this test folder.
+
+1. Leave any running session. From inside `coastal-water-quality`, create the test folder next to your project:
 
    ```bash
-   cp -R . ../control-test
-   cd ../control-test
-   mkdir -p .claude
+   mkdir ../control-test
    ```
 
-2. In a text editor, create `.claude/settings.json` in `control-test` with this rule. If the file already exists, ask a helper to add the rule to it.
+   If this command says the folder already exists, stop. Do not reuse it. Ask a helper, or choose a new folder name.
+
+2. Create the test file and keep a copy of it:
+
+   ```bash
+   cd ../control-test
+   mkdir data .claude
+   echo "original" > data/probe.txt
+   cp data/probe.txt probe.before.txt
+   ```
+
+3. Run the baseline. Start a session with `claude --permission-mode acceptEdits`. Run `/permissions` and `/context all`, and note any rules or instruction files that you did not expect. Your user settings and instructions still load, and so do any rules your organisation manages. Do not remove or change managed rules to make this exercise work. Then type:
+
+   ```
+   Use your file editing tool to add the line TEST to the end of data/probe.txt. If it is not permitted, stop and report the exact message. Do not try another way.
+   ```
+
+   Look for the edit call and its result on screen. Leave the session, then compare:
+
+   ```bash
+   diff data/probe.txt probe.before.txt
+   ```
+
+   The baseline works only if the edit tool ran and `diff` shows the added line. If it did not, record the result as inconclusive and stop.
+
+4. Restore the file:
+
+   ```bash
+   cp probe.before.txt data/probe.txt
+   ```
+
+5. In a text editor, create `.claude/settings.json` in `control-test` with this rule:
 
    ```json
    {
      "permissions": {
-       "deny": ["Edit(./data/**)"]
+       "deny": ["Edit(/data/**)"]
      }
    }
    ```
 
-3. Start a session with `claude --permission-mode acceptEdits`. This mode accepts file edits without asking, so a blocked edit is not just a prompt that you refused. Run `/permissions` and find your rule.
-4. Predict what will happen. Then type:
+6. Predict what will happen. Start a new session with `claude --permission-mode acceptEdits`, run `/permissions` to find your rule, and type the same request. Leave the session and run the same `diff` command.
 
-   ```
-   This is a disposable test copy. Use your file editing tool to add the line TEST to the end of data/site_A.csv. If it is not permitted, stop and report the exact message. Do not try another way.
-   ```
+7. Judge the result. The test passes only if you see all three:
 
-5. Do not rely on the agent's report. In a separate terminal, from inside `control-test`, compare the file with the original. No output means the two files are the same.
+   - the screen shows an attempt to edit `data/probe.txt` with the file editing tool,
+   - that attempt was refused for a permission reason, and
+   - `diff` prints nothing, so the file is unchanged.
 
-   ```bash
-   diff data/site_A.csv ../coastal-water-quality/data/site_A.csv
-   ```
+   An unchanged file alone proves nothing. If the agent declined without trying the edit, record the result as inconclusive.
 
-6. Write down the active mode, the rule, what happened and one thing this test does not show.
+8. Write down the mode, the rule, both results and one thing this test does not show.
 
-When you finish, leave the session, return to `coastal-water-quality` and delete the `control-test` folder.
+When you finish, return to `coastal-water-quality` and delete the `control-test` folder. Start your next session in manual mode.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::: solution
 
 ## What to expect
 
-The file editing tool refuses the change, and `diff` prints nothing. In the lesson's test run, the message was "File is in a directory that is denied by your permission settings." Your wording may differ. If the file changed, stop and check the rule, the folder you started in and your version.
+In the baseline, the edit succeeds and `diff` shows the new line. With the rule, the file editing tool refuses the change and `diff` prints nothing. In the lesson's test run, the message was "File is in a directory that is denied by your permission settings." Your wording may differ. If the file changed with the rule in place, stop and check the rule, the folder you started in and your version.
 
 The result covers one tool and one path. It does not show that `data/` is protected from everything. The [permissions documentation](https://code.claude.com/docs/en/permissions) says that Read and Edit deny rules apply to the built-in file tools and to some file commands that Claude Code recognises in the shell. They do not apply to a program that opens files itself, such as a Python script. This exercise does not test that limit, and you should not ask the agent to get around the rule. To restrict what a script can write, you need a control on the process, such as a sandbox or file system permissions. Test that control too.
 

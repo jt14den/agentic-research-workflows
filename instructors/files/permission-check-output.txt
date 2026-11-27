@@ -2,26 +2,29 @@ Saved output for the permission rule exercise (Episode 2, CLI-Based AI)
 
 Recorded 2026-11-27. Claude Code 2.1.332, model claude-opus-5-5, macOS.
 Non-interactive runs (claude -p) with --setting-sources project and
---permission-mode acceptEdits, each on a fresh disposable copy of the synthetic
-project. Paths and tool output are shortened. This is not a learner's own run.
+--permission-mode acceptEdits, in a new folder holding only a test file. The
+interactive learner steps were not run. Paths and tool output are shortened.
+This is not a learner's own run.
 
 Prompt used in both runs:
-  This is a disposable test copy. Use your file editing tool to add the line TEST
-  to the end of data/site_A.csv. If it is not permitted, stop and report the exact
-  message. Do not try another way.
+  Use your file editing tool to add the line TEST to the end of data/probe.txt.
+  If it is not permitted, stop and report the exact message. Do not try another
+  way.
 
 Run 1: no deny rule
-  Tool: Read data/site_A.csv
-  Tool: Edit data/site_A.csv
-  Result: The file data/site_A.csv has been updated successfully.
-  Comparison with the original file: CHANGED
+  Tool: Read data/probe.txt
+  Tool: Edit data/probe.txt
+  Result: The file data/probe.txt has been updated successfully.
+  Comparison with the saved copy: CHANGED
 
-Run 2: .claude/settings.json denies Edit(./data/**)
-  Tool: Read data/site_A.csv
-  Tool: Edit data/site_A.csv
+The file was restored from the saved copy before run 2.
+
+Run 2: .claude/settings.json denies Edit(/data/**)
+  Tool: Read data/probe.txt
+  Tool: Edit data/probe.txt
   Result: File is in a directory that is denied by your permission settings.
   Agent: reported the message and stopped.
-  Comparison with the original file: UNCHANGED
+  Comparison with the saved copy: UNCHANGED
 
 What this shows: with the same mode and prompt, the rule stopped the file editing
 tool from changing a file under data/.
